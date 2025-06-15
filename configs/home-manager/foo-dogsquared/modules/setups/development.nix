@@ -113,6 +113,24 @@ in {
       programs.helix.enable = true;
     }
 
+    (lib.mkIf (config.services.podman.enable && !(attrs.nixosConfig.programs.distrobox.enable or false)) {
+      programs.distrobox = {
+        enable = true;
+        settings = {
+          container_additional_volumes = [
+            "/nix/store:/nix/store:ro"
+          ]
+          ++ lib.optionals (attrs.nixosConfig.home-manager.useUserPackages or false) [
+            "/etc/profiles/per-user:/etc/profiles/per-user:ro"
+            "/etc/static:/etc/static:ro"
+          ]
+          ++ lib.optionals (builtins.storeDir != "/nix/store") [
+            builtins.storeDir
+          ];
+        };
+      };
+    })
+
     (lib.mkIf (!config.programs.nixvim.enable or false) {
       programs.neovim = {
         enable = true;

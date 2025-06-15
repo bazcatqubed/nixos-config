@@ -124,7 +124,6 @@ in {
   home.stateVersion = "23.11";
 
   xdg.configFile = {
-    distrobox.source = ./config/distrobox;
     kanidm.source = ./config/kanidm/config;
   };
 
