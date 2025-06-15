@@ -66,6 +66,21 @@ in
                       (mkChromiumWrapperMatch "gnome-devdocs" {
                         spaceIndex = wmIndexOf "dev";
                       })
+
+                      {
+                        wm_class = "Podman Desktop";
+                        spaceIndex = wmIndexOf "dev";
+                      }
+
+                      {
+                        wm_class = "org.gnome.Logs";
+                        spaceIndex = wmIndexOf "dev";
+                      }
+
+                      {
+                        wm_class = "com.github.markhb.Pods";
+                        spaceIndex = wmIndexOf "dev";
+                      }
                     ]
                     ++ lib.optionals userCfg.setups.development.creative-coding.enable [
                       {

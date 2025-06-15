@@ -107,6 +107,12 @@ in {
       ]
       ++ lib.optionals (attrs.nixosConfig.suites.vpn.personal.enable or false) [
         trayscale
+      ]
+      ++ lib.optionals config.services.podman.enable [
+        podman-desktop
+        pods
+        toolbox
+        ptyxis
       ];
 
       # Text editors galore.
@@ -129,6 +135,10 @@ in {
           ];
         };
       };
+    })
+
+    (lib.mkIf (attrs.nixosConfig.services.guix.enable or false) {
+      home.sessionPath = lib.singleton "${config.xdg.configHome}/guix/current/bin";
     })
 
     (lib.mkIf (!config.programs.nixvim.enable or false) {
