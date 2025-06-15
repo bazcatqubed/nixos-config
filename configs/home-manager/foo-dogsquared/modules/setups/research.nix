@@ -46,7 +46,10 @@ in {
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
-      users.foo-dogsquared.programs.password-utilities.enable = lib.mkDefault true;
+      users.foo-dogsquared = {
+        programs.password-utilities.enable = lib.mkDefault true;
+        services.archivebox.enable = true;
+      };
 
       state.ports.syncthing.value = 8384;
 
