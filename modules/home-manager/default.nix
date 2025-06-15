@@ -1,6 +1,7 @@
 {
   imports = [
     ./files/mutable-files.nix
+    ./programs/distrobox.nix
     ./programs/epiphany.nix
     ./programs/kando.nix
     ./programs/pipewire.nix
