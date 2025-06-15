@@ -1,0 +1,7 @@
+:root {
+    --tridactyl-font-size: 20pt !important;
+}
+
+#completions > div > table {
+    font-size: var(--tridactyl-cmplt-font-size) !important;
+}

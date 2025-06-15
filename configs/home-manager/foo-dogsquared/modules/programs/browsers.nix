@@ -99,6 +99,8 @@ in {
           {
             isDefault = true;
 
+            userContent = lib.readFile ../../files/firefox/userContent.css;
+
             extensions.packages = with pkgs.nur.repos.rycee.firefox-addons;
               [
                 bitwarden
@@ -136,6 +138,9 @@ in {
             # https://mozilla.github.io/policy-templates/.
             settings = lib.mkMerge [
               {
+                # Enable them custom stylesheets.
+                "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
                 # Disable the UI tour.
                 "browser.uitour.enabled" = false;
 
