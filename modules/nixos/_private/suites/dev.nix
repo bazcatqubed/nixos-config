@@ -152,7 +152,12 @@ in {
         settings = {
           container_additional_volumes = [
             "/nix/store:/nix/store:ro"
-            "/etc/profiles/per-user:/etc/profiles/per-user:ro"
+            "/etc/profiles/per-user/$USER:/etc/profiles/per-user/$USER:ro"
+            "/etc/static:/etc/static:ro"
+            "$HOME/.nix-profile:$HOME/.nix-profile:ro"
+          ]
+          ++ lib.optionals (builtins.storeDir != "/nix/store") [
+            builtins.storeDir
           ];
           container_image_default =
             "registry.opensuse.org/opensuse/distrobox-packaging:latest";
