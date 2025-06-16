@@ -53,6 +53,7 @@ in {
         arcmenu
         burn-my-windows
         caffeine
+        dash2dock-lite
         fly-pie
         just-perfection
         kimpanel
