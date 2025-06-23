@@ -139,9 +139,12 @@ in {
           inherit chromiumPackage;
           name = "graphite";
           url = "https://editor.graphite.rs";
-          imageHash = "sha512-bakt/iIYVi0Vq67LPxM3Dy10WCNZmYVcjjxV2hNDnpxSLUCqDk59xboFGs2QVVV8qQavhN9B8KC80dhr8f3Ivw==";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
+            icon = pkgs.fetchurl {
+              url = "https://static.graphite.rs/logos/graphite-logo-color-480x480.png";
+              hash = "sha256-ZyeWHvF5/7G/Lhxln6+WuUrrZvqBBhj8Uz9MkraDkbo=";
+            };
             desktopName = "Graphite";
             genericName = "Procedural Generation Image Editor";
             categories = [ "Graphics" ];

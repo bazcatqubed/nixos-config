@@ -195,7 +195,7 @@ in {
           inherit chromiumPackage;
           name = "devdocs";
           url = "https://devdocs.io";
-          imageHash = "sha512-odmJsmPk582oEL+lmhjp9OJkVOXgY0shCw4eaJx5hui2+V07+AskBzlyVvWVbhuI+efldA06ySqWJtEbS1pF4A==";
+          imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
             desktopName = "DevDocs";
@@ -210,7 +210,7 @@ in {
           inherit chromiumPackage;
           name = "gnome-devdocs";
           url = "https://gjs-docs.gnome.org";
-          imageHash = "sha512-odmJsmPk582oEL+lmhjp9OJkVOXgY0shCw4eaJx5hui2+V07+AskBzlyVvWVbhuI+efldA06ySqWJtEbS1pF4A==";
+          imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
             desktopName = "GNOME DevDocs";
