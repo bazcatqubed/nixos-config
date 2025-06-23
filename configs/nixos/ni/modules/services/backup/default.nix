@@ -15,18 +15,19 @@ let
         inherit passCommand;
         mode = "repokey-blake2";
       };
-      extraCreateArgs = lib.concatStringsSep " "
-        (lib.map (patternFile: "--patterns-from ${patternFile}") patterns);
+      extraCreateArgs = let
+        patternsFromArgs = lib.map (patternFile: "--patterns-from ${patternFile}") patterns;
+      in lib.concatStringsSep " "
+        (patternsFromArgs ++ [
+          "--exclude-if-present .nobackup"
+          "--stats"
+        ]);
       extraInitArgs = "--make-parent-dirs";
 
       # We're emptying them since we're specifying them all through the patterns file.
       paths = lib.mkForce [ ];
 
       persistentTimer = true;
-      preHook = ''
-        extraCreateArgs="$extraCreateArgs --exclude-if-present .nobackup"
-        extraCreateArgs="$extraCreateArgs --stats"
-      '';
       prune = {
         keep = {
           within = "1d";
