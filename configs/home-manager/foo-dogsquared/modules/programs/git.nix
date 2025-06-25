@@ -24,7 +24,7 @@ in {
         enable = true;
         package = pkgs.gitFull;
         lfs.enable = true;
-        signing.key = "4AA9CDFF7C99DFF9";
+        signing.key = "0x6D6903902005F4A4";
         extraConfig = {
           core.excludesFile = builtins.toString ../../config/git/ignore;
 

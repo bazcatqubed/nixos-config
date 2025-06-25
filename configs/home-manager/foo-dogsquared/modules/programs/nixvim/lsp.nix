@@ -36,7 +36,17 @@ in
       nixd.enable = true; # For Nix.
       nushell.enable = true; # For Nushell.
       pyright.enable = true; # For Python.
-      vale_ls.enable = true; # For Vale.
+
+      # For Vale.
+      vale_ls = {
+        enable = true;
+        settings.filetypes = [
+          "md"
+          "mdx"
+          "adoc"
+          "rst"
+        ];
+      };
 
       # For Rust (even though I barely use it).
       rust_analyzer = {

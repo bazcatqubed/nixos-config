@@ -84,6 +84,15 @@ in {
           passwordCommand =
             "gopass show websites/accounts.google.com/foo.dogsquared | head -n 1";
         };
+
+        old_personal = rec {
+          address = "christiangabrielarazas@gmail.com";
+          realName = config.accounts.email.accounts.personal.realName;
+          userName = address;
+          flavor = "gmail.com";
+          passwordCommand =
+            "gopass show websites/accounts.google.com/christiangabrielarazas | head -n 1";
+        };
       };
     }
 
@@ -91,6 +100,7 @@ in {
       accounts.email.accounts =
         let
           enabledEmails = [
+            "old_personal"
             "personal"
             "work"
             "old_work"
