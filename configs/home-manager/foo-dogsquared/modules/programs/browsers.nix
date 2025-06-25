@@ -131,7 +131,9 @@ in {
               ]) ++ lib.optionals config.programs.mpv.enable
               (with pkgs.nur.repos.rycee.firefox-addons; [ ff2mpv ])
               ++ lib.optionals config.services.activitywatch.enable
-              (with pkgs.nur.repos.rycee.firefox-addons; [ aw-watcher-web ]);
+              (with pkgs.nur.repos.rycee.firefox-addons; [ aw-watcher-web ])
+              ++ lib.optionals userCfg.setups.research.enable
+              (with pkgs.nur.repos.rycee.firefox-addons; [ sponsorblock dearrow zotero-connector ]);
 
             # Much of the settings are affected by the policies set in the
             # package. See more information about them in
@@ -167,6 +169,7 @@ in {
                 # Enable them vertical bars.
                 "sidebar.revamp" = true;
                 "sidebar.verticalTabs" = true;
+                "sidebar.expandOnHover" = true;
               }
 
               (lib.mkIf userCfg.programs.custom-homepage.enable {
