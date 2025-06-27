@@ -63,6 +63,11 @@ in {
     (lib.mkIf config.programs.nushell.enable {
       home.file."${config.xdg.dataHome}/nushell/vendor/autoload".source =
         getDotfiles "nu/autoload";
+
+      home.sessionVariables = {
+        FZF_ALT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --unrestricted";
+        FZF_ALT_SHIFT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --full-path --max-depth 4 . ../";
+      };
     })
 
     (lib.mkIf config.programs.helix.enable {
