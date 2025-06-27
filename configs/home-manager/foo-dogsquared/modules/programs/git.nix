@@ -26,6 +26,7 @@ in {
         lfs.enable = true;
         signing.key = "0x6D6903902005F4A4";
         extraConfig = {
+          mailmap.file = builtins.toString ../../config/git/mailmap;
           core.excludesFile = builtins.toString ../../config/git/ignore;
 
           user = {
