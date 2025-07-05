@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }@attrs:
 
 let
   userCfg = config.users.foo-dogsquared;
@@ -7,6 +7,7 @@ let
   projectsDir = config.xdg.userDirs.extraConfig.XDG_PROJECTS_DIR;
 
   dotfiles = "${projectsDir}/packages/dotfiles";
+  dotfilePackages = import "${dotfiles}/_packages/nix" { inherit pkgs; };
   dotfiles' = config.lib.file.mkOutOfStoreSymlink
     config.home.mutableFile."${dotfiles}".path;
   getDotfiles = path: "${dotfiles'}/${path}";
@@ -72,6 +73,17 @@ in {
 
     (lib.mkIf config.programs.helix.enable {
       xdg.configFile.helix.source = getDotfiles "helix";
+    })
+
+    (lib.mkIf (lib.elem "one.foodogsquared.AHappyGNOME" attrs.nixosConfig.workflows.enable or []) {
+      xdg.dataFile."nautilus/scripts" = {
+        source = getDotfiles "nautilus/scripts";
+        recursive = true;
+      };
+
+      home.packages = with dotfilePackages; [
+        fds-nautilus-extensions
+      ];
     })
   ]);
 }
