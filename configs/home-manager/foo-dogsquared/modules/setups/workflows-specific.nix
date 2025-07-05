@@ -29,7 +29,10 @@ in
         ];
         inherit (attrs.nixosConfig.workflows) workflows;
       in {
-        home.packages = additionalShellExtensions;
+        home.packages =
+          additionalShellExtensions
+          ++ lib.optionals userCfg.services.backup.enable [ pkgs.pika-backup ]
+          ++ lib.optionals userCfg.setups.development.enable [ pkgs.devhelp ];
 
         dconf.settings = lib.mkMerge [
           {
@@ -74,6 +77,11 @@ in
 
                       {
                         wm_class = "org.gnome.Logs";
+                        spaceIndex = wmIndexOf "dev";
+                      }
+
+                      {
+                        wm_class = "org.gnome.Sysprof";
                         spaceIndex = wmIndexOf "dev";
                       }
 
@@ -132,6 +140,12 @@ in
 
                       {
                         wm_class = "Musescore4";
+                        spaceIndex = wmIndexOf "creative";
+                      }
+                    ]
+                    ++ lib.optionals (attrs.nixosConfig.programs.blender.enable or false) [
+                      {
+                        wm_class = "blender";
                         spaceIndex = wmIndexOf "creative";
                       }
                     ]
