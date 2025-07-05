@@ -121,6 +121,7 @@ in {
         lsof # View every single open connections.
         lshw # View your hardware.
         pciutils # View your peripherals.
+        sniffnet # Sniff them network packets.
       ];
 
       # Instrumentate your instrument.

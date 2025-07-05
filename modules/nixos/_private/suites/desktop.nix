@@ -72,6 +72,7 @@ in {
             libxcb
             libxkbfile
             libxshmfence
+            libXxf86vm
           ];
           commonLibs = with pkgs; [
             alsa-lib
