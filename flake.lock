@@ -1220,15 +1220,15 @@
     },
     "wrapper-manager-fds": {
       "locked": {
-        "lastModified": 1749790041,
-        "narHash": "sha256-bVy0CsQgulYr/s3E+ZDugb7ITAKvCJ9EYhCldhaZRDc=",
-        "owner": "foo-dogsquared",
+        "lastModified": 1751542511,
+        "narHash": "sha256-o8HTRfHNongrj2+SV+hJZ1tfekiLmEHJOvb4pTeRi+w=",
+        "owner": "bazcatqubed",
         "repo": "nix-module-wrapper-manager-fds",
-        "rev": "220337d8c5409826e1f995ab8db81912f205f42f",
+        "rev": "4d030062bcea2a90a5fd443c7af0d1ee4df36540",
         "type": "github"
       },
       "original": {
-        "owner": "foo-dogsquared",
+        "owner": "bazcatqubed",
         "repo": "nix-module-wrapper-manager-fds",
         "type": "github"
       }

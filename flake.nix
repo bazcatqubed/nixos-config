@@ -56,7 +56,7 @@
 
     # Make a wrapper.
     wrapper-manager-fds.url =
-      "github:foo-dogsquared/nix-module-wrapper-manager-fds";
+      "github:bazcatqubed/nix-module-wrapper-manager-fds";
 
     # This is what AUR strives to be.
     nur.url = "github:nix-community/NUR";
