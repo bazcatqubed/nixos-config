@@ -87,7 +87,7 @@ in {
         k9s
       ];
 
-      networking.firewall.allowedTCPPorts = [
+      networking.firewall.allowedTCPPorts = lib.optionals config.services.k3s.enable [
         6443 # required so that pods can reach the API server (running on port 6443 by default)
         2379 # etcd clients: required if using a "High Availability Embedded etcd" configuration
         2380 # etcd peers: required if using a "High Availability Embedded etcd" configuration
@@ -98,7 +98,7 @@ in {
         51821
       ];
 
-      networking.firewall.allowedUDPPorts = [
+      networking.firewall.allowedUDPPorts = lib.optionals config.services.k3s.enable [
         8472 # flannel: required if using multi-node for inter-node networking
       ];
     })
