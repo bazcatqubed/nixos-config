@@ -21,5 +21,11 @@ in {
 
     # Extend the life of an SSD.
     services.fstrim.enable = true;
+
+    # Put more RAM into your RAM.
+    zramSwap = {
+      enable = true;
+      algorithm = "zstd";
+    };
   };
 }
