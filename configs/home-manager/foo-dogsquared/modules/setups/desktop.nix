@@ -1,9 +1,15 @@
 # Makes you infinitesimally productive.
-{ config, lib, pkgs, foodogsquaredLib, ... }:
+{ config, lib, pkgs, foodogsquaredLib, ... }@attrs:
 
 let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.setups.desktop;
+
+  elementalWarriorVersion = "9.13";
+  elementalWarriorWine = pkgs.fetchzip {
+    url = "https://github.com/Twig6943/wine/releases/download/${elementalWarriorVersion}/ElementalWarriorWine-x86_64.tar.gz";
+    hash = "sha256-skiG6wVeU8k/lKX4h35OM7YMcyB2dOe7oN4DmpCDWek=";
+  };
 in {
   options.users.foo-dogsquared.setups.desktop.enable =
     lib.mkEnableOption "a set of usual desktop productivity services";
@@ -220,5 +226,13 @@ in {
         };
       }
     );
+
+    # We're doing in this way since Bottles crash out when the runners are
+    # symlinks.
+    home.mutableFile."${config.xdg.dataHome}/bottles/runners/elemental-warrior-${elementalWarriorVersion}" =
+      lib.mkIf (attrs.nixosConfig.suites.desktop.windows-compatibility.enable  or false) {
+        type = "copy";
+        url = elementalWarriorWine;
+      };
   };
 }

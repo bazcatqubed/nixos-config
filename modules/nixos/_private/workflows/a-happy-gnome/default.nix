@@ -108,6 +108,8 @@ in {
         gnome-search-provider-recoll # This is here for some reason.
 
         # Nautilus extensions
+        nautilus-python
+        turtle
         nautilus-annotations
         nautilus-open-any-terminal
 
