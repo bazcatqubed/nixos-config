@@ -13,6 +13,9 @@ let
       path = lib.escapeShellArg value.path;
       extraArgs = lib.escapeShellArgs value.extraArgs;
     in {
+      copy = ''
+        [ -d ${path} ] || cp --recursive ${url} ${path}
+      '';
       git = ''
         [ -d ${path} ] || git clone ${extraArgs} ${url} ${path}
       '';
@@ -54,7 +57,7 @@ let
     { name, config, options, ... }: {
       options = {
         url = lib.mkOption {
-          type = lib.types.str;
+          type = with lib.types; either str package;
           description = ''
             The URL of the file to be fetched.
           '';
@@ -85,7 +88,7 @@ let
         };
 
         type = lib.mkOption {
-          type = lib.types.enum [ "git" "fetch" "archive" "gopass" "custom" ];
+          type = lib.types.enum [ "copy" "git" "fetch" "archive" "gopass" "custom" ];
           description = ''
             Type that configures the behavior for fetching the URL.
 
