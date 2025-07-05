@@ -186,6 +186,7 @@ weight = 10000
 links = [
   { url = "https://globaltracktrace.ptc.post/gtt.web/", text = "Global parcel tracker" },
   { url = "https://n2t.net/", text = "Name-to-Thing (N2T)" },
+  { url = "https://regex101.com/", text = "Regex101" },
 ]
 icon.iconset = "material-design-icons"
 icon.name = "apps"

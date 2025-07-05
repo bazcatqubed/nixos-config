@@ -21,6 +21,10 @@ in {
       komikku
       bitwarden-cli bitwarden-desktop
 
+      # Games make you productive, right?
+      aisleriot
+      crosswords
+
       freecad
       kicad
       leocad

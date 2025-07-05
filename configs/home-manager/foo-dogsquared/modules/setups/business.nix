@@ -87,7 +87,10 @@ in {
           inherit chromiumPackage;
           name = "discord";
           url = "https://app.discord.com";
-          imageHash = "sha512-PIxr9jVnSU0Q4SlL/0UvBTrFCQxaVaSSjvvyMURp09thCxbFrk94gfOtfQHr0OC4MvVbz2n5pBHXprA5mG0Vhg==";
+          imageHash = "sha512-A3HStENdfTG1IA5j5nCebKmQkJaKIC5Rp2NGt0ba/a3aUriVrBFZYcYmLmwDY8F98zCKyazBvnCGz9Z5/yfvUw==";
+          imageBuildFlags = [
+            "--disable-html-download"
+          ];
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
             desktopName = "Discord";
@@ -100,6 +103,7 @@ in {
               "Video Calls"
               "Audio Calls"
             ];
+            mimeTypes = [ "x-scheme-handler/discord" ];
           };
         };
 
