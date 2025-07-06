@@ -20,6 +20,31 @@
         platforms = platforms.all;
       };
     };
+    "dearrow" = buildFirefoxXpiAddon {
+      pname = "dearrow";
+      version = "2.1.4";
+      addonId = "deArrow@ajay.app";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4517611/dearrow-2.1.4.xpi";
+      sha256 = "89db620c2340c67562cf527554d268b1c29c2a5a903e6b8d4229ee815f05395a";
+      meta = with lib;
+      {
+        homepage = "https://dearrow.ajay.app";
+        description = "Crowdsourcing titles and thumbnails to be descriptive and not sensational";
+        license = licenses.lgpl3;
+        mozPermissions = [
+          "storage"
+          "unlimitedStorage"
+          "alarms"
+          "https://sponsor.ajay.app/*"
+          "https://dearrow-thumb.ajay.app/*"
+          "https://*.googlevideo.com/*"
+          "https://*.youtube.com/*"
+          "https://www.youtube-nocookie.com/embed/*"
+          "scripting"
+        ];
+        platforms = platforms.all;
+      };
+    };
     "extended-color-management" = buildFirefoxXpiAddon {
       pname = "extended-color-management";
       version = "1.1.1";
@@ -163,6 +188,29 @@
         platforms = platforms.all;
       };
     };
+    "refined-github-" = buildFirefoxXpiAddon {
+      pname = "refined-github-";
+      version = "25.7.1";
+      addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4524491/refined_github-25.7.1.xpi";
+      sha256 = "966b9cb65e509eb833494cd91a3910aeeb240584d0fd4c490bcbe19b6cc47157";
+      meta = with lib;
+      {
+        homepage = "https://github.com/refined-github/refined-github";
+        description = "Simplifies the GitHub interface and adds many useful features.";
+        license = licenses.mit;
+        mozPermissions = [
+          "storage"
+          "scripting"
+          "contextMenus"
+          "activeTab"
+          "alarms"
+          "https://github.com/*"
+          "https://gist.github.com/*"
+        ];
+        platforms = platforms.all;
+      };
+    };
     "regretsreporter" = buildFirefoxXpiAddon {
       pname = "regretsreporter";
       version = "2.1.2";
@@ -286,6 +334,31 @@
         description = "Check archival state of a source code repository and propose to update it if needed.";
         license = licenses.mit;
         mozPermissions = [ "<all_urls>" "storage" "tabs" "activeTab" ];
+        platforms = platforms.all;
+      };
+    };
+    "worldbrain" = buildFirefoxXpiAddon {
+      pname = "worldbrain";
+      version = "3.20.9";
+      addonId = "info@worldbrain.io";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4333559/worldbrain-3.20.9.xpi";
+      sha256 = "7eef4ff92d314308db2db917e3209950a6abcee3068665e8e24b24d3d4043800";
+      meta = with lib;
+      {
+        homepage = "http://worldbrain.io";
+        description = "Remember Everything You Read Online. \nAn open-source and privacy focused extension to Full-Text Search, Annotate and Organise your Web-Research";
+        mozPermissions = [
+          "<all_urls>"
+          "alarms"
+          "bookmarks"
+          "contextMenus"
+          "tabs"
+          "webNavigation"
+          "notifications"
+          "unlimitedStorage"
+          "storage"
+          "clipboardWrite"
+        ];
         platforms = platforms.all;
       };
     };
