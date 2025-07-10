@@ -51,7 +51,7 @@ in {
 
       # Rootless podman.
       services.podman = {
-        enable = true;
+        enable = !(attrs.nixosConfig.services.podman.enable or false);
         enableTypeChecks = false;
         autoUpdate = {
           enable = true;

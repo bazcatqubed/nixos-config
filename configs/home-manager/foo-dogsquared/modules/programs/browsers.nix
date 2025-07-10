@@ -88,7 +88,7 @@ in {
             SponsporedPocket = false;
             SponsporedTopSites = false;
           };
-          NoDefaultBookmarks = true;
+          NoDefaultBookmarks = lib.mkForce true;
           OfferToSaveLoginsDefault = false;
           PasswordManagerEnabled = false;
           SanitizeOnShutdown = { FormData = true; };
@@ -128,6 +128,8 @@ in {
                 zhongwen
                 open-access-helper
                 rsshub-radar
+                dearrow
+                refined-github-
               ]) ++ lib.optionals config.programs.mpv.enable
               (with pkgs.nur.repos.rycee.firefox-addons; [ ff2mpv ])
               ++ lib.optionals config.services.activitywatch.enable
