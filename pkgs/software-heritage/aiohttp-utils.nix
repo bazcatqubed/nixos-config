@@ -4,6 +4,7 @@ with python3Packages;
 buildPythonPackage rec {
   pname = "aiohttp-utils";
   version = "3.2.1";
+  format = "pyproject";
 
   src = fetchPypi {
     inherit version;

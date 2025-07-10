@@ -3,6 +3,7 @@
 python3.pkgs.buildPythonApplication rec {
   pname = "mopidy-funkwhale";
   version = "1.1.0";
+  format = "pyproject";
 
   src = fetchgit {
     url = "https://dev.funkwhale.audio/funkwhale/mopidy.git";

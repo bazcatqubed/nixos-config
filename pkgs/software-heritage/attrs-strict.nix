@@ -4,6 +4,7 @@ with python3Packages;
 buildPythonPackage rec {
   pname = "attrs_strict";
   version = "1.0.0";
+  format = "pyproject";
 
   src = fetchPypi {
     inherit pname version;

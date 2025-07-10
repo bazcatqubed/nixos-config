@@ -3,6 +3,7 @@
 python3.pkgs.buildPythonApplication rec {
   pname = "mopidy-internetarchive";
   version = "3.0.1";
+  format = "pyproject";
 
   src = fetchFromGitHub {
     owner = "tkem";
