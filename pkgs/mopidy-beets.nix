@@ -2,13 +2,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "mopidy-beets";
-  version = "4.0.1";
+  version = "unstable-2025-07-10";
+  format = "pyproject";
 
   src = fetchFromGitHub {
     owner = "mopidy";
     repo = pname;
-    rev = "v${version}";
-    sha256 = "sha256-HvhYAGtgf2rpzIJwMspGtHcrk4IZxPX1jZbNNwQCJA4=";
+    rev = "2b1f23804dc6b03764cffcc7154104d2fb0abbff";
+    hash = "sha256-V7ftl1Hvyt54I3+wTRWfSw3k5rkvYurH62hsjwJ2TCs=";
   };
 
   propagatedBuildInputs = with python3.pkgs;
