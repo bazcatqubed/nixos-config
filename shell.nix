@@ -23,6 +23,7 @@ in pkgs.mkShell {
       home-manager
       git
       sops
+      reuse
       nix-update
       nixdoc
 
