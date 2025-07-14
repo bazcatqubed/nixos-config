@@ -17,7 +17,7 @@ rec {
         if [ -d $i/share/blender/${blenderVersion} ]; then
           resourcesPath="$i/share/blender/${blenderVersion}";
         fi
-        lndir -silent $resourcesPath $out
+        cp -r $resourcesPath $out
       done
     '';
 
@@ -156,4 +156,85 @@ rec {
     "--disable-component-extensions-with-background-pages"
     "--disable-backgrounding-occluded-windows"
   ];
+
+  systemdSubenvModule = { config, ... }: {
+    options.nixEnv = {
+      pathsToLink = lib.mkOption {
+        type = with lib.types; listOf nonEmptyStr;
+        description = ''
+          List of directories per-given package in `paths` to be included as
+          part of the Nix environment.
+
+          ::: {.note}
+          This is given as part of `buildEnv` builder of the Nix environment
+          for the systemd unit.
+          :::
+        '';
+        default = [ "/" ];
+        example = [
+          "/bin"
+          "/share/wayland-sessions"
+          "/share/gnome-session"
+          "/share/systemd"
+        ];
+      };
+
+      paths = lib.mkOption {
+        type = with lib.types; listOf package;
+        description = ''
+          Packages to be included in the Nix profile.
+        '';
+        default = [ ];
+        example = lib.literalExpression ''
+          with pkgs; [
+            hello
+            coreutils
+            gcc
+
+            moreutils
+            man-pages-posix
+          ];
+        '';
+      };
+
+      extraOutputsToInstall = lib.mkOption {
+        type = with lib.types; nullOr (listOf nonEmptyStr);
+        description = ''
+          A list of extra derivation outputs to install to the Nix environment.
+        '';
+        default = null;
+        example = [ "man" ];
+      };
+
+      profileRelativeEnvVars = lib.mkOption {
+        type = with lib.types; attrsOf (listOf string);
+        description = ''
+          A set of environment variables to be set relative to the Nix profile.
+        '';
+        example = {
+          MANPATH = [
+            "/man"
+            "/share/man"
+          ];
+
+          PATH = [
+            "/bin"
+          ];
+        };
+      };
+    };
+
+    config.environment = lib.mkIf (config.nixEnv.paths != [ ]) (
+      let
+        nixEnv = pkgs.buildEnv {
+          name = "systemd-unit-${self.systemd.escapeSystemdPath config.name}-nix-profile";
+          inherit (config.nixEnv) extraOutputsToInstall paths pathsToLink;
+        };
+
+        mkEnvVar = _: paths:
+          lib.map (suffix: "${nixEnv}${suffix}") paths;
+      in
+        lib.mapAttrs mkEnvVar config.nixEnv.profileRelativeEnvVars
+    );
+  };
 }
