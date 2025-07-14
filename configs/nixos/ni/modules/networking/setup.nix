@@ -140,6 +140,12 @@ in {
         {
           enable = true;
           dhcp = lib.mkIf (config.networking.dhcpcd.enable) "dhcpcd";
+
+          plugins = with pkgs; [
+            networkmanager-openconnect
+            networkmanager-openvpn
+            networkmanager-vpnc
+          ];
         }
 
         (lib.mkIf config.services.resolved.enable { dns = "systemd-resolved"; })
