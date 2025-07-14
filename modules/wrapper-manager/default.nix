@@ -5,6 +5,7 @@
     ./programs/neovim.nix
     ./programs/jujutsu.nix
     ./nixgl.nix
+    ./subenvironments.nix
     ./dconf.nix
     ./wraparound
   ];
