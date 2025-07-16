@@ -109,16 +109,24 @@ in {
 
         # Nautilus extensions
         nautilus-python
-        turtle
         nautilus-annotations
         nautilus-open-any-terminal
 
         # Extra background images.
         fedora-backgrounds.f38
         fedora-backgrounds.f37
-      ];
+      ]
+      ++ lib.optionals config.suites.dev.enable (with pkgs; [
+          devtoolbox
+          turtle
+        ]);
       example = lib.literalExpression ''
-        with pkgs; [ gnome.polari ];
+        with pkgs; [
+          polari
+          dconf-editor
+          gnome-secrets
+          gnome-extension-manager
+        ];
       '';
     };
 
