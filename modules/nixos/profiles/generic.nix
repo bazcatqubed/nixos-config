@@ -12,6 +12,8 @@
     XDG_STATE_HOME = "$HOME/.local/state";
   };
 
+  environment.etc.nixos.source = ../../../.;
+
   # Find Nix files with these! Even if nix-index is already enabled, it
   # is better to make it explicit.
   programs.command-not-found.enable = false;
