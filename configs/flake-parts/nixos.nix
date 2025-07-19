@@ -151,6 +151,12 @@ in {
           xdg.userDirs.createDirectories = lib.mkDefault true;
           manual.html.enable = false;
         };
+
+        # This is flake-parts anyways so there's a set expectation that we're
+        # setting this in a flake.
+        system.configurationRevision =
+          if (inputs.self ? rev) then inputs.self.rev
+          else inputs.self.dirtyRev;
       })
     ];
   };
