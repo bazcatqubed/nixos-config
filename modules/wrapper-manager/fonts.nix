@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.fonts;
+  cfg = config.fontconfig;
 
   fontsModuleFactory = { isGlobal ? false }: {
-    enable = lib.mkEnableOption "local fonts support" // {
+    enable = lib.mkEnableOption "fontconfig configuration" // {
       default = if isGlobal then false else cfg.enable;
     };
 
@@ -28,20 +28,28 @@ let
     };
   };
 in {
-  options.fonts = fontsModuleFactory { isGlobal = true; };
+  options.fontconfig = fontsModuleFactory { isGlobal = true; };
 
   wrappers = let
     fontsSubmodule = { config, lib, name, pkgs, ... }:
-      let submoduleCfg = config.fonts;
+      let submoduleCfg = config.fontconfig;
       in {
         options.fonts = fontsModuleFactory { isGlobal = false; };
 
         config = let
-          fontCache = pkgs.makeFontsCache {
+          fontCacheConf = pkgs.makeFontsConf {
             inherit (pkgs) fontconfig;
             fontsDirectories = submoduleCfg.packages;
           };
-        in lib.mkIf submoduleCfg.enable { fonts.packages = cfg.packages; };
+        in lib.mkMerge [
+          {
+            fonts.packages = cfg.packages;
+          }
+
+          (lib.mkIf submoduleCfg.enable {
+            env.FONTCONFIG_FILE.value = fontCacheConf;
+          })
+        ];
       };
   in lib.mkOption {
     type = with lib.types; attrsOf (submodule fontsSubmodule);
