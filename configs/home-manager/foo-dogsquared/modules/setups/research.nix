@@ -41,8 +41,13 @@ let
         }) categories;
     in lib.listToAttrs jobsList;
 in {
-  options.users.foo-dogsquared.setups.research.enable =
-    lib.mkEnableOption "foo-dogsquared's usual toolbelt for research";
+  options.users.foo-dogsquared.setups.research = {
+    enable =
+      lib.mkEnableOption "foo-dogsquared's usual toolbelt for research";
+
+    writing.enable =
+      lib.mkEnableOption "writing suite";
+  };
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
@@ -114,6 +119,27 @@ in {
         "^archivebox"
         "^fanficfare"
       ];
+    })
+
+    (lib.mkIf cfg.writing.enable {
+      # We want the doom and gloom of writing.
+      users.foo-dogsquared.programs.doom-emacs.enable = lib.mkDefault true;
+
+      # Enable this subset of desktop suite.
+      suites.desktop.documents.enable = true;
+
+      home.packages = with pkgs; [
+        vale # Make writing docs a welcoming night.
+        ascii-draw # Super emoticons.
+        exhibit # View them 3D boats.
+        eloquent # Reach a higher caliber for your wordsmithing, indubitably.
+      ];
+
+      # The heaviest installation of them all, I swear.
+      programs.texlive = {
+        enable = true;
+        package = pkgs.texliveMedium;
+      };
     })
   ]);
 }
