@@ -25,6 +25,7 @@ in pkgs.mkShell {
       sops
       reuse
       nix-update
+      deadnix
       nixdoc
 
       bind
