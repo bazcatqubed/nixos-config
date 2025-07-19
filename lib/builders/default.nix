@@ -505,4 +505,41 @@
     ```
   */
   buildDockerImage = pkgs.callPackage ./build-docker-image.nix { foodogsquaredLib = self; };
+
+  /**
+    Builder for creating a Blender resource folder containing addons and assets.
+
+    # Arguments
+
+    Similar to `stdenv.mkDerivation` but with a few attributes specific for
+    this builder function:
+
+    blenderPackage
+    : The main Blender package to be based on. This is used for comparing
+    version to be found inside of the given addons list.
+
+    blenderAddons
+    : A list of packages containing Blender addons in
+    `$out/share/blender/$BLENDER_VERSION`.
+
+    # Type
+
+    ```
+    buildBlenderAddons :: Attr -> Derivation
+    ```
+
+    # Examples
+
+    ```nix
+    buildBlenderAddons {
+      blenderPackage = pkgs.blender;
+      blenderAddons = with pkgs.blender32Addons; [
+        machine3d
+        blendergis
+        openhuman
+      ];
+    }
+    ```
+  */
+  buildBlenderAddons = pkgs.callPackage ./blender/build-addons.nix { };
 }
