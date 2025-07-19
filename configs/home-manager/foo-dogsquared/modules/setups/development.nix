@@ -107,11 +107,13 @@ in {
 
         # Testing out your web app #532.
         dbeaver-bin
+        beekeeper-studio
+        turso-cli
       ]
       ++ lib.optionals (attrs.nixosConfig.suites.vpn.personal.enable or false) [
         trayscale
       ]
-      ++ lib.optionals config.services.podman.enable [
+      ++ lib.optionals (config.services.podman.enable || attrs.nixosConfig.virtualisation.podman.enable or false) [
         podman-desktop
         pods
         toolbox
