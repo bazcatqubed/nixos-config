@@ -9,6 +9,9 @@ in {
 
     creative-coding.enable =
       lib.mkEnableOption "foo-dogsquared's creative coding setup";
+
+    math.enable =
+      lib.mkEnableOption "foo-dogsquared's meth suite";
   };
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
@@ -51,7 +54,7 @@ in {
 
       # Rootless podman.
       services.podman = {
-        enable = !(attrs.nixosConfig.services.podman.enable or false);
+        enable = !(attrs.nixosConfig.virtualisation.podman.enable or false);
         enableTypeChecks = false;
         autoUpdate = {
           enable = true;
@@ -241,6 +244,18 @@ in {
         (puredata-with-plugins (with pkgs; [ zexy ]))
         tic-80-unstable
         shader-slang
+      ];
+    })
+
+    (lib.mkIf cfg.math.enable {
+      home.packages = with pkgs; [
+        geogebra6
+      ];
+
+      programs.python.modules = ps: with ps; [
+        jupyter
+        jupyter-book
+        notebook
       ];
     })
   ]);
