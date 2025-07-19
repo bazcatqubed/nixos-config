@@ -56,13 +56,17 @@ in {
       guile_3_0
 
       # :lang org +roam2
-      texlive.combined.scheme-medium
       sqlite
     ];
 
+    programs.texlive = {
+      enable = lib.mkDefault true;
+      package = lib.mkDefault pkgs.texliveMedium;
+    };
+
     programs.python = {
-      enable = true;
-      package = pkgs.python313;
+      enable = lib.mkDefault true;
+      package = lib.mkDefault pkgs.python313;
       modules = ps: with ps; [ jupyter ];
     };
 
