@@ -35,7 +35,7 @@
 
     keymaps = [
       {
-        mode = "i";
+        mode = [ "i" "v" ];
         key = "jk";
         action = "<Esc>";
         options.desc = "Escape";
