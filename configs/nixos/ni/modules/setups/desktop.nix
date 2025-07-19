@@ -21,6 +21,8 @@ in {
         cleanup.enable = true;
       };
 
+      services.dbus.implementation = "broker";
+
       # Apparently the Emacs of 3D artists.
       programs.blender = {
         enable = true;
