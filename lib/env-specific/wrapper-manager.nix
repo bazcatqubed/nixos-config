@@ -237,4 +237,13 @@ rec {
         lib.mapAttrs mkEnvVar config.nixEnv.profileRelativeEnvVars
     );
   };
+
+  mkGnomeSessionTargetUnit = config: workflowName: requiredComponents:
+    let
+      sessionConfig = config.programs.gnome-session.sessions.${workflowName};
+      getId = lib.foldlAttrs (acc: _: v: acc ++ [ "${v.id}.target" ]) [ ];
+    in {
+      requires = getId (lib.filterAttrs (n: _: lib.elem n requiredComponents) sessionConfig.components);
+      wants = getId (lib.attrsets.removeAttrs sessionConfig.components requiredComponents);
+    };
 }
