@@ -57,6 +57,13 @@ in {
         };
       };
 
+      # Userland schedulers.
+      services.scx = {
+        enable = true;
+        package = pkgs.scx.rustscheds;
+        scheduler = "scx_rustland";
+      };
+
       # Adding a bunch of emulated systems for cross-system building.
       boot.binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
     }
