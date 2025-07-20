@@ -18,7 +18,7 @@ let
       extraOptions = lib.mkOption {
         type = with lib.types; listOf str;
         description = ''
-          A list of extra arguments to be passed to {command}`${options.virtualisation.oci-containers.backend.default} run`.
+          A list of extra arguments to be passed to {command}`$OCI_CONTAINERS_RUNTIME_DEFAULT run`.
         '';
         default = [ ];
       };
@@ -26,7 +26,7 @@ let
       preRunExtraOptions = lib.mkOption {
         type = with lib.types; listOf str;
         description = ''
-          A list of extra arguments to be passed to {command}`${options.virtualisation.oci-containers.backend.default}`.
+          A list of extra arguments to be passed to {command}`$OCI_CONTAINERS_RUNTIME_DEFAULT`.
         '';
         default = [ ];
       };
