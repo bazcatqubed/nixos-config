@@ -59,11 +59,9 @@ in {
       state.ports.syncthing.value = 8384;
 
       home.packages = with pkgs; [
-        anki # Rise, rinse, and repeat.
         curl # The general purpose downloader.
         fanficfare # It's for the badly written fanfics.
         gallery-dl # More potential for your image collection.
-        goldendict-ng # A golden dictionary for perfecting your diction.
         internetarchive # All of the potential vintage collection of questionable materials at your fingertips.
         kiwix # Offline reader for your fanon wiki.
         localsend # Local network syncing.
@@ -74,6 +72,15 @@ in {
         yt-dlp # The general purpose video downloader.
         zotero # It's actually good at archiving despite not being a researcher myself.
       ];
+
+      programs.anki = {
+        enable = true;
+        addons = with pkgs.ankiAddons; [
+          anki-connect
+          adjust-sound-volume
+          reviewer-refocus-card
+        ];
+      };
 
       services.syncthing = {
         enable = true;
@@ -130,6 +137,7 @@ in {
 
       home.packages = with pkgs; [
         vale # Make writing docs a welcoming night.
+        goldendict-ng # A golden dictionary for perfecting your diction.
         ascii-draw # Super emoticons.
         exhibit # View them 3D boats.
         eloquent # Reach a higher caliber for your wordsmithing, indubitably.
