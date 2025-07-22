@@ -9,10 +9,8 @@ in {
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
-      plugins.lsp.enable = true;
-
       # Make all of the preferred language servers.
-      plugins.lsp.servers = let
+      lsp.servers = let
         servers = [
           "ansiblels" # For Ansible.
           "astro" # For Astro.
@@ -66,17 +64,6 @@ in {
         mkEnableServerConfig = server:
           lib.nameValuePair server { enable = true; };
       in lib.listToAttrs (lib.map mkEnableServerConfig servers);
-    }
-
-    {
-      plugins.lsp.servers.rust_analyzer = {
-        installCargo = lib.mkDefault true;
-        installRustc = lib.mkDefault true;
-      };
-
-      plugins.lsp.servers.hls = {
-        installGhc = lib.mkDefault true;
-      };
     }
   ]);
 }
