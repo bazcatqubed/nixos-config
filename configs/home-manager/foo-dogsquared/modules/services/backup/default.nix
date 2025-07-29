@@ -66,8 +66,6 @@ in {
     sops.secrets = foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml
       (foodogsquaredLib.sops-nix.attachSopsPathPrefix pathPrefix {
         "repos/remote-hetzner-boxes-personal/password" = { };
-        "repos/local-external-hdd-personal/password" = { };
-        "repos/local-archive-personal/password" = { };
       });
 
     programs.borgmatic.enable = true;
@@ -103,8 +101,6 @@ in {
             removablePath =
               "${attrs.nixosConfig.state.paths.external-hdd}/Backups";
           in borgmaticCommonConfig {
-            encryption_passcommand =
-              "cat ${getPath "repos/local-external-hdd-personal/password"}";
             repositories = lib.singleton {
               path = removablePath;
               label = "local-external-hdd";
@@ -121,8 +117,6 @@ in {
           initService.enable = true;
           initService.startAt = "04:30";
           settings = borgmaticCommonConfig {
-            encryption_passcommand =
-              "cat ${getPath "repos/local-archive-personal/password"}";
             repositories = lib.singleton {
               path =
                 "\${BORG_PERSONAL_FDS_PATH:-${attrs.nixosConfig.state.paths.laptop-ssd}/Backups/foodogsquared}";
