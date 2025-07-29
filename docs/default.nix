@@ -55,7 +55,7 @@ let
       "includeModuleSystemArguments"
     ]);
 
-  mkManpage = { optionsJSON, asciidocHeader }:
+  mkManpage = { filename, optionsJSON, asciidocHeader }:
     pkgs.runCommand "wrapper-manager-reference-manpage" {
       nativeBuildInputs = with pkgs; [ nixos-render-docs asciidoctor ];
     } ''
@@ -65,7 +65,7 @@ let
       nixos-render-docs options manpage --revision ${pkgs.lib.version} \
         --header ./header.5 --footer ${./manpages/footer.5} \
         ${optionsJSON}/share/doc/nixos/options.json \
-        $out/share/man/man5/wrapper-manager.nix.5
+        $out/share/man/man5/fds-extra-${filename}.5
     '';
 in {
   nixos = rec {
@@ -77,6 +77,7 @@ in {
     outputs.manpage = mkManpage {
       inherit (optionsDoc) optionsJSON;
       asciidocHeader = ./manpages/nixos-header.adoc;
+      filename = "nixos-configuration";
     };
   };
 
@@ -89,6 +90,7 @@ in {
     outputs.manpage = mkManpage {
       inherit (optionsDoc) optionsJSON;
       asciidocHeader = ./manpages/home-manager-header.adoc;
+      filename = "home-configuration";
     };
   };
 
@@ -101,6 +103,7 @@ in {
     outputs.manpage = mkManpage {
       inherit (optionsDoc) optionsJSON;
       asciidocHeader = ./manpages/nixvim-header.adoc;
+      filename = "nixvim-configuration";
     };
   };
 
@@ -114,6 +117,7 @@ in {
     outputs.manpage = mkManpage {
       inherit (optionsDoc) optionsJSON;
       asciidocHeader = ./manpages/wrapper-manager-header.adoc;
+      filename = "wrapper-manager-configuration";
     };
   };
 
@@ -126,6 +130,7 @@ in {
     outputs.manpage = mkManpage {
       inherit (optionsDoc) optionsJSON;
       asciidocHeader = ./manpages/flake-parts-header.adoc;
+      filename = "flake-parts-configuration";
     };
   };
 
