@@ -11,7 +11,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     sops.secrets = foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml {
-      "miniflux/admin" = { };
+      "miniflux/admin".restartUnits = [ config.systemd.services.miniflux.name ];
     };
 
     state.ports.miniflux.value = 9640;
@@ -22,6 +22,8 @@ in {
       config = {
         LISTEN_ADDR = "127.0.0.1:${builtins.toString port}";
         BASE_URL = "http://rss.ni.local";
+        CREATE_ADMIN = "1";
+        METRICS_COLLECTOR = lib.mkIf hostCfg.services.monitoring.enable "1";
       };
     };
 
