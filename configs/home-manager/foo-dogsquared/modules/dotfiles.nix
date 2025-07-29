@@ -72,6 +72,9 @@ in {
     })
 
     (lib.mkIf config.programs.helix.enable {
+      # Force unset them configs for our dotfiles.
+      programs.helix.settings = lib.mkForce { };
+
       xdg.configFile.helix.source = getDotfiles "helix";
     })
 

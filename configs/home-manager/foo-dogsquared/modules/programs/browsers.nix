@@ -128,7 +128,6 @@ in {
                 zhongwen
                 open-access-helper
                 rsshub-radar
-                dearrow
                 refined-github-
               ]) ++ lib.optionals config.programs.mpv.enable
               (with pkgs.nur.repos.rycee.firefox-addons; [ ff2mpv ])

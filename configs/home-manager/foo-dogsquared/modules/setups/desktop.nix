@@ -29,6 +29,8 @@ in {
       kicad
       leocad
       librecad
+
+      aider-chat-full
     ];
 
     users.foo-dogsquared = {

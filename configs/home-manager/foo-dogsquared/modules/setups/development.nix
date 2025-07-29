@@ -84,6 +84,7 @@ in {
         regex-cli # Save some face of confusion for yourself.
         dt # Get that functional gawk.
         jq # Get that JSON querying tool.
+        fq # Get that binary querying tool.
         recode # Convert between different encodings.
         go-migrate # Go potential migraines.
         oils-for-unix # Rev them up, reverent admin.
