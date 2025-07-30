@@ -42,7 +42,7 @@ in lib.makeScope pkgs.newScope (self: {
     callPackage ./pop-launcher-plugin-jetbrains { };
   pigeon-mail = callPackage ./pigeon-mail { };
   swh = callPackage ./software-heritage {
-    python3Packages = pkgs.python310Packages;
+    python3Packages = pkgs.python312Packages;
   };
   #pd-l2ork = callPackage ./pd-l2ork { };
   #rotp-modnar = callPackage ./rotp-modnar { };
