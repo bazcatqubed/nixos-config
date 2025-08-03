@@ -41,6 +41,16 @@ in {
       };
     };
 
+    dconf.settings = {
+      "info/febvre/Komikku".pinned-servers = [
+        "mangabin"
+        "tapas"
+        "webtoon"
+        "xkcd"
+        "peppercarrot"
+      ];
+    };
+
     # Install all of the desktop stuff.
     suites.desktop = {
       enable = true;

@@ -26,13 +26,15 @@ in
       let
         additionalShellExtensions = with pkgs; [
           gnomeExtensions.quake-terminal
+          gnomeExtensions.vitals
         ];
         inherit (attrs.nixosConfig.workflows) workflows;
       in {
         home.packages =
           additionalShellExtensions
           ++ lib.optionals userCfg.services.backup.enable [ pkgs.pika-backup ]
-          ++ lib.optionals userCfg.setups.development.enable [ pkgs.devhelp ];
+          ++ lib.optionals userCfg.setups.development.enable [ pkgs.devhelp ]
+          ++ lib.optionals userCfg.programs.vs-code.enable [ pkgs.gnomeExtensions.vscode-search-provider ];
 
         dconf.settings = lib.mkMerge [
           {

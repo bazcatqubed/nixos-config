@@ -54,7 +54,7 @@ in {
 
       # Rootless podman.
       services.podman = {
-        enable = !(attrs.nixosConfig.virtualisation.podman.enable or false);
+        enable = true;
         enableTypeChecks = false;
         autoUpdate = {
           enable = true;
@@ -248,6 +248,13 @@ in {
         tic-80-unstable
         shader-slang
       ];
+
+      xdg.desktopEntries.decker = {
+        name = "Decker";
+        genericName = "Multimedia Sketchbook";
+        exec = lib.getExe pkgs.decker;
+        icon = "${pkgs.decker.src}/icon_512x512.png";
+      };
     })
 
     (lib.mkIf cfg.math.enable {
