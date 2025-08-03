@@ -25,8 +25,7 @@ let
         ]);
       extraInitArgs = "--make-parent-dirs";
 
-      # We're emptying them since we're specifying them all through the patterns file.
-      paths = lib.mkForce [ ];
+      paths = cfg.globalPaths;
 
       persistentTimer = true;
       prune = {
@@ -46,8 +45,25 @@ let
 
   pathPrefix = "borg-backup";
 in {
-  options.hosts.ni.services.backup.enable =
-    lib.mkEnableOption "backup setup with BorgBackup and Snapper";
+  options.hosts.ni.services.backup = {
+    enable = lib.mkEnableOption "backup setup with BorgBackup and Snapper";
+
+    globalPaths = lib.mkOption {
+      type = with lib.types; listOf path;
+      default = [ ];
+      description = ''
+        A set of paths to be included in all of the backup jobs.
+      '';
+      example = lib.literalExpression ''
+        [
+          config.services.kavita.dataDir
+          config.services.kubernetes.dataDir
+
+          "/var/lib/com.example.Service"
+        ]
+      '';
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     sops.secrets = foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml

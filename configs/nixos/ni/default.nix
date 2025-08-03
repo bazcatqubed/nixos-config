@@ -18,6 +18,7 @@
     hardware.qol.enable = true;
     networking.enable = true;
     services.backup.enable = true;
+    services.reading-server.enable = true;
     services.monitoring.enable = true;
     services.mail-archive.enable = true;
     services.reverse-proxy.enable = true;

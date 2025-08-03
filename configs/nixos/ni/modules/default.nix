@@ -10,6 +10,7 @@
     ./services/monitoring.nix
     ./services/download-media
     ./services/rss-reader
+    ./services/reading-server
     ./services/dns-server
     ./services/penpot
     ./setups/desktop.nix
