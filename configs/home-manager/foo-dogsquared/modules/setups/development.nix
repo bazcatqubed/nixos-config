@@ -10,6 +10,9 @@ in {
     creative-coding.enable =
       lib.mkEnableOption "foo-dogsquared's creative coding setup";
 
+    gamedev.enable =
+      lib.mkEnableOption "foo-dogsquared's gamedev suite";
+
     math.enable =
       lib.mkEnableOption "foo-dogsquared's meth suite";
   };
@@ -245,7 +248,6 @@ in {
         sonic-pi
         processing
         (puredata-with-plugins (with pkgs; [ zexy ]))
-        tic-80-unstable
         shader-slang
       ];
 
@@ -255,6 +257,15 @@ in {
         exec = lib.getExe pkgs.decker;
         icon = "${pkgs.decker.src}/icon_512x512.png";
       };
+    })
+
+    (lib.mkIf cfg.gamedev.enable {
+      home.packages = with pkgs; [
+        tic-80-unstable
+        godot_4
+        godot_4-export-templates
+        gdtoolkit_4
+      ];
     })
 
     (lib.mkIf cfg.math.enable {

@@ -86,6 +86,7 @@ in {
         enable = true;
         creative-coding.enable = true;
         math.enable = true;
+        gamedev.enable = true;
       };
       fonts.enable = true;
       music.enable = true;
