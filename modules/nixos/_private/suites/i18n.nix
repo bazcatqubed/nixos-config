@@ -52,8 +52,6 @@ in {
           mozc
           rime
           hangul
-          table
-          table-others
           typing-booster
           uniemoji
         ];
