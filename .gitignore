@@ -2,9 +2,6 @@
 result*
 *.qcow2
 
-# All of the encrypted secrets (so it cannot be added to index more than once).
-*.bin
-
 # Generated Tailscale authentication keys.
 *-tailscale-auth-key
 
