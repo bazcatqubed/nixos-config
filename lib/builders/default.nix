@@ -274,7 +274,7 @@
     }
     ```
   */
-  buildAntoraSite = pkgs.callPackage ./antora/build-site.nix { foodogsquaredLib = self; };
+  buildAntoraSite = pkgs.callPackage ./antora/build-site.nix { };
 
   /**
     An convenient function for building with the custom extended stdenv.

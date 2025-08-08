@@ -6,8 +6,11 @@ in lib.makeScope pkgs.newScope (self: {
   foodogsquaredLib = import ../lib { inherit pkgs; };
   inherit (self.foodogsquaredLib.builders)
     makeXDGMimeAssociationList makeXDGPortalConfiguration makeXDGDesktopEntry
-    buildHugoSite buildFDSEnv;
-  inherit (self.foodogsquaredLib.fetchers) fetchInternetArchive fetchUgeeDriver;
+    buildHugoSite buildMdbookSite buildMkdocsSite buildAntoraSite buildFDSEnv
+    buildDconfDb buildDconfProfile buildDconfConf buildDconfPackage
+    buildDockerImage;
+  inherit (self.foodogsquaredLib.fetchers) fetchInternetArchive fetchUgeeDriver
+    fetchWebsiteIcon fetchPexelsImages fetchPexelsVideos fetchUnsplashImages;
 
   # My custom packages.
   awesome-cli = callPackage ./awesome-cli { };

@@ -1,4 +1,4 @@
-{ lib, stdenv, mdbook, rustPlatforms }:
+{ lib, stdenv, mdbook, rustPlatform }:
 
 lib.extendMkDerivation {
   constructDrv = stdenv.mkDerivation;
@@ -14,8 +14,8 @@ lib.extendMkDerivation {
     }@args:
     {
       nativeBuildInputs = args.nativeBuildInputs or [ ] ++ [
-        rustPlatforms.cargo
-        rustPlatforms.rustc
+        rustPlatform.cargo
+        rustPlatform.rustc
       ];
 
       buildInputs = args.buildInputs or [ ] ++ [ mdbook ];
@@ -41,7 +41,7 @@ lib.extendMkDerivation {
       dontFixup = args.dontFixup or true;
 
       passthru = args.passthru or { } // {
-        inherit rustPlatforms;
+        inherit rustPlatform;
         inherit mdbook;
       };
     };
