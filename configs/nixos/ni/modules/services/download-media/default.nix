@@ -127,7 +127,7 @@ in {
     };
 
     services.archivebox = {
-      enable = true;
+      enable = false;
       webserver.enable = true;
 
       jobs = mkJobs { db = lib.importJSON ./data/jobs.archivebox.json; } // {
@@ -206,7 +206,5 @@ in {
         prependArgs = galleryDlArgs;
       };
     };
-
-    environment.systemPackages = with pkgs; [ archivebox ];
   });
 }
