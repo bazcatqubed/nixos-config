@@ -42,7 +42,6 @@ in {
     (lib.mkIf cfg.emulators.enable {
       environment.systemPackages = with pkgs; [
         ares # Another multi-system emulator but for accuracy.
-        duckstation # Taking a gander with the original console.
         ppsspp # (PSP)-squared for foodogsquared.
         pcsx2 # A nice emulator with a nice (NOT) name.
         scummvm # Pretty scummy of us to put it here despite not being an emulator.
