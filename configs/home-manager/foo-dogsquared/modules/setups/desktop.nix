@@ -199,6 +199,44 @@ in {
           };
         };
 
+        snapchat = wrapChromiumWebApp rec {
+          inherit chromiumPackage;
+          name = "snapchat";
+          url = "https://snapchat.com";
+          appendArgs = mkFlags name;
+          xdg.desktopEntry.settings = {
+            desktopName = "Snapchat";
+            genericName = "Messaging client";
+            keywords = [
+              "Chat"
+              "Instant Messaging"
+            ];
+            icon = pkgs.fetchurl {
+              url = "https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg";
+              hash = "sha256-c7gR2q3bbqwd3n8RCFAUjKJzyxCOT0zZWsHU0bcu6rI=";
+            };
+          };
+        };
+
+        whatsapp = wrapChromiumWebApp rec {
+          inherit chromiumPackage;
+          name = "whatsapp";
+          url = "https://web.whatsapp.com";
+          appendArgs = mkFlags name;
+          xdg.desktopEntry.settings = {
+            desktopName = "WhatsApp";
+            genericName = "Messaging client";
+            keywords = [
+              "Chat"
+              "Instant Messaging"
+            ];
+            icon = pkgs.fetchurl {
+              url = "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg";
+              hash = "sha256-r86bMymoW0YuC0Ag6aqBrlFU+Etko2U931MOD5Q1Ebs=";
+            };
+          };
+        };
+
         google-earth = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "google-earth";
