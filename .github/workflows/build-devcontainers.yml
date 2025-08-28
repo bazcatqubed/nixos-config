@@ -17,6 +17,7 @@ jobs:
           nix build -f ./devcontainers --print-out-paths --no-link > build_paths
         env:
           NIXPKGS_ALLOW_UNFREE: "1"
+          NIXPKGS_ALLOW_INSECURE: "1"
       - name: Deploy devcontainers to GitHub registry
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | skopeo login ghcr.io -u ${{ github.actor }} --password-stdin
