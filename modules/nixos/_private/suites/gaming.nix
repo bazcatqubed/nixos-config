@@ -28,6 +28,9 @@ in {
       programs.steam = {
         enable = true;
         gamescopeSession.enable = true;
+        extraCompatPackages = with pkgs; [
+          proton-ge-bin
+        ];
       };
 
       # Get your game on, go play...
