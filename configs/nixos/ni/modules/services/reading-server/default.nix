@@ -9,11 +9,14 @@ in
     lib.mkEnableOption "reading server";
 
   config = lib.mkIf cfg.enable {
+    state.ports.kavita.value = 6797;
+
     sops.secrets.kavita-token = foodogsquaredLib.sops-nix.getAsOneSecret ./secrets.bin;
 
     services.kavita = {
       enable = true;
       tokenKeyFile = config.sops.secrets.kavita-token.path;
+      settings.Port = config.state.ports.kavita.value;
     };
 
     hosts.ni.services.backup.globalPaths = [
