@@ -154,15 +154,6 @@ in {
       # We'll configure individual network interfaces to use DHCP since it can
       # fail wait-online-interface.service.
       networking.useDHCP = lib.mkDefault true;
-
-      # Configure the networking bonds.
-      networking.bonds.bond0 = {
-        driverOptions = {
-          miimon = "100";
-          mode = "active-backup";
-        };
-        interfaces = [ "eno1" "enp3s0" "wlp4s0" ];
-      };
     })
 
     (lib.mkIf cfg.enableCommonSetup {
