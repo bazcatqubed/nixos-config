@@ -54,11 +54,15 @@ let
   nixvimManpage = pkgs.runCommand "get-main-nixvim-manpage" { } ''
     mkdir -p $out/share && cp -r "${nvimPkg}/share/man" $out/share
   '';
+
+  neovimFlavorsPackage = config.wrapper-manager.packages.neovim-flavors.build.toplevel;
 in {
   options.users.foo-dogsquared.programs.nixvim.enable =
     lib.mkEnableOption "editors made with NixVim";
 
   config = lib.mkIf cfg.enable {
+    state.ports.neovim-fiesta-remote-server.value = 9099;
+
     home.packages = [ nixvimManpage ];
 
     # Basically, we're creating Neovim flavors with NixVim so no need for it.
@@ -80,6 +84,27 @@ in {
           };
         };
       };
+    };
+
+    systemd.user.services.neovim-fiesta-remote-server = {
+      Unit = {
+        Description = "Neovim (nvim-fiesta-fds) headless server";
+        Documentation = [
+          "man:nvim(1)"
+        ];
+      };
+
+      Service = {
+        ExecStart = let
+          port = config.state.ports.neovim-fiesta-remote-server.value;
+        in ''
+          ${lib.getExe' neovimFlavorsPackage "nvim-fiesta-fds"} --headless --listen 0.0.0.0:${builtins.toString port}
+        '';
+        Restart = "always";
+        RestartSec = 12;
+      };
+
+      Install.WantedBy = [ "default.target" ];
     };
   };
 }
