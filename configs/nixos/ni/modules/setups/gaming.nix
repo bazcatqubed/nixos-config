@@ -26,7 +26,7 @@ in {
 
       clonehero # Is a real virtuoso, a rock idol.
       mindustry # Not a Minecraft industry simulator.
-      minetest # Free Minecraft.
+      luanti # Free Roblox
       the-powder-toy # Free micro-Minecraft.
       rotp-foodogsquared # Free space Minecraft planet colonization simulator.
     ];
@@ -39,6 +39,12 @@ in {
         enableFPS = true;
       };
     };
+
+    programs.steam.extraCompatPackages = with pkgs; [
+      proton-ge-9-27-bin
+      proton-ge-9-7-bin
+      proton-ge-10-14-bin
+    ];
 
     xdg.desktopEntries.dwarf-fortress = {
       desktopName = "Dwarf Fortress";
