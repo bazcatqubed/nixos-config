@@ -104,6 +104,8 @@ let
 
   configFile = settingsFormat.generate "crowdsec-config" cfg.settings;
 in {
+  disabledModules = lib.optionals (lib.versionAtLeast "25.11pre-git" lib.version) [ "services/security/crowdsec.nix" ];
+
   options.services.crowdsec = {
     enable = lib.mkEnableOption
       "[Crowdsec](https://crowdsec.net), a monitoring service using crowdsourced data";
