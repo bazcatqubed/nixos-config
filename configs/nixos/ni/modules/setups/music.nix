@@ -78,41 +78,25 @@ in {
 
     services.snapserver = {
       enable = true;
-      http = {
-        enable = true;
-        port = config.state.ports.snapserver-http.value;
-        docRoot = "${pkgs.snapcast}/share/snapserver/snapweb";
-      };
-      tcp = {
-        enable = true;
-        port = config.state.ports.snapserver-tcp.value;
-      };
-      listenAddress = "127.0.0.1";
-
-      streams = {
-        gonic-jukebox = {
-          type = "pipe";
-          location = "/run/snapserver/jukebox";
-          sampleFormat = "48000:16:2";
-          codec = "pcm";
+      settings = {
+        stream = {
+          bind_to_address = "127.0.0.1";
+          source = [
+            "pipe:///run/snapserver/jukebox?sampleFormat=48000:16:2&codec=pcm"
+            "airplay://${lib.getExe' pkgs.shairport-sync "shairport-sync"}?devicename=Snapcast"
+            "librespot://${lib.getExe' pkgs.librespot "librespot"}?devicename=Snapcast&bitrate=320&volume=50&normalize=true&autoplay=true"
+          ];
         };
 
-        airplay = {
-          type = "airplay";
-          location = lib.getExe' pkgs.shairport-sync "shairport-sync";
-          query = { devicename = "Snapcast"; };
+        http = {
+          enable = true;
+          port = config.state.ports.snapserver-http.value;
+          doc_root = "${pkgs.snapcast}/share/snapserver/snapweb";
         };
 
-        spotify = {
-          type = "librespot";
-          location = lib.getExe' pkgs.librespot "librespot";
-          query = {
-            devicename = "Snapcast";
-            bitrate = "320";
-            volume = "50";
-            normalize = "true";
-            autoplay = "true";
-          };
+        tcp = {
+          enabled = true;
+          port = config.state.ports.snapserver-tcp.value;
         };
       };
     };
