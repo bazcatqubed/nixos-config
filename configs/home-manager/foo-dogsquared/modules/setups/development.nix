@@ -19,6 +19,8 @@ in {
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
+      state.packages.pager = config.programs.bat.package;
+
       state.paths.ignoreDirectories = [
         "node_modules" # For Node projects.
         "result" # For Nix builds.

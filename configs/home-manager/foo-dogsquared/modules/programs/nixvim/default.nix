@@ -63,6 +63,8 @@ in {
   config = lib.mkIf cfg.enable {
     state.ports.neovim-fiesta-remote-server.value = 9099;
 
+    state.packages.editor = lib.mkForce nvimPkg;
+
     home.packages = [ nixvimManpage ];
 
     # Basically, we're creating Neovim flavors with NixVim so no need for it.

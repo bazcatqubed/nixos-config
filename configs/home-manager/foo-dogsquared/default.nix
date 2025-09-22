@@ -103,7 +103,7 @@ in {
   # GARBAGE DAY!
   nix.gc = {
     automatic = true;
-    frequency = "weekly";
+    dates = "weekly";
     randomizedDelaySec = "5m";
   };
 
@@ -134,14 +134,13 @@ in {
 
   # Holding these in for whatever reason.
   state.packages = {
-    diff = pkgs.diffoscope;
-    pager = config.programs.bat.package;
+    diff = lib.mkDefault pkgs.diffoscope;
+    pager = lib.mkDefault config.programs.bat.package;
     editor = if config.programs.nixvim.enable or false then
       config.programs.nixvim.finalPackage
     else
       config.programs.neovim.package;
-    browser =
-      config.programs.chromium.package;
+    browser = lib.mkDefault config.programs.chromium.package;
     chromiumWrapper =
       config.programs.google-chrome.package or pkgs.google-chrome;
   };
