@@ -22,7 +22,7 @@ in {
       config = {
         LISTEN_ADDR = "127.0.0.1:${builtins.toString port}";
         BASE_URL = "http://rss.ni.local";
-        CREATE_ADMIN = "1";
+        CREATE_ADMIN = true;
         METRICS_COLLECTOR = lib.mkIf hostCfg.services.monitoring.enable "1";
       };
     };
