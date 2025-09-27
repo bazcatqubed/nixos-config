@@ -53,6 +53,16 @@ in {
       # Enable font-related options for more smoother and consistent experience.
       fonts.fontconfig.enable = true;
 
+      # Create a neat interface for making system diffs.
+      # Based on https://discourse.nixos.org/t/nvd-simple-nix-nixos-version-diff-tool/12397/42
+      system.activationScripts.preActivation = ''
+        if [[ -e /run/current-system ]]; then
+          echo "--- diff to current-system"
+          ${pkgs.nvd}/bin/nvd --nix-bin-dir=${config.nix.package}/bin diff /run/current-system "$systemConfig"
+          echo "---"
+        fi
+      '';
+
       # Run unpatched binaries with these!
       programs.nix-ld = {
         enable = true;
