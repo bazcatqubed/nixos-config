@@ -62,7 +62,7 @@
     # cluster.
     sharedModules = [
       # ...plus a bunch of third-party modules.
-      inputs.nix-index-database.hmModules.nix-index
+      inputs.nix-index-database.homeModules.nix-index
 
       # The rainbow road to ricing your raw materials.
       inputs.self.homeModules.bahaghari
