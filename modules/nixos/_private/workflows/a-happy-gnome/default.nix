@@ -92,7 +92,6 @@ in {
         gnome-boxes # Virtual machines, son.
         mission-center # It is your duty to monitor your system.
         polari # Your gateway to one of the most hidden and cobweb-ridden parts of the internet. ;)
-        gradience # Make it rain!
         handbrake # Take a break from those custom ffmpeg conversion scripts.
         shortwave # Yer' humble internet radio.
         symbolic-preview # Them symbols... it's important.
