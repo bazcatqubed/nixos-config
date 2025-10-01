@@ -36,8 +36,6 @@ in {
         # For debugging build environments in Nix packages.
         cntr
 
-        devpod-desktop
-
         freecad
       ];
 
@@ -72,14 +70,14 @@ in {
       state.ports.cockpit.value = 9090;
 
       services.cockpit = {
-        enable = true;
+        enable = false;
         port = config.state.ports.cockpit.value;
         settings = { WebService.AllowUnencrypted = true; };
       };
 
       # Setting up a single-node k3s cluster for learning purposes.
       services.k3s = {
-        enable = true;
+        enable = false;
         role = "server";
       };
 
