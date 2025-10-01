@@ -251,6 +251,7 @@ in {
         processing
         (puredata-with-plugins (with pkgs; [ zexy ]))
         shader-slang
+        material-maker
       ];
 
       xdg.desktopEntries.decker = {

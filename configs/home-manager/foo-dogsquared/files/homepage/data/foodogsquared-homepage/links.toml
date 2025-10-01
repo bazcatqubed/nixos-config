@@ -49,6 +49,7 @@ links = [
 
   { subsection = true, text = "References" },
   { url = "https://devdocs.io", text = "Devdocs" },
+  { url = "https://www.cvedetails.com", text = "CVEdetails.com" },
   { url = "https://gjs-docs.gnome.org/", text = "GNOME DevDocs" },
   { url = "https://manpages.debian.org", text = "Debian Manpages" },
   { url = "https://nixos.org/manual/nixpkgs/unstable", text = "nixpkgs reference" },

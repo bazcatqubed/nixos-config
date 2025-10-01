@@ -23,7 +23,7 @@ let
   ] ++ lib.optionals userCfg.services.archivebox.enable [
     { id = "habonpimjphpdnmcfkaockjnffodikoj"; } # ArchiveBox Extractor
   ] ++ lib.optionals userCfg.setups.research.enable [
-    { id = "gknkbkaapnhpmkcgkmdekdffgcddoiel"; } # Open Access Button
+    { id = "iplffkdpngmdjhlpjmppncnlhomiipha"; } # Unpaywall
     { id = "fpnmgdkabkmnadcjpehmlllkndpkmiak"; } # Wayback Machine
     { id = "ekhagklcjbdpajgpjgmbionohlpdbjgc"; } # Zotero connector
     { id = "palihjnakafgffnompkdfgbgdbcagbko"; } # UpdateSWH
@@ -126,7 +126,7 @@ in {
                 sourcegraph-for-firefox
                 updateswh
                 zhongwen
-                open-access-helper
+                unpaywall
                 rsshub-radar
                 refined-github-
               ]) ++ lib.optionals config.programs.mpv.enable

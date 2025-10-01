@@ -17,6 +17,7 @@ in {
     (lib.mkIf cfg.ssh.enable {
       programs.ssh = {
         enable = true;
+        enableDefaultConfig = true;
         includes = [ "config.d/*" ];
         extraConfig = ''
           AddKeysToAgent confirm 15m

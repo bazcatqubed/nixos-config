@@ -73,6 +73,15 @@ in {
               text = "RSS reader";
             };
           })
+
+          (lib.mkIf (attrs.nixosConfig.services.kavita.enable or false) {
+            services.links = lib.singleton {
+              url = "http://localhost:${
+                builtins.toString attrs.nixosConfig.state.ports.kavita.value
+              }";
+              text = "Book reader";
+            };
+          })
         ];
       };
     };
