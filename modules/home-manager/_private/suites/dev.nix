@@ -208,7 +208,7 @@ in {
     (lib.mkIf cfg.servers.enable {
       home.packages = with pkgs; [
         bind.dnsutils # Make DNS a little less fun.
-        kanidm # What is you?
+        kanidm_1_6 # What is you?
         ipcalc # Calculate how many stars are there in space.
         geoip # Know where the spam came from.
         sshfs # Intrude others' home and steal their shit, why don't 'ya?
