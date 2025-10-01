@@ -47,10 +47,10 @@
     };
     "extended-color-management" = buildFirefoxXpiAddon {
       pname = "extended-color-management";
-      version = "1.1.1";
+      version = "1.1.2";
       addonId = "{816dd215-0e91-4621-9d89-3bac78798e6f}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3966904/extended_color_management-1.1.1.xpi";
-      sha256 = "8b09d9fb312635c428571bd74beacf67e426089ebc812c7f39e9c3b4dad05a0b";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4581050/extended_color_management-1.1.2.xpi";
+      sha256 = "3b877b0f8425031fd73adc940b9439fc0847301d5f1cb7947ae9f6957eb56642";
       meta = with lib;
       {
         description = "Ever wish that Firefox didn't use color management when viewing images or video? Turn it off easily with this add-on.";
@@ -329,6 +329,21 @@
           "notifications"
           "nativeMessaging"
         ];
+        platforms = platforms.all;
+      };
+    };
+    "unpaywall" = buildFirefoxXpiAddon {
+      pname = "unpaywall";
+      version = "3.98";
+      addonId = "{f209234a-76f0-4735-9920-eb62507a54cd}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3816853/unpaywall-3.98.xpi";
+      sha256 = "6893bea86d3c4ed7f1100bf0e173591b526a062f4ddd7be13c30a54573c797fb";
+      meta = with lib;
+      {
+        homepage = "https://unpaywall.org/products/extension";
+        description = "Get free text of research papers as you browse, using Unpaywall's index of ten million legal, open-access articles.";
+        license = licenses.mit;
+        mozPermissions = [ "*://*.oadoi.org/*" "storage" "<all_urls>" ];
         platforms = platforms.all;
       };
     };
