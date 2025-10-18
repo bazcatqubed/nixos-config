@@ -71,7 +71,10 @@ in {
         wget # Who would've think a simple tool can be made for this purpose?
         yt-dlp # The general purpose video downloader.
         zotero # It's actually good at archiving despite not being a researcher myself.
-      ];
+      ]
+        ++ lib.optionals userCfg.setups.desktop.enable (with pkgs; [
+          parabolic
+        ]);
 
       programs.anki = {
         enable = true;
