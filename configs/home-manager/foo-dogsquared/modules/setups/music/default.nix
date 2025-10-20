@@ -127,7 +127,7 @@ in {
         yt-music = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "yt-music";
-          url = "https://music.youtube.com";
+          baseURL = "music.youtube.com";
           imageHash = "sha512-h0LO75CcxTKuU+JBzC4EkFxikl0mGz3+YpxRRH8vkw4PqGGSbqR+N5nNcLZldSDroiJ5C6XEnEsQi6sLs1OkEA==";
           imageBuildFlags = [
             # Because the service only accepts browser views.
@@ -178,7 +178,7 @@ in {
         spotify = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "spotify";
-          url = "https://open.spotify.com/";
+          baseURL = "open.spotify.com";
           imageHash = "sha512-caFOXceJa0q+/LVOrKbR5wviSJFwrahehdZ2Dmv+BTmAkDhfWjwl6tpf690vI17S998Ohe+J9trLMjYX+BihEQ==";
           appendArgs = mkFlags name ++ [
             # This is required for DRM.

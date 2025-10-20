@@ -205,7 +205,7 @@ in {
         devdocs = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "devdocs";
-          url = "https://devdocs.io";
+          baseURL = "devdocs.io";
           imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
@@ -220,7 +220,7 @@ in {
         gnome-devdocs = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "gnome-devdocs";
-          url = "https://gjs-docs.gnome.org";
+          baseURL = "gjs-docs.gnome.org";
           imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
@@ -250,7 +250,7 @@ in {
         sonic-pi
         processing
         (puredata-with-plugins (with pkgs; [ zexy ]))
-        shader-slang
+        # shader-slang
         material-maker
       ];
 

@@ -145,7 +145,7 @@ in {
         penpot = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "penpot";
-          url = "https://design.penpot.app";
+          baseURL = "design.penpot.app";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
             icon = pkgs.fetchurl {
@@ -163,7 +163,7 @@ in {
         graphite = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "graphite";
-          url = "https://editor.graphite.rs";
+          baseURL = "editor.graphite.rs";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
             icon = pkgs.fetchurl {
@@ -186,7 +186,7 @@ in {
         google-maps = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "google-maps";
-          url = "https://maps.google.com";
+          baseURL = "maps.google.com";
           imageHash = "sha512-vjo1kMyvm/q/N6zF+hwgRYuIjjJ3MHjgNVGQd4SbvMZZzS3Df+CzqCKDHPPfPYjKwSA+ustuIlEzE8FrmKDgzA==";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
@@ -205,7 +205,7 @@ in {
         snapchat = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "snapchat";
-          url = "https://snapchat.com";
+          baseURL = "snapchat.com";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
             desktopName = "Snapchat";
@@ -224,7 +224,7 @@ in {
         whatsapp = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "whatsapp";
-          url = "https://web.whatsapp.com";
+          baseURL = "web.whatsapp.com";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
             desktopName = "WhatsApp";
@@ -243,7 +243,7 @@ in {
         google-earth = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "google-earth";
-          url = "https://earth.google.com";
+          baseURL = "earth.google.com";
           imageHash = "sha512-nNhrwyQStOU/yMDVcFP/qL2QOLORynhbGG0tu4Yh5Y8x/FfhCAR8+sxVfKQ1KG2LDopo6icUrSWn0bshrSlWQw==";
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
@@ -261,7 +261,7 @@ in {
         netflix = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "netflix";
-          url = "https://netflix.com";
+          baseURL = "netflix.com";
           imageHash = "sha512-V5TfMR+Je7QNS8Nsh+M8M0I7KU2oxDnqPVcu1LS2wa/gkf67V6fQeWW0Q5AzzIdNbMy1Vp9CEw0DkAotRcvkDg==";
           appendArgs = mkFlags name ++ [
             "--enable-nacl"
