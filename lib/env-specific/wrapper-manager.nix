@@ -84,7 +84,7 @@ rec {
     ];
 
   wrapChromiumWebApp =
-    { name, url, chromiumPackage ? pkgs.chromium, imageHash ? null, imageSize ? 256, imageBuildFlags ? [ ], ... }@module:
+    { name, baseURL ? null, url ? "https://${baseURL}", chromiumPackage ? pkgs.chromium, imageHash ? null, imageSize ? 256, imageBuildFlags ? [ ], ... }@module:
     let
       className = "${chromiumPackage.pname}-${name}";
     in
@@ -113,7 +113,7 @@ rec {
           enable = true;
           settings = {
             terminal = false;
-            startupWMClass = lib.mkDefault className;
+            startupWMClass = lib.mkDefault (if (baseURL != null) then "chrome-${baseURL}__-Default" else className);
           };
         };
       }
@@ -133,6 +133,7 @@ rec {
 
       (builtins.removeAttrs module [
         "chromiumPackage"
+        "baseURL"
         "url"
         "imageHash"
         "imageBuildFlags"
