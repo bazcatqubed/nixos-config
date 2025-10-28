@@ -97,7 +97,28 @@ in {
             pango
             pipewire
           ];
-          desktopLibs = with pkgs; [ qt5.full qt6.full gtk3 gtk4 ];
+          desktopLibs = with pkgs; [
+            qt5.qtbase
+            qt5.qtwayland
+            qt5.qt3d
+            qt5.qtcharts
+            qt5.qtdeclarative
+            qt5.qtgamepad
+            qt5.qtimageformats
+            qt5.qtlottie
+            qt5.qtscript
+
+            qt6.qtbase
+            qt6.qtwayland
+            qt6.qt3d
+            qt6.qtcharts
+            qt6.qtdeclarative
+            qt6.qtimageformats
+            qt6.qtlottie
+
+            gtk3
+            gtk4
+          ];
         in commonLibs ++ xorgLibs ++ desktopLibs;
       };
 
