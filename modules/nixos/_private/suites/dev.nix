@@ -193,11 +193,7 @@ in {
 
       # Virtual machines, son. They open in response to physical needs to
       # foreign environments.
-      virtualisation.libvirtd = {
-        enable = true;
-        qemu.package = pkgs.qemu_full;
-        qemu.ovmf.enable = true;
-      };
+      virtualisation.libvirtd.enable = true;
 
       programs.virt-manager.enable = true;
     })
