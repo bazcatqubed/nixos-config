@@ -38,7 +38,7 @@
     # Managing home configurations.
     home-manager.follows = "home-manager-unstable";
 
-    home-manager-stable.url = "github:nix-community/home-manager/release-24.11";
+    home-manager-stable.url = "github:nix-community/home-manager/release-25.05";
     home-manager-stable.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager-unstable.url = "github:nix-community/home-manager";
@@ -47,7 +47,7 @@
     # Make a Neovim distro.
     nixvim.follows = "nixvim-unstable";
 
-    nixvim-stable.url = "github:nix-community/nixvim/nixos-24.11";
+    nixvim-stable.url = "github:nix-community/nixvim/nixos-25.05";
     nixvim-stable.inputs.nixpkgs.follows = "nixos-stable";
     nixvim-stable.inputs.home-manager.follows = "home-manager-stable";
 
