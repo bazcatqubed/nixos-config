@@ -5,12 +5,14 @@
   --background: var(--base00);
   --foreground: var(--base05);
   --accent-color: var(--base0C);
+
+  --text-color: var(--foreground);
 }
 
 body {
   min-height: 100%;
   margin: 0;
-  background: var(--background);
+  background: var(--foreground);
   font-family: "Source Sans Pro", sans-serif;
 }
 
@@ -25,8 +27,8 @@ body {
   margin: calc(var(--gap) * 2);
 
   section[id^="section-"] {
-    background: var(--foreground);
-    color: var(--background);
+    background: var(--background);
+    color: var(--text-color);
 
     border: var(--gap) solid var(--accent-color);
     padding: calc(var(--gap) * 2);
@@ -78,7 +80,7 @@ body {
     }
 
     a {
-      color: var(--background);
+      color: var(--text-color);
 
       &:hover {
         color: var(--accent-color);

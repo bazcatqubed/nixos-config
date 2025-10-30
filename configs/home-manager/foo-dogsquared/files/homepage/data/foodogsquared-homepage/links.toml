@@ -156,9 +156,13 @@ icon.name = "awesomelists"
 name = "Search"
 flavorText = "your soul"
 textOnly = true
+weight = -2
 links = [
   { url = "https://search.brave.com", text = "Brave Search" },
   { url = "https://sourcegraph.com/search", text = "SourceGraph" },
+  { url = "https://manualslib.com/", text = "ManualsLib" },
+  { url = "https://www.digikey.ph/en/products", text = "Digikey products search" },
+  { url = "https://www.trustedparts.com/en/distributors", text = "TrustedParts product search" },
   { url = "https://phind.com/", text = "Phind" },
   { url = "https://grok.com/", text = "Grok" },
   { url = "https://learn-anything.xyz/", text = "Learn anything" },
