@@ -27,7 +27,7 @@ in {
         cookiecutter # Cookiecutter templates for your mama (which is you).
         copier # Another set of scaffolding.
         dasel # Universal version of jq.
-        moar # More 'more'.
+        moor # More 'more'.
         perlPackages.vidir # Bulk rename for your organizing needs in the terminal.
       ];
 
@@ -155,7 +155,7 @@ in {
       programs.bat = {
         enable = true;
         config = {
-          pager = "${lib.getBin pkgs.moar}/bin/moar";
+          pager = lib.getExe pkgs.moor;
           theme = "base16";
           style = "plain";
         };
