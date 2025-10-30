@@ -145,8 +145,8 @@ in {
   state.packages = {
     diff = lib.mkDefault pkgs.diffoscope;
     pager = lib.mkDefault config.programs.bat.package;
-    editor = if config.programs.nixvim.enable or false then
-      config.programs.nixvim.finalPackage
+    editor = if userCfg.programs.nixvim.enable then
+      config.wrapper-manager.packages.neovim-flavors.build.toplevel
     else
       config.programs.neovim.package;
     browser = lib.mkDefault config.programs.chromium.package;

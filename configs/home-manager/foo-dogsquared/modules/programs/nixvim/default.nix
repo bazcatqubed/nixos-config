@@ -68,15 +68,19 @@ in {
     home.packages = [ nixvimManpage ];
 
     # Basically, we're creating Neovim flavors with NixVim so no need for it.
-    wrapper-manager.packages.neovim-flavors = { config, ... }: {
+    wrapper-manager.packages.neovim-flavors = { config, ... }: let
+      exeName = config.wrappers.nvim-fiesta-fds.executableName;
+    in {
+      build.extraMeta.mainProgram = exeName;
+
       wrappers.nvim-fiesta-fds = {
         arg0 = lib.getExe' nvimPkg "nvim";
         xdg.desktopEntry = {
           enable = true;
           settings = {
             desktopName = "Neovim (nvim-fiesta-fds)";
-            tryExec = config.wrappers.nvim-fiesta-fds.executableName;
-            exec = lib.mkForce "${config.wrappers.nvim-fiesta-fds.executableName} %F";
+            tryExec = exeName;
+            exec = lib.mkForce "${exeName} %F";
             terminal = true;
             categories = [ "Utility" "TextEditor" ];
             icon = "nvim";
