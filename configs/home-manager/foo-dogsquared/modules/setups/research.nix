@@ -144,6 +144,7 @@ in {
         ascii-draw # Super emoticons.
         exhibit # View them 3D boats.
         eloquent # Reach a higher caliber for your wordsmithing, indubitably.
+        harper # A grammer checker.
       ];
 
       # The heaviest installation of them all, I swear.

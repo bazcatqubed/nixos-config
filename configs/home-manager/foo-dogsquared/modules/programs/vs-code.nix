@@ -33,7 +33,9 @@ in {
         ] ++ lib.optionals userCfg.programs.browsers.firefox.enable
         [ firefox-devtools.vscode-firefox-debug ]
         ++ lib.optionals config.programs.python.enable
-        [ ms-toolsai.jupyter ms-toolsai.jupyter-renderers ];
+        [ ms-toolsai.jupyter ms-toolsai.jupyter-renderers ]
+        ++ lib.optionals userCfg.setups.research.writing.enable
+        [ ltex-plus.vscode-ltex-plus ];
 
       userSettings = { "extensions.ignoreRecommendations" = true; };
     };

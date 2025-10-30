@@ -27,6 +27,8 @@ let
     { id = "fpnmgdkabkmnadcjpehmlllkndpkmiak"; } # Wayback Machine
     { id = "ekhagklcjbdpajgpjgmbionohlpdbjgc"; } # Zotero connector
     { id = "palihjnakafgffnompkdfgbgdbcagbko"; } # UpdateSWH
+  ] ++ lib.optionals (userCfg.setups.research.enable && userCfg.setups.research.writing.enable) [
+    { id = "lodbfhdipoipcjmlebjbgmmgekckhpfb"; } # Harper grammar checker.
   ] ++ lib.optionals userCfg.setups.development.enable [
     { id = "dgjhfomjieaadpoljlnidmbgkdffpack"; } # Sourcegraph
   ];
@@ -134,7 +136,9 @@ in {
               ++ lib.optionals config.services.activitywatch.enable
               (with pkgs.nur.repos.rycee.firefox-addons; [ aw-watcher-web ])
               ++ lib.optionals userCfg.setups.research.enable
-              (with pkgs.nur.repos.rycee.firefox-addons; [ sponsorblock dearrow zotero-connector ]);
+              (with pkgs.nur.repos.rycee.firefox-addons; [ sponsorblock dearrow zotero-connector ])
+              ++ lib.optionals (userCfg.setups.research.enable && userCfg.setups.research.writing.enable)
+              (with pkgs.firefox-addons; [ private-grammar-checker-harper ]);
 
             # Much of the settings are affected by the policies set in the
             # package. See more information about them in
