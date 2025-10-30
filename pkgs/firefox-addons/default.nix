@@ -188,6 +188,20 @@
         platforms = platforms.all;
       };
     };
+    "private-grammar-checker-harper" = buildFirefoxXpiAddon {
+      pname = "private-grammar-checker-harper";
+      version = "0.70.0";
+      addonId = "harper@writewithharper.com";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4606997/private_grammar_checker_harper-0.70.0.xpi";
+      sha256 = "2bf711901379221aca0e566928d8aec76fc57f2e0a6d3b2a0bdd5be4d1e96370";
+      meta = with lib;
+      {
+        homepage = "https://writewithharper.com";
+        description = "A private grammar checker for 21st Century English";
+        mozPermissions = [ "storage" "tabs" "<all_urls>" ];
+        platforms = platforms.all;
+      };
+    };
     "refined-github-" = buildFirefoxXpiAddon {
       pname = "refined-github-";
       version = "25.10.2";
