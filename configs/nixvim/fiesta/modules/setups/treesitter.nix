@@ -37,27 +37,29 @@ in {
     # Some niceties for refactoring.
     plugins.treesitter-refactor = {
       enable = true;
-      highlightCurrentScope.enable = false;
-      highlightDefinitions.enable = true;
-      navigation.enable = true;
-      smartRename.enable = true;
+      settings = {
+        highlight_current_scope.enable = false;
+        highlight_definitions.enable = true;
+        navigation.enable = true;
+        smart_rename.enable = true;
+      };
     };
 
     # Bring some convenience to editing them.
     plugins.ts-autotag.enable = true;
 
     plugins.which-key.settings.spec =
-      lib.optionals config.plugins.treesitter-textobjects.swap.enable [
+      lib.optionals config.plugins.treesitter-textobjects.settings.swap.enable [
         (helpers.listToUnkeyedAttrs [ lspSwapBindingPrefix ] // { group = "Swap"; })
       ];
 
     # Show me your moves.
     plugins.treesitter-textobjects = {
       enable = true;
-      lspInterop = {
+      settings.lsp_interop = {
         enable = true;
         border = "none";
-        peekDefinitionCode = let
+        peek_definition_code = let
           bindingPrefix = "<leader>d";
 
           mkQueryMappings = query: binding:
@@ -70,12 +72,13 @@ in {
           "class" = "F";
         };
       };
-      move = lib.mkMerge ([{
+
+      settings.move = lib.mkMerge ([{
         enable = true;
-        setJumps = true;
+        set_jumps = true;
       }] ++ (let
         motions = lib.cartesianProduct {
-          region = [ "Start" "End" ];
+          region = [ "start" "end" ];
           jumpDirection = [ "Previous" "Next" ];
           variant = [ "outer" "inner" ];
         };
@@ -112,7 +115,7 @@ in {
                 binding' = bindings.${jumpDirection'};
                 bindingPrefix = motionMap."${variant}${jumpDirection}";
               in {
-                "goto${jumpDirection}${region}" = {
+                "goto_${jumpDirection}_${region}" = {
                   "${bindingPrefix}${binding'}" = {
                     desc = actionDesc variant jumpDirection' query;
                     query = "@${query}.${variant}";
@@ -150,10 +153,11 @@ in {
           next = "l";
         };
       }));
-      select = {
+
+      settings.select = {
         enable = true;
         lookahead = true;
-        selectionModes = {
+        selection_modes = {
           "@function.outer" = "V";
           "@class.outer" = "<c-v>";
           "@block.outer" = "<c-v>";
@@ -198,7 +202,8 @@ in {
           "attribute" = "a";
         };
       };
-      swap = lib.mkMerge ([{ enable = true; }] ++ (let
+
+      settings.swap = lib.mkMerge ([{ enable = true; }] ++ (let
         motions = lib.cartesianProduct {
           jumpDirection = [ "Previous" "Next" ];
           variant = [ "outer" ];
@@ -217,7 +222,7 @@ in {
                 inherit (motion) jumpDirection variant;
                 jumpDirection' = lib.strings.toLower jumpDirection;
               in {
-                "swap${jumpDirection}" = {
+                "swap_${jumpDirection}" = {
                   "${lspSwapBindingPrefix}${bindings.${jumpDirection'}}" = {
                     desc = actionDesc variant jumpDirection' query;
                     query = "@${query}.${variant}";

@@ -50,6 +50,8 @@ in {
       };
     };
 
+    plugins.web-devicons.enable = true;
+
     # mini.plugins
     plugins.mini = {
       enable = lib.mkDefault true;
