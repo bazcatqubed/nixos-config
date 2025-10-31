@@ -250,7 +250,7 @@ in {
         sonic-pi
         processing
         (puredata-with-plugins (with pkgs; [ zexy ]))
-        # shader-slang
+        shader-slang
         material-maker
       ];
 

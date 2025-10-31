@@ -51,6 +51,7 @@ in {
       programs.neovim.extraPackages = with pkgs; [
         charm-freeze
         luarocks
+        lua5_1
         shfmt
         cmake
 

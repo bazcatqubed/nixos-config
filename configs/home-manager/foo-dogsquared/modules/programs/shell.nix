@@ -36,7 +36,7 @@ in {
     };
 
     # Set up with these variables.
-    systemd.user.sessionVariables.PAGER = "moar";
+    systemd.user.sessionVariables.PAGER = "moor";
 
     # Add it to the laundry list.
     services.bleachbit.cleaners = [ "bash.history" ];

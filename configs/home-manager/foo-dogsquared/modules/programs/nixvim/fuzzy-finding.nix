@@ -10,6 +10,8 @@ in {
     lib.mkEnableOption "fuzzy finding setup within fiesta-fds";
 
   config = lib.mkIf cfg.enable {
+    nixvimConfigs.fiesta.setups.fuzzy-finder.enable = true;
+
     plugins.telescope.extensions.frecency = {
       enable = true;
       settings = {
