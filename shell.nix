@@ -27,6 +27,7 @@ in pkgs.mkShell {
       nix-update
       deadnix
       nixdoc
+      nvd
 
       bind
       opentofu
