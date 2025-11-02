@@ -304,6 +304,8 @@ in {
       enable = true;
     };
 
+    services.libinput.enable = true;
+
     xdg.autostart.entries = {
       "${workflowName}-kando" = {
         desktopName = "Kando";
