@@ -31,13 +31,13 @@
 # TODO: Fix the timestamp in the help section.
 stdenv.mkDerivation rec {
   pname = "tic-80";
-  version = "unstable-2025-10-11";
+  version = "unstable-2025-11-02";
 
   src = fetchFromGitHub {
     owner = "nesbox";
     repo = "TIC-80";
-    rev = "463d8b14effb3a90c345fc15a14da297deb79773";
-    hash = "sha256-Ms2tPPxfwkpQ9ZjPJlYRB+oBkN1cnAAQmSP3V/qaSAc=";
+    rev = "b3feccf7704fa32d33d458d722d1eeff886c54ab";
+    hash = "sha256-/3ncpl4AQO/Qdz3u9e4pboqUDP3KWAMB2SMW8BeeHaA=";
     fetchSubmodules = true;
   };
 
@@ -81,6 +81,7 @@ stdenv.mkDerivation rec {
       "-DBUILD_WITH_FENNEL=ON"
       "-DBUILD_WITH_MOON=ON"
       "-DBUILD_WITH_SCHEME=ON"
+      "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
     ] ++ lib.optionals withPro [ "-DBUILD_PRO=ON" ]
     ++ lib.optionals jsSupport [ "-DBUILD_WITH_JS=ON" ]
     ++ lib.optionals rubySupport [ "-DBUILD_WITH_RUBY=ON" ]
