@@ -208,7 +208,7 @@ rec {
       };
 
       profileRelativeEnvVars = lib.mkOption {
-        type = with lib.types; attrsOf (listOf string);
+        type = with lib.types; attrsOf (listOf str);
         description = ''
           A set of environment variables to be set relative to the Nix profile.
         '';
