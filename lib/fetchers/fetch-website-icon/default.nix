@@ -1,4 +1,4 @@
-{ lib, callPackage, stdenv, cacert, pkg-config, makeFontsConf, fontconfig, noto-fonts, noto-fonts-emoji }:
+{ lib, callPackage, stdenv, cacert, pkg-config, makeFontsConf, fontconfig, noto-fonts, noto-fonts-color-emoji }:
 
 let
   extractWebsiteIcon = callPackage ./package/package.nix { };
@@ -27,7 +27,7 @@ lib.extendMkDerivation {
       # A list of fonts to be included within the environment. This is mainly
       # used for the backup icon generation in the program which uses
       # fontconfig utilities to access the fonts.
-      fonts ? [ noto-fonts noto-fonts-emoji ],
+      fonts ? [ noto-fonts noto-fonts-color-emoji ],
 
       disableHTMLDownload ? false,
       disableGoogleIconsDownload ? false,

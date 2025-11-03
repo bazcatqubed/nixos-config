@@ -266,7 +266,7 @@ in {
       home.packages = with pkgs; [
         tic-80-unstable
         godot_4
-        godot_4-export-templates
+        godot_4-export-templates-bin
         gdtoolkit_4
       ];
     })

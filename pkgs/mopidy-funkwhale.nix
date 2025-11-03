@@ -16,14 +16,14 @@ python3.pkgs.buildPythonApplication rec {
   '';
 
   propagatedBuildInputs = with python3.pkgs;
-    [ pykka requests requests_oauthlib pygobject3 ] ++ [ mopidy ];
+    [ pykka requests requests-oauthlib pygobject3 ] ++ [ mopidy ];
 
   checkInputs = with python3.pkgs; [
     pytest
     pytest-cov
     pytest-mock
     requests-mock
-    factory_boy
+    factory-boy
   ];
 
   meta = with lib; {
