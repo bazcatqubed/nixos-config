@@ -6,9 +6,17 @@ update:
     git checkout -- flake.lock
     nix flake update --commit-lock-file
 
+# Quickly inspect a NixOS configuration.
+object-inspect HOST ATTR="nixosConfigurations" *ARGS:
+    nix repl '.#{{ATTR}}.{{HOST}}-{{arch()}}-{{os()}}' {{ARGS}}
+
 # Small wrapper around nixos-rebuild.
 host-build HOST *ARGS:
     nixos-rebuild --flake '.#{{HOST}}-{{arch()}}-{{os()}}' {{ARGS}}
+
+# Gives the diff between the current installed system and the to-be-built version of the system.
+host-diff HOST *ARGS:
+    nixos-rebuild build --flake ".#{{HOST}}-{{arch()}}-{{os()}}" {{ARGS}} && nvd diff /run/current-system result
 
 # Small wrapper for installing NixOS systems.
 nixos-install HOST *ARGS:
