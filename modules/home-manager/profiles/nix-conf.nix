@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }: {
   # Set the package for generating the configuration.
-  nix.package = lib.mkDefault pkgs.nixStable;
+  nix.package = lib.mkDefault pkgs.nixVersions.stable;
 
   # Set the configurations for the package manager.
   nix.settings = {
