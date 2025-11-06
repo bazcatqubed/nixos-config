@@ -240,7 +240,8 @@ in {
           appendArgs = mkFlags name;
           xdg.desktopEntry.settings = {
             desktopName = "WhatsApp";
-            genericName = "Messaging client";
+            genericName = "Messaging Client";
+            comment = "Web chat that will let everyone know everything";
             keywords = [
               "Chat"
               "Instant Messaging"
@@ -249,6 +250,23 @@ in {
               url = "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg";
               hash = "sha256-r86bMymoW0YuC0Ag6aqBrlFU+Etko2U931MOD5Q1Ebs=";
             };
+          };
+        };
+
+        telegram = wrapChromiumWebApp rec {
+          inherit chromiumPackage;
+          name = "telegram";
+          baseURL = "web.telegram.org";
+          appendArgs = mkFlags name;
+          imageHash = "sha512-qxxTdmmM6GUWqoNLjs8CxFDUd5RBY8K3icWVaTBcQsUe/3saBaKD9e82Q7rG5rICne8dAnYRWQbtFJtGh2zy+Q==";
+          xdg.desktopEntry.settings = {
+            desktopName = "Telegram";
+            genericName = "Messaging Client";
+            comment = "Messaging client for your ILLEGAL ACTIVITIES";
+            keywords = [
+              "Chat"
+              "Instant Messaging"
+            ];
           };
         };
 
