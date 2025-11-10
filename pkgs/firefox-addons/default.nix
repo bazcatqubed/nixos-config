@@ -190,10 +190,10 @@
     };
     "private-grammar-checker-harper" = buildFirefoxXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "0.70.0";
+      version = "0.71.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4606997/private_grammar_checker_harper-0.70.0.xpi";
-      sha256 = "2bf711901379221aca0e566928d8aec76fc57f2e0a6d3b2a0bdd5be4d1e96370";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4614025/private_grammar_checker_harper-0.71.0.xpi";
+      sha256 = "7558f24122c05e29a10add91bf37d150882dc190b676aa8ae89f2d392e57f259";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
@@ -204,10 +204,10 @@
     };
     "refined-github-" = buildFirefoxXpiAddon {
       pname = "refined-github-";
-      version = "25.10.2";
+      version = "25.11.4";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4590019/refined_github-25.10.2.xpi";
-      sha256 = "bb53d3d1f0b003a5ae705c79402d537141c191f76934bf7aec02b8e891bd16f7";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4612464/refined_github-25.11.4.xpi";
+      sha256 = "240ccda8bd39c1e0d2d0eb4113825856cf7f2bdabd6b323ee164f02ca11a7dea";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
