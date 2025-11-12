@@ -195,6 +195,23 @@ in {
           };
         };
 
+        coolors = wrapChromiumWebApp rec {
+          inherit chromiumPackage;
+          name = "coolors";
+          baseURL = "coolors.co";
+          imageHash = "sha512-dWfZaUNuMP9C57PxhOWhFugcOdz4ol/BMLqe3DklkbHvJkMUKD4INlOZu26PcTV+NKWiSjyVdQjS6eRRoNxgRw==";
+          appendArgs = mkFlags name;
+          xdg.desktopEntry.settings = {
+            desktopName = "Coolors";
+            genericName = "Color Palette Generator";
+            comment = "Palette generator";
+            keywords = [
+              "Design"
+              "Visual Arts"
+            ];
+          };
+        };
+
         google-maps = wrapChromiumWebApp rec {
           inherit chromiumPackage;
           name = "google-maps";
