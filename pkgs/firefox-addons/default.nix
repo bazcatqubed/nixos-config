@@ -190,10 +190,10 @@
     };
     "private-grammar-checker-harper" = buildFirefoxXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "0.71.0";
+      version = "0.72.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4614025/private_grammar_checker_harper-0.71.0.xpi";
-      sha256 = "7558f24122c05e29a10add91bf37d150882dc190b676aa8ae89f2d392e57f259";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4619955/private_grammar_checker_harper-0.72.0.xpi";
+      sha256 = "86928063b7a3940f95f3c45bfd489f68bd7332a43618ae6339f9e173f518e043";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
