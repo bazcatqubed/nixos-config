@@ -8,7 +8,7 @@
 # upstream and it may be here for the rest of time.
 #
 # In other words, dconf is just not built for this case.
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, wrapperManagerLib, ... }:
 
 let
   cfg = config.dconf;
@@ -32,6 +32,22 @@ let
     package = lib.mkPackageOption pkgs "dconf" { }
       // lib.optionalAttrs (!isGlobal) { default = cfg.package; };
 
+    keyfiles = lib.mkOption {
+      type = with lib.types; listOf path;
+      description = if isGlobal then ''
+        Global list of keyfiles to be included to each dconf-enabled wrapper.
+      '' else ''
+        Additional list of keyfiles to be included as part of the dconf
+        database.
+      '';
+      default = if isGlobal then [ ] else [ "user-db" ];
+      example = lib.literalExpression ''
+        [
+          ./config/dconf/90-extra-settings.conf
+        ]
+      '';
+    };
+
     settings = lib.mkOption {
       type = settingsFormat.type;
       default = { };
@@ -52,22 +68,6 @@ let
       '';
     };
 
-    keyfiles = lib.mkOption {
-      type = with lib.types; listOf path;
-      description = if isGlobal then ''
-        Global list of keyfiles to be included to each dconf-enabled wrapper.
-      '' else ''
-        Additional list of keyfiles to be included as part of the dconf
-        database.
-      '';
-      default = if isGlobal then [ ] else [ "user-db" ];
-      example = lib.literalExpression ''
-        [
-          ./config/dconf/90-extra-settings.conf
-        ]
-      '';
-    };
-
     profile = lib.mkOption {
       type = with lib.types; listOf str;
       description = if isGlobal then ''
@@ -81,6 +81,23 @@ let
       defaultText = ''
         "user-db:user" as the writeable database alongside the generated
         database file from our settings.
+      '';
+    };
+  }
+  // lib.optionalAttrs isGlobal {
+    extraPackages = lib.mkOption {
+      type = with lib.types; listOf package;
+      default = [ ];
+      description = ''
+        Additional packages where their dconf-related files (in
+        `$out/share/dconf` and `$out/etc/dconf`) to be included in the output
+        derivation of the wrapper-manager package.
+      '';
+      example = lib.literalExpression ''
+        [
+          pkgs.ibus
+          (pkgs.callPackage ./config/dconf)
+        ]
       '';
     };
   };
@@ -141,5 +158,17 @@ in {
       };
   in lib.mkOption {
     type = with lib.types; attrsOf (submodule dconfSubmodule);
+  };
+
+  config = lib.mkIf (cfg.extraPackages != [ ]) {
+    files."etc/dconf".source = pkgs.symlinkJoin {
+      name = "wrapper-manager-fds-dconf-extra-packages-etc-${config.build.drvName}";
+      paths = lib.lists.map (p: "${p}/etc/dconf") cfg.extraPackages;
+    };
+
+    files."share/dconf".source = pkgs.symlinkJoin {
+      name = "wrapper-manager-fds-dconf-extra-packages-share-${config.build.drvName}";
+      paths = lib.lists.map (p: "${p}/share/dconf") cfg.extraPackages;
+    };
   };
 }
