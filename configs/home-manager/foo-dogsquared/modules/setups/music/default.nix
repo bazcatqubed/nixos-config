@@ -22,6 +22,9 @@ in {
       home.packages = with pkgs; [
         songrec # SHAZAM!
         picard # Graphical beets.
+
+        milkytracker # Mommy, mommy, I want milky music.
+        sunvox # Synthesize them sunshine and rainbows.
       ];
 
       wrapper-manager.packages.music-setup = {

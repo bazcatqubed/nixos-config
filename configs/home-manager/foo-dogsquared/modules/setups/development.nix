@@ -1,5 +1,4 @@
 { config, lib, pkgs, options, foodogsquaredLib, ... }@attrs:
-
 let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.setups.development;
@@ -96,6 +95,7 @@ in {
         lnav # Navigate with some logs like what some pirates do.
         inotify-tools # I notify things with tools like these.
         watchman # He ain't a superhero though, he's a creeper (for your files that is).
+        miller # Another data query language.
         devbox # Create a Nix devshell without Nixlang.
 
         # Testing REST and all about backend development.
@@ -249,7 +249,7 @@ in {
         supercollider-with-plugins
         sonic-pi
         processing
-        (puredata-with-plugins (with pkgs; [ zexy ]))
+        (puredata-with-plugins (with pkgs; [ zexy cyclone ]))
         shader-slang
         material-maker
       ];
@@ -274,11 +274,13 @@ in {
     (lib.mkIf cfg.math.enable {
       home.packages = with pkgs; [
         geogebra6
+        marimo
+        julia
       ];
 
       programs.python.modules = ps: with ps; [
         jupyter
-        jupyter-book
+        # jupyter-book
         notebook
       ];
     })
