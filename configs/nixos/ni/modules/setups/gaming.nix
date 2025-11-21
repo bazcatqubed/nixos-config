@@ -21,7 +21,7 @@ in {
       nexusmods-app # Making your gaming experience to infinite possibilities like the space.
       ruffle # Take a trip to nostalgia lane without the viruses.
 
-      rpcs3
+      # rpcs3
       ryubing
 
       clonehero # Is a real virtuoso, a rock idol.
@@ -33,20 +33,19 @@ in {
 
     # Losing only means more possibilities to play.
     programs.dwarf-fortress = {
-      enable = true;
+      enable = false;
       wrapperSettings = {
         enableIntro = true;
         enableFPS = true;
       };
     };
 
-    programs.steam.extraCompatPackages = with pkgs; [
-      proton-ge-9-27-bin
-      proton-ge-9-7-bin
-      proton-ge-10-14-bin
-    ];
+    programs.steam.extraCompatPackages = let
+      protonGEVersions = [ "9-27" "9-7" "10-14" "10-15" "10-24" ];
+    in
+      lib.map (v: pkgs."proton-ge-${v}-bin") protonGEVersions;
 
-    xdg.desktopEntries.dwarf-fortress = {
+    xdg.desktopEntries.dwarf-fortress = lib.mkIf config.programs.dwarf-fortress.enable {
       desktopName = "Dwarf Fortress";
       exec = lib.getExe config.programs.dwarf-fortress.package;
       genericName = "Dwarf Fortress";
