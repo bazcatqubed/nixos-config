@@ -100,6 +100,7 @@ in {
         tangram # Your social media manager, probably.
         ymuse # I muse with a simple MPD client.
         gnome-secrets # Feel the secureness, O Keeper of Secrets.
+        varia # Your internet download manager.
 
         gnome-backgrounds # Default backgrounds.
 
