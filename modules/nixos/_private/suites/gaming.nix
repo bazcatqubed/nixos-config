@@ -56,7 +56,6 @@ in {
     (lib.mkIf cfg.games.enable {
       environment.systemPackages = with pkgs; [
         cataclysm-dda # Dwarf Fortress but in the future.
-        dwarf-fortress # Dwarf Fortress.
         endless-sky # My other cocaine replacement.
         mindustry # Dwarf Fortress but with machineries.
         minetest # Dwarf Fortress but with voxels.
@@ -67,6 +66,8 @@ in {
         wesnoth # Dwarf Fortress but with dwarves and fortresses.
         zeroad # Dwarf Fortress but with ancient armed civilizations.
       ];
+
+      programs.dwarf-fortress.enable = lib.mkEnable true;
     })
 
     # Old computer systems for old people.
