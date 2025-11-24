@@ -46,6 +46,7 @@ in {
         # Enable them text editors.
         nixvim.enable = true;
         vs-code.enable = true;
+        zed-editor.enable = true;
       };
 
       suites.dev = {
