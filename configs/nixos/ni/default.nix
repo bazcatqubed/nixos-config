@@ -50,7 +50,7 @@
   nix.channel.enable = true;
 
   # Make Nix experimental.
-  nix.package = pkgs.nixVersions.stable;
+  nix.package = pkgs.lix;
 
   system.stateVersion = "24.05"; # Yes! I read the comment!
 }
