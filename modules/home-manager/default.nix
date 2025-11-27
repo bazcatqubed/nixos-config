@@ -11,6 +11,7 @@
     ./programs/diceware.nix
     ./programs/nushell.nix
     ./programs/python.nix
+    ./programs/typst.nix
     ./services/archivebox.nix
     ./services/borgbackup.nix
     ./services/borgmatic.nix
