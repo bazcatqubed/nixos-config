@@ -144,13 +144,30 @@ in {
         ascii-draw # Super emoticons.
         exhibit # View them 3D boats.
         eloquent # Reach a higher caliber for your wordsmithing, indubitably.
-        harper # A grammer checker.
-      ];
+        harper # A grammer checker with yer' Grandma..er.
+      ]
+        ++ lib.optionals config.programs.typst.enable [
+          tinymist
+        ]
+        ++ lib.optionals config.programs.texlive.enable [
+          lyx
+        ];
 
       # The heaviest installation of them all, I swear.
       programs.texlive = {
         enable = true;
         package = pkgs.texliveMedium;
+      };
+
+      # Lighter version of LaTeX if you want to be a hipster in document
+      # typesetting.
+      programs.typst = {
+        enable = true;
+        extraPackages = p: with p; [
+          cetz
+          unify
+          glossarium
+        ];
       };
     })
   ]);

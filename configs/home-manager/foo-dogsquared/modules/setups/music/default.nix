@@ -23,6 +23,7 @@ in {
         songrec # SHAZAM!
         picard # Graphical beets.
 
+        ardour # Arrrrrr...
         milkytracker # Mommy, mommy, I want milky music.
         sunvox # Synthesize them sunshine and rainbows.
       ];
