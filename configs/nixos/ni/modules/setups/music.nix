@@ -82,10 +82,12 @@ in {
         stream = {
           bind_to_address = "127.0.0.1";
           source = [
-            "pipe:///run/snapserver/jukebox?sampleFormat=48000:16:2&codec=pcm"
+            "pipe:///run/snapserver/jukebox?name=${lib.escapeURL "foodogsquared's PC"}&sampleFormat=48000:16:2&codec=pcm"
             "airplay://${lib.getExe' pkgs.shairport-sync "shairport-sync"}?devicename=Snapcast"
-            "librespot://${lib.getExe' pkgs.librespot "librespot"}?devicename=Snapcast&bitrate=320&volume=50&normalize=true&autoplay=true"
-          ];
+          ]
+            ++ lib.optionals config.services.spotifyd.enable [
+              "librespot://${lib.getExe' pkgs.librespot "librespot"}?devicename=Snapcast&bitrate=320&volume=50&normalize=true&autoplay=true"
+            ];
         };
 
         http = {
