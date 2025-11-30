@@ -104,7 +104,7 @@ let
 
   configFile = settingsFormat.generate "crowdsec-config" cfg.settings;
 in {
-  disabledModules = lib.optionals (lib.versionAtLeast "25.11pre-git" lib.version) [ "services/security/crowdsec.nix" ];
+  disabledModules = lib.optionals (lib.versionAtLeast lib.version "25.11") [ "services/security/crowdsec.nix" ];
 
   options.services.crowdsec = {
     enable = lib.mkEnableOption
