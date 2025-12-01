@@ -49,11 +49,9 @@
 
     nixvim-stable.url = "github:nix-community/nixvim/nixos-25.05";
     nixvim-stable.inputs.nixpkgs.follows = "nixos-stable";
-    nixvim-stable.inputs.home-manager.follows = "home-manager-stable";
 
     nixvim-unstable.url = "github:nix-community/nixvim";
     nixvim-unstable.inputs.nixpkgs.follows = "nixos-unstable";
-    nixvim-unstable.inputs.home-manager.follows = "home-manager-unstable";
 
     # Make a wrapper.
     wrapper-manager-fds.url =
