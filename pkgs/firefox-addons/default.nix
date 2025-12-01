@@ -2,10 +2,10 @@
   {
     "cookies-txt" = buildFirefoxXpiAddon {
       pname = "cookies-txt";
-      version = "0.9";
+      version = "1.0";
       addonId = "{12cf650b-1822-40aa-bff0-996df6948878}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4573893/cookies_txt-0.9.xpi";
-      sha256 = "a734a72d34dbeea1c0a2035c3fa3eb3e9119918b0249b5722ab1d89b142f42a0";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4624727/cookies_txt-1.0.xpi";
+      sha256 = "5277a747488f2bbe657e83f8266eb7f7d3c30aeb886be53b9de87766f2053406";
       meta = with lib;
       {
         description = "Exports all cookies to a Netscape HTTP Cookie File, as used by curl, wget, and youtube-dl, among others.";
@@ -16,6 +16,7 @@
           "contextualIdentities"
           "<all_urls>"
           "tabs"
+          "clipboardWrite"
         ];
         platforms = platforms.all;
       };
@@ -190,10 +191,10 @@
     };
     "private-grammar-checker-harper" = buildFirefoxXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "0.72.0";
+      version = "1.0.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4619955/private_grammar_checker_harper-0.72.0.xpi";
-      sha256 = "86928063b7a3940f95f3c45bfd489f68bd7332a43618ae6339f9e173f518e043";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4630785/private_grammar_checker_harper-1.0.0.xpi";
+      sha256 = "931fd84648cf3d985b903e4d6dbdbc5e5ffc5dc647e0da2b97cdb0fc5d9e3f54";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
