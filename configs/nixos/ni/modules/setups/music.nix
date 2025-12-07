@@ -80,7 +80,6 @@ in {
       enable = true;
       settings = {
         stream = {
-          bind_to_address = "127.0.0.1";
           source = [
             "pipe:///run/snapserver/jukebox?name=${lib.escapeURL "foodogsquared's PC"}&sampleFormat=48000:16:2&codec=pcm"
             "airplay://${lib.getExe' pkgs.shairport-sync "shairport-sync"}?devicename=Snapcast"
@@ -96,9 +95,10 @@ in {
           doc_root = "${pkgs.snapcast}/share/snapserver/snapweb";
         };
 
-        tcp = {
+        tcp-control = {
           enabled = true;
           port = config.state.ports.snapserver-tcp.value;
+          bind_to_address = "127.0.0.1";
         };
       };
     };
