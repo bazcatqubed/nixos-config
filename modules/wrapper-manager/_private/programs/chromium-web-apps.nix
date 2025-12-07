@@ -139,8 +139,8 @@ in
             v.desktopEntrySettings
 
             {
+              inherit (v) startupWMClass;
               terminal = false;
-              startupWMClass = lib.mkDefault "chrome-${v.baseURL}__-Default";
             }
 
             (lib.mkIf (v.imageHash != null) (
