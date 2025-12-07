@@ -16,7 +16,7 @@
   # for my fragile internet bandwidth.
   inputs = {
     # The core modules found in this project.
-    fds-core.url = "path:.?dir=./core";
+    fds-core.url = "path:./core";
 
     # I know NixOS can be stable but we're going cutting edge, baybee! While
     # `nixpkgs-unstable` branch could be faster delivering updates, it is
@@ -26,8 +26,8 @@
 
     # ...except we allow other configurations to use other nixpkgs branch so
     # that may not matter anyways.
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nixos-stable-small.url = "github:NixOS/nixpkgs/nixos-25.05-small";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixos-stable-small.url = "github:NixOS/nixpkgs/nixos-25.11-small";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -38,7 +38,7 @@
     # Managing home configurations.
     home-manager.follows = "home-manager-unstable";
 
-    home-manager-stable.url = "github:nix-community/home-manager/release-25.05";
+    home-manager-stable.url = "github:nix-community/home-manager/release-25.11";
     home-manager-stable.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager-unstable.url = "github:nix-community/home-manager";
@@ -47,7 +47,7 @@
     # Make a Neovim distro.
     nixvim.follows = "nixvim-unstable";
 
-    nixvim-stable.url = "github:nix-community/nixvim/nixos-25.05";
+    nixvim-stable.url = "github:nix-community/nixvim/nixos-25.11";
     nixvim-stable.inputs.nixpkgs.follows = "nixos-stable";
 
     nixvim-unstable.url = "github:nix-community/nixvim";
