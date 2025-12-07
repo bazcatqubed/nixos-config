@@ -98,6 +98,7 @@ in {
         watchman # He ain't a superhero though, he's a creeper (for your files that is).
         miller # Another data query language.
         devbox # Create a Nix devshell without Nixlang.
+        kanidm_1_8 # What is you?
 
         # Testing REST and all about backend development.
         httpie
