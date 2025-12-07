@@ -91,6 +91,7 @@ in {
         dconf-editor # A saner version of Windows registry.
         gnome-boxes # Virtual machines, son.
         mission-center # It is your duty to monitor your system.
+        packet # Quick sharing between two phones.
         polari # Your gateway to one of the most hidden and cobweb-ridden parts of the internet. ;)
         handbrake # Take a break from those custom ffmpeg conversion scripts.
         shortwave # Yer' humble internet radio.
