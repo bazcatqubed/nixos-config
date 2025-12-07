@@ -34,8 +34,8 @@ in {
       # We're just making a version of Wezterm with the default arguments if
       # the user has them.
       home.packages = let
-        inherit (pkgs) wezterm hiPrio;
-      in [ wezterm (hiPrio weztermUserDefaultDesktop) ];
+        inherit (pkgs) wezterm;
+      in [ wezterm (lib.hiPrio weztermUserDefaultDesktop) ];
 
       xdg.autostart.entries =
         lib.singleton (getXdgDesktop weztermUserDefaultDesktop "org.wezfurlong.wezterm");
