@@ -50,6 +50,17 @@ let
         example = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
       };
 
+      imageFetcherArgs = lib.mkOption {
+        type = with lib.types; listOf anything;
+        description = ''
+          List of additional flags for the custom (default) icon fetcher of the web app.
+        '';
+        default = [ ];
+        example = [
+          "--disable-html-download"
+        ];
+      };
+
       desktopEntrySettings = lib.mkOption {
         type = with lib.types; attrsOf anything;
         default = { };
@@ -64,6 +75,10 @@ let
         '';
       };
     };
+
+    config = {
+      flags = cfg.flags;
+    };
   };
 in
 {
@@ -71,6 +86,18 @@ in
     enable = lib.mkEnableOption "configuring web apps with a Chromium-based browser";
 
     package = lib.mkPackageOption pkgs "google-chrome" { };
+
+    flags = lib.mkOption {
+      type = with lib.types; listOf str;
+      description = ''
+        List of additional flags to be added per-web-app.
+      '';
+      default = [ ];
+      example = [
+        "--disable-sync"
+        "--no-service-autorun"
+      ];
+    };
 
     apps = lib.mkOption {
       type = with lib.types; attrsOf (submodule appSubmodule);
@@ -148,6 +175,7 @@ in
                 iconDrv = foodogsquaredLib.fetchers.fetchWebsiteIcon {
                   inherit url;
                   hash = v.imageHash;
+                  buildFlags = v.imageFetcherArgs;
                 };
               in
               {
