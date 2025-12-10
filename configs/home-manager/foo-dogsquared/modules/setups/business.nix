@@ -19,109 +19,101 @@ in {
       libreoffice
     ];
 
-    wrapper-manager.packages.web-apps.wrappers = lib.mkIf userCfg.programs.browsers.google-chrome.enable (
+    wrapper-manager.packages.web-apps = lib.mkIf userCfg.programs.browsers.google-chrome.enable (
+      { hmConfig, config, ... }:
+
       let
-        inherit (foodogsquaredLib.wrapper-manager) wrapChromiumWebApp commonChromiumFlags;
+        chromiumPackage = config.programs.chromium-web-apps.package;
 
-        chromiumPackage = config.state.packages.chromiumWrapper;
-
-        mkFlags = name: commonChromiumFlags ++ [
-          "--user-data-dir=${config.xdg.configHome}/${chromiumPackage.pname}-${name}"
+        mkFlags = name: [
+          "--user-data-dir=${hmConfig.xdg.configHome}/${chromiumPackage.pname}-${name}"
         ];
       in {
-        google-workspace = wrapChromiumWebApp rec {
-          inherit chromiumPackage;
-          name = "google-workspace";
-          baseURL = "workspace.google.com";
-          imageHash = "sha512-fdbTvnDTU7DQLSGth8hcsnTNWnBK1qc8Rvmak4oaOE+35YTJ9G8q+BdTqoYxUBxq9Dv9TkAB8Vu7UKjZL1GMcQ==";
-          appendArgs = mkFlags name;
-          xdg.desktopEntry.settings = {
-            desktopName = "Google Workspace";
-            genericName = "Cloud Software Suite";
-            comment = "Collection of Google cloud tools";
-            keywords = [
-              "Microsoft 365"
-              "Google Docs"
-              "Google Drive"
-              "Google Calendar"
-              "Google Sheets"
-              "Gmail"
-            ];
+        programs.chromium-web-apps.apps = {
+          google-workspace = {
+            baseURL = "workspace.google.com";
+            imageHash = "sha512-fdbTvnDTU7DQLSGth8hcsnTNWnBK1qc8Rvmak4oaOE+35YTJ9G8q+BdTqoYxUBxq9Dv9TkAB8Vu7UKjZL1GMcQ==";
+            flags = mkFlags "google-workspace";
+            desktopEntrySettings = {
+              desktopName = "Google Workspace";
+              genericName = "Cloud Software Suite";
+              comment = "Collection of Google cloud tools";
+              keywords = [
+                "Microsoft 365"
+                "Google Docs"
+                "Google Drive"
+                "Google Calendar"
+                "Google Sheets"
+                "Gmail"
+              ];
+            };
           };
-        };
 
-        microsoft-teams = wrapChromiumWebApp rec {
-          inherit chromiumPackage;
-          name = "microsoft-teams";
-          baseURL = "teams.microsoft.com";
-          imageHash = "sha512-p71hFz3xGNCThfzgA00icEpmH8XKeRHLxwIwDruiixBmwFa/LbCkzwrkXZS4xntPrysObCsM7L0vvWl6Iq1ZAA==";
-          appendArgs = mkFlags name;
-          xdg.desktopEntry.settings = {
-            desktopName = "Microsoft Teams";
-            genericName = "Video Conferencing";
-            comment = "Video conferencing software";
-            keywords = [ "Zoom" "Jitsi" "Work Chat" ];
+          microsoft-teams = {
+            baseURL = "teams.microsoft.com";
+            imageHash = "sha512-p71hFz3xGNCThfzgA00icEpmH8XKeRHLxwIwDruiixBmwFa/LbCkzwrkXZS4xntPrysObCsM7L0vvWl6Iq1ZAA==";
+            flags = mkFlags "microsoft-teams";
+            desktopEntrySettings = {
+              desktopName = "Microsoft Teams";
+              genericName = "Video Conferencing";
+              comment = "Video conferencing software";
+              keywords = [ "Zoom" "Jitsi" "Work Chat" ];
+            };
           };
-        };
 
-        messenger = wrapChromiumWebApp rec {
-          inherit chromiumPackage;
-          name = "messenger";
-          baseURL = "www.messenger.com";
-          imageHash = "sha512-3rbCuiW14TVu8G+VU7hEDsmW4Q7XTx6ZLeEeFtY3XUB9ylzkNSJPwz6U8EiA5vOF1f6qeO4RVWVi8n5jibPouQ==";
-          appendArgs = mkFlags name;
-          xdg.desktopEntry.settings = {
-            desktopName = "Messenger";
-            genericName = "Instant Messaging Client";
-            comment = "Instant messaging network";
-            keywords = [
-              "Facebook Messenger"
-              "Meta Messenger"
-              "Chat"
-            ];
-            mimeTypes = [ "x-scheme-handler/fb-messenger" ];
+          messenger = {
+            baseURL = "www.messenger.com";
+            imageHash = "sha512-3rbCuiW14TVu8G+VU7hEDsmW4Q7XTx6ZLeEeFtY3XUB9ylzkNSJPwz6U8EiA5vOF1f6qeO4RVWVi8n5jibPouQ==";
+            flags = mkFlags "messenger";
+            desktopEntrySettings = {
+              desktopName = "Messenger";
+              genericName = "Instant Messaging Client";
+              comment = "Instant messaging network";
+              keywords = [
+                "Facebook Messenger"
+                "Meta Messenger"
+                "Chat"
+              ];
+              mimeTypes = [ "x-scheme-handler/fb-messenger" ];
+            };
           };
-        };
 
-        discord = wrapChromiumWebApp rec {
-          inherit chromiumPackage;
-          name = "discord";
-          baseURL = "app.discord.com";
-          imageHash = "sha512-A3HStENdfTG1IA5j5nCebKmQkJaKIC5Rp2NGt0ba/a3aUriVrBFZYcYmLmwDY8F98zCKyazBvnCGz9Z5/yfvUw==";
-          imageBuildFlags = [
-            "--disable-html-download"
-          ];
-          appendArgs = mkFlags name;
-          xdg.desktopEntry.settings = {
-            desktopName = "Discord";
-            genericName = "Group Messaging Client";
-            comment = "Group text and voice messaging";
-            keywords = [
-              "Chat"
-              "Instant Messaging"
-              "Video Conferencing"
-              "Video Calls"
-              "Audio Calls"
+          discord = {
+            baseURL = "app.discord.com";
+            imageHash = "sha512-A3HStENdfTG1IA5j5nCebKmQkJaKIC5Rp2NGt0ba/a3aUriVrBFZYcYmLmwDY8F98zCKyazBvnCGz9Z5/yfvUw==";
+            imageFetcherArgs = [
+              "--disable-html-download"
             ];
-            mimeTypes = [ "x-scheme-handler/discord" ];
+            flags = mkFlags "discord";
+            desktopEntrySettings = {
+              desktopName = "Discord";
+              genericName = "Group Messaging Client";
+              comment = "Group text and voice messaging";
+              keywords = [
+                "Chat"
+                "Instant Messaging"
+                "Video Conferencing"
+                "Video Calls"
+                "Audio Calls"
+              ];
+              mimeTypes = [ "x-scheme-handler/discord" ];
+            };
           };
-        };
 
-        zoom = wrapChromiumWebApp rec {
-          inherit chromiumPackage;
-          name = "zoom";
-          baseURL = "zoom.us";
-          imageHash = "sha512-l0XEVskMHJXBEdqqZBkDTgGp+F50ux22d1KHH63/Bu83awQP4v80/p3Csuiz4IfIowEu27nucDkIg/nmLotvhQ==";
-          appendArgs = mkFlags name;
-          xdg.desktopEntry.settings = {
-            desktopName = "Zoom";
-            genericName = "Video Conferencing";
-            comment = "Video conferencing";
-            keywords = [
-              "Audio Calls"
-              "Video Calls"
-              "Work Chat"
-            ];
+          zoom = {
+            baseURL = "zoom.us";
+            imageHash = "sha512-l0XEVskMHJXBEdqqZBkDTgGp+F50ux22d1KHH63/Bu83awQP4v80/p3Csuiz4IfIowEu27nucDkIg/nmLotvhQ==";
+            flags = mkFlags "zoom";
+            desktopEntrySettings = {
+              desktopName = "Zoom";
+              genericName = "Video Conferencing";
+              comment = "Video conferencing";
+              keywords = [
+                "Audio Calls"
+                "Video Calls"
+                "Work Chat"
+              ];
+            };
           };
         };
       }

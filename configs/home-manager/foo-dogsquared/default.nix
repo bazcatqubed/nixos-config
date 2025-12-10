@@ -154,6 +154,16 @@ in {
       config.programs.google-chrome.package or pkgs.google-chrome;
   };
 
+  wrapper-manager.sharedModules = lib.singleton {
+    programs.chromium-web-apps.package = config.state.packages.chromiumWrapper;
+  };
+
+  # This is for setting up the rest of the web apps.
+  wrapper-manager.packages.web-apps.programs.chromium-web-apps = {
+    enable = lib.mkDefault true;
+    flags = foodogsquaredLib.wrapper-manager.commonChromiumFlags;
+  };
+
   # Automating some files to be fetched on activation.
   home.mutableFile = {
     # ...my gopass secrets,...

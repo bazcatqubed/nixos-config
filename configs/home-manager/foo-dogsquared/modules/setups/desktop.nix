@@ -126,216 +126,198 @@ in {
         text = "Telemetry server";
       };
 
-    wrapper-manager.packages.web-apps.wrappers = lib.mkIf userCfg.programs.browsers.google-chrome.enable (
+    wrapper-manager.packages.web-apps = lib.mkIf userCfg.programs.browsers.google-chrome.enable (
+      { hmConfig, config, ... }:
+
       let
-        inherit (foodogsquaredLib.wrapper-manager) wrapChromiumWebApp commonChromiumFlags;
+        chromiumPackage = config.programs.chromium-web-apps.package;
 
-        chromiumPackage = config.state.packages.chromiumWrapper;
-
-        mkFlags = name: commonChromiumFlags ++ [
-          "--user-data-dir=${config.xdg.configHome}/${chromiumPackage.pname}-${name}"
+        mkFlags = name: [
+          "--user-data-dir=${hmConfig.xdg.configHome}/${chromiumPackage.pname}-${name}"
         ];
       in
-        lib.mkMerge [
-          (lib.mkIf config.suites.desktop.graphics.enable {
-            penpot = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "penpot";
-              baseURL = "design.penpot.app";
-              appendArgs = mkFlags name;
-              xdg.desktopEntry.settings = {
-                icon = pkgs.fetchurl {
-                  url = "https://github.com/penpot.png?s=460";
-                  hash = "sha256-Ft9AIWyMe8UcENeBLnKtxNW2DfLMwMqTYTha/FtEpwI=";
-                };
-                desktopName = "Penpot";
-                genericName = "Wireframing Tool";
-                categories = [ "Graphics" ];
-                comment = "Design and code collaboration tool";
-                keywords = [ "Design" "Wireframing" "Website" ];
-              };
-            };
-
-            graphite = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "graphite";
-              baseURL = "editor.graphite.rs";
-              appendArgs = mkFlags name;
-              xdg.desktopEntry.settings = {
-                icon = pkgs.fetchurl {
-                  url = "https://static.graphite.rs/logos/graphite-logo-color-480x480.png";
-                  hash = "sha256-ZyeWHvF5/7G/Lhxln6+WuUrrZvqBBhj8Uz9MkraDkbo=";
-                };
-                desktopName = "Graphite";
-                genericName = "Procedural Generation Image Editor";
-                categories = [ "Graphics" ];
-                comment = "Procedural toolkit for 2D content creation";
-                keywords = [
-                  "Procedural Generation"
-                  "Photoshop"
-                  "Illustration"
-                  "Photo Editing"
-                ];
-              };
-            };
-
-            canva = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "canva";
-              baseURL = "canva.com";
-              imageHash = "sha512-jpXHNmTRi7Up6nK4i1//H0DyTE8ADRvcA0wvnB2rZ2Td2t3qw6eSUM8mIT7FbYqbQ5sDAfKGpeD3VQVcMx6f8Q==";
-              appendArgs = mkFlags name;
-              xdg.desktopEntry.settings = {
-                desktopName = "Canva";
-                genericName = "Visual Design Editor";
-                comment = "Graphic design for non-designers";
-                keywords = [
-                  "Design"
-                  "Visual Arts"
-                  "Whiteboard"
-                ];
-              };
-            };
-
-            coolors = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "coolors";
-              baseURL = "coolors.co";
-              imageHash = "sha512-dWfZaUNuMP9C57PxhOWhFugcOdz4ol/BMLqe3DklkbHvJkMUKD4INlOZu26PcTV+NKWiSjyVdQjS6eRRoNxgRw==";
-              appendArgs = mkFlags name;
-              xdg.desktopEntry.settings = {
-                desktopName = "Coolors";
-                genericName = "Color Palette Generator";
-                comment = "Palette generator";
-                keywords = [
-                  "Design"
-                  "Visual Arts"
-                ];
-              };
-            };
-          })
-
-          (lib.mkIf config.suites.desktop.documents.enable {
-            google-maps = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "google-maps";
-              baseURL = "maps.google.com";
-              imageHash = "sha512-vjo1kMyvm/q/N6zF+hwgRYuIjjJ3MHjgNVGQd4SbvMZZzS3Df+CzqCKDHPPfPYjKwSA+ustuIlEzE8FrmKDgzA==";
-              appendArgs = mkFlags name;
-              xdg.desktopEntry.settings = {
-                desktopName = "Google Maps";
-                genericName = "Map Viewer";
-                keywords = [
-                  "Maps"
-                  "Geographic"
-                  "Locations"
-                  "Geospatial Data"
-                  "Satellite Imagery"
-                ];
-              };
-            };
-
-            google-earth = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "google-earth";
-              baseURL = "earth.google.com";
-              imageHash = "sha512-nNhrwyQStOU/yMDVcFP/qL2QOLORynhbGG0tu4Yh5Y8x/FfhCAR8+sxVfKQ1KG2LDopo6icUrSWn0bshrSlWQw==";
-              appendArgs = mkFlags name;
-              xdg.desktopEntry.settings = {
-                desktopName = "Google Earth";
-                genericName = "3D Planet Viewer";
-                comment = "View the earth in 3D";
-                keywords = [
-                  "Maps"
-                  "Geographic"
-                  "Locations"
-                ];
-              };
-            };
-          })
-
-          (lib.mkIf config.suites.desktop.documents.enable {
-            snapchat = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "snapchat";
-              baseURL = "snapchat.com";
-              appendArgs = mkFlags name;
-              xdg.desktopEntry.settings = {
-                desktopName = "Snapchat";
-                genericName = "Messaging client";
-                keywords = [
-                  "Chat"
-                  "Instant Messaging"
-                ];
-                icon = pkgs.fetchurl {
-                  url = "https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg";
-                  hash = "sha256-c7gR2q3bbqwd3n8RCFAUjKJzyxCOT0zZWsHU0bcu6rI=";
+        {
+          programs.chromium-web-apps.apps = lib.mkMerge [
+            (lib.mkIf hmConfig.suites.desktop.graphics.enable {
+              penpot = {
+                baseURL = "design.penpot.app";
+                flags = mkFlags "penpot";
+                desktopEntrySettings = {
+                  icon = pkgs.fetchurl {
+                    url = "https://github.com/penpot.png?s=460";
+                    hash = "sha256-Ft9AIWyMe8UcENeBLnKtxNW2DfLMwMqTYTha/FtEpwI=";
+                  };
+                  desktopName = "Penpot";
+                  genericName = "Wireframing Tool";
+                  categories = [ "Graphics" ];
+                  comment = "Design and code collaboration tool";
+                  keywords = [ "Design" "Wireframing" "Website" ];
                 };
               };
-            };
 
-            whatsapp = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "whatsapp";
-              baseURL = "web.whatsapp.com";
-              appendArgs = mkFlags name;
-              xdg.desktopEntry.settings = {
-                desktopName = "WhatsApp";
-                genericName = "Messaging Client";
-                comment = "Web chat that will let everyone know everything";
-                keywords = [
-                  "Chat"
-                  "Instant Messaging"
-                ];
-                icon = pkgs.fetchurl {
-                  url = "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg";
-                  hash = "sha256-r86bMymoW0YuC0Ag6aqBrlFU+Etko2U931MOD5Q1Ebs=";
+              graphite = {
+                baseURL = "editor.graphite.rs";
+                flags = mkFlags "graphite";
+                desktopEntrySettings = {
+                  icon = pkgs.fetchurl {
+                    url = "https://static.graphite.rs/logos/graphite-logo-color-480x480.png";
+                    hash = "sha256-ZyeWHvF5/7G/Lhxln6+WuUrrZvqBBhj8Uz9MkraDkbo=";
+                  };
+                  desktopName = "Graphite";
+                  genericName = "Procedural Generation Image Editor";
+                  categories = [ "Graphics" ];
+                  comment = "Procedural toolkit for 2D content creation";
+                  keywords = [
+                    "Procedural Generation"
+                    "Photoshop"
+                    "Illustration"
+                    "Photo Editing"
+                  ];
                 };
               };
-            };
 
-            telegram = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "telegram";
-              baseURL = "web.telegram.org";
-              appendArgs = mkFlags name;
-              imageHash = "sha512-qxxTdmmM6GUWqoNLjs8CxFDUd5RBY8K3icWVaTBcQsUe/3saBaKD9e82Q7rG5rICne8dAnYRWQbtFJtGh2zy+Q==";
-              xdg.desktopEntry.settings = {
-                desktopName = "Telegram";
-                genericName = "Messaging Client";
-                comment = "Messaging client for your ILLEGAL ACTIVITIES";
-                keywords = [
-                  "Chat"
-                  "Instant Messaging"
-                ];
+              canva = {
+                baseURL = "canva.com";
+                imageHash = "sha512-jpXHNmTRi7Up6nK4i1//H0DyTE8ADRvcA0wvnB2rZ2Td2t3qw6eSUM8mIT7FbYqbQ5sDAfKGpeD3VQVcMx6f8Q==";
+                flags = mkFlags "canva";
+                desktopEntrySettings = {
+                  desktopName = "Canva";
+                  genericName = "Visual Design Editor";
+                  comment = "Graphic design for non-designers";
+                  keywords = [
+                    "Design"
+                    "Visual Arts"
+                    "Whiteboard"
+                  ];
+                };
               };
-            };
 
-            netflix = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "netflix";
-              baseURL = "netflix.com";
-              imageHash = "sha512-V5TfMR+Je7QNS8Nsh+M8M0I7KU2oxDnqPVcu1LS2wa/gkf67V6fQeWW0Q5AzzIdNbMy1Vp9CEw0DkAotRcvkDg==";
-              appendArgs = mkFlags name ++ [
-                "--enable-nacl"
-              ];
-              xdg.desktopEntry.settings = {
-                desktopName = "Netflix";
-                genericName = "Online Video Stream Client";
-                comment = "Video stream from a wide library of shows";
-                categories = [ "AudioVideo" ];
-                keywords = [
-                  "TV Shows"
-                  "Anime"
-                  "Documentaries"
-                  "KDrama"
-                  "CDrama"
-                  "JDrama"
-                ];
+              coolors = {
+                baseURL = "coolors.co";
+                imageHash = "sha512-dWfZaUNuMP9C57PxhOWhFugcOdz4ol/BMLqe3DklkbHvJkMUKD4INlOZu26PcTV+NKWiSjyVdQjS6eRRoNxgRw==";
+                flags = mkFlags "coolors";
+                desktopEntrySettings = {
+                  desktopName = "Coolors";
+                  genericName = "Color Palette Generator";
+                  comment = "Palette generator";
+                  keywords = [
+                    "Design"
+                    "Visual Arts"
+                  ];
+                };
               };
-            };
-          })
-        ]
+            })
+
+            (lib.mkIf hmConfig.suites.desktop.documents.enable {
+              google-maps = {
+                baseURL = "maps.google.com";
+                imageHash = "sha512-vjo1kMyvm/q/N6zF+hwgRYuIjjJ3MHjgNVGQd4SbvMZZzS3Df+CzqCKDHPPfPYjKwSA+ustuIlEzE8FrmKDgzA==";
+                flags = mkFlags "google-maps";
+                desktopEntrySettings = {
+                  desktopName = "Google Maps";
+                  genericName = "Map Viewer";
+                  keywords = [
+                    "Maps"
+                    "Geographic"
+                    "Locations"
+                    "Geospatial Data"
+                    "Satellite Imagery"
+                  ];
+                };
+              };
+
+              google-earth = {
+                baseURL = "earth.google.com";
+                imageHash = "sha512-nNhrwyQStOU/yMDVcFP/qL2QOLORynhbGG0tu4Yh5Y8x/FfhCAR8+sxVfKQ1KG2LDopo6icUrSWn0bshrSlWQw==";
+                flags = mkFlags "google-earth";
+                desktopEntrySettings = {
+                  desktopName = "Google Earth";
+                  genericName = "3D Planet Viewer";
+                  comment = "View the earth in 3D";
+                  keywords = [
+                    "Maps"
+                    "Geographic"
+                    "Locations"
+                  ];
+                };
+              };
+            })
+
+            (lib.mkIf hmConfig.suites.desktop.documents.enable {
+              snapchat = {
+                baseURL = "snapchat.com";
+                flags = mkFlags "snapchat";
+                desktopEntrySettings = {
+                  desktopName = "Snapchat";
+                  genericName = "Messaging client";
+                  keywords = [
+                    "Chat"
+                    "Instant Messaging"
+                  ];
+                  icon = pkgs.fetchurl {
+                    url = "https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg";
+                    hash = "sha256-c7gR2q3bbqwd3n8RCFAUjKJzyxCOT0zZWsHU0bcu6rI=";
+                  };
+                };
+              };
+
+              whatsapp = {
+                baseURL = "web.whatsapp.com";
+                flags = mkFlags "whatsapp";
+                desktopEntrySettings = {
+                  desktopName = "WhatsApp";
+                  genericName = "Messaging Client";
+                  comment = "Web chat that will let everyone know everything";
+                  keywords = [
+                    "Chat"
+                    "Instant Messaging"
+                  ];
+                  icon = pkgs.fetchurl {
+                    url = "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg";
+                    hash = "sha256-r86bMymoW0YuC0Ag6aqBrlFU+Etko2U931MOD5Q1Ebs=";
+                  };
+                };
+              };
+
+              telegram = {
+                baseURL = "web.telegram.org";
+                flags = mkFlags "telegram";
+                imageHash = "sha512-qxxTdmmM6GUWqoNLjs8CxFDUd5RBY8K3icWVaTBcQsUe/3saBaKD9e82Q7rG5rICne8dAnYRWQbtFJtGh2zy+Q==";
+                desktopEntrySettings = {
+                  desktopName = "Telegram";
+                  genericName = "Messaging Client";
+                  comment = "Messaging client for your ILLEGAL ACTIVITIES";
+                  keywords = [
+                    "Chat"
+                    "Instant Messaging"
+                  ];
+                };
+              };
+
+              netflix = {
+                baseURL = "netflix.com";
+                imageHash = "sha512-V5TfMR+Je7QNS8Nsh+M8M0I7KU2oxDnqPVcu1LS2wa/gkf67V6fQeWW0Q5AzzIdNbMy1Vp9CEw0DkAotRcvkDg==";
+                flags = mkFlags "netflix" ++ [
+                  "--enable-nacl"
+                ];
+                desktopEntrySettings = {
+                  desktopName = "Netflix";
+                  genericName = "Online Video Stream Client";
+                  comment = "Video stream from a wide library of shows";
+                  categories = [ "AudioVideo" ];
+                  keywords = [
+                    "TV Shows"
+                    "Anime"
+                    "Documentaries"
+                    "KDrama"
+                    "CDrama"
+                    "JDrama"
+                  ];
+                };
+              };
+            })
+          ];
+        }
     );
   };
 }

@@ -195,45 +195,40 @@ in {
     })
 
     (lib.mkIf userCfg.programs.browsers.google-chrome.enable {
-      wrapper-manager.packages.web-apps.wrappers = let
-        inherit (foodogsquaredLib.wrapper-manager) wrapChromiumWebApp commonChromiumFlags;
-
-        chromiumPackage = config.state.packages.chromiumWrapper;
-
-        mkFlags = name: commonChromiumFlags ++ [
-          "--user-data-dir=${config.xdg.configHome}/${chromiumPackage.pname}-${name}"
+      wrapper-manager.packages.web-apps = ({ config, hmConfig, ... }: let
+        chromiumPackage = config.programs.chromium-web-apps.package;
+        mkFlags = name: [
+          "--user-data-dir=${hmConfig.xdg.configHome}/${chromiumPackage.pname}-${name}"
         ];
       in {
-        devdocs = wrapChromiumWebApp rec {
-          inherit chromiumPackage;
-          name = "devdocs";
-          baseURL = "devdocs.io";
-          imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
-          appendArgs = mkFlags name;
-          xdg.desktopEntry.settings = {
-            desktopName = "DevDocs";
-            genericName = "Documentation Browser";
-            categories = [ "Development" ];
-            comment = "One-stop shop for API documentation";
-            keywords = [ "Documentation" "HTML" "CSS" "JavaScript" ];
+        programs.chromium-web-apps.apps = {
+          devdocs = {
+            baseURL = "devdocs.io";
+            imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
+            flags = mkFlags "devdocs";
+            desktopEntrySettings = {
+              desktopName = "DevDocs";
+              genericName = "Documentation Browser";
+              categories = [ "Development" ];
+              comment = "One-stop shop for API documentation";
+              keywords = [ "Documentation" "HTML" "CSS" "JavaScript" ];
+            };
           };
-        };
 
-        gnome-devdocs = wrapChromiumWebApp rec {
-          inherit chromiumPackage;
-          name = "gnome-devdocs";
-          baseURL = "gjs-docs.gnome.org";
-          imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
-          appendArgs = mkFlags name;
-          xdg.desktopEntry.settings = {
-            desktopName = "GNOME DevDocs";
-            genericName = "Documentation Browser";
-            categories = [ "Development" ];
-            comment = "DevDocs instance for GNOME tech stack";
-            keywords = [ "Documentation" "GTK" "GJS" "glib" ];
+          gnome-devdocs = {
+            baseURL = "gjs-docs.gnome.org";
+            imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
+            flags = mkFlags "gnome-devdocs";
+            desktopEntrySettings = {
+              desktopName = "GNOME DevDocs";
+              genericName = "Documentation Browser";
+              categories = [ "Development" ];
+              comment = "DevDocs instance for GNOME tech stack";
+              keywords = [ "Documentation" "GTK" "GJS" "glib" ];
+            };
           };
         };
-      };
+      });
     })
 
     (lib.mkIf (userCfg.setups.desktop.enable && pkgs.stdenv.isLinux) {
