@@ -23,10 +23,10 @@
     };
     "dearrow" = buildFirefoxXpiAddon {
       pname = "dearrow";
-      version = "2.1.11";
+      version = "2.2.1";
       addonId = "deArrow@ajay.app";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4597677/dearrow-2.1.11.xpi";
-      sha256 = "a9f386c3d8ef128a571ede229a0d2f14bedb1c8ad646f43fb82282ae92992242";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4634684/dearrow-2.2.1.xpi";
+      sha256 = "9fefe049ccc9995bd0ccf517efff8d651cbfe7352af3f98d21ad028f7728c053";
       meta = with lib;
       {
         homepage = "https://dearrow.ajay.app";
@@ -191,10 +191,10 @@
     };
     "private-grammar-checker-harper" = buildFirefoxXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "1.1.0";
+      version = "1.2.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4634406/private_grammar_checker_harper-1.1.0.xpi";
-      sha256 = "d28390f1ff54678e8650fea2114d01b0153db246aceef0893343363e93573824";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4640643/private_grammar_checker_harper-1.2.0.xpi";
+      sha256 = "8abe2973f56e1073ffd5707c668f7fd397771d486ca115684d42cc76eb5294e0";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
@@ -205,10 +205,10 @@
     };
     "refined-github-" = buildFirefoxXpiAddon {
       pname = "refined-github-";
-      version = "25.11.22";
+      version = "25.12.12";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4625462/refined_github-25.11.22.xpi";
-      sha256 = "8329cb9300ecf370254173d85b375481b7114137279efed87c0330e365c862b6";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4640952/refined_github-25.12.12.xpi";
+      sha256 = "b22d87cab1bc9e9415183c1d4e6a926e37d758662643092e7ab73ce6717abd2b";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
