@@ -85,9 +85,12 @@ in {
         recursive = true;
       };
 
-      home.packages = with dotfilePackages; [
-        fds-nautilus-extensions
-      ];
+      # Despite the option to install through a build system upstream, we'll
+      # use this similarly to the other dotfiles since I always modify them.
+      xdg.dataFile."nautilus-python/extensions" = {
+        source = getDotfiles "nautilus-extensions";
+        recursive = true;
+      };
     })
   ]);
 }
