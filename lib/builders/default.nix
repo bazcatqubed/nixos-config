@@ -203,6 +203,41 @@
   buildMdbookSite = pkgs.callPackage ./mdbook/build-site.nix { };
 
   /**
+    Builder for building with Zola.
+
+    # Arguments
+
+    Similar to `stdenv.mkDerivation` but with a few attributes specific for
+    this builder function:
+
+    `buildDir`
+    : The output directory used in the build phase of the package.
+    By default, it is set to `book`.
+
+    # Type
+
+    ```
+    buildZolaSite :: Attr -> Derivation
+    ```
+
+    # Examples
+
+    ```nix
+    buildZolaSite {
+      pname = "foodogsquared-hm-startpage";
+      version = "0.3.0";
+      src = lib.cleanSource ./path/to/zola-project;
+
+      meta = with lib; {
+        description = "foodogsquared's homepage";
+        license = licenses.fdl11Plus;
+      };
+    }
+    ```
+  */
+  buildZolaSite = pkgs.callPackage ./zola/build-site.nix { };
+
+  /**
     A wrapper for building with mkdocs.
 
     # Arguments
