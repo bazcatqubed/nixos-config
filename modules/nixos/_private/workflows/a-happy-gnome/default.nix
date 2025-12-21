@@ -4,6 +4,9 @@ let
   workflowName = "one.foodogsquared.AHappyGNOME";
   cfg = config.workflows.workflows.${workflowName};
 
+  isGnomeVersionAtLeast = v:
+    lib.versionAtLeast pkgs.gnome-shell.version v;
+
   requiredApps = with pkgs;
     [
       # The application menu.
@@ -88,6 +91,7 @@ in {
         gnome-decoder # Go with them QR codes.
         gnome-frog # Graphical OCR with Tesseract that I always wanted.
         gnome-solanum # Cute little matodor timers.
+        gradia # Your cool screenshot is ready.
         dconf-editor # A saner version of Windows registry.
         gnome-boxes # Virtual machines, son.
         mission-center # It is your duty to monitor your system.
@@ -330,6 +334,14 @@ in {
 
           "org/gnome/mutter" = {
             dynamic-workspaces = !cfg.paperwm.enableStaticWorkspace;
+            experimental-features =
+              lib.optionals (isGnomeVersionAtLeast "47") [
+                "scale-monitor-framebuffer"
+              ] ++ lib.optionals (isGnomeVersionAtLeast "49") [
+                "variable-refresh-rate"
+                "autoclose-wayland"
+                "xwayland-native-scaling"
+              ];
           };
 
           "org/gnome/desktop/wm/preferences" = {
