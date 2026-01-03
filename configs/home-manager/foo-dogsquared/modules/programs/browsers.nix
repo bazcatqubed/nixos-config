@@ -180,6 +180,20 @@ in {
               (lib.mkIf userCfg.programs.custom-homepage.enable {
                 "browser.startup.homepage" = "file://${config.xdg.dataHome}/foodogsquared/homepage";
               })
+
+              (lib.mkIf pkgs.stdenv.isLinux (
+                # Enable all features through xdg-desktop-portal. I've used
+                # Firefox in modern desktop setups anyways which should have
+                # XDG portals service enabled.
+                foodogsquaredLib.genAttrs' [ "file-picker" "location" "mime-handler" ] (n:
+                  lib.nameValuePair "widget.use-xdg-desktop-portal.${n}" 1
+                )
+              ))
+
+              (lib.mkIf (pkgs.stdenv.isLinux && attrs.nixosConfig.services.pipewire.enable or false) {
+                "media.webrtc.camera.allow-pipewire" = 1;
+                "media.webrtc.capture.allow-pipewire" = 1;
+              })
             ];
 
             search = {
