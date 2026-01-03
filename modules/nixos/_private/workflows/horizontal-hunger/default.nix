@@ -27,7 +27,7 @@ in {
     package = lib.mkOption {
       type = lib.types.package;
       description = ''
-        Derivation containing {program}`niri` executable which is the preferred
+        Derivation containing {command}`niri` executable which is the preferred
         window manager for this workflow.
       '';
       default = pkgs.niri;
