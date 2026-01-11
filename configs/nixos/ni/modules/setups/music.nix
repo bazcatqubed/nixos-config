@@ -108,8 +108,11 @@ in {
       RuntimeDirectoryMode = "0775";
     };
 
-    systemd.services.gonic.serviceConfig = {
-      SupplementaryGroups = [ "audio" ];
+    systemd.services.gonic = {
+      serviceConfig = {
+        SupplementaryGroups = [ "audio" ];
+        CacheDirectory = "gonic";
+      };
     };
   };
 }

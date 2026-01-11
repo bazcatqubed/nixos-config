@@ -37,13 +37,12 @@ in {
         cntr
 
         freecad
+
+        android-tools
       ];
 
       # Enable the terminal emulator of choice.
       programs.wezterm.enable = true;
-
-      # Enable them debugging your mobile tracker.
-      programs.adb.enable = true;
 
       # Installing Guix within NixOS. Now that's some OTP rarepair material right
       # there.
