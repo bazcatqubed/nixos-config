@@ -18,7 +18,10 @@ in pkgs.lib.makeExtensible (self:
 
     # Just like from its inspiration, this contains Nix-representable data
     # formats and won't have any attributes exported at the top-level.
+    # -- START-NO-TOP-LVL-EXPORT --
     formats = callLib ./formats.nix;
+    services = import ../modules/services { inherit pkgs; };
+    # -- END-NO-TOP-LVL-EXPORT --
 
     # For future references, these are the only attributes that are going to be
     # exported as part of nixpkgs overlay.

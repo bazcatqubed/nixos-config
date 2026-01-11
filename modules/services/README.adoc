@@ -1,0 +1,6 @@
+= Modular services
+:toc:
+
+These are custom modular services.
+Just like the rest of the modules, these follow the design of the upstream but because of the experimental nature of this feature, it can go wildly different so don't expect too much.
+I'm not even sure if it's going to stay anyways.
