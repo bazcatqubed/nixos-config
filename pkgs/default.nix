@@ -55,7 +55,6 @@ in lib.makeScope pkgs.newScope (self: {
   tic-80-unstable = callPackage ./tic-80 { };
   smile = callPackage ./smile { };
   sessiond = callPackage ./sessiond { };
-  uwsm = callPackage ./uwsm { };
   vgc = qt5.callPackage ./vgc { };
   watc = callPackage ./watc { };
   willow = callPackage ./willow { };
