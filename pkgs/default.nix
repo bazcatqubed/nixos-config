@@ -29,7 +29,6 @@ in lib.makeScope pkgs.newScope (self: {
   go-avahi-cname = callPackage ./go-avahi-cname { };
   hush-shell = callPackage ./hush-shell.nix { };
   kip = callPackage ./kip { };
-  lazyjj = callPackage ./lazyjj { };
   lwp = callPackage ./lwp { };
   moac = callPackage ./moac.nix { };
   mopidy-beets = callPackage ./mopidy-beets.nix { };
