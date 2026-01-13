@@ -20,6 +20,7 @@ in lib.makeScope pkgs.newScope (self: {
   clidle = callPackage ./clidle.nix { };
   ctrld = callPackage ./ctrld { };
   domterm = qt5.callPackage ./domterm { };
+  durdraw = python3Packages.callPackage ./durdraw { };
   fastn = callPackage ./fastn { };
   flatsync = callPackage ./flatsync { };
   freerct = callPackage ./freerct.nix { };
