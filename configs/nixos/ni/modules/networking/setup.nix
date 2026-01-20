@@ -82,12 +82,14 @@ in {
       # Set resolved for DNS resolutions.
       services.resolved = {
         enable = true;
-        llmnr = "true";
-        domains = [
-          "~plover.foodogsquared.one"
-          "~0.27.172.in-addr.arpa"
-          "~0.28.172.in-addr.arpa"
-        ];
+        settings.Resolve = {
+          LLMNR = true;
+          Domains = [
+            "~plover.foodogsquared.one"
+            "~0.27.172.in-addr.arpa"
+            "~0.28.172.in-addr.arpa"
+          ];
+        };
       };
     }
 
