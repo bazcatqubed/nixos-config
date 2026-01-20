@@ -20,7 +20,7 @@ in {
       nixvimInjections = true;
 
       # Enable all of its useful features.
-      folding = true;
+      folding.enable = true;
       settings = {
         highlight.enable = true;
         indent.enable = true;
@@ -29,14 +29,14 @@ in {
     };
 
     opts = {
-      foldenable = config.plugins.treesitter.folding;
+      foldenable = config.plugins.treesitter.folding.enable;
       foldlevelstart = 3;
       foldlevel = 5;
     };
 
     # Some niceties for refactoring.
     plugins.treesitter-refactor = {
-      enable = true;
+      enable = false;
       settings = {
         highlight_current_scope.enable = false;
         highlight_definitions.enable = true;

@@ -18,9 +18,9 @@ in {
       grammarPackages = config.plugins.treesitter.package.allGrammars;
 
       # Enable all of its useful features.
-      folding = true;
       settings = {
         indent.enable = true;
+        folding.enable = true;
         incremental_selection.enable = true;
       };
     };

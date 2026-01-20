@@ -27,7 +27,7 @@ in {
     # Talk to your programming languages like how and when you would talk to
     # your friends: only when you need to know what value does this Python
     # expression evaluates to.
-    plugins.conjure.enable = true;
+    # plugins.conjure.enable = true;
 
     # Make them parenthesis management tolerable.
     plugins.parinfer-rust.enable = true;
