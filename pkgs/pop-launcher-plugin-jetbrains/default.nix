@@ -12,7 +12,6 @@ rustPlatform.buildRustPackage rec {
   };
 
   cargoHash = "sha256-d54PlaKZaDhQ6PI/J1+IOMqgC/h5XUuEkULLbSTIcUw=";
-  useFetchCargoVendor = true;
 
   postInstall = ''
     install -Dm644 plugin.ron -t "$out/share/pop-launcher/plugins/jetbrains"

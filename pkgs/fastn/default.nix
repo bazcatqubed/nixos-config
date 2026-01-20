@@ -13,7 +13,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   cargoHash = "sha256-0hXOqfid2kyCCLJpg2Q/0aDUXIis6/YTEioQJWmCqcc=";
   cargoBuildFeatures = [ "edition2024" ];
-  useFetchCargoVendor = true;
 
   nativeBuildInputs = [ rustPlatform.bindgenHook cmake pkg-config ];
   buildInputs = [ openssl ];
