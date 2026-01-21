@@ -34,6 +34,8 @@ in
           ardour # Arrrrrr...
           milkytracker # Mommy, mommy, I want milky music.
           sunvox # Synthesize them sunshine and rainbows.
+          helm # Take 'yer synthesizing at 'yer head.
+          surge-XT # FM
         ];
 
         wrapper-manager.packages.music-setup = {

@@ -70,6 +70,7 @@ in
 
       (lib.mkIf config.programs.nushell.enable {
         home.file."${config.xdg.dataHome}/nushell/vendor/autoload".source = getDotfiles "nu/autoload";
+        home.file."${config.xdg.configHome}/nushell/foodogsquared".source = getDotfiles "nu/foodogsquared";
 
         home.sessionVariables = {
           FZF_ALT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --unrestricted";
