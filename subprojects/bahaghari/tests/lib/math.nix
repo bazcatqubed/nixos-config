@@ -4,7 +4,11 @@
 #
 # For future references, the initial maintainer (foodogsquared) basically used
 # GNOME Calculator which uses libmath.
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 let
   # The typical rounding procedure for our results. 10 decimal places should be
@@ -208,22 +212,44 @@ lib.runTests {
   };
 
   testMathSummate = {
-    expr = self.math.summate [ 1 2 3 4 ];
+    expr = self.math.summate [
+      1
+      2
+      3
+      4
+    ];
     expected = 10;
   };
 
   testMathSummate2 = {
-    expr = self.math.summate [ 1 2 3 4.5 5.6 6.7 ];
+    expr = self.math.summate [
+      1
+      2
+      3
+      4.5
+      5.6
+      6.7
+    ];
     expected = 22.8;
   };
 
   testMathProduct = {
-    expr = self.math.product [ 1 2 3 4 ];
+    expr = self.math.product [
+      1
+      2
+      3
+      4
+    ];
     expected = 24;
   };
 
   testMathProduct2 = {
-    expr = self.math.product [ 1.5 2 3 4.6 ];
+    expr = self.math.product [
+      1.5
+      2
+      3
+      4.6
+    ];
     expected = 41.4;
   };
 
@@ -353,19 +379,23 @@ lib.runTests {
     expected = 7.3890560989;
   };
 
-  testMathExp4 = let
-    round' = self.math.round' (-8);
-  in {
-    expr = round' (self.math.exp 8);
-    expected = round' 2980.95798704;
-  };
+  testMathExp4 =
+    let
+      round' = self.math.round' (-8);
+    in
+    {
+      expr = round' (self.math.exp 8);
+      expected = round' 2980.95798704;
+    };
 
-  testMathExp5 = let
-    round' = self.math.round' (-8);
-  in {
-    expr = round' (self.math.exp 8.1);
-    expected = 3294.46807528;
-  };
+  testMathExp5 =
+    let
+      round' = self.math.round' (-8);
+    in
+    {
+      expr = round' (self.math.exp 8.1);
+      expected = 3294.46807528;
+    };
 
   testMathExp6 = {
     expr = round' (self.math.exp (-9.5));
@@ -382,19 +412,23 @@ lib.runTests {
     expected = round' 13.4581714817256;
   };
 
-  testMathAGM2 = let
-    round' = self.math.round' (-9);
-  in {
-    expr = round' (self.math.agm 1 5);
-    expected = round' 2.6040081905309407;
-  };
+  testMathAGM2 =
+    let
+      round' = self.math.round' (-9);
+    in
+    {
+      expr = round' (self.math.agm 1 5);
+      expected = round' 2.6040081905309407;
+    };
 
-  testMathAGM3 = let
-    round' = self.math.round' (-4);
-  in {
-    expr = round' (self.math.agm 1123.0 576.756);
-    expected = round' 827.1835522818762;
-  };
+  testMathAGM3 =
+    let
+      round' = self.math.round' (-4);
+    in
+    {
+      expr = round' (self.math.agm 1123.0 576.756);
+      expected = round' 827.1835522818762;
+    };
 
   testDegreesToRadians = {
     expr = self.math.degreesToRadians 180;
@@ -438,12 +472,14 @@ lib.runTests {
     expected = 0;
   };
 
-  testMathSine3 = let
-    round' = self.math.round' (-5);
-  in {
-    expr = round' (self.math.sin (self.math.constants.pi / 2));
-    expected = round' 1;
-  };
+  testMathSine3 =
+    let
+      round' = self.math.round' (-5);
+    in
+    {
+      expr = round' (self.math.sin (self.math.constants.pi / 2));
+      expected = round' 1;
+    };
 
   testMathSine4 = {
     expr = round' (self.math.sin 360);

@@ -1,5 +1,9 @@
-let sources = import ./npins;
-in { pkgs ? import sources.nixos-stable { } }:
+let
+  sources = import ./npins;
+in
+{
+  pkgs ? import sources.nixos-stable { },
+}:
 
 with pkgs;
 

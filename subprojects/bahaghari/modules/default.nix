@@ -1,1 +1,6 @@
-{ imports = [ ./tinted-theming ./extra-arguments.nix ]; }
+{
+  imports = [
+    ./tinted-theming
+    ./extra-arguments.nix
+  ];
+}

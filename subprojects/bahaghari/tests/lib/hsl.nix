@@ -1,4 +1,8 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 let
   inherit (self.colors.rgb) RGB;
@@ -9,7 +13,8 @@ let
     s = 100;
     l = 45;
   };
-in lib.runTests {
+in
+lib.runTests {
   testsBasicHsl = {
     expr = HSL {
       h = 245;

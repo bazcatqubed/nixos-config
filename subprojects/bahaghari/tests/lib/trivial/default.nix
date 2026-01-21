@@ -1,4 +1,8 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 let
   # The typical rounding procedure for our results. 10 decimal places should be
@@ -71,9 +75,19 @@ let
   };
 
   base24Set = self.trivial.generateBaseDigitType base24GlyphsList;
-in lib.runTests {
+in
+lib.runTests {
   testGenerateCustomGlyphSet = {
-    expr = self.trivial.generateGlyphSet [ "A" "B" "C" "D" "E" "F" "G" "H" ];
+    expr = self.trivial.generateGlyphSet [
+      "A"
+      "B"
+      "C"
+      "D"
+      "E"
+      "F"
+      "G"
+      "H"
+    ];
     expected = customOctalGlyphs;
   };
 
@@ -83,8 +97,16 @@ in lib.runTests {
   };
 
   testGenerateConversionTable = {
-    expr =
-      self.trivial.generateConversionTable [ "A" "B" "C" "D" "E" "F" "G" "H" ];
+    expr = self.trivial.generateConversionTable [
+      "A"
+      "B"
+      "C"
+      "D"
+      "E"
+      "F"
+      "G"
+      "H"
+    ];
     expected = {
       "A" = 0;
       "B" = 1;
@@ -177,7 +199,10 @@ in lib.runTests {
         I'm fine. Thank you for asking.
       '';
       "It's a number" = 53;
-      dog-breeds = [ "chihuahua" "golden retriever" ];
+      dog-breeds = [
+        "chihuahua"
+        "golden retriever"
+      ];
     };
   };
 
@@ -282,12 +307,14 @@ in lib.runTests {
   };
 
   testNumberScaleFloat3 = {
-    expr = round' (self.trivial.scale {
-      inMin = 0;
-      inMax = 255;
-      outMin = 0.0;
-      outMax = 1.0;
-    } 53);
+    expr = round' (
+      self.trivial.scale {
+        inMin = 0;
+        inMax = 255;
+        outMin = 0.0;
+        outMax = 1.0;
+      } 53
+    );
     expected = round' 0.207843;
   };
 

@@ -21,14 +21,17 @@
 # and happy dev running in a rainbow la-la land.
 { pkgs }:
 
-pkgs.lib.makeExtensible (self:
+pkgs.lib.makeExtensible (
+  self:
   let
-    callLibs = file:
+    callLibs =
+      file:
       import file {
         inherit (pkgs) lib;
         inherit pkgs self;
       };
-  in {
+  in
+  {
     trivial = callLibs ./trivial.nix;
     hex = callLibs ./hex.nix;
     math = callLibs ./math.nix;
@@ -48,12 +51,36 @@ pkgs.lib.makeExtensible (self:
     tinted-theming = callLibs ./tinted-theming.nix;
 
     inherit (self.trivial)
-      importYAML toYAML toBaseDigitsWithGlyphs generateGlyphSet
-      generateConversionTable generateBaseDigitType clamp isNumber scale
-      optionalNull toFloat;
+      importYAML
+      toYAML
+      toBaseDigitsWithGlyphs
+      generateGlyphSet
+      generateConversionTable
+      generateBaseDigitType
+      clamp
+      isNumber
+      scale
+      optionalNull
+      toFloat
+      ;
 
     inherit (self.hex) isHexString;
     inherit (self.math)
-      abs pow percentage factorial floor ceil round round' summate product sqrt
-      remainder mod radiansToDegrees degreesToRadians;
-  })
+      abs
+      pow
+      percentage
+      factorial
+      floor
+      ceil
+      round
+      round'
+      summate
+      product
+      sqrt
+      remainder
+      mod
+      radiansToDegrees
+      degreesToRadians
+      ;
+  }
+)

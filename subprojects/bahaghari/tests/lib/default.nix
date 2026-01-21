@@ -2,13 +2,15 @@
 
 let
   lib = import ../../lib { inherit pkgs; };
-  callLib = file:
+  callLib =
+    file:
     import file {
       inherit (pkgs) lib;
       inherit pkgs;
       self = lib;
     };
-in {
+in
+{
   hex = callLib ./hex.nix;
   math = callLib ./math.nix;
   trivial = callLib ./trivial;

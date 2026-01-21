@@ -1,4 +1,11 @@
-{ config, options, lib, pkgs, bahaghariLib, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  bahaghariLib,
+  ...
+}:
 
 {
   options.bahaghari.panapton = {
