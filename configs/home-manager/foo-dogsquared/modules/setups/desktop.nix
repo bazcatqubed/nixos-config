@@ -22,10 +22,8 @@ in {
       aisleriot
       crosswords
 
-      freecad
-      kicad
+      # freecad
       leocad
-      librecad
 
       aider-chat-full
     ];
@@ -216,6 +214,7 @@ in {
                 desktopEntrySettings = {
                   desktopName = "Google Maps";
                   genericName = "Map Viewer";
+                  comment = "Online map viewer";
                   keywords = [
                     "Maps"
                     "Geographic"

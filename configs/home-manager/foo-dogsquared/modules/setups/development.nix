@@ -272,7 +272,7 @@ in {
       home.packages = with pkgs; [
         geogebra6
         marimo
-        julia
+        # julia
       ];
 
       programs.python.modules = ps: with ps; [

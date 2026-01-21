@@ -36,8 +36,6 @@ in {
         # For debugging build environments in Nix packages.
         cntr
 
-        freecad
-
         android-tools
       ];
 

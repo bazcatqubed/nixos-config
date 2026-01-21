@@ -12,7 +12,7 @@ in
     lib.mkEnableOption "development utilities integration within fiesta-fds";
 
   config = lib.mkIf cfg.enable {
-    plugins.conjure.enable = true;
+    # plugins.conjure.enable = true;
 
     # Confirming these files are conforming.
     plugins.conform-nvim = {
