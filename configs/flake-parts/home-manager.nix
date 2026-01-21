@@ -38,7 +38,10 @@
         modules = [
           inputs.nur.modules.homeManager.default
           inputs.sops-nix.homeManagerModules.sops
+
+          # Configure them wrappers and all of the modules associated with it.
           inputs.wrapper-manager-fds.homeModules.wrapper-manager
+          ../../modules/home-manager/_private/programs/gnome-session.nix
         ];
         deploy = {
           autoRollback = true;
