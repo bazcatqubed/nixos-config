@@ -34,7 +34,7 @@ in
               vim.keymap.set(mode, l, r, opts)
             end
 
-            map("n", "]c", function()
+            map("n", "]d", function()
               if vim.wo.diff then
                 vim.cmd.normal({"]c", bang=true})
               else
@@ -42,7 +42,7 @@ in
               end
             end, { desc = "Go to next diff" })
 
-            map("n", "[c", function()
+            map("n", "[d", function()
               if vim.wo.diff then
                 vim.cmd.normal({"[c", bang=true})
               else

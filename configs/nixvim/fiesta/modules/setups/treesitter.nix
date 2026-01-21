@@ -28,6 +28,29 @@ in {
       };
     };
 
+    keymaps = lib.optionals config.plugins.treesitter-context.enable [
+      {
+        mode = "n";
+        key = "[c";
+        options = {
+          desc = "Go to context upwards";
+          silent = true;
+        };
+        action = helpers.mkRaw ''
+          function()
+            require("treesitter-context").go_to_context(vim.v.count1)
+          end
+        '';
+      }
+
+      {
+        mode = "n";
+        key = "<leader>Lc";
+        options.desc = "Toggle context";
+        action = "<cmd>TSContext toggle<CR>";
+      }
+    ];
+
     opts = {
       foldenable = config.plugins.treesitter.folding.enable;
       foldlevelstart = 3;
@@ -43,6 +66,13 @@ in {
         navigation.enable = true;
         smart_rename.enable = true;
       };
+    };
+
+    plugins.treesitter-context = {
+      enable = true;
+
+      # Enable the plugin, just don't enable it by default. ;p
+      settings.enable = false;
     };
 
     # Bring some convenience to editing them.
