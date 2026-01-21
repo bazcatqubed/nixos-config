@@ -2,14 +2,20 @@
 # that). Take note this profile doesn't setup Emacs-as-a-development-tool
 # thing, rather Emacs-as-a-note-taking tool thing with the complete
 # package.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.programs.doom-emacs;
 
   doomEmacsInstallation = "${config.xdg.configHome}/emacs";
-in {
+in
+{
   options.users.foo-dogsquared.programs.doom-emacs.enable =
     lib.mkEnableOption "foo-dogsquared's Doom Emacs configuration";
 
@@ -17,8 +23,8 @@ in {
     programs.emacs = {
       enable = true;
       package = pkgs.emacs;
-      extraPackages = epkgs:
-        with epkgs; [
+      extraPackages =
+        epkgs: with epkgs; [
           org-noter-pdftools
           org-pdftools
           pdf-tools
@@ -30,7 +36,10 @@ in {
     home.mutableFile.${doomEmacsInstallation} = {
       url = "https://github.com/doomemacs/doomemacs.git";
       type = "git";
-      extraArgs = [ "--depth" "1" ];
+      extraArgs = [
+        "--depth"
+        "1"
+      ];
       postScript = ''
         ${doomEmacsInstallation}/bin/doom install --no-config --no-fonts --install --force
         ${doomEmacsInstallation}/bin/doom sync

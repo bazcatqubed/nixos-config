@@ -1,9 +1,17 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 let
   # We're just using stub configurations instead.
   nixosConfig = {
-    programs = { firefox = { enable = true; }; };
+    programs = {
+      firefox = {
+        enable = true;
+      };
+    };
 
     services = {
       pipewire = {
@@ -22,7 +30,10 @@ let
       activitywatch.enable = true;
       bleachbit = {
         enable = true;
-        cleaners = [ "firefox.cookies" "discord.cache" ];
+        cleaners = [
+          "firefox.cookies"
+          "discord.cache"
+        ];
       };
     };
   };
@@ -30,12 +41,12 @@ let
   hmConfig' = {
     inherit nixosConfig;
     osConfig = nixosConfig;
-  } // hmConfig;
-in lib.runTests {
+  }
+  // hmConfig;
+in
+lib.runTests {
   testHomeManagerStandaloneEmpty = {
-    expr =
-      self.home-manager.hasNixOSConfigAttr { } [ "programs" "firefox" "enable" ]
-      false;
+    expr = self.home-manager.hasNixOSConfigAttr { } [ "programs" "firefox" "enable" ] false;
     expected = false;
   };
 

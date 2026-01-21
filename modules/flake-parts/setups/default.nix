@@ -35,7 +35,9 @@
         module environments based from the nixpkgs module system.
       '';
       default = { };
-      example = { allowUnfree = true; };
+      example = {
+        allowUnfree = true;
+      };
     };
 
     sharedSpecialArgs = lib.mkOption {

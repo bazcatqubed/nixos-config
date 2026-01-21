@@ -1,6 +1,17 @@
-{ lib, writeTextDir, buildEnv, extendedStdenv, direnv, coreutils }:
+{
+  lib,
+  writeTextDir,
+  buildEnv,
+  extendedStdenv,
+  direnv,
+  coreutils,
+}:
 
-{ paths ? [ ], pathsToLink ? [ ], ... }@args:
+{
+  paths ? [ ],
+  pathsToLink ? [ ],
+  ...
+}@args:
 
 let
   bashProfile = writeTextDir "/etc/bashrc" ''
@@ -17,7 +28,18 @@ let
       eval "$(${lib.getExe' coreutils "dircolors"} --sh)"
     fi
   '';
-in buildEnv (args // {
-  paths = extendedStdenv ++ paths ++ [ bashProfile ];
-  pathsToLink = [ "/bin" "/etc" "/share" "/lib" "/libexec" ] ++ pathsToLink;
-})
+in
+buildEnv (
+  args
+  // {
+    paths = extendedStdenv ++ paths ++ [ bashProfile ];
+    pathsToLink = [
+      "/bin"
+      "/etc"
+      "/share"
+      "/lib"
+      "/libexec"
+    ]
+    ++ pathsToLink;
+  }
+)

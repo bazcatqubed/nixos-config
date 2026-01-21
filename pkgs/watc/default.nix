@@ -1,4 +1,9 @@
-{ stdenv, lib, fetchhg, buildGoModule }:
+{
+  stdenv,
+  lib,
+  fetchhg,
+  buildGoModule,
+}:
 
 buildGoModule rec {
   pname = "watc";

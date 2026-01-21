@@ -1,13 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   hostCfg = config.hosts.plover;
   cfg = hostCfg.services.fail2ban;
 
   inherit (import ../hardware/networks.nix) interfaces;
-in {
-  options.hosts.plover.services.fail2ban.enable =
-    lib.mkEnableOption "fail2ban monitoring";
+in
+{
+  options.hosts.plover.services.fail2ban.enable = lib.mkEnableOption "fail2ban monitoring";
 
   config = lib.mkIf cfg.enable {
     services.fail2ban = {

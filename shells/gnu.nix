@@ -4,8 +4,20 @@
 # It's a good thing they have documented the full details in one of their
 # manuals at
 # https://www.gnu.org/software/automake/manual/html_node/GNU-Build-System.html
-{ mkShell, lib, autoconf, autoconf-archive, automake, gnumake, gcc, gettext
-, coreutils, pkg-config, help2man, texinfo }:
+{
+  mkShell,
+  lib,
+  autoconf,
+  autoconf-archive,
+  automake,
+  gnumake,
+  gcc,
+  gettext,
+  coreutils,
+  pkg-config,
+  help2man,
+  texinfo,
+}:
 
 mkShell {
   packages = [
@@ -21,5 +33,9 @@ mkShell {
     pkg-config
   ];
 
-  inputsFrom = [ gcc coreutils gnumake ];
+  inputsFrom = [
+    gcc
+    coreutils
+    gnumake
+  ];
 }

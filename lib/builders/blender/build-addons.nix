@@ -1,4 +1,8 @@
-{ lib, stdenv, blender }:
+{
+  lib,
+  stdenv,
+  blender,
+}:
 
 lib.extendMkDerivation {
   constructDrv = stdenv.mkDerivation;
@@ -11,9 +15,9 @@ lib.extendMkDerivation {
       blenderPackage ? blender,
       blenderAddons ? [ ],
       ...
-    }
-    @args:
-    let blenderVersion = lib.versions.majorMinor blenderPackage.version;
+    }@args:
+    let
+      blenderVersion = lib.versions.majorMinor blenderPackage.version;
     in
     {
       passAsFile = args.passAsFile or [ ] ++ [ "paths" ];

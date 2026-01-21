@@ -1,7 +1,15 @@
-{ config, lib, pkgs, helpers, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  helpers,
+  ...
+}:
 
-let cfg = config.plugins.dressing-nvim;
-in {
+let
+  cfg = config.plugins.dressing-nvim;
+in
+{
   options.plugins.dressing-nvim = {
     enable = lib.mkEnableOption "dressing.nvim configuration";
 
@@ -18,7 +26,12 @@ in {
         };
         select = {
           enabled = true;
-          backend = [ "telescope" "fzf_lua" "builtin" "nui" ];
+          backend = [
+            "telescope"
+            "fzf_lua"
+            "builtin"
+            "nui"
+          ];
         };
       };
       description = ''

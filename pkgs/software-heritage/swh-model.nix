@@ -1,4 +1,11 @@
-{ stdenv, lib, python3Packages, attrs-strict, swh-core, ... }:
+{
+  stdenv,
+  lib,
+  python3Packages,
+  attrs-strict,
+  swh-core,
+  ...
+}:
 
 with python3Packages;
 buildPythonPackage rec {

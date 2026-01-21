@@ -1,5 +1,11 @@
 # WHOA! Even browsers with extensions can be declarative!
-{ config, lib, pkgs, foodogsquaredLib, ... }@attrs:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  ...
+}@attrs:
 
 let
   inherit (foodogsquaredLib.xdg) getXdgDesktop;
@@ -15,31 +21,38 @@ let
     { id = "kkmlkkjojmombglmlpbpapmhcaljjkde"; } # Zhongwen
     { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
     { id = "oldceeleldhonbafppcapldpdifcinji"; } # LanguageTool checker
-  ] ++ lib.optionals config.services.activitywatch.enable [
+  ]
+  ++ lib.optionals config.services.activitywatch.enable [
     { id = "nglaklhklhcoonedhgnpgddginnjdadi"; } # ActivityWatch Web Watcher
-  ] ++ lib.optionals (lib.elem "one.foodogsquared.AHappyGNOME" attrs.nixosConfig.workflows.enable or []) [
-    { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # GNOME Shell integration
-    { id = "jfnifeihccihocjbfcfhicmmgpjicaec"; } # GSConnect
-  ] ++ lib.optionals userCfg.services.archivebox.enable [
+  ]
+  ++
+    lib.optionals (lib.elem "one.foodogsquared.AHappyGNOME" attrs.nixosConfig.workflows.enable or [ ])
+      [
+        { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # GNOME Shell integration
+        { id = "jfnifeihccihocjbfcfhicmmgpjicaec"; } # GSConnect
+      ]
+  ++ lib.optionals userCfg.services.archivebox.enable [
     { id = "habonpimjphpdnmcfkaockjnffodikoj"; } # ArchiveBox Extractor
-  ] ++ lib.optionals userCfg.setups.research.enable [
+  ]
+  ++ lib.optionals userCfg.setups.research.enable [
     { id = "iplffkdpngmdjhlpjmppncnlhomiipha"; } # Unpaywall
     { id = "fpnmgdkabkmnadcjpehmlllkndpkmiak"; } # Wayback Machine
     { id = "ekhagklcjbdpajgpjgmbionohlpdbjgc"; } # Zotero connector
     { id = "palihjnakafgffnompkdfgbgdbcagbko"; } # UpdateSWH
-  ] ++ lib.optionals (userCfg.setups.research.enable && userCfg.setups.research.writing.enable) [
+  ]
+  ++ lib.optionals (userCfg.setups.research.enable && userCfg.setups.research.writing.enable) [
     { id = "lodbfhdipoipcjmlebjbgmmgekckhpfb"; } # Harper grammar checker.
-  ] ++ lib.optionals userCfg.setups.development.enable [
+  ]
+  ++ lib.optionals userCfg.setups.development.enable [
     { id = "dgjhfomjieaadpoljlnidmbgkdffpack"; } # Sourcegraph
   ];
-in {
+in
+{
   options.users.foo-dogsquared.programs.browsers = {
     firefox.enable = lib.mkEnableOption "foo-dogsquared's Firefox setup";
     brave.enable = lib.mkEnableOption "foo-dogsquared's Brave setup";
-    google-chrome.enable =
-      lib.mkEnableOption "foo-dogsquared's Google Chrome setup";
-    misc.enable =
-      lib.mkEnableOption "foo-dogsquared's miscellaneous browsers setup";
+    google-chrome.enable = lib.mkEnableOption "foo-dogsquared's Google Chrome setup";
+    misc.enable = lib.mkEnableOption "foo-dogsquared's miscellaneous browsers setup";
 
     plugins.firenvim.enable = lib.mkEnableOption "setting up Firenvim";
   };
@@ -49,8 +62,10 @@ in {
     (lib.mkIf cfg.brave.enable {
       programs.brave = {
         enable = true;
-        commandLineArgs =
-          [ "--no-default-browser-check" "--use-system-default-printer" ];
+        commandLineArgs = [
+          "--no-default-browser-check"
+          "--use-system-default-printer"
+        ];
         extensions = commonExtensions;
       };
 
@@ -71,8 +86,12 @@ in {
       programs.firefox = {
         enable = true;
 
-        nativeMessagingHosts = with pkgs;
-          [ bukubrow tridactyl-native ]
+        nativeMessagingHosts =
+          with pkgs;
+          [
+            bukubrow
+            tridactyl-native
+          ]
           ++ lib.optional config.programs.mpv.enable pkgs.ff2mpv;
 
         policies = {
@@ -93,7 +112,9 @@ in {
           NoDefaultBookmarks = lib.mkForce true;
           OfferToSaveLoginsDefault = false;
           PasswordManagerEnabled = false;
-          SanitizeOnShutdown = { FormData = true; };
+          SanitizeOnShutdown = {
+            FormData = true;
+          };
           UseSystemPrintDialog = true;
         };
 
@@ -103,7 +124,8 @@ in {
 
             userContent = lib.readFile ../../files/firefox/userContent.css;
 
-            extensions.packages = with pkgs.nur.repos.rycee.firefox-addons;
+            extensions.packages =
+              with pkgs.nur.repos.rycee.firefox-addons;
               [
                 bitwarden
                 browserpass
@@ -120,7 +142,8 @@ in {
                 ublock-origin
                 vimium
                 wayback-machine
-              ] ++ (with pkgs.firefox-addons; [
+              ]
+              ++ (with pkgs.firefox-addons; [
                 google-container
                 microsoft-container
                 regretsreporter
@@ -131,14 +154,22 @@ in {
                 unpaywall
                 rsshub-radar
                 refined-github-
-              ]) ++ lib.optionals config.programs.mpv.enable
-              (with pkgs.nur.repos.rycee.firefox-addons; [ ff2mpv ])
-              ++ lib.optionals config.services.activitywatch.enable
-              (with pkgs.nur.repos.rycee.firefox-addons; [ aw-watcher-web ])
-              ++ lib.optionals userCfg.setups.research.enable
-              (with pkgs.nur.repos.rycee.firefox-addons; [ sponsorblock dearrow zotero-connector ])
-              ++ lib.optionals (userCfg.setups.research.enable && userCfg.setups.research.writing.enable)
-              (with pkgs.firefox-addons; [ private-grammar-checker-harper ]);
+              ])
+              ++ lib.optionals config.programs.mpv.enable (with pkgs.nur.repos.rycee.firefox-addons; [ ff2mpv ])
+              ++ lib.optionals config.services.activitywatch.enable (
+                with pkgs.nur.repos.rycee.firefox-addons; [ aw-watcher-web ]
+              )
+              ++ lib.optionals userCfg.setups.research.enable (
+                with pkgs.nur.repos.rycee.firefox-addons;
+                [
+                  sponsorblock
+                  dearrow
+                  zotero-connector
+                ]
+              )
+              ++ lib.optionals (userCfg.setups.research.enable && userCfg.setups.research.writing.enable) (
+                with pkgs.firefox-addons; [ private-grammar-checker-harper ]
+              );
 
             # Much of the settings are affected by the policies set in the
             # package. See more information about them in
@@ -185,8 +216,8 @@ in {
                 # Enable all features through xdg-desktop-portal. I've used
                 # Firefox in modern desktop setups anyways which should have
                 # XDG portals service enabled.
-                foodogsquaredLib.genAttrs' [ "file-picker" "location" "mime-handler" ] (n:
-                  lib.nameValuePair "widget.use-xdg-desktop-portal.${n}" 1
+                foodogsquaredLib.genAttrs' [ "file-picker" "location" "mime-handler" ] (
+                  n: lib.nameValuePair "widget.use-xdg-desktop-portal.${n}" 1
                 )
               ))
 
@@ -199,7 +230,11 @@ in {
             search = {
               default = "Brave";
               force = true;
-              order = [ "Brave" "Nix Packages" "google" ];
+              order = [
+                "Brave"
+                "Nix Packages"
+                "google"
+              ];
               engines = {
                 "Brave" = {
                   urls = lib.singleton {
@@ -216,9 +251,11 @@ in {
                     ];
                   };
 
-                  icon =
-                    "${config.programs.brave.package}/share/icons/hicolor/64x64/apps/brave-browser.png";
-                  definedAliases = [ "@brave" "@b" ];
+                  icon = "${config.programs.brave.package}/share/icons/hicolor/64x64/apps/brave-browser.png";
+                  definedAliases = [
+                    "@brave"
+                    "@b"
+                  ];
                 };
 
                 "Nix Packages" = {
@@ -236,8 +273,7 @@ in {
                     ];
                   };
 
-                  icon =
-                    "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                  icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                   definedAliases = [ "@np" ];
                 };
 
@@ -298,8 +334,7 @@ in {
         ];
       };
 
-      xdg.autostart.entries =
-        lib.singleton (getXdgDesktop config.programs.firefox.package "firefox");
+      xdg.autostart.entries = lib.singleton (getXdgDesktop config.programs.firefox.package "firefox");
 
       # Configuring Bleachbit for Firefox cleaning.
       services.bleachbit.cleaners = [
@@ -318,8 +353,10 @@ in {
     (lib.mkIf cfg.google-chrome.enable {
       programs.google-chrome.enable = true;
 
-      programs.google-chrome.commandLineArgs =
-        [ "--no-default-browser-check" "--use-system-default-printer" ];
+      programs.google-chrome.commandLineArgs = [
+        "--no-default-browser-check"
+        "--use-system-default-printer"
+      ];
 
       services.bleachbit.cleaners = [
         "google_chrome.cookies"
@@ -341,17 +378,27 @@ in {
       ];
     })
 
-    (lib.mkIf cfg.plugins.firenvim.enable (let
-      supportedBrowsers = [ "brave" "chromium" "google-chrome" "vivaldi" ];
-      enableSupportedBrowser = acc: name:
-        acc // {
-          programs.${name}.extensions =
-            [{ id = "egpjdkipkomnmjhjmdamaniclmdlobbo"; }];
-        };
-    in lib.foldl' enableSupportedBrowser { } supportedBrowsers // {
-      programs.firefox.profiles.personal.extensions.packages =
-        with pkgs.nur.repos.rycee.firefox-addons;
-        [ firenvim ];
-    }))
+    (lib.mkIf cfg.plugins.firenvim.enable (
+      let
+        supportedBrowsers = [
+          "brave"
+          "chromium"
+          "google-chrome"
+          "vivaldi"
+        ];
+        enableSupportedBrowser =
+          acc: name:
+          acc
+          // {
+            programs.${name}.extensions = [ { id = "egpjdkipkomnmjhjmdamaniclmdlobbo"; } ];
+          };
+      in
+      lib.foldl' enableSupportedBrowser { } supportedBrowsers
+      // {
+        programs.firefox.profiles.personal.extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+          firenvim
+        ];
+      }
+    ))
   ];
 }

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.gallery-dl;
@@ -6,79 +11,85 @@ let
   jobUnitName = name: "gallery-dl-job-${name}";
 
   settingsFormat = pkgs.formats.json { };
-  settingsFormatFile =
-    settingsFormat.generate "gallery-dl-service-config-${config.home.username}"
-    cfg.settings;
+  settingsFormatFile = settingsFormat.generate "gallery-dl-service-config-${config.home.username}" cfg.settings;
 
-  jobType = { name, config, options, ... }: {
-    options = {
-      urls = lib.mkOption {
-        type = with lib.types; listOf str;
-        default = [ ];
-        description = ''
-          A list of URLs to be downloaded to {command}`gallery-dl`. Please
-          see the list of extractors with `--list-extractors`.
-        '';
-        example = lib.literalExpression ''
-          [
-            "https://www.deviantart.com/xezeno"
-            "https://www.pixiv.net/en/users/60562229"
-          ]
-        '';
-      };
+  jobType =
+    {
+      name,
+      config,
+      options,
+      ...
+    }:
+    {
+      options = {
+        urls = lib.mkOption {
+          type = with lib.types; listOf str;
+          default = [ ];
+          description = ''
+            A list of URLs to be downloaded to {command}`gallery-dl`. Please
+            see the list of extractors with `--list-extractors`.
+          '';
+          example = lib.literalExpression ''
+            [
+              "https://www.deviantart.com/xezeno"
+              "https://www.pixiv.net/en/users/60562229"
+            ]
+          '';
+        };
 
-      startAt = lib.mkOption {
-        type = with lib.types; str;
-        description = ''
-          Indicates how frequent the download will occur. The given schedule
-          should follow the format as described from
-          {manpage}`systemd.time(5)`.
-        '';
-        default = "daily";
-        example = "*-*-3/4";
-      };
+        startAt = lib.mkOption {
+          type = with lib.types; str;
+          description = ''
+            Indicates how frequent the download will occur. The given schedule
+            should follow the format as described from
+            {manpage}`systemd.time(5)`.
+          '';
+          default = "daily";
+          example = "*-*-3/4";
+        };
 
-      persistent = lib.mkOption {
-        type = lib.types.bool;
-        description = ''
-          Indicates whether job is persistent, starting the service despite the
-          timer missed. Defaults to `true` assuming it is used on the desktop.
-        '';
-        default = true;
-        defaultText = "true";
-        example = "false";
-      };
+        persistent = lib.mkOption {
+          type = lib.types.bool;
+          description = ''
+            Indicates whether job is persistent, starting the service despite the
+            timer missed. Defaults to `true` assuming it is used on the desktop.
+          '';
+          default = true;
+          defaultText = "true";
+          example = "false";
+        };
 
-      extraArgs = lib.mkOption {
-        type = with lib.types; listOf str;
-        description = ''
-          Job-specific extra arguments to be passed to the
-          {command}`gallery-dl`.
-        '';
-        default = [ ];
-        example = lib.literalExpression ''
-          [
-            "--date" "today-1week" # get only videos from a week ago
-            "--output" "%(uploader)s/%(title)s.%(ext)s" # download them in the respective directory
-          ]
-        '';
-      };
+        extraArgs = lib.mkOption {
+          type = with lib.types; listOf str;
+          description = ''
+            Job-specific extra arguments to be passed to the
+            {command}`gallery-dl`.
+          '';
+          default = [ ];
+          example = lib.literalExpression ''
+            [
+              "--date" "today-1week" # get only videos from a week ago
+              "--output" "%(uploader)s/%(title)s.%(ext)s" # download them in the respective directory
+            ]
+          '';
+        };
 
-      settings = lib.mkOption {
-        type = settingsFormat.type;
-        description = ''
-          Job-specific settings to be overridden to the service-wide settings.
-        '';
-        default = { };
-        example = lib.literalExpression ''
-          {
-            extractor.directory = [ "{category}" "{user|artist|uploader}" ];
-          }
-        '';
+        settings = lib.mkOption {
+          type = settingsFormat.type;
+          description = ''
+            Job-specific settings to be overridden to the service-wide settings.
+          '';
+          default = { };
+          example = lib.literalExpression ''
+            {
+              extractor.directory = [ "{category}" "{user|artist|uploader}" ];
+            }
+          '';
+        };
       };
     };
-  };
-in {
+in
+{
   options.services.gallery-dl = {
     enable = lib.mkEnableOption "archiving services with gallery-dl";
 
@@ -97,8 +108,7 @@ in {
         path.
       '';
       default = "${config.xdg.userDirs.pictures}/gallery-dl-service";
-      example = lib.literalExpression
-        "\${config.xdg.userDirs.download}/archiving-service/photos";
+      example = lib.literalExpression "\${config.xdg.userDirs.download}/archiving-service/photos";
     };
 
     settings = lib.mkOption {
@@ -157,7 +167,8 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
-    systemd.user.services = lib.mapAttrs' (name: value:
+    systemd.user.services = lib.mapAttrs' (
+      name: value:
       lib.nameValuePair (jobUnitName name) {
         Unit = {
           Description = "gallery-dl archive job for group '${name}'";
@@ -165,26 +176,24 @@ in {
           Documentation = "man:gallery-dl(1)";
         };
 
-        Service.ExecStart = let
-          scriptName = "gallery-dl-service-${config.home.username}-${name}";
-          jobSpecificSettingsFile =
-            settingsFormat.generate "gallery-dl-service-job-${name}-settings"
-            value.settings;
-          archiveScript = pkgs.writeShellScriptBin scriptName ''
-            ${cfg.package}/bin/gallery-dl ${
-              lib.escapeShellArgs cfg.extraArgs
-            } ${
-              lib.optionalString (cfg.settings != null)
-              "--config ${settingsFormatFile}"
-            } ${lib.escapeShellArgs value.extraArgs} ${
-              lib.optionalString (value.settings != null)
-              "--config ${jobSpecificSettingsFile}"
-            } --destination ${cfg.archivePath} ${lib.escapeShellArgs value.urls}
-          '';
-        in "${archiveScript}/bin/${scriptName}";
-      }) cfg.jobs;
+        Service.ExecStart =
+          let
+            scriptName = "gallery-dl-service-${config.home.username}-${name}";
+            jobSpecificSettingsFile = settingsFormat.generate "gallery-dl-service-job-${name}-settings" value.settings;
+            archiveScript = pkgs.writeShellScriptBin scriptName ''
+              ${cfg.package}/bin/gallery-dl ${lib.escapeShellArgs cfg.extraArgs} ${
+                lib.optionalString (cfg.settings != null) "--config ${settingsFormatFile}"
+              } ${lib.escapeShellArgs value.extraArgs} ${
+                lib.optionalString (value.settings != null) "--config ${jobSpecificSettingsFile}"
+              } --destination ${cfg.archivePath} ${lib.escapeShellArgs value.urls}
+            '';
+          in
+          "${archiveScript}/bin/${scriptName}";
+      }
+    ) cfg.jobs;
 
-    systemd.user.timers = lib.mapAttrs' (name: value:
+    systemd.user.timers = lib.mapAttrs' (
+      name: value:
       lib.nameValuePair (jobUnitName name) {
         Unit = {
           Description = "gallery-dl archive job for group '${name}'";
@@ -198,6 +207,7 @@ in {
         };
 
         Install.WantedBy = [ "timers.target" ];
-      }) cfg.jobs;
+      }
+    ) cfg.jobs;
   };
 }

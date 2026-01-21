@@ -1,22 +1,40 @@
-{ stdenv, lib, fetchurl, autoreconfHook, recoll, python3Packages, glib
-, gobject-introspection, wrapGAppsHook3, gnome-shell }:
+{
+  stdenv,
+  lib,
+  fetchurl,
+  autoreconfHook,
+  recoll,
+  python3Packages,
+  glib,
+  gobject-introspection,
+  wrapGAppsHook3,
+  gnome-shell,
+}:
 
 python3Packages.buildPythonPackage rec {
   pname = "gnome-search-provider-recoll";
   version = "1.1.1";
 
   src = fetchurl {
-    url =
-      "https://www.lesbonscomptes.com/recoll/downloads/gssp-recoll-${version}.tar.gz";
+    url = "https://www.lesbonscomptes.com/recoll/downloads/gssp-recoll-${version}.tar.gz";
     sha256 = "sha256-CSW1EvLXa4SXSak8wMFfBBqtS2LkSGeu4El9fEBN/aY=";
   };
 
   format = "other";
   strictDeps = false;
   dontWrapGApps = true;
-  nativeBuildInputs = [ wrapGAppsHook3 autoreconfHook gobject-introspection ];
-  propagatedBuildInputs = [ recoll ]
-    ++ (with python3Packages; [ pydbus pygobject3 ]);
+  nativeBuildInputs = [
+    wrapGAppsHook3
+    autoreconfHook
+    gobject-introspection
+  ];
+  propagatedBuildInputs = [
+    recoll
+  ]
+  ++ (with python3Packages; [
+    pydbus
+    pygobject3
+  ]);
   buildInputs = [ glib ];
 
   postPatch = ''

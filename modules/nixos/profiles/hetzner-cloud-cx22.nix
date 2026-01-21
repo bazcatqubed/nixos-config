@@ -1,4 +1,10 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
@@ -11,14 +17,19 @@
     efiInstallAsRemovable = true;
   };
 
-  boot.initrd.availableKernelModules =
-    [ "ata_piix" "virtio_pci" "virtio_scsi" "xhci_pci" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [
+    "ata_piix"
+    "virtio_pci"
+    "virtio_scsi"
+    "xhci_pci"
+    "sd_mod"
+    "sr_mod"
+  ];
   boot.initrd.kernelModules = [ "nvme" ];
 
   zramSwap.enable = true;
 
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   services.qemuGuest.enable = true;
   systemd.services.qemu-guest-agent.path = [ pkgs.shadow ];

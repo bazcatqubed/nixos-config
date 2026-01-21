@@ -1,4 +1,8 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 rec {
   /**
@@ -26,8 +30,7 @@ rec {
     => /nix/store/$HASH-wezterm-org.wezterm.wezterm.desktop
     ```
   */
-  getXdgDesktop = drv: name:
-    "${drv}/share/applications/${name}.desktop";
+  getXdgDesktop = drv: name: "${drv}/share/applications/${name}.desktop";
 
   /**
     Naively get the absolute path of an autostart file given a derivation and a
@@ -54,6 +57,5 @@ rec {
     => /nix/store/$HASH-wezterm-org.wezterm.wezterm.desktop
     ```
   */
-  getXdgAutostartFile = drv: name:
-    "${drv}/etc/xdg/autostart/${name}.desktop";
+  getXdgAutostartFile = drv: name: "${drv}/etc/xdg/autostart/${name}.desktop";
 }

@@ -15,8 +15,14 @@
       };
 
       research = {
-        links = [ "https://arxiv.org/rss/cs" "https://distill.pub/" ];
-        extraArgs = [ "--depth" "1" ];
+        links = [
+          "https://arxiv.org/rss/cs"
+          "https://distill.pub/"
+        ];
+        extraArgs = [
+          "--depth"
+          "1"
+        ];
         startAt = "daily";
       };
 

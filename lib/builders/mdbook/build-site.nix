@@ -1,4 +1,9 @@
-{ lib, stdenv, mdbook, rustPlatform }:
+{
+  lib,
+  stdenv,
+  mdbook,
+  rustPlatform,
+}:
 
 lib.extendMkDerivation {
   constructDrv = stdenv.mkDerivation;
@@ -19,23 +24,28 @@ lib.extendMkDerivation {
       ];
 
       buildInputs = args.buildInputs or [ ] ++ [ mdbook ];
-      buildFlags = args.buildFlags or [ ] ++ [ "--dest-dir" buildDir ];
+      buildFlags = args.buildFlags or [ ] ++ [
+        "--dest-dir"
+        buildDir
+      ];
 
-      buildPhase = args.buildPhase or ''
-        runHook preBuild
+      buildPhase =
+        args.buildPhase or ''
+          runHook preBuild
 
-        mdbook ''${buildFlags[@]}
+          mdbook ''${buildFlags[@]}
 
-        runHook postBuild
-      '';
+          runHook postBuild
+        '';
 
-      installPhase = args.installPhase or ''
-        runHook preInstall
+      installPhase =
+        args.installPhase or ''
+          runHook preInstall
 
-        cp -r ./${buildDir}/* $out/
+          cp -r ./${buildDir}/* $out/
 
-        runHook postInstall
-      '';
+          runHook postInstall
+        '';
 
       doCheck = args.doCheck or true;
       dontFixup = args.dontFixup or true;

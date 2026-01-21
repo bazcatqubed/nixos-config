@@ -1,86 +1,115 @@
-{ lib, config, options, inputs, ... }:
+{
+  lib,
+  config,
+  options,
+  inputs,
+  ...
+}:
 
 let
   partsConfig = config;
   cfg = config.setups.wrapper-manager;
 
-  mkWrapperManagerPackage = { pkgs, wrapperManagerBranch ? "wrapper-manager-fds", modules ? [ ], specialArgs ? { }, }:
+  mkWrapperManagerPackage =
+    {
+      pkgs,
+      wrapperManagerBranch ? "wrapper-manager-fds",
+      modules ? [ ],
+      specialArgs ? { },
+    }:
     inputs.${wrapperManagerBranch}.lib.build { inherit pkgs modules specialArgs; };
 
-  wrapperManagerIntegrationModule = { name, config, lib, ... }: {
-    options.wrapper-manager = {
-      additionalModules = lib.mkOption {
-        type = with lib.types; listOf deferredModule;
-        default = [ ];
-        description = ''
-          Additional wrapper-manager modules to be included in the wider-scoped
-          environment.
-        '';
+  wrapperManagerIntegrationModule =
+    {
+      name,
+      config,
+      lib,
+      ...
+    }:
+    {
+      options.wrapper-manager = {
+        additionalModules = lib.mkOption {
+          type = with lib.types; listOf deferredModule;
+          default = [ ];
+          description = ''
+            Additional wrapper-manager modules to be included in the wider-scoped
+            environment.
+          '';
+        };
+
+        branch = lib.mkOption {
+          type = with lib.types; nullOr nonEmptyStr;
+          default = "wrapper-manager-fds";
+          example = "wrapper-manager-fds-stable";
+          description = ''
+            Name of the flake input containing the wrapper-manager-fds dependency.
+          '';
+        };
+
+        packages = lib.mkOption {
+          type =
+            with lib.types;
+            attrsOf (submodule {
+              options.additionalModules = lib.mkOption {
+                type = with lib.types; listOf deferredModule;
+                description = ''
+                  Additional wrapper-manager modules to be included into the given
+                  declarative wrapper-manager configuration.
+                '';
+                default = [ ];
+              };
+            });
+          default = { };
+          description = ''
+            Include declared wrapper-manager packages into the wider environment.
+          '';
+        };
       };
 
-      branch = lib.mkOption {
-        type = with lib.types; nullOr nonEmptyStr;
-        default = "wrapper-manager-fds";
-        example = "wrapper-manager-fds-stable";
-        description = ''
-          Name of the flake input containing the wrapper-manager-fds dependency.
-        '';
-      };
+      config = lib.mkIf (config.wrapper-manager.packages != { }) {
+        modules = [
+          (
+            { lib, ... }:
+            {
+              wrapper-manager.sharedModules = cfg.sharedModules ++ config.wrapper-manager.additionalModules;
 
-      packages = lib.mkOption {
-        type = with lib.types;
-          attrsOf (submodule {
-            options.additionalModules = lib.mkOption {
-              type = with lib.types; listOf deferredModule;
-              description = ''
-                Additional wrapper-manager modules to be included into the given
-                declarative wrapper-manager configuration.
-              '';
-              default = [ ];
-            };
-          });
-        default = { };
-        description = ''
-          Include declared wrapper-manager packages into the wider environment.
-        '';
+              wrapper-manager.packages = lib.mapAttrs (name: wmPackage: {
+                imports = partsConfig.setups.wrapper-manager.configs.${name}.modules ++ wmPackage.additionalModules;
+              }) config.wrapper-manager.packages;
+            }
+          )
+        ];
       };
     };
 
-    config = lib.mkIf (config.wrapper-manager.packages != { }) {
-      modules = [
-        ({ lib, ... }: {
-          wrapper-manager.sharedModules = cfg.sharedModules
-            ++ config.wrapper-manager.additionalModules;
+  wrapperManagerConfigModule =
+    {
+      name,
+      config,
+      lib,
+      ...
+    }:
+    {
+      options = {
+        standaloneConfigModules = options.setups.wrapper-manager.standaloneConfigModules // {
+          description = ''
+            A list of config-specific modules to be included when the
+            wrapper-manager package is deployed as a standalone package.
+          '';
+        };
+      };
 
-          wrapper-manager.packages = lib.mapAttrs (name: wmPackage: {
-            imports = partsConfig.setups.wrapper-manager.configs.${name}.modules
-              ++ wmPackage.additionalModules;
-          }) config.wrapper-manager.packages;
-        })
-      ];
-    };
-  };
+      config = {
+        nixpkgs.config = cfg.sharedNixpkgsConfig;
+        specialArgs = cfg.sharedSpecialArgs;
 
-  wrapperManagerConfigModule = { name, config, lib, ... }: {
-    options = {
-      standaloneConfigModules = options.setups.wrapper-manager.standaloneConfigModules // {
-        description = ''
-          A list of config-specific modules to be included when the
-          wrapper-manager package is deployed as a standalone package.
-        '';
+        modules = [
+          "${partsConfig.setups.configDir}/wrapper-manager/${config.configName}"
+        ];
       };
     };
-
-    config = {
-      nixpkgs.config = cfg.sharedNixpkgsConfig;
-      specialArgs = cfg.sharedSpecialArgs;
-
-      modules = [
-        "${partsConfig.setups.configDir}/wrapper-manager/${config.configName}"
-      ];
-    };
-  };
-in {
+in
+{
   options.setups.wrapper-manager = {
     sharedNixpkgsConfig = options.setups.sharedNixpkgsConfig // {
       description = ''
@@ -90,7 +119,8 @@ in {
     };
 
     configs = lib.mkOption {
-      type = with lib.types;
+      type =
+        with lib.types;
         attrsOf (submodule [
           (import ./shared/config-options.nix { inherit (config) systems; })
           ./shared/nixpkgs-options.nix
@@ -139,13 +169,15 @@ in {
 
   # Integrations with the composable environments such as NixOS and home-manager.
   options.setups.nixos.configs = lib.mkOption {
-    type = with lib.types;
+    type =
+      with lib.types;
       attrsOf (submodule [
         wrapperManagerIntegrationModule
-        ({ config, lib, ... }: {
-          config = lib.mkIf (config.wrapper-manager.packages != { }) {
-            modules =
-              [
+        (
+          { config, lib, ... }:
+          {
+            config = lib.mkIf (config.wrapper-manager.packages != { }) {
+              modules = [
                 inputs.${config.wrapper-manager.branch}.nixosModules.default
 
                 {
@@ -154,60 +186,76 @@ in {
                   wrapper-manager.extraSpecialArgs = cfg.sharedSpecialArgs;
                 }
               ];
-          };
-        })
+            };
+          }
+        )
       ]);
   };
 
   options.setups.home-manager.configs = lib.mkOption {
-    type = with lib.types;
+    type =
+      with lib.types;
       attrsOf (submodule [
         wrapperManagerIntegrationModule
-        ({ config, lib, ... }: {
-          config = lib.mkMerge [
-            (lib.mkIf (config.wrapper-manager.branch != null) {
-              modules = [
-                inputs.${config.wrapper-manager.branch}.homeModules.default
+        (
+          { config, lib, ... }:
+          {
+            config = lib.mkMerge [
+              (lib.mkIf (config.wrapper-manager.branch != null) {
+                modules = [
+                  inputs.${config.wrapper-manager.branch}.homeModules.default
 
-                # Welp, it's not complete since each package will not its
-                # package-specific specialArgs.
-                { wrapper-manager.extraSpecialArgs = cfg.sharedSpecialArgs; }
-              ];
-            })
-          ];
-        })
+                  # Welp, it's not complete since each package will not its
+                  # package-specific specialArgs.
+                  { wrapper-manager.extraSpecialArgs = cfg.sharedSpecialArgs; }
+                ];
+              })
+            ];
+          }
+        )
       ]);
   };
 
   config = lib.mkMerge [
     {
-      setups.wrapper-manager.sharedNixpkgsConfig =
-        config.setups.sharedNixpkgsConfig;
+      setups.wrapper-manager.sharedNixpkgsConfig = config.setups.sharedNixpkgsConfig;
 
-      setups.wrapper-manager.sharedSpecialArgs =
-        config.setups.sharedSpecialArgs;
+      setups.wrapper-manager.sharedSpecialArgs = config.setups.sharedSpecialArgs;
     }
 
     (lib.mkIf (cfg.configs != { }) {
-      perSystem = { system, config, lib, ... }:
+      perSystem =
+        {
+          system,
+          config,
+          lib,
+          ...
+        }:
         let
-          validWrapperManagerConfigs =
-            lib.filterAttrs (_: metadata: lib.elem system metadata.systems)
-            cfg.configs;
-        in {
-          wrapperManagerPackages = lib.mapAttrs (name: metadata:
+          validWrapperManagerConfigs = lib.filterAttrs (
+            _: metadata: lib.elem system metadata.systems
+          ) cfg.configs;
+        in
+        {
+          wrapperManagerPackages = lib.mapAttrs (
+            name: metadata:
             let
               pkgs = import inputs.${metadata.nixpkgs.branch} {
                 inherit (metadata.nixpkgs) config;
                 inherit system;
               };
-            in mkWrapperManagerPackage {
+            in
+            mkWrapperManagerPackage {
               inherit pkgs;
               inherit (metadata) specialArgs;
               wrapperManagerBranch = metadata.wrapper-manager.branch;
-              modules = cfg.sharedModules ++ cfg.standaloneConfigModules
-                ++ metadata.modules ++ metadata.standaloneConfigModules;
-            }) validWrapperManagerConfigs;
+              modules =
+                cfg.sharedModules
+                ++ cfg.standaloneConfigModules
+                ++ metadata.modules
+                ++ metadata.standaloneConfigModules;
+            }
+          ) validWrapperManagerConfigs;
         };
     })
   ];

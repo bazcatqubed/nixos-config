@@ -1,8 +1,15 @@
 # Mainly used for managing the installations with deploy-rs.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let name = "admin";
-in {
+let
+  name = "admin";
+in
+{
   users.users.${name} = {
     description = "The administrator account for the servers.";
     isNormalUser = true;
@@ -15,18 +22,24 @@ in {
   };
 
   # We're going passwordless, baybee!
-  security.sudo.extraRules = [{
-    users = [ name ];
-    commands = [{
-      command = "ALL";
-      options = [ "NOPASSWD" ];
-    }];
-  }];
+  security.sudo.extraRules = [
+    {
+      users = [ name ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 
-  security.doas.extraRules = [{
-    users = [ name ];
-    noPass = true;
-  }];
+  security.doas.extraRules = [
+    {
+      users = [ name ];
+      noPass = true;
+    }
+  ];
 
   # This is also a trusted user for the Nix daemon.
   nix.settings.trusted-users = [ name ];

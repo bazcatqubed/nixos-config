@@ -1,4 +1,12 @@
-{ stdenv, lib, rustPlatform, fetchFromGitHub, pkg-config, libinput, udev }:
+{
+  stdenv,
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  pkg-config,
+  libinput,
+  udev,
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "wzmach";
@@ -14,7 +22,10 @@ rustPlatform.buildRustPackage rec {
   cargoHash = "sha256-MknrsJuNMS5BgCbgMuqSPzxyR70y24TGsKMPOuzfkjY=";
 
   nativeBuildInputs = [ pkg-config ];
-  buildInputs = [ libinput udev ];
+  buildInputs = [
+    libinput
+    udev
+  ];
 
   postInstall = ''
     install -Dm644 config.ron -t $out/share/wzmach/examples

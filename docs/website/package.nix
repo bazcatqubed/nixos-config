@@ -1,4 +1,10 @@
-{ lib, buildHugoSite, bundlerEnv, ruby_3_4, writeShellScriptBin, }:
+{
+  lib,
+  buildHugoSite,
+  bundlerEnv,
+  ruby_3_4,
+  writeShellScriptBin,
+}:
 
 let
   gems = bundlerEnv {
@@ -10,7 +16,8 @@ let
   asciidoctorWrapper = writeShellScriptBin "asciidoctor" ''
     ${lib.getExe' gems "asciidoctor"} -T ${./assets/templates/asciidoctor} $@
   '';
-in buildHugoSite {
+in
+buildHugoSite {
   pname = "foodogsquared-docs";
   version = "2024-11-21";
 

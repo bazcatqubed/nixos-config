@@ -1,4 +1,9 @@
-{ lib, fetchFromGitHub, python3, mopidy }:
+{
+  lib,
+  fetchFromGitHub,
+  python3,
+  mopidy,
+}:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "mopidy-listenbrainz";
@@ -12,12 +17,16 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-kYZgG2KQMTxMR8tdwwCKkfexDcxcndXG9LSdlnoN/CY=";
   };
 
-  propagatedBuildInputs = with python3.pkgs;
-    [ pykka musicbrainzngs ] ++ [ mopidy ];
+  propagatedBuildInputs =
+    with python3.pkgs;
+    [
+      pykka
+      musicbrainzngs
+    ]
+    ++ [ mopidy ];
 
   meta = with lib; {
-    description =
-      "Mopidy extension for getting recommendations with Listenbrainz";
+    description = "Mopidy extension for getting recommendations with Listenbrainz";
     homepage = "https://github.com/suaviloquence/mopidy-listenbrainz";
     license = licenses.apsl20;
     platforms = mopidy.meta.platforms;

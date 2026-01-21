@@ -6,10 +6,15 @@
 # If you have to add those functions, you'll have to add them in configUtils.
 { pkgs }:
 
-let inherit (pkgs) lib;
-in pkgs.lib.makeExtensible (self:
-  let callLib = file: import file { inherit pkgs lib self; };
-  in {
+let
+  inherit (pkgs) lib;
+in
+pkgs.lib.makeExtensible (
+  self:
+  let
+    callLib = file: import file { inherit pkgs lib self; };
+  in
+  {
     trivial = callLib ./trivial.nix;
     data = callLib ./data.nix;
     math = callLib ./math.nix;
@@ -31,8 +36,15 @@ in pkgs.lib.makeExtensible (self:
     # foodogsquared's version of a standard environment. Basically just an
     # extended version of nixpkgs' version that went overboard with
     # developer-oriented dependencies.
-    stdenv = with pkgs;
-      [ direnv cookiecutter oils-for-unix nushell ipcalc ]
+    stdenv =
+      with pkgs;
+      [
+        direnv
+        cookiecutter
+        oils-for-unix
+        nushell
+        ipcalc
+      ]
       ++ lib.optionals stdenv.isLinux [
         gdb
         moreutils
@@ -42,25 +54,52 @@ in pkgs.lib.makeExtensible (self:
         man-pages
         man-pages-posix
         neovim
-      ] ++ (import "${pkgs.path}/pkgs/stdenv/generic/common-path.nix" {
+      ]
+      ++ (import "${pkgs.path}/pkgs/stdenv/generic/common-path.nix" {
         inherit pkgs;
       });
 
     inherit (self.builders)
-      makeXDGMimeAssociationList makeXDGPortalConfiguration makeXDGDesktopEntry
-      buildHugoSite buildMdbookSite buildMkdocsSite buildAntoraSite buildFDSEnv
-      buildDconfDb buildDconfProfile buildDconfConf buildDconfPackage
-      buildDockerImage;
+      makeXDGMimeAssociationList
+      makeXDGPortalConfiguration
+      makeXDGDesktopEntry
+      buildHugoSite
+      buildMdbookSite
+      buildMkdocsSite
+      buildAntoraSite
+      buildFDSEnv
+      buildDconfDb
+      buildDconfProfile
+      buildDconfConf
+      buildDconfPackage
+      buildDockerImage
+      ;
     inherit (self.trivial)
-      countAttrs filterAttrs' bitsToBytes SIPrefixExponent
-      metricPrefixMultiplier binaryPrefixExponent binaryPrefixMultiplier
-      parseBytesSizeIntoInt unitsToInt genAttrs';
+      countAttrs
+      filterAttrs'
+      bitsToBytes
+      SIPrefixExponent
+      metricPrefixMultiplier
+      binaryPrefixExponent
+      binaryPrefixMultiplier
+      parseBytesSizeIntoInt
+      unitsToInt
+      genAttrs'
+      ;
     inherit (self.data) importYAML renderTeraTemplate renderMustacheTemplate;
-    inherit (self.fetchers) fetchInternetArchive fetchUgeeDriver
-      fetchWebsiteIcon fetchPexelsImages fetchPexelsVideos fetchUnsplashImages;
+    inherit (self.fetchers)
+      fetchInternetArchive
+      fetchUgeeDriver
+      fetchWebsiteIcon
+      fetchPexelsImages
+      fetchPexelsVideos
+      fetchUnsplashImages
+      ;
     inherit (self.xdg) getXdgDesktop getXdgAutostartFile;
-  } // lib.optionalAttrs (builtins ? fetchTree) {
+  }
+  // lib.optionalAttrs (builtins ? fetchTree) {
     flake = callLib ./flake.nix;
 
     inherit (self.flake) importFlakeMetadata fetchTree fetchInput;
-  })
+  }
+)

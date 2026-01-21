@@ -3,12 +3,14 @@
 {
   setups.nixvim.configs = {
     fiesta = {
-      components = [{
-        nixpkgsBranch = "nixos-unstable";
-        nixvimBranch = "nixvim-unstable";
-        neovimPackage = pkgs: pkgs.neovim;
-        overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
-      }];
+      components = [
+        {
+          nixpkgsBranch = "nixos-unstable";
+          nixvimBranch = "nixvim-unstable";
+          neovimPackage = pkgs: pkgs.neovim;
+          overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
+        }
+      ];
     };
 
     trovebelt = {
@@ -16,7 +18,10 @@
         nixpkgsBranch = [ "nixos-unstable" ];
         nixvimBranch = [ "nixvim-unstable" ];
         neovimPackage = [ (pkgs: pkgs.neovim) ];
-        overlays = [ [ inputs.neovim-nightly-overlay.overlays.default ] [ ] ];
+        overlays = [
+          [ inputs.neovim-nightly-overlay.overlays.default ]
+          [ ]
+        ];
       };
     };
   };
@@ -26,5 +31,7 @@
     inputs.self.nixvimModules.bahaghari
   ];
 
-  flake = { nixvimModules.default = inputs.fds-core.nixvimModules.default; };
+  flake = {
+    nixvimModules.default = inputs.fds-core.nixvimModules.default;
+  };
 }

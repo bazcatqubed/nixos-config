@@ -1,4 +1,10 @@
-{ lib, fetchFromGitHub, python3, mopidy, beets }:
+{
+  lib,
+  fetchFromGitHub,
+  python3,
+  mopidy,
+  beets,
+}:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "mopidy-beets";
@@ -12,10 +18,21 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-V7ftl1Hvyt54I3+wTRWfSw3k5rkvYurH62hsjwJ2TCs=";
   };
 
-  propagatedBuildInputs = with python3.pkgs;
-    [ pykka requests ] ++ [ mopidy beets ];
+  propagatedBuildInputs =
+    with python3.pkgs;
+    [
+      pykka
+      requests
+    ]
+    ++ [
+      mopidy
+      beets
+    ];
 
-  checkInputs = with python3.pkgs; [ pytest pytest-cov ];
+  checkInputs = with python3.pkgs; [
+    pytest
+    pytest-cov
+  ];
 
   meta = with lib; {
     description = "Mopidy extension for playing music from a Beets collection";

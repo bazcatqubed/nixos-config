@@ -8,7 +8,8 @@ let
   nixosModules = ../../nixos;
   nixvimModules = ../../nixvim;
   wrapperManagerModules = ../../wrapper-manager;
-in {
+in
+{
   setups.home-manager = {
     sharedSpecialArgs = {
       foodogsquaredModulesPath = builtins.toString homeManagerModules;
@@ -21,9 +22,8 @@ in {
 
   setups.nixos = {
     sharedSpecialArgs = {
-      foodogsquaredUtils =
-        import ../../../lib/utils/nixos.nix { inherit lib; };
-        foodogsquaredModulesPath = builtins.toString nixosModules;
+      foodogsquaredUtils = import ../../../lib/utils/nixos.nix { inherit lib; };
+      foodogsquaredModulesPath = builtins.toString nixosModules;
     };
     sharedModules = [
       nixosModules

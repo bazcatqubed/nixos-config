@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.jujutsu = {
@@ -10,10 +15,12 @@
   };
 
   build.extraPassthru.tests = {
-    runWithJujutsu = let wrapper = config.build.toplevel;
-    in pkgs.runCommand ''
-      [ -x ${lib.getExe' wrapper "jj"} ] && touch $out
-    '';
+    runWithJujutsu =
+      let
+        wrapper = config.build.toplevel;
+      in
+      pkgs.runCommand ''
+        [ -x ${lib.getExe' wrapper "jj"} ] && touch $out
+      '';
   };
 }
-

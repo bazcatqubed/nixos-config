@@ -1,11 +1,17 @@
-{ config, lib, pkgs, foodogsquaredLib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
   cfg = hostCfg.setups.music;
-in {
-  options.hosts.ni.setups.music.enable =
-    lib.mkEnableOption "music streaming and organizing setup";
+in
+{
+  options.hosts.ni.setups.music.enable = lib.mkEnableOption "music streaming and organizing setup";
 
   config = lib.mkIf cfg.enable {
     state.ports = rec {
@@ -40,20 +46,21 @@ in {
     services.gonic = {
       enable = true;
       settings = rec {
-        listen-addr =
-          "localhost:${builtins.toString config.state.ports.gonic.value}";
+        listen-addr = "localhost:${builtins.toString config.state.ports.gonic.value}";
         cache-path = "${config.state.paths.cacheDir}/gonic";
         music-path = [ "/srv/Music" ];
         podcast-path = "${cache-path}/podcasts";
         playlists-path = "${cache-path}/playlists";
 
         jukebox-enabled = true;
-        jukebox-mpv-extra-args = let
-          args = [
-            "--ao=pcm"
-            "--ao-pcm-file=${config.state.paths.runtimeDir}/snapserver/jukebox"
-          ];
-        in lib.concatStringsSep " " args;
+        jukebox-mpv-extra-args =
+          let
+            args = [
+              "--ao=pcm"
+              "--ao-pcm-file=${config.state.paths.runtimeDir}/snapserver/jukebox"
+            ];
+          in
+          lib.concatStringsSep " " args;
 
         scan-interval = 1;
         scan-at-start-enabled = true;
@@ -84,9 +91,9 @@ in {
             "pipe:///run/snapserver/jukebox?name=${lib.escapeURL "foodogsquared's PC"}&sampleFormat=48000:16:2&codec=pcm"
             "airplay://${lib.getExe' pkgs.shairport-sync "shairport-sync"}?devicename=Snapcast"
           ]
-            ++ lib.optionals config.services.spotifyd.enable [
-              "librespot://${lib.getExe' pkgs.librespot "librespot"}?devicename=Snapcast&bitrate=320&volume=50&normalize=true&autoplay=true"
-            ];
+          ++ lib.optionals config.services.spotifyd.enable [
+            "librespot://${lib.getExe' pkgs.librespot "librespot"}?devicename=Snapcast&bitrate=320&volume=50&normalize=true&autoplay=true"
+          ];
         };
 
         http = {

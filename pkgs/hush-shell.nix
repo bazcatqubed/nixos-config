@@ -1,4 +1,10 @@
-{ stdenv, lib, fetchFromGitHub, rustPlatform, toybox }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  rustPlatform,
+  toybox,
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "hush";
@@ -18,8 +24,10 @@ rustPlatform.buildRustPackage rec {
   '';
 
   checkInputs = [ toybox ];
-  checkFlags =
-    [ "--skip=tests::test_token_kind_size" "--skip=tests::test_positive" ];
+  checkFlags = [
+    "--skip=tests::test_token_kind_size"
+    "--skip=tests::test_positive"
+  ];
 
   meta = with lib; {
     homepage = "https://github.com/hush-shell/hush";

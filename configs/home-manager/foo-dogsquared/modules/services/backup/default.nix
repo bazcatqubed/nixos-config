@@ -1,4 +1,10 @@
-{ config, lib, foodogsquaredLib, pkgs, ... }@attrs:
+{
+  config,
+  lib,
+  foodogsquaredLib,
+  pkgs,
+  ...
+}@attrs:
 
 let
   userCfg = config.users.foo-dogsquared;
@@ -6,19 +12,19 @@ let
 
   pathPrefix = "borg-backup";
   getPath = path: config.sops.secrets."${pathPrefix}/${path}".path;
-  isFilesystemSet = setupName:
-    attrs.nixosConfig.suites.filesystem.setups.${setupName}.enable or false;
+  isFilesystemSet =
+    setupName: attrs.nixosConfig.suites.filesystem.setups.${setupName}.enable or false;
 
   hetznerBoxesUser = "u332477";
   hetznerBoxesServer = "${hetznerBoxesUser}.your-storagebox.de";
 
-  borgmaticCommonConfig = module:
+  borgmaticCommonConfig =
+    module:
     lib.mkMerge [
       module
 
       {
-        archive_name_format =
-          lib.mkDefault "{fqdn}-home-manager-personal-{now}";
+        archive_name_format = lib.mkDefault "{fqdn}-home-manager-personal-{now}";
         patterns = lib.mkBefore [
           "R ${config.home.homeDirectory}"
           "! ${config.xdg.dataHome}"
@@ -36,9 +42,17 @@ let
           "+ ${config.xdg.configHome}/age"
           "+ ${config.xdg.configHome}/sops"
         ];
-        exclude_if_present = [ ".nobackup" ".exclude.bak" ];
-        exclude_patterns =
-          [ "node_modules/" "*.pyc" "result*/" "*/.vim*.tmp" "target/" ];
+        exclude_if_present = [
+          ".nobackup"
+          ".exclude.bak"
+        ];
+        exclude_patterns = [
+          "node_modules/"
+          "*.pyc"
+          "result*/"
+          "*/.vim*.tmp"
+          "target/"
+        ];
 
         store_config_files = true;
 
@@ -54,19 +68,19 @@ let
       }
     ];
 
-  checkRemovableMountScript =
-    pkgs.writeShellScript "check-for-removable-storage" ''
-      { findmnt "$(dirname "$1")" > /dev/null && [ -d "$1" ]; } || exit 75
-    '';
-in {
-  options.users.foo-dogsquared.services.backup.enable =
-    lib.mkEnableOption "preferred backup service";
+  checkRemovableMountScript = pkgs.writeShellScript "check-for-removable-storage" ''
+    { findmnt "$(dirname "$1")" > /dev/null && [ -d "$1" ]; } || exit 75
+  '';
+in
+{
+  options.users.foo-dogsquared.services.backup.enable = lib.mkEnableOption "preferred backup service";
 
   config = lib.mkIf cfg.enable {
-    sops.secrets = foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml
-      (foodogsquaredLib.sops-nix.attachSopsPathPrefix pathPrefix {
+    sops.secrets = foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml (
+      foodogsquaredLib.sops-nix.attachSopsPathPrefix pathPrefix {
         "repos/remote-hetzner-boxes-personal/password" = { };
-      });
+      }
+    );
 
     programs.borgmatic.enable = true;
     programs.borgmatic.backups = lib.mkMerge [
@@ -75,11 +89,9 @@ in {
           initService.enable = true;
           initService.startAt = "06:30";
           settings = borgmaticCommonConfig {
-            encryption_passcommand =
-              "cat ${getPath "repos/remote-hetzner-boxes-personal/password"}";
+            encryption_passcommand = "cat ${getPath "repos/remote-hetzner-boxes-personal/password"}";
             repositories = lib.singleton {
-              path =
-                "ssh://${hetznerBoxesUser}@${hetznerBoxesServer}:23/./borg/users/${config.home.username}";
+              path = "ssh://${hetznerBoxesUser}@${hetznerBoxesServer}:23/./borg/users/${config.home.username}";
               label = "remote-hetzner-boxes";
             };
             extra_borg_options = {
@@ -97,18 +109,18 @@ in {
         local-external-hdd-personal = {
           initService.enable = true;
           initService.startAt = "04:30";
-          settings = let
-            removablePath =
-              "${attrs.nixosConfig.state.paths.external-hdd}/Backups";
-          in borgmaticCommonConfig {
-            repositories = lib.singleton {
-              path = removablePath;
-              label = "local-external-hdd";
+          settings =
+            let
+              removablePath = "${attrs.nixosConfig.state.paths.external-hdd}/Backups";
+            in
+            borgmaticCommonConfig {
+              repositories = lib.singleton {
+                path = removablePath;
+                label = "local-external-hdd";
+              };
+              relocated_repo_access_is_ok = true;
+              before_backup = lib.singleton "${checkRemovableMountScript} ${removablePath}";
             };
-            relocated_repo_access_is_ok = true;
-            before_backup =
-              lib.singleton "${checkRemovableMountScript} ${removablePath}";
-          };
         };
       })
 
@@ -118,8 +130,7 @@ in {
           initService.startAt = "04:30";
           settings = borgmaticCommonConfig {
             repositories = lib.singleton {
-              path =
-                "\${BORG_PERSONAL_FDS_PATH:-${attrs.nixosConfig.state.paths.laptop-ssd}/Backups/foodogsquared}";
+              path = "\${BORG_PERSONAL_FDS_PATH:-${attrs.nixosConfig.state.paths.laptop-ssd}/Backups/foodogsquared}";
               label = "local-archive";
             };
           };
@@ -132,23 +143,26 @@ in {
       enable = true;
       startAt = "daily";
 
-      settings = let backup_path = "${config.xdg.cacheHome}/ludusavi/backups";
-      in {
-        manifest.enable = true;
-        roots = [
-          {
-            path = "${config.home.homeDirectory}/.steam";
-            store = "steam";
-          }
-          {
-            path = "${config.xdg.dataHome}/lutris";
-            store = "lutris";
-          }
-        ];
-        backup.path = backup_path;
-        restore.path = backup_path;
-        release.check = false;
-      };
+      settings =
+        let
+          backup_path = "${config.xdg.cacheHome}/ludusavi/backups";
+        in
+        {
+          manifest.enable = true;
+          roots = [
+            {
+              path = "${config.home.homeDirectory}/.steam";
+              store = "steam";
+            }
+            {
+              path = "${config.xdg.dataHome}/lutris";
+              store = "lutris";
+            }
+          ];
+          backup.path = backup_path;
+          restore.path = backup_path;
+          release.check = false;
+        };
     };
   };
 }

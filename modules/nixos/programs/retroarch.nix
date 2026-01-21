@@ -1,10 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.retroarch;
 
   finalPkg = pkgs.wrapRetroArch { inherit (cfg) cores settings; };
-in {
+in
+{
   options.programs.retroarch = {
     enable = lib.mkEnableOption "configuring Retroarch";
 

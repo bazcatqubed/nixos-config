@@ -1,11 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   workflowName = "knome";
   cfg = config.workflows.workflows.${workflowName};
-in {
-  options.workflows.enable =
-    lib.mkOption { type = with lib.types; listOf (enum [ workflowName ]); };
+in
+{
+  options.workflows.enable = lib.mkOption { type = with lib.types; listOf (enum [ workflowName ]); };
 
   config = lib.mkIf (lib.elem workflowName config.workflows.enable) {
     services.xserver = {
@@ -71,10 +76,12 @@ in {
     };
 
     # Install additional packages.
-    environment.systemPackages = with pkgs;
+    environment.systemPackages =
+      with pkgs;
       [
         kitty # The preferred terminal emulator.
-      ] ++ (with pkgs.plasma5Packages; [
+      ]
+      ++ (with pkgs.plasma5Packages; [
         bismuth # Tiling inside Plasma?
 
         # Powering up Krunner.

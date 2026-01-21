@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.yt-dlp;
@@ -7,60 +12,67 @@ let
 
   serviceLevelArgs = lib.escapeShellArgs cfg.extraArgs;
 
-  jobType = { name, config, options, ... }: {
-    options = {
-      urls = lib.mkOption {
-        type = with lib.types; listOf str;
-        default = [ ];
-        description = ''
-          A list of URLs to be downloaded to {command}`yt-dlp`. Please
-          see the list of extractors with `--list-extractors`.
-        '';
-        example = lib.literalExpression ''
-          [
-            "https://www.youtube.com/c/ronillust"
-            "https://www.youtube.com/c/Jazza"
-          ]
-        '';
-      };
+  jobType =
+    {
+      name,
+      config,
+      options,
+      ...
+    }:
+    {
+      options = {
+        urls = lib.mkOption {
+          type = with lib.types; listOf str;
+          default = [ ];
+          description = ''
+            A list of URLs to be downloaded to {command}`yt-dlp`. Please
+            see the list of extractors with `--list-extractors`.
+          '';
+          example = lib.literalExpression ''
+            [
+              "https://www.youtube.com/c/ronillust"
+              "https://www.youtube.com/c/Jazza"
+            ]
+          '';
+        };
 
-      startAt = lib.mkOption {
-        type = with lib.types; str;
-        description = ''
-          Indicates how frequent the download will occur. The given schedule
-          should follow the format as described from
-          {manpage}`systemd.time(5)`.
-        '';
-        default = "daily";
-        example = "*-*-3/4";
-      };
+        startAt = lib.mkOption {
+          type = with lib.types; str;
+          description = ''
+            Indicates how frequent the download will occur. The given schedule
+            should follow the format as described from
+            {manpage}`systemd.time(5)`.
+          '';
+          default = "daily";
+          example = "*-*-3/4";
+        };
 
-      persistent = lib.mkOption {
-        type = lib.types.bool;
-        description = ''
-          Indicates whether the service will start if timer has missed.
-          Defaults to `true` since this module mainly assumes it is used on the
-          desktop.
-        '';
-        default = true;
-        defaultText = "true";
-        example = "false";
-      };
+        persistent = lib.mkOption {
+          type = lib.types.bool;
+          description = ''
+            Indicates whether the service will start if timer has missed.
+            Defaults to `true` since this module mainly assumes it is used on the
+            desktop.
+          '';
+          default = true;
+          defaultText = "true";
+          example = "false";
+        };
 
-      extraArgs = lib.mkOption {
-        type = with lib.types; listOf str;
-        description =
-          "Job-specific extra arguments to be passed to the {command}`yt-dlp`";
-        default = [ ];
-        example = lib.literalExpression ''
-          [
-            "--date" "today"
-          ]
-        '';
+        extraArgs = lib.mkOption {
+          type = with lib.types; listOf str;
+          description = "Job-specific extra arguments to be passed to the {command}`yt-dlp`";
+          default = [ ];
+          example = lib.literalExpression ''
+            [
+              "--date" "today"
+            ]
+          '';
+        };
       };
     };
-  };
-in {
+in
+{
   options.services.yt-dlp = {
     enable = lib.mkEnableOption "archiving service with yt-dlp";
 
@@ -69,8 +81,7 @@ in {
       description = "The derivation that contains {command}`yt-dlp` binary.";
       default = pkgs.yt-dlp;
       defaultText = lib.literalExpression "pkgs.yt-dlp";
-      example = lib.literalExpression
-        "pkgs.yt-dlp.override { phantomjsSupport = true; }";
+      example = lib.literalExpression "pkgs.yt-dlp.override { phantomjsSupport = true; }";
     };
 
     archivePath = lib.mkOption {
@@ -81,11 +92,9 @@ in {
         path.
       '';
       default = "${
-          lib.replaceStrings [ "$HOME" ] [ config.home.homeDirectory ]
-          config.xdg.userDirs.videos
-        }/yt-dlp-service";
-      example = lib.literalExpression
-        "\${config.xdg.userDirs.download}/archiving-service/videos";
+        lib.replaceStrings [ "$HOME" ] [ config.home.homeDirectory ] config.xdg.userDirs.videos
+      }/yt-dlp-service";
+      example = lib.literalExpression "\${config.xdg.userDirs.download}/archiving-service/videos";
     };
 
     extraArgs = lib.mkOption {
@@ -130,7 +139,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.user.services = lib.mapAttrs' (name: value:
+    systemd.user.services = lib.mapAttrs' (
+      name: value:
       lib.nameValuePair (jobUnitName name) {
         Unit = {
           Description = "yt-dlp archive job for group '${name}'";
@@ -140,28 +150,27 @@ in {
 
         Service = {
           ExecStartPre = ''
-            ${pkgs.bash}/bin/bash -c "${pkgs.coreutils}/bin/mkdir -p ${
-              lib.escapeShellArg cfg.archivePath
-            }"
+            ${pkgs.bash}/bin/bash -c "${pkgs.coreutils}/bin/mkdir -p ${lib.escapeShellArg cfg.archivePath}"
           '';
-          ExecStart = let
-            scriptName =
-              "yt-dlp-archive-service-${config.home.username}-${name}";
-            jobLevelArgs = lib.escapeShellArgs value.extraArgs;
-            urls = lib.escapeShellArgs value.urls;
-            archiveScript = pkgs.writeShellScriptBin scriptName ''
-              ${cfg.package}/bin/yt-dlp ${serviceLevelArgs} ${jobLevelArgs} \
-                                        ${urls} --paths ${
-                                          lib.escapeShellArg cfg.archivePath
-                                        }
-            '';
-          in "${archiveScript}/bin/${scriptName}";
+          ExecStart =
+            let
+              scriptName = "yt-dlp-archive-service-${config.home.username}-${name}";
+              jobLevelArgs = lib.escapeShellArgs value.extraArgs;
+              urls = lib.escapeShellArgs value.urls;
+              archiveScript = pkgs.writeShellScriptBin scriptName ''
+                ${cfg.package}/bin/yt-dlp ${serviceLevelArgs} ${jobLevelArgs} \
+                                          ${urls} --paths ${lib.escapeShellArg cfg.archivePath}
+              '';
+            in
+            "${archiveScript}/bin/${scriptName}";
           StandardOutput = "journal";
           StandardError = "journal";
         };
-      }) cfg.jobs;
+      }
+    ) cfg.jobs;
 
-    systemd.user.timers = lib.mapAttrs' (name: value:
+    systemd.user.timers = lib.mapAttrs' (
+      name: value:
       lib.nameValuePair (jobUnitName name) {
         Unit = {
           Description = "yt-dlp archive job for group '${name}'";
@@ -175,6 +184,7 @@ in {
         };
 
         Install.WantedBy = [ "timers.target" ];
-      }) cfg.jobs;
+      }
+    ) cfg.jobs;
   };
 }

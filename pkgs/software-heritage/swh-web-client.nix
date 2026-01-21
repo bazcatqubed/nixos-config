@@ -1,4 +1,11 @@
-{ lib, python3Packages, swh-core, swh-model, swh-auth, ... }:
+{
+  lib,
+  python3Packages,
+  swh-core,
+  swh-model,
+  swh-auth,
+  ...
+}:
 
 with python3Packages;
 buildPythonPackage rec {

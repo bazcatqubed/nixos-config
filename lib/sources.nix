@@ -1,4 +1,8 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 rec {
   /**
@@ -17,18 +21,19 @@ rec {
       || builtins.match "^\\..*\\.sw[a-z]$" baseName != null
       ||
 
-      # Filter out generates files.
-      lib.hasSuffix ".o" baseName
+        # Filter out generates files.
+        lib.hasSuffix ".o" baseName
       || lib.hasSuffix ".so" baseName
       ||
-      # Filter out nix-build result symlinks
-      (type == "symlink" && lib.hasPrefix "result" baseName)
+        # Filter out nix-build result symlinks
+        (type == "symlink" && lib.hasPrefix "result" baseName)
       ||
-      # Filter out sockets and other types of files we can't have in the store.
-      (type == "unknown")
+        # Filter out sockets and other types of files we can't have in the store.
+        (type == "unknown")
     );
 
-  cleanSource' = src:
+  cleanSource' =
+    src:
     lib.sources.cleanSourceWith {
       inherit src;
       filter = cleanSourceFilter';

@@ -22,21 +22,23 @@ lib.extendMkDerivation {
       lockAll ? false,
 
       ...
-    }
-    @args:
+    }@args:
     let
-      mkLocks = s:
+      mkLocks =
+        s:
         # It has to be done this way since it is typically passed as an attrset
         # of attrset with atomic values.
         lib.flatten (lib.mapAttrsToList (k: v: lib.mapAttrsToList (k': _: "/${k}/${k'}") v) s);
 
-      locks' =
-        if lockAll then mkLocks settings else locks;
+      locks' = if lockAll then mkLocks settings else locks;
 
       name' = lib.escapeShellArg name;
     in
     {
-      passAsFile = args.passAsFile or [ ] ++ [ "settings" "locks" ];
+      passAsFile = args.passAsFile or [ ] ++ [
+        "settings"
+        "locks"
+      ];
       settings = lib.generators.toDconfINI settings;
       locks = lib.concatStringsSep "\n" locks';
 

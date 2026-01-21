@@ -1,4 +1,12 @@
-{ stdenv, lib, python3Packages, swh-core, swh-model, swh-web-client, ... }:
+{
+  stdenv,
+  lib,
+  python3Packages,
+  swh-core,
+  swh-model,
+  swh-web-client,
+  ...
+}:
 
 with python3Packages;
 buildPythonPackage rec {

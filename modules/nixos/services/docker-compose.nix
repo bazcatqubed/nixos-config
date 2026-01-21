@@ -1,55 +1,72 @@
-{ config, lib, pkgs, utils, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  utils,
+  ...
+}:
 
 let
   cfg = config.services.docker-compose;
 
   settingsFormat = pkgs.formats.yaml { };
 
-  jobModule = { name, lib, config, ... }: {
-    options = {
-      extraArgs = lib.mkOption {
-        type = with lib.types; listOf str;
-        default = [ ];
-        description = ''
-          Job-specific set of arguments to be added to {command}`docker compose`.
-        '';
+  jobModule =
+    {
+      name,
+      lib,
+      config,
+      ...
+    }:
+    {
+      options = {
+        extraArgs = lib.mkOption {
+          type = with lib.types; listOf str;
+          default = [ ];
+          description = ''
+            Job-specific set of arguments to be added to {command}`docker compose`.
+          '';
+        };
+
+        files = lib.mkOption {
+          type = with lib.types; listOf path;
+          description = ''
+            List of files to be used when setting up the docker-compose service.
+          '';
+          default = [ ];
+          example = lib.literalExpression ''
+            [
+              /path/to/docker-compose.yml
+            ]
+          '';
+        };
+
+        settings = lib.mkOption {
+          type = settingsFormat.type;
+          description = ''
+            Configuration to be used for the docker-compose process.
+          '';
+          default = { };
+          example = { };
+        };
       };
 
-      files = lib.mkOption {
-        type = with lib.types; listOf path;
-        description = ''
-          List of files to be used when setting up the docker-compose service.
-        '';
-        default = [ ];
-        example = lib.literalExpression ''
-          [
-            /path/to/docker-compose.yml
-          ]
-        '';
-      };
+      config = {
+        extraArgs =
+          cfg.extraArgs
+          ++ lib.concatMap (f: [
+            "--file"
+            f
+          ]) config.files;
 
-      settings = lib.mkOption {
-        type = settingsFormat.type;
-        description = ''
-          Configuration to be used for the docker-compose process.
-        '';
-        default = { };
-        example = { };
+        files = lib.optionals (config.settings != { }) [
+          (settingsFormat.generate "docker-compose-generated-${name}" config.settings)
+        ];
       };
     };
 
-    config = {
-      extraArgs = cfg.extraArgs
-        ++ lib.concatMap (f: [ "--file" f ]) config.files;
-
-      files = lib.optionals (config.settings != { }) [
-        (settingsFormat.generate "docker-compose-generated-${name}"
-          config.settings)
-      ];
-    };
-  };
-
-  mkDockerComposeService = name: value:
+  mkDockerComposeService =
+    name: value:
     lib.nameValuePair "docker-compose-${utils.escapeSystemdPath name}" {
       path = [ config.virtualisation.docker.package ];
       script = "docker compose --project-name ${name} up";
@@ -60,7 +77,8 @@ let
         RemainAfterExit = true;
       };
     };
-in {
+in
+{
   options.services.docker-compose = {
     enable = lib.mkEnableOption "integration with docker-compose";
 

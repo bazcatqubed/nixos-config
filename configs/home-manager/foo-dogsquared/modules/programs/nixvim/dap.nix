@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   nixvimCfgs = config.nixvimConfigs.fiesta-fds;
@@ -16,10 +21,15 @@ in
     plugins.dap.adapters.executables = {
       gdb = {
         command = "gdb";
-        args = [ "-i" "dap" ];
+        args = [
+          "-i"
+          "dap"
+        ];
       };
 
-      lldb = { command = "lldb-dap"; };
+      lldb = {
+        command = "lldb-dap";
+      };
 
       dart = {
         command = "dart";

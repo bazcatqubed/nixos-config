@@ -1,4 +1,11 @@
-{ config, options, lib, pkgs, foodogsquaredLib, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  ...
+}:
 
 let
   workflowId = "one.foodogsquared.HorizontalHunger";
@@ -19,9 +26,9 @@ let
     name = "${workflowId}-env";
     paths = requiredPackages ++ cfg.extraApps;
   };
-in {
-  options.workflows.enable =
-    lib.mkOption { type = with lib.types; listOf (enum [ workflowId ]); };
+in
+{
+  options.workflows.enable = lib.mkOption { type = with lib.types; listOf (enum [ workflowId ]); };
 
   options.workflows.workflows.${workflowId} = {
     package = lib.mkOption {
@@ -35,7 +42,11 @@ in {
 
     extraApps = lib.mkOption {
       type = with lib.types; listOf package;
-      default = with pkgs; [ flowtime dialect blanket ];
+      default = with pkgs; [
+        flowtime
+        dialect
+        blanket
+      ];
       description = ''
         A list of extraneous applications to be included with the desktop
         session.
@@ -78,9 +89,10 @@ in {
         extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
         # The option value is only a coerced `lib.type.str` so ehhh...
-        config.${workflowId}.default = [ "gtk" ]
-          ++ lib.optionals (config.services.gnome.gnome-keyring.enable)
-          [ "gnome" ];
+        config.${workflowId}.default = [
+          "gtk"
+        ]
+        ++ lib.optionals (config.services.gnome.gnome-keyring.enable) [ "gnome" ];
       }
 
       (lib.mkIf config.services.gnome.gnome-keyring.enable {
@@ -98,21 +110,22 @@ in {
       fullName = "Horizontal Hunger";
       desktopNames = [ workflowId ];
 
-      systemd.targetUnit = let
-        requiredComponents = [ "window-manager" ];
-        getId = lib.foldlAttrs (acc: _: v: acc ++ [ "${v.id}.target" ]) [ ];
-      in {
-        requires = getId (lib.filterAttrs (n: _: lib.elem n requiredComponents)
-          sessionConfig.components);
-        wants = getId (lib.attrsets.removeAttrs sessionConfig.components
-          requiredComponents);
-      };
+      systemd.targetUnit =
+        let
+          requiredComponents = [ "window-manager" ];
+          getId = lib.foldlAttrs (
+            acc: _: v:
+            acc ++ [ "${v.id}.target" ]
+          ) [ ];
+        in
+        {
+          requires = getId (lib.filterAttrs (n: _: lib.elem n requiredComponents) sessionConfig.components);
+          wants = getId (lib.attrsets.removeAttrs sessionConfig.components requiredComponents);
+        };
 
       components = {
         window-manager = {
-          script = "${
-              lib.getExe' cfg.package "niri"
-            } --config /tmp/shared/modules/nixos/_private/workflows/horizontal-hunger/config/niri/config";
+          script = "${lib.getExe' cfg.package "niri"} --config /tmp/shared/modules/nixos/_private/workflows/horizontal-hunger/config/niri/config";
           description = "Window manager";
 
           systemd.serviceUnit = {
@@ -138,9 +151,7 @@ in {
         };
 
         desktop-widgets = {
-          script = "${
-              lib.getExe' pkgs.ags "ags"
-            } --config /tmp/shared/modules/nixos/_private/workflows/horizontal-hunger/config/ags/config.js";
+          script = "${lib.getExe' pkgs.ags "ags"} --config /tmp/shared/modules/nixos/_private/workflows/horizontal-hunger/config/ags/config.js";
           description = "Desktop widgets";
 
           systemd.serviceUnit = {
@@ -163,8 +174,7 @@ in {
         };
 
         auth-agent = {
-          script =
-            "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+          script = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
           description = "Authentication agent";
 
           systemd.serviceUnit = {
@@ -176,7 +186,10 @@ in {
           };
 
           systemd.targetUnit = {
-            partOf = [ "graphical-session.target" "gnome-session.target" ];
+            partOf = [
+              "graphical-session.target"
+              "gnome-session.target"
+            ];
           };
         };
       };

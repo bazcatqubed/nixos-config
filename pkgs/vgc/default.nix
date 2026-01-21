@@ -1,5 +1,16 @@
-{ stdenv, lib, fetchFromGitHub, wrapQtAppsHook, qtbase, cmake, python3, harfbuzz
-, freetype, libGLU, git }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  wrapQtAppsHook,
+  qtbase,
+  cmake,
+  python3,
+  harfbuzz,
+  freetype,
+  libGLU,
+  git,
+}:
 
 stdenv.mkDerivation rec {
   pname = "vgc";
@@ -15,14 +26,23 @@ stdenv.mkDerivation rec {
 
   patches = [ ./patches/set-reproducible-build.patch ];
 
-  nativeBuildInputs = [ wrapQtAppsHook cmake ];
+  nativeBuildInputs = [
+    wrapQtAppsHook
+    cmake
+  ];
 
-  buildInputs = [ python3 git freetype harfbuzz libGLU qtbase ];
+  buildInputs = [
+    python3
+    git
+    freetype
+    harfbuzz
+    libGLU
+    qtbase
+  ];
 
   meta = with lib; {
     homepage = "https://www.vgc.io/";
-    description =
-      "Upcoming suite of vector-drawing applications that makes use of Vector Graphics Complex (VGC)";
+    description = "Upcoming suite of vector-drawing applications that makes use of Vector Graphics Complex (VGC)";
     license = licenses.asl20;
     maintainers = with maintainers; [ foo-dogsquared ];
   };

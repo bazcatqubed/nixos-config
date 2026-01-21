@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   userCfg = config.users.foo-dogsquared;
@@ -10,10 +15,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs;
-      [
-        gopass # An improved version of the password manager for hipsters.
-      ];
+    home.packages = with pkgs; [
+      gopass # An improved version of the password manager for hipsters.
+    ];
 
     programs.diceware = {
       enable = true;

@@ -1,31 +1,38 @@
 # Basically a poor man's version of NixVim or those configuration options from
 # either NixOS or home-manager, really.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.neovim;
 
-  neovimConfigPluginType = { name, lib, ... }: {
-    freeformType = with lib.types; attrsOf anything;
-    options = {
-      plugin = lib.mkOption {
-        type = lib.types.package;
-        description = ''
-          Package containing the Neovim module.
-        '';
-      };
+  neovimConfigPluginType =
+    { name, lib, ... }:
+    {
+      freeformType = with lib.types; attrsOf anything;
+      options = {
+        plugin = lib.mkOption {
+          type = lib.types.package;
+          description = ''
+            Package containing the Neovim module.
+          '';
+        };
 
-      pluginConfig = lib.mkOption {
-        type = lib.types.lines;
-        description = ''
-          Plugin configuration in VimL.
-        '';
-        default = "";
-      };
+        pluginConfig = lib.mkOption {
+          type = lib.types.lines;
+          description = ''
+            Plugin configuration in VimL.
+          '';
+          default = "";
+        };
 
-      optional = lib.mkEnableOption "inclusion of this configuration";
+        optional = lib.mkEnableOption "inclusion of this configuration";
+      };
     };
-  };
 
   neovimConfig = pkgs.neovimUtils.makeNeovimConfig {
     inherit (cfg) plugins extraPython3Packages extraLuaPackages;
@@ -36,7 +43,8 @@ let
   };
 
   finalNeovimPackage = pkgs.wrapNeovimUnstable cfg.package neovimConfig;
-in {
+in
+{
   options.programs.neovim = {
     enable = lib.mkEnableOption "Neovim, a terminal text editor";
 

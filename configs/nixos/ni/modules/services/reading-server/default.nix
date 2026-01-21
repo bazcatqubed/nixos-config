@@ -1,12 +1,17 @@
-{ config, lib, pkgs, foodogsquaredLib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
   cfg = hostCfg.services.reading-server;
 in
 {
-  options.hosts.ni.services.reading-server.enable =
-    lib.mkEnableOption "reading server";
+  options.hosts.ni.services.reading-server.enable = lib.mkEnableOption "reading server";
 
   config = lib.mkIf cfg.enable {
     state.ports.kavita.value = 6797;

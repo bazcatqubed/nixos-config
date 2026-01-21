@@ -1,4 +1,8 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 rec {
   /**
@@ -55,9 +59,9 @@ rec {
     => 1
     ```
   */
-  countAttrs = pred: attrs:
-    lib.count (attr: pred attr.name attr.value)
-    (lib.mapAttrsToList lib.nameValuePair attrs);
+  countAttrs =
+    pred: attrs:
+    lib.count (attr: pred attr.name attr.value) (lib.mapAttrsToList lib.nameValuePair attrs);
 
   /**
     Filters and groups the attribute set into two separate attribute where it
@@ -85,16 +89,24 @@ rec {
     => { ok = { a = 4; }; notOk = { b = 2; c = 6; }; }
     ```
   */
-  filterAttrs' = f: attrs:
-    lib.foldlAttrs (acc: name: value:
-      let isOk = f name value;
-      in {
-        ok = acc.ok // lib.optionalAttrs isOk { ${name} = value; };
-        notOk = acc.notOk // lib.optionalAttrs (!isOk) { ${name} = value; };
-      }) {
+  filterAttrs' =
+    f: attrs:
+    lib.foldlAttrs
+      (
+        acc: name: value:
+        let
+          isOk = f name value;
+        in
+        {
+          ok = acc.ok // lib.optionalAttrs isOk { ${name} = value; };
+          notOk = acc.notOk // lib.optionalAttrs (!isOk) { ${name} = value; };
+        }
+      )
+      {
         ok = { };
         notOk = { };
-      } attrs;
+      }
+      attrs;
 
   /**
     Convenient function for converting bits to bytes.
@@ -143,7 +155,8 @@ rec {
     => 30
     ```
   */
-  SIPrefixExponent = c:
+  SIPrefixExponent =
+    c:
     let
       prefixes = {
         Q = 30;
@@ -171,7 +184,8 @@ rec {
         r = -27;
         q = -30;
       };
-    in prefixes.${c};
+    in
+    prefixes.${c};
 
   /**
     Gives the multiplier for the metric units.
@@ -213,7 +227,8 @@ rec {
     => 30
     ```
   */
-  binaryPrefixExponent = c:
+  binaryPrefixExponent =
+    c:
     let
       prefixes = {
         Y = 80;
@@ -225,7 +240,8 @@ rec {
         M = 20;
         K = 10;
       };
-    in prefixes.${c};
+    in
+    prefixes.${c};
 
   /**
     Gives the multiplier for the given byte unit. Essentially returns the
@@ -270,22 +286,23 @@ rec {
     => 250000
     ```
   */
-  parseBytesSizeIntoInt = str:
+  parseBytesSizeIntoInt =
+    str:
     let
-      matches =
-        builtins.match "([[:digit:]]+)[[:space:]]*([[:alpha:]]{1})(i?[B|b])"
-        str;
+      matches = builtins.match "([[:digit:]]+)[[:space:]]*([[:alpha:]]{1})(i?[B|b])" str;
       numeral = lib.toInt (lib.lists.head matches);
       prefix = lib.lists.elemAt matches 1;
       suffix = lib.lists.last matches;
       isBinary = lib.hasPrefix "i" suffix;
 
-      multiplier = let
-        multiplierFn =
-          if isBinary then binaryPrefixMultiplier else metricPrefixMultiplier;
-      in multiplierFn prefix;
+      multiplier =
+        let
+          multiplierFn = if isBinary then binaryPrefixMultiplier else metricPrefixMultiplier;
+        in
+        multiplierFn prefix;
       bitDivider = if lib.hasSuffix "b" suffix then 8 else 1;
-    in numeral * multiplier / bitDivider;
+    in
+    numeral * multiplier / bitDivider;
 
   /**
     Given an attrset of unit size object, return the size in bytes.
@@ -314,15 +331,22 @@ rec {
     => 4000000000
     ```
   */
-  unitsToInt = { size, prefix, type ? "binary" }:
+  unitsToInt =
+    {
+      size,
+      prefix,
+      type ? "binary",
+    }:
     let
-      multiplierFn = if type == "binary" then
-        binaryPrefixMultiplier
-      else if type == "metric" then
-        metricPrefixMultiplier
-      else
-        builtins.throw "no multiplier type ${type}";
-    in size * (multiplierFn prefix);
+      multiplierFn =
+        if type == "binary" then
+          binaryPrefixMultiplier
+        else if type == "metric" then
+          metricPrefixMultiplier
+        else
+          builtins.throw "no multiplier type ${type}";
+    in
+    size * (multiplierFn prefix);
 
   /**
     Similar to nixpkgs' `lib.genAttrs` but requiring the return value to be a
@@ -347,10 +371,7 @@ rec {
     }
     ```
   */
-  genAttrs' =
-    names:
-    f:
-    lib.listToAttrs (map (n: (f n)) names);
+  genAttrs' = names: f: lib.listToAttrs (map (n: (f n)) names);
 
   /**
     Split a string only once with the rest of the string intact.
@@ -380,11 +401,11 @@ rec {
   */
   splitStringOnce =
     sep: s:
-      let
-        s' = lib.splitString sep s;
-      in
-      if lib.length s' == 1 then
-        s'
-      else
-        [ (lib.head s') ] ++ [ (lib.concatStringsSep sep (lib.drop 1 s')) ];
+    let
+      s' = lib.splitString sep s;
+    in
+    if lib.length s' == 1 then
+      s'
+    else
+      [ (lib.head s') ] ++ [ (lib.concatStringsSep sep (lib.drop 1 s')) ];
 }

@@ -1,7 +1,17 @@
-{ dockerTools, foodogsquaredLib, nodejs, bun, pnpm }:
+{
+  dockerTools,
+  foodogsquaredLib,
+  nodejs,
+  bun,
+  pnpm,
+}:
 
 foodogsquaredLib.buildDockerImage rec {
   name = "js-backend";
   tag = name;
-  contents = [ nodejs bun pnpm ];
+  contents = [
+    nodejs
+    bun
+    pnpm
+  ];
 }

@@ -2,7 +2,12 @@
 # the nixpkgs instance).
 { formats }:
 
-{ config, options, lib, ... }:
+{
+  config,
+  options,
+  lib,
+  ...
+}:
 
 let
   cfg = config.vouch-proxy;
@@ -73,11 +78,13 @@ in
   config = {
     process.argv = [
       (lib.getExe config.vouch-proxy.package)
-      "-c" cfg.settingsFile
-    ] ++ cfg.extraArguments;
-  } // (lib.optionalAttrs (options ? systemd)) {
-    systemd.mainExecStart =
-      config.systemd.lib.escapeSystemdExecArgs config.process.argv;
+      "-c"
+      cfg.settingsFile
+    ]
+    ++ cfg.extraArguments;
+  }
+  // (lib.optionalAttrs (options ? systemd)) {
+    systemd.mainExecStart = config.systemd.lib.escapeSystemdExecArgs config.process.argv;
 
     systemd.service = {
       after = [ "network.target" ];
@@ -125,7 +132,11 @@ in
         AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
 
         # Limit this service to Unix sockets and IPs.
-        RestrictAddressFamilies = [ "AF_LOCAL" "AF_INET" "AF_INET6" ];
+        RestrictAddressFamilies = [
+          "AF_LOCAL"
+          "AF_INET"
+          "AF_INET6"
+        ];
         RestrictNamespaces = true;
       };
     };

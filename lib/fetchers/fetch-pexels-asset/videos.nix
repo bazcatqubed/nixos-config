@@ -1,4 +1,9 @@
-{ lib, callPackage, stdenv, cacert }:
+{
+  lib,
+  callPackage,
+  stdenv,
+  cacert,
+}:
 
 let
   fetcherPkg = callPackage ../../../apps/fds-fetcher-flock/nix/package.nix { };
@@ -18,8 +23,8 @@ lib.extendMkDerivation {
     }@args:
     {
       name = args.name or "fetch-pexels-videos";
-      nativeBuildInputs = args.nativeBuildInputs or [] ++ [ cacert ];
-      buildInputs = args.buildInputs or [] ++ [ fetcherPkg ];
+      nativeBuildInputs = args.nativeBuildInputs or [ ] ++ [ cacert ];
+      buildInputs = args.buildInputs or [ ] ++ [ fetcherPkg ];
 
       buildCommand = ''
         ffof pexels videos-by-id ${lib.escapeShellArgs ids}

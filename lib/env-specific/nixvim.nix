@@ -1,6 +1,9 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 {
-  isStandalone = config:
-    !config ? hmConfig && !config ? nixosConfig && !config ? darwinConfig;
+  isStandalone = config: !config ? hmConfig && !config ? nixosConfig && !config ? darwinConfig;
 }

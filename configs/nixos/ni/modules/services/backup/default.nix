@@ -1,13 +1,30 @@
 # It's a setup for my backup.
-{ config, lib, pkgs, foodogsquaredLib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
   cfg = hostCfg.services.backup;
 
-  borgJobCommonSetting = { patterns ? [ ], patternFiles ? [ ], passCommand, ... }@args:
-    let args' = lib.attrsets.removeAttrs args [ "patterns" "passCommand" ];
-    in {
+  borgJobCommonSetting =
+    {
+      patterns ? [ ],
+      patternFiles ? [ ],
+      passCommand,
+      ...
+    }@args:
+    let
+      args' = lib.attrsets.removeAttrs args [
+        "patterns"
+        "passCommand"
+      ];
+    in
+    {
       compression = "zstd,12";
       dateFormat = "+%F-%H-%M-%S-%z";
       doInit = false;
@@ -15,14 +32,19 @@ let
         inherit passCommand;
         mode = "repokey-blake2";
       };
-      extraCreateArgs = let
-        patternsFromArgs = lib.map (patternFile: "--patterns-from ${patternFile}") patternFiles;
-        patternArgs = lib.map (pattern: "--pattern ${pattern}") patterns;
-      in lib.concatStringsSep " "
-        (patternsFromArgs ++ patternArgs ++ [
-          "--exclude-if-present .nobackup"
-          "--stats"
-        ]);
+      extraCreateArgs =
+        let
+          patternsFromArgs = lib.map (patternFile: "--patterns-from ${patternFile}") patternFiles;
+          patternArgs = lib.map (pattern: "--pattern ${pattern}") patterns;
+        in
+        lib.concatStringsSep " " (
+          patternsFromArgs
+          ++ patternArgs
+          ++ [
+            "--exclude-if-present .nobackup"
+            "--stats"
+          ]
+        );
       extraInitArgs = "--make-parent-dirs";
 
       paths = cfg.globalPaths;
@@ -38,13 +60,15 @@ let
           yearly = 3;
         };
       };
-    } // args';
+    }
+    // args';
 
   hetzner-boxes-user = "u332477";
   hetzner-boxes-server = "${hetzner-boxes-user}.your-storagebox.de";
 
   pathPrefix = "borg-backup";
-in {
+in
+{
   options.hosts.ni.services.backup = {
     enable = lib.mkEnableOption "backup setup with BorgBackup and Snapper";
 
@@ -66,19 +90,20 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    sops.secrets = foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml
-      (foodogsquaredLib.sops-nix.attachSopsPathPrefix pathPrefix {
+    sops.secrets = foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml (
+      foodogsquaredLib.sops-nix.attachSopsPathPrefix pathPrefix {
         "patterns/keys" = { };
         "repos/external-hdd/password" = { };
-      });
+      }
+    );
 
-    suites.filesystem.setups = { laptop-ssd.enable = true; };
+    suites.filesystem.setups = {
+      laptop-ssd.enable = true;
+    };
 
     services.borgbackup.jobs = {
       local-external-storage = borgJobCommonSetting {
-        passCommand = "cat ${
-            config.sops.secrets."${pathPrefix}/repos/external-hdd/password".path
-          }";
+        passCommand = "cat ${config.sops.secrets."${pathPrefix}/repos/external-hdd/password".path}";
         removableDevice = true;
         doInit = true;
         repo = "${config.state.paths.laptop-ssd}/Backups";

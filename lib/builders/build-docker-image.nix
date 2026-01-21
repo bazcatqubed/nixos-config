@@ -1,36 +1,59 @@
-{ dockerTools, lib, foodogsquaredLib }:
+{
+  dockerTools,
+  lib,
+  foodogsquaredLib,
+}:
 
-{ name, contents ? [ ], pathsToLink ? [ ], enableTypicalSetup ? true, ... }@attrs:
+{
+  name,
+  contents ? [ ],
+  pathsToLink ? [ ],
+  enableTypicalSetup ? true,
+  ...
+}@attrs:
 
 let
-  attrs' = lib.removeAttrs attrs [ "contents" "pathsToLink" "enableTypicalSetup" "name" ];
+  attrs' = lib.removeAttrs attrs [
+    "contents"
+    "pathsToLink"
+    "enableTypicalSetup"
+    "name"
+  ];
 in
-dockerTools.buildImage (attrs' // {
-  name = "fds-${name}";
+dockerTools.buildImage (
+  attrs'
+  // {
+    name = "fds-${name}";
 
-  copyToRoot = foodogsquaredLib.buildFDSEnv {
-    inherit pathsToLink;
-    name = "fds-${name}-root";
-    paths =
-      contents
-      ++ lib.optionals enableTypicalSetup (with dockerTools; [
-        usrBinEnv
-        binSh
-        caCertificates
-        fakeNss
-      ]);
-  };
+    copyToRoot = foodogsquaredLib.buildFDSEnv {
+      inherit pathsToLink;
+      name = "fds-${name}-root";
+      paths =
+        contents
+        ++ lib.optionals enableTypicalSetup (
+          with dockerTools;
+          [
+            usrBinEnv
+            binSh
+            caCertificates
+            fakeNss
+          ]
+        );
+    };
 
-  runAsRoot = ''
-    ${lib.optionalString enableTypicalSetup ''
-      mkdir -p /data
-    ''}
-    ${attrs.runAsRoot or ""}
-  '';
+    runAsRoot = ''
+      ${lib.optionalString enableTypicalSetup ''
+        mkdir -p /data
+      ''}
+      ${attrs.runAsRoot or ""}
+    '';
 
-  config = (attrs.config or {}) // lib.optionalAttrs enableTypicalSetup {
-    Cmd = [ "/bin/bash" ];
-    WorkingDir = "/data";
-    Volumes."/data" = { };
-  };
-})
+    config =
+      (attrs.config or { })
+      // lib.optionalAttrs enableTypicalSetup {
+        Cmd = [ "/bin/bash" ];
+        WorkingDir = "/data";
+        Volumes."/data" = { };
+      };
+  }
+)

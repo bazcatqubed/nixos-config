@@ -5,10 +5,17 @@
 #
 # As much as I want 100% reproducibility with Nix, 5% of the remaining stuff
 # for me is not worth to maintain.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.suites.editors;
-in {
+let
+  cfg = config.suites.editors;
+in
+{
   options.suites.editors = {
     neovim.enable = lib.mkEnableOption "basic Neovim setup";
     vscode.enable = lib.mkEnableOption "basic Visual Studio Code setup";

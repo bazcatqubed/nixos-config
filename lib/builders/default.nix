@@ -1,4 +1,8 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 {
   /**
@@ -48,8 +52,7 @@
     }
     ```
   */
-  makeXDGMimeAssociationList =
-    pkgs.callPackage ./xdg/make-association-list.nix { };
+  makeXDGMimeAssociationList = pkgs.callPackage ./xdg/make-association-list.nix { };
 
   /**
     Create a derivation containing an XDG Portal configuration.
@@ -84,8 +87,7 @@
     }
     ```
   */
-  makeXDGPortalConfiguration =
-    pkgs.callPackage ./xdg/make-portal-config.nix { };
+  makeXDGPortalConfiguration = pkgs.callPackage ./xdg/make-portal-config.nix { };
 
   /**
     Create a derivation containing an XDG desktop entry file. Unlike
@@ -105,7 +107,7 @@
     validate
     : Add a validation check for the exported desktop entry.
 
-    destination 
+    destination
     : Destination path relative to the output path.
 
     # Type
@@ -333,8 +335,7 @@
     }
     ```
   */
-  buildFDSEnv =
-    pkgs.callPackage ./build-fds-env.nix { extendedStdenv = self.stdenv; };
+  buildFDSEnv = pkgs.callPackage ./build-fds-env.nix { extendedStdenv = self.stdenv; };
 
   /**
     A builder for creating a dconf configuration file.

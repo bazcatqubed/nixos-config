@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   userCfg = config.users.foo-dogsquared;
@@ -6,7 +11,8 @@ let
 
   settingsFormat = pkgs.formats.toml { };
   themesSettingsFormat = pkgs.formats.yaml { };
-in {
+in
+{
   options.users.foo-dogsquared.programs.custom-homepage = {
     enable = lib.mkEnableOption "addition of custom homepage";
 
@@ -96,26 +102,26 @@ in {
   };
 
   config = {
-    users.foo-dogsquared.programs.custom-homepage.finalPackage = let
-      data = lib.mapAttrs
-        (n: v: settingsFormat.generate "fds-homepage-section-${n}" v)
-        cfg.sections;
+    users.foo-dogsquared.programs.custom-homepage.finalPackage =
+      let
+        data = lib.mapAttrs (n: v: settingsFormat.generate "fds-homepage-section-${n}" v) cfg.sections;
 
-      installDataDir = lib.foldlAttrs (acc: n: v: ''
-        ${acc}
-        install -Dm0644 ${v} './data/foodogsquared-homepage/links/${n}.toml'
-      '') "" data;
+        installDataDir = lib.foldlAttrs (acc: n: v: ''
+          ${acc}
+          install -Dm0644 ${v} './data/foodogsquared-homepage/links/${n}.toml'
+        '') "" data;
 
-      installThemes = lib.foldlAttrs (acc: n: v: ''
-        ${acc}
-        install -Dm0644 ${v} './data/foodogsquared-homepage/themes/${n}}.yaml
-      '') "" cfg.themes;
-    in cfg.package.overrideAttrs (prevAttrs: {
-      preBuild = (prevAttrs.preBuild or "") + ''
-        ${installDataDir}
-        ${installThemes}
-      '';
-    });
+        installThemes = lib.foldlAttrs (acc: n: v: ''
+          ${acc}
+          install -Dm0644 ${v} './data/foodogsquared-homepage/themes/${n}}.yaml
+        '') "" cfg.themes;
+      in
+      cfg.package.overrideAttrs (prevAttrs: {
+        preBuild = (prevAttrs.preBuild or "") + ''
+          ${installDataDir}
+          ${installThemes}
+        '';
+      });
 
     xdg.dataFile."foodogsquared/homepage".source = cfg.finalPackage;
   };

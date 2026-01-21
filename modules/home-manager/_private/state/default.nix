@@ -1,7 +1,11 @@
 { lib, ... }:
 
 {
-  imports = [ ./ports.nix ./paths.nix ./packages.nix ];
+  imports = [
+    ./ports.nix
+    ./paths.nix
+    ./packages.nix
+  ];
 
   options.state = lib.mkOption {
     type = lib.types.submodule {
@@ -15,7 +19,11 @@
     '';
     example = {
       sampleValue = 10;
-      paths.ignoreDirectories = [ ".git" "node_modules" ".direnv" ];
+      paths.ignoreDirectories = [
+        ".git"
+        "node_modules"
+        ".direnv"
+      ];
     };
   };
 }

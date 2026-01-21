@@ -1,5 +1,15 @@
-{ stdenv, lib, fetchFromGitHub, autoreconfHook, bison, fftw, libtool, libjack2
-, bluez, udev }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  autoreconfHook,
+  bison,
+  fftw,
+  libtool,
+  libjack2,
+  bluez,
+  udev,
+}:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "pd-l2ork";
@@ -14,7 +24,13 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [ libtool ];
 
-  buildInputs = [ bison fftw libjack2 bluez udev ];
+  buildInputs = [
+    bison
+    fftw
+    libjack2
+    bluez
+    udev
+  ];
 
   meta = with lib; {
     homepage = "http://l2ork.music.vt.edu/";

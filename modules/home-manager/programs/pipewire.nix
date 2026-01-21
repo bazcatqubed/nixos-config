@@ -1,15 +1,21 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.pipewire;
   settingsFormat = pkgs.formats.json { };
 
-  generatePipewireConfig = name: settings:
+  generatePipewireConfig =
+    name: settings:
     lib.nameValuePair "pipewire/pipewire.conf.d/${name}.conf" {
-      source = settingsFormat.generate "hm-pipewire-override-settings-${name}"
-        settings;
+      source = settingsFormat.generate "hm-pipewire-override-settings-${name}" settings;
     };
-in {
+in
+{
   options.programs.pipewire = {
     enable = lib.mkEnableOption "Pipewire configuration";
     settings = lib.mkOption {
@@ -38,9 +44,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    xdg.configFile = lib.optionalAttrs (cfg.settings != { }) {
-      "pipewire/pipewire.conf".source =
-        settingsFormat.generate "hm-pipewire-settings" cfg.settings;
-    } // lib.mapAttrs' generatePipewireConfig cfg.overrides;
+    xdg.configFile =
+      lib.optionalAttrs (cfg.settings != { }) {
+        "pipewire/pipewire.conf".source = settingsFormat.generate "hm-pipewire-settings" cfg.settings;
+      }
+      // lib.mapAttrs' generatePipewireConfig cfg.overrides;
   };
 }

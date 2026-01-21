@@ -1,4 +1,9 @@
-{ lib, flake-parts-lib, inputs, ... }:
+{
+  lib,
+  flake-parts-lib,
+  inputs,
+  ...
+}:
 
 {
   options = {

@@ -1,4 +1,10 @@
-{ inputs, config, lib, ... }: {
+{
+  inputs,
+  config,
+  lib,
+  ...
+}:
+{
   imports = [
     ./dev.nix
     ./packages.nix
@@ -22,31 +28,41 @@
 
   _module.args = {
     # This will be shared among NixOS and home-manager configurations.
-    defaultNixConf = { config, lib, pkgs, ... }: {
-      # Extend nixpkgs with our overlays except for the NixOS-focused modules
-      # here.
-      nixpkgs.overlays =
-        lib.attrValues inputs.self.overlays
-        ++ [ inputs.wrapper-manager-fds.overlays.default ];
-    };
+    defaultNixConf =
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
+      {
+        # Extend nixpkgs with our overlays except for the NixOS-focused modules
+        # here.
+        nixpkgs.overlays = lib.attrValues inputs.self.overlays ++ [
+          inputs.wrapper-manager-fds.overlays.default
+        ];
+      };
 
     defaultOverlays = lib.attrValues inputs.self.overlays;
 
     defaultSystems = [ "x86_64-linux" ];
   };
 
-  setups.sharedNixpkgsConfig = { allowUnfree = true; };
+  setups.sharedNixpkgsConfig = {
+    allowUnfree = true;
+  };
 
-  perSystem = { lib, system, ... }: {
-    _module.args = {
-      # nixpkgs for this module should be used as less as possible especially
-      # for building NixOS and home-manager systems.
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        config = config.setups.sharedNixpkgsConfig;
-        overlays = lib.attrValues inputs.self.overlays
-          ++ [ inputs.nur.overlays.default ];
+  perSystem =
+    { lib, system, ... }:
+    {
+      _module.args = {
+        # nixpkgs for this module should be used as less as possible especially
+        # for building NixOS and home-manager systems.
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config = config.setups.sharedNixpkgsConfig;
+          overlays = lib.attrValues inputs.self.overlays ++ [ inputs.nur.overlays.default ];
+        };
       };
     };
-  };
 }

@@ -1,6 +1,5 @@
 { lib, foodogsquaredLib, ... }:
 
-
 let
   inherit (foodogsquaredLib.wrapper-manager) systemdSubenvModule;
   mkSubenvironmentModule = lib.mkOption {

@@ -1,4 +1,8 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 {
   # Similar to `lib.fetchers.proxyImpureEnvVars` but for Git.

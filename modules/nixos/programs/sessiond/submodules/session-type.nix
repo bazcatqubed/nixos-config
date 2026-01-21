@@ -1,4 +1,12 @@
-{ name, config, pkgs, lib, utils, sessiondPkg, ... }:
+{
+  name,
+  config,
+  pkgs,
+  lib,
+  utils,
+  sessiondPkg,
+  ...
+}:
 
 let
   # For an updated list, see `menu/menu-spec.xml` from
@@ -29,9 +37,9 @@ let
   # This is used both as the configuration format for sessiond.conf and its
   # hooks.
   settingsFormat = pkgs.formats.toml { };
-  sessionSettingsFile =
-    settingsFormat.generate "sessiond-conf-${config.name}" config.settings;
-in {
+  sessionSettingsFile = settingsFormat.generate "sessiond-conf-${config.name}" config.settings;
+in
+{
   options = {
     name = lib.mkOption {
       type = lib.types.nonEmptyStr;
@@ -69,13 +77,15 @@ in {
       '';
       default = [ config.fullName ];
       defaultText = "[ <session>.fullName ]";
-      apply = names:
-        lib.map (name:
-          if (lib.elem name validDesktopNames) || (lib.hasPrefix "X-" name) then
-            name
-          else
-            "X-${name}") names;
-      example = [ "GNOME" "Garden" ];
+      apply =
+        names:
+        lib.map (
+          name: if (lib.elem name validDesktopNames) || (lib.hasPrefix "X-" name) then name else "X-${name}"
+        ) names;
+      example = [
+        "GNOME"
+        "Garden"
+      ];
     };
 
     settings = lib.mkOption {
@@ -83,7 +93,10 @@ in {
       default = { };
       example = {
         Idle = {
-          Inputs = [ "motion" "button-press" ];
+          Inputs = [
+            "motion"
+            "button-press"
+          ];
           IdleSec = 60;
         };
 
@@ -107,13 +120,13 @@ in {
         A one-sentence description of the desktop environment.
       '';
       default = "${config.fullName} desktop environment";
-      defaultText =
-        lib.literalExpression "\${<name>.fullName} desktop environment";
+      defaultText = lib.literalExpression "\${<name>.fullName} desktop environment";
       example = "A desktop environment featuring a scrolling compositor.";
     };
 
     components = lib.mkOption {
-      type = with lib.types;
+      type =
+        with lib.types;
         attrsOf (submoduleWith {
           specialArgs = {
             inherit utils;
@@ -135,10 +148,15 @@ in {
     };
 
     targetUnit = lib.mkOption {
-      type = let
-        inherit (utils.systemdUtils.lib) unitConfig;
-        inherit (utils.systemdUtils.unitOptions) commonUnitOptions;
-      in lib.types.submodule [ commonUnitOptions unitConfig ];
+      type =
+        let
+          inherit (utils.systemdUtils.lib) unitConfig;
+          inherit (utils.systemdUtils.unitOptions) commonUnitOptions;
+        in
+        lib.types.submodule [
+          commonUnitOptions
+          unitConfig
+        ];
       description = ''
         systemd target configuration to be generated for
         `<name>.target`.
@@ -164,16 +182,20 @@ in {
     };
 
     serviceUnit = lib.mkOption {
-      type = let
-        inherit (utils.systemdUtils.lib) unitConfig serviceConfig;
-        inherit (utils.systemdUtils.unitOptions)
-          commonUnitOptions serviceOptions;
-      in lib.types.submodule [
-        commonUnitOptions
-        serviceOptions
-        serviceConfig
-        unitConfig
-      ];
+      type =
+        let
+          inherit (utils.systemdUtils.lib) unitConfig serviceConfig;
+          inherit (utils.systemdUtils.unitOptions)
+            commonUnitOptions
+            serviceOptions
+            ;
+        in
+        lib.types.submodule [
+          commonUnitOptions
+          serviceOptions
+          serviceConfig
+          unitConfig
+        ];
       default = { };
       visible = "shallow";
       description = ''
@@ -212,17 +234,18 @@ in {
 
   # Append the session argument.
   config = {
-    extraArgs =
-      lib.optional (config.settings != { }) "--config=${sessionSettingsFile}";
+    extraArgs = lib.optional (config.settings != { }) "--config=${sessionSettingsFile}";
 
     targetUnit = {
       description = config.description;
       requires = [ "${config.name}.service" ];
-      wants = let
-        componentTargetUnits =
-          lib.mapAttrsToList (_: component: "${component.id}.target")
-          config.components;
-      in componentTargetUnits;
+      wants =
+        let
+          componentTargetUnits = lib.mapAttrsToList (
+            _: component: "${component.id}.target"
+          ) config.components;
+        in
+        componentTargetUnits;
     };
 
     serviceUnit = {
@@ -237,9 +260,7 @@ in {
         Slice = lib.mkForce "session.slice";
         Type = lib.mkForce "dbus";
         BusName = lib.mkForce "org.sessiond.session1";
-        ExecStart = lib.mkForce "${lib.getExe' sessiondPkg "sessiond"} ${
-            lib.concatStringsSep " " config.extraArgs
-          }";
+        ExecStart = lib.mkForce "${lib.getExe' sessiondPkg "sessiond"} ${lib.concatStringsSep " " config.extraArgs}";
         Restart = "always";
       };
 

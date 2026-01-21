@@ -1,13 +1,16 @@
-{ inputs
+{
+  inputs,
 
-, defaultNixConf
+  defaultNixConf,
 
-, ... }:
+  ...
+}:
 
 let
   domain = "foodogsquared.one";
   subdomain = name: "${name}.${domain}";
-in {
+in
+{
   setups.nixos = {
     configs = {
       # The main desktop.
@@ -29,14 +32,19 @@ in {
         modules = [
           inputs.disko.nixosModules.disko
           inputs.sops-nix.nixosModules.sops
-          ({ lib, ... }: {
-            documentation.man.generateCaches = lib.mkForce false;
-          })
+          (
+            { lib, ... }:
+            {
+              documentation.man.generateCaches = lib.mkForce false;
+            }
+          )
 
           inputs.wrapper-manager-fds.nixosModules.wrapper-manager
           {
-            documentation.nixos.extraModules =
-              [ ../../modules/nixos ../../modules/nixos/_private ];
+            documentation.nixos.extraModules = [
+              ../../modules/nixos
+              ../../modules/nixos/_private
+            ];
             wrapper-manager.documentation.manpage.enable = true;
             wrapper-manager.documentation.extraModules = [
               ../../modules/wrapper-manager
@@ -47,16 +55,20 @@ in {
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
           inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
 
-          ({ config, ... }:
-            let hmCfg = config.home-manager.users;
-            in {
+          (
+            { config, ... }:
+            let
+              hmCfg = config.home-manager.users;
+            in
+            {
               # Testing out Nushell for a spinerooski.
               users.users.foo-dogsquared.shell =
                 if hmCfg.foo-dogsquared.programs.nushell.enable then
                   hmCfg.foo-dogsquared.programs.nushell.package
                 else
                   "/run/current-system/sw/bin/bash";
-            })
+            }
+          )
         ];
         home-manager = {
           branch = "home-manager-unstable";
@@ -76,8 +88,7 @@ in {
                 "wireshark"
                 "input"
               ];
-              hashedPassword =
-                "$6$.cMYto0K0CHbpIMT$dRqyKs4q1ppzmTpdzy5FWP/V832a6X..FwM8CJ30ivK0nfLjQ7DubctxOZbeOtygfjcUd1PZ0nQoQpOg/WMvg.";
+              hashedPassword = "$6$.cMYto0K0CHbpIMT$dRqyKs4q1ppzmTpdzy5FWP/V832a6X..FwM8CJ30ivK0nfLjQ7DubctxOZbeOtygfjcUd1PZ0nQoQpOg/WMvg.";
               description = "Du-bi-dabi-du-bida-du-dubi-du-dubi-du";
             };
           };
@@ -100,15 +111,20 @@ in {
           activationTimeout = 1200;
         };
 
-        modules =
-          [ inputs.disko.nixosModules.disko inputs.sops-nix.nixosModules.sops ];
+        modules = [
+          inputs.disko.nixosModules.disko
+          inputs.sops-nix.nixosModules.sops
+        ];
       };
 
       # The barely customized non-graphical installer.
       bootstrap = {
         nixpkgs.branch = "nixos-unstable-small";
         home-manager.branch = "home-manager-unstable";
-        systems = [ "aarch64-linux" "x86_64-linux" ];
+        systems = [
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
         formats = [ "install-iso" ];
         shouldBePartOfNixOSConfigurations = true;
       };
@@ -117,7 +133,10 @@ in {
       graphical-installer = {
         nixpkgs.branch = "nixos-unstable";
         home-manager.branch = "home-manager-unstable";
-        systems = [ "aarch64-linux" "x86_64-linux" ];
+        systems = [
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
         formats = [ "install-iso-graphical" ];
         diskoConfigs = [ "external-hdd" ];
         shouldBePartOfNixOSConfigurations = true;
@@ -152,18 +171,20 @@ in {
       ../../modules/nixos/profiles/generic.nix
       ../../modules/nixos/profiles/nix-conf.nix
 
-      ({ lib, ... }: {
-        home-manager.sharedModules = lib.singleton {
-          xdg.userDirs.createDirectories = lib.mkDefault true;
-          manual.html.enable = false;
-        };
+      (
+        { lib, ... }:
+        {
+          home-manager.sharedModules = lib.singleton {
+            xdg.userDirs.createDirectories = lib.mkDefault true;
+            manual.html.enable = false;
+          };
 
-        # This is flake-parts anyways so there's a set expectation that we're
-        # setting this in a flake.
-        system.configurationRevision =
-          if (inputs.self ? rev) then inputs.self.rev
-          else inputs.self.dirtyRev;
-      })
+          # This is flake-parts anyways so there's a set expectation that we're
+          # setting this in a flake.
+          system.configurationRevision =
+            if (inputs.self ? rev) then inputs.self.rev else inputs.self.dirtyRev;
+        }
+      )
     ];
   };
 

@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.programs.python;
-in {
+let
+  cfg = config.programs.python;
+in
+{
   options.programs.python = {
     enable = lib.mkEnableOption "user-wide Python installation";
     package = lib.mkPackageOption pkgs "python3" { };

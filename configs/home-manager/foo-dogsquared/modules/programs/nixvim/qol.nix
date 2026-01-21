@@ -1,4 +1,11 @@
-{ config, lib, pkgs, helpers, hmConfig, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  helpers,
+  hmConfig,
+  ...
+}:
 
 let
   nixvimCfg = config.nixvimConfigs.fiesta-fds;
@@ -39,34 +46,39 @@ in
       };
     };
 
-    plugins.which-key.settings.spec = lib.singleton
-      (helpers.listToUnkeyedAttrs [ bindingPrefix ] // { group = "Git"; });
+    plugins.which-key.settings.spec = lib.singleton (
+      helpers.listToUnkeyedAttrs [ bindingPrefix ] // { group = "Git"; }
+    );
 
     keymaps = [
       {
         options.desc = "Open blame lines for the current line";
         key = bindingPrefix' "b";
-        action = helpers.mkRaw ''function()
-          Snacks.git.blame_line()
-        end
+        action = helpers.mkRaw ''
+          function()
+                    Snacks.git.blame_line()
+                  end
         '';
       }
-    ] ++ lib.optionals config.plugins.snacks.settings.lazygit.enabled [
+    ]
+    ++ lib.optionals config.plugins.snacks.settings.lazygit.enabled [
       {
         options.desc = "Open lazygit";
         key = bindingPrefix' "g";
-        action = helpers.mkRaw ''function()
-          Snacks.lazygit()
-        end
+        action = helpers.mkRaw ''
+          function()
+                    Snacks.lazygit()
+                  end
         '';
       }
 
       {
         options.desc = "Open current file history in lazygit";
         key = bindingPrefix' "f";
-        action = helpers.mkRaw ''function()
-          Snacks.lazygit.log_file()
-        end
+        action = helpers.mkRaw ''
+          function()
+                    Snacks.lazygit.log_file()
+                  end
         '';
       }
     ];

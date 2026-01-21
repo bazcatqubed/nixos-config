@@ -1,4 +1,10 @@
-{ lib, buildPythonPackage, fetchFromGitHub, imageio, openimageio }:
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  imageio,
+  openimageio,
+}:
 
 buildPythonPackage rec {
   pname = "blender-blendergis";

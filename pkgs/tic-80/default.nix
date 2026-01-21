@@ -1,32 +1,66 @@
 # Build the TIC-80 virtual computer console with the PRO version. The
 # developers are kind enough to make it easy to compile it if you know
 # how.
-{ stdenv, lib, giflib, SDL2, SDL2_sound, sdl2-compat, alsa-lib, argparse, curl
-, cmake, fetchFromGitHub, freeglut, git, gtk3, dbus, libGLU, libX11, libglvnd
-, libsamplerate, mesa, pkg-config, sndio, zlib, lua54Packages
+{
+  stdenv,
+  lib,
+  giflib,
+  SDL2,
+  SDL2_sound,
+  sdl2-compat,
+  alsa-lib,
+  argparse,
+  curl,
+  cmake,
+  fetchFromGitHub,
+  freeglut,
+  git,
+  gtk3,
+  dbus,
+  libGLU,
+  libX11,
+  libglvnd,
+  libsamplerate,
+  mesa,
+  pkg-config,
+  sndio,
+  zlib,
+  lua54Packages,
 
-, pulseaudioSupport ? stdenv.isLinux, libpulseaudio
+  pulseaudioSupport ? stdenv.isLinux,
+  libpulseaudio,
 
-, jsSupport ? true, quickjs
+  jsSupport ? true,
+  quickjs,
 
-, waylandSupport ? true, wayland, wayland-scanner, libxkbcommon, libdecor
+  waylandSupport ? true,
+  wayland,
+  wayland-scanner,
+  libxkbcommon,
+  libdecor,
 
-, esoundSupport ? true, espeak
+  esoundSupport ? true,
+  espeak,
 
-, jackSupport ? true, jack2
+  jackSupport ? true,
+  jack2,
 
-# As of 2025-03-26, it is basically required to have a very specific version of
-# mruby so no...
-, rubySupport ? false, mruby
+  # As of 2025-03-26, it is basically required to have a very specific version of
+  # mruby so no...
+  rubySupport ? false,
+  mruby,
 
-, pythonSupport ? true
+  pythonSupport ? true,
 
-, janetSupport ? true, janet
+  janetSupport ? true,
+  janet,
 
-# This doesn't have the appropriate system library as of nixpkgs 2025-03-26, btw.
-, wasmSupport ? true, wasm
+  # This doesn't have the appropriate system library as of nixpkgs 2025-03-26, btw.
+  wasmSupport ? true,
+  wasm,
 
-, withPro ? true }:
+  withPro ? true,
+}:
 
 # TODO: Fix the timestamp in the help section.
 stdenv.mkDerivation rec {
@@ -41,7 +75,10 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ cmake pkg-config ];
+  nativeBuildInputs = [
+    cmake
+    pkg-config
+  ];
   buildInputs = [
     argparse
     alsa-lib
@@ -60,19 +97,20 @@ stdenv.mkDerivation rec {
     SDL2_sound
     zlib
     sndio
-  ] ++ lib.optionals pulseaudioSupport [ libpulseaudio ]
-    ++ lib.optionals jackSupport [ jack2 ]
-    ++ lib.optionals jsSupport [ quickjs ]
-    ++ lib.optionals esoundSupport [ espeak ]
-    ++ lib.optionals rubySupport [ mruby ]
-    ++ lib.optionals janetSupport [ janet ]
-    ++ lib.optionals wasmSupport [ wasm ]
-    ++ lib.optionals (stdenv.isLinux && waylandSupport) [
-      wayland
-      wayland-scanner
-      libxkbcommon
-      libdecor
-    ];
+  ]
+  ++ lib.optionals pulseaudioSupport [ libpulseaudio ]
+  ++ lib.optionals jackSupport [ jack2 ]
+  ++ lib.optionals jsSupport [ quickjs ]
+  ++ lib.optionals esoundSupport [ espeak ]
+  ++ lib.optionals rubySupport [ mruby ]
+  ++ lib.optionals janetSupport [ janet ]
+  ++ lib.optionals wasmSupport [ wasm ]
+  ++ lib.optionals (stdenv.isLinux && waylandSupport) [
+    wayland
+    wayland-scanner
+    libxkbcommon
+    libdecor
+  ];
 
   cmakeFlags =
     # Just leave the tinier libraries alone for this.
@@ -82,7 +120,8 @@ stdenv.mkDerivation rec {
       "-DBUILD_WITH_MOON=ON"
       "-DBUILD_WITH_SCHEME=ON"
       "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
-    ] ++ lib.optionals withPro [ "-DBUILD_PRO=ON" ]
+    ]
+    ++ lib.optionals withPro [ "-DBUILD_PRO=ON" ]
     ++ lib.optionals jsSupport [ "-DBUILD_WITH_JS=ON" ]
     ++ lib.optionals rubySupport [ "-DBUILD_WITH_RUBY=ON" ]
     ++ lib.optionals pythonSupport [ "-DBUILD_WITH_PYTHON=ON" ]
@@ -90,7 +129,10 @@ stdenv.mkDerivation rec {
     ++ lib.optionals janetSupport [ "-DBUILD_WITH_JANET=ON" ];
 
   # Export all of the TIC-80-related utilities.
-  outputs = [ "out" "dev" ];
+  outputs = [
+    "out"
+    "dev"
+  ];
   postInstall = ''
     install -Dm755 bin/* -t $dev/bin
     install -Dm644 lib/* -t $dev/lib

@@ -1,9 +1,16 @@
-{ config, lib, pkgs, foodogsquaredLib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
   cfg = hostCfg.networking;
-in {
+in
+{
   options.hosts.ni.networking = {
     enable = lib.mkEnableOption "networking setup";
 
@@ -18,7 +25,10 @@ in {
     };
 
     setup = lib.mkOption {
-      type = lib.types.enum [ "networkd" "networkmanager" ];
+      type = lib.types.enum [
+        "networkd"
+        "networkmanager"
+      ];
       description = ''
         Indicates the component of the network setup. In practice, you'll most
         likely just use NetworkManager since it is what is being supported by
@@ -29,8 +39,7 @@ in {
         risk.
         :::
       '';
-      default =
-        if config.networking.useNetworkd then "networkd" else "networkmanager";
+      default = if config.networking.useNetworkd then "networkd" else "networkmanager";
       defaultText = ''
         When networkd is enabled, `networkd`, otherwise `networkmanager` as the
         general fallback value.
@@ -39,145 +48,150 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable (lib.mkMerge [
-    {
-      # Set your time zone.
-      time.timeZone = "Asia/Manila";
+  config = lib.mkIf cfg.enable (
+    lib.mkMerge [
+      {
+        # Set your time zone.
+        time.timeZone = "Asia/Manila";
 
-      # Doxxing myself.
-      location = {
-        latitude = 15.0;
-        longitude = 121.0;
-      };
+        # Doxxing myself.
+        location = {
+          latitude = 15.0;
+          longitude = 121.0;
+        };
 
-      # Add these timeservers.
-      networking.timeServers =
-        lib.mkBefore [ "ntp.nict.jp" "time.nist.gov" "time.facebook.com" ];
+        # Add these timeservers.
+        networking.timeServers = lib.mkBefore [
+          "ntp.nict.jp"
+          "time.nist.gov"
+          "time.facebook.com"
+        ];
 
-      # Put on your cloak, kid.
-      suites.vpn.personal.enable = true;
+        # Put on your cloak, kid.
+        suites.vpn.personal.enable = true;
 
-      # We'll go with a software firewall. We're mostly configuring it as if we're
-      # using a server even though the chances of that is pretty slim.
-      networking.nftables.enable = true;
-      networking.firewall.enable = true;
+        # We'll go with a software firewall. We're mostly configuring it as if we're
+        # using a server even though the chances of that is pretty slim.
+        networking.nftables.enable = true;
+        networking.firewall.enable = true;
 
-      # Just supporting local systems, businesses, and business systems.
-      services.avahi = {
-        enable = true;
-        nssmdns4 = true;
-        publish = {
+        # Just supporting local systems, businesses, and business systems.
+        services.avahi = {
           enable = true;
-          userServices = true;
+          nssmdns4 = true;
+          publish = {
+            enable = true;
+            userServices = true;
+          };
         };
-      };
 
-      # Cross-platform filesystem networking.
-      services.samba = {
-        enable = true;
-        nmbd.enable = true;
-        nsswins = true;
-      };
-
-      # Set resolved for DNS resolutions.
-      services.resolved = {
-        enable = true;
-        settings.Resolve = {
-          LLMNR = true;
-          Domains = [
-            "~plover.foodogsquared.one"
-            "~0.27.172.in-addr.arpa"
-            "~0.28.172.in-addr.arpa"
-          ];
-        };
-      };
-    }
-
-    (lib.mkIf (cfg.setup == "networkd") {
-      networking = {
-        usePredictableInterfaceNames = true;
-        useNetworkd = true;
-
-        # We're using networkd to configure so we're disabling this
-        # service.
-        useDHCP = false;
-        dhcpcd.enable = false;
-      };
-
-      # Setting up our network manager of choice.
-      systemd.network.enable = true;
-
-      # Setting up the bond devices. So far it should have 2 Ethernet ports and
-      # one WiFi interface so it should be bond composed of three interfaces.
-      systemd.network.networks."40-bond1-dev1" = {
-        matchConfig.Name = "enp3s0";
-        networkConfig.Bond = "bond1";
-      };
-
-      systemd.network.networks."40-bond1-dev2" = {
-        matchConfig.Name = "wlp4s0";
-        networkConfig = {
-          Bond = "bond1";
-          IgnoreCarrierLoss = "15";
-        };
-      };
-
-      # Creating the ethernet-wireless-network bond.
-      systemd.network.netdevs."40-bond1".netdevConfig = {
-        Name = "bond1";
-        Kind = "bond";
-      };
-
-      systemd.network.networks."40-bond1" = {
-        matchConfig.Name = "bond1";
-        networkConfig.DHCP = "yes";
-      };
-    })
-
-    (lib.mkIf (cfg.setup == "networkmanager") {
-      networking.usePredictableInterfaceNames = true;
-
-      # Enable and configure NetworkManager.
-      networking.networkmanager = lib.mkMerge [
-        {
+        # Cross-platform filesystem networking.
+        services.samba = {
           enable = true;
-          dhcp = lib.mkIf (config.networking.dhcpcd.enable) "dhcpcd";
-
-          plugins = with pkgs; [
-            networkmanager-openconnect
-            networkmanager-openvpn
-            networkmanager-vpnc
-          ];
-        }
-
-        (lib.mkIf config.services.resolved.enable { dns = "systemd-resolved"; })
-      ];
-
-      # We'll configure individual network interfaces to use DHCP since it can
-      # fail wait-online-interface.service.
-      networking.useDHCP = lib.mkDefault true;
-    })
-
-    (lib.mkIf cfg.enableCommonSetup {
-      state.ports = {
-        http = {
-          value = 80;
-          protocols = [ "tcp" ];
-          openFirewall = true;
-        };
-        https = {
-          value = 443;
-          protocols = [ "tcp" ];
-          openFirewall = true;
+          nmbd.enable = true;
+          nsswins = true;
         };
 
-        # This is for user-specific services that would need to be exposed to
-        # the local network.
-        userland = {
-          value = foodogsquaredLib.nixos.makeRange 20000 30000;
-          openFirewall = true;
+        # Set resolved for DNS resolutions.
+        services.resolved = {
+          enable = true;
+          settings.Resolve = {
+            LLMNR = true;
+            Domains = [
+              "~plover.foodogsquared.one"
+              "~0.27.172.in-addr.arpa"
+              "~0.28.172.in-addr.arpa"
+            ];
+          };
         };
-      };
-    })
-  ]);
+      }
+
+      (lib.mkIf (cfg.setup == "networkd") {
+        networking = {
+          usePredictableInterfaceNames = true;
+          useNetworkd = true;
+
+          # We're using networkd to configure so we're disabling this
+          # service.
+          useDHCP = false;
+          dhcpcd.enable = false;
+        };
+
+        # Setting up our network manager of choice.
+        systemd.network.enable = true;
+
+        # Setting up the bond devices. So far it should have 2 Ethernet ports and
+        # one WiFi interface so it should be bond composed of three interfaces.
+        systemd.network.networks."40-bond1-dev1" = {
+          matchConfig.Name = "enp3s0";
+          networkConfig.Bond = "bond1";
+        };
+
+        systemd.network.networks."40-bond1-dev2" = {
+          matchConfig.Name = "wlp4s0";
+          networkConfig = {
+            Bond = "bond1";
+            IgnoreCarrierLoss = "15";
+          };
+        };
+
+        # Creating the ethernet-wireless-network bond.
+        systemd.network.netdevs."40-bond1".netdevConfig = {
+          Name = "bond1";
+          Kind = "bond";
+        };
+
+        systemd.network.networks."40-bond1" = {
+          matchConfig.Name = "bond1";
+          networkConfig.DHCP = "yes";
+        };
+      })
+
+      (lib.mkIf (cfg.setup == "networkmanager") {
+        networking.usePredictableInterfaceNames = true;
+
+        # Enable and configure NetworkManager.
+        networking.networkmanager = lib.mkMerge [
+          {
+            enable = true;
+            dhcp = lib.mkIf (config.networking.dhcpcd.enable) "dhcpcd";
+
+            plugins = with pkgs; [
+              networkmanager-openconnect
+              networkmanager-openvpn
+              networkmanager-vpnc
+            ];
+          }
+
+          (lib.mkIf config.services.resolved.enable { dns = "systemd-resolved"; })
+        ];
+
+        # We'll configure individual network interfaces to use DHCP since it can
+        # fail wait-online-interface.service.
+        networking.useDHCP = lib.mkDefault true;
+      })
+
+      (lib.mkIf cfg.enableCommonSetup {
+        state.ports = {
+          http = {
+            value = 80;
+            protocols = [ "tcp" ];
+            openFirewall = true;
+          };
+          https = {
+            value = 443;
+            protocols = [ "tcp" ];
+            openFirewall = true;
+          };
+
+          # This is for user-specific services that would need to be exposed to
+          # the local network.
+          userland = {
+            value = foodogsquaredLib.nixos.makeRange 20000 30000;
+            openFirewall = true;
+          };
+        };
+      })
+    ]
+  );
 }

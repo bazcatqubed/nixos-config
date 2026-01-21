@@ -1,7 +1,13 @@
 # A home-manager module that simply uses the wrapper-manager module under the
 # hood. I just did this because I don't want to reimplement the entire thing
 # from scratch lmao.
-{ config, pkgs, lib, wrapperManagerLib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  wrapperManagerLib,
+  ...
+}:
 
 let
   gnomeSessionCfg = wrapperManagerLib.eval {
@@ -22,8 +28,8 @@ in
       # way to access the options from wrapper-manager other than a module
       # argument, I guess.
       emptyWM = wrapperManagerLib.eval { inherit pkgs; };
-      in
-        emptyWM.options.programs.gnome-session;
+    in
+    emptyWM.options.programs.gnome-session;
 
   config = lib.mkIf (cfg.sessions != { }) {
     home.packages = lib.singleton gnomeSessionPackage;

@@ -1,10 +1,17 @@
-{ config, lib, helpers, hmConfig, ... }:
+{
+  config,
+  lib,
+  helpers,
+  hmConfig,
+  ...
+}:
 
 let
   inherit (hmConfig.xdg) userDirs;
   nixvimCfg = config.nixvimConfigs.fiesta-fds;
   cfg = nixvimCfg.setups.fuzzy-finding;
-in {
+in
+{
   options.nixvimConfigs.fiesta-fds.setups.fuzzy-finding.enable =
     lib.mkEnableOption "fuzzy finding setup within fiesta-fds";
 

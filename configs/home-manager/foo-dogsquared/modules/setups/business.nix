@@ -1,11 +1,17 @@
-{ config, lib, pkgs, foodogsquaredLib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  ...
+}:
 
 let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.setups.business;
-in {
-  options.users.foo-dogsquared.setups.business.enable =
-    lib.mkEnableOption "business setup";
+in
+{
+  options.users.foo-dogsquared.setups.business.enable = lib.mkEnableOption "business setup";
 
   config = lib.mkIf cfg.enable {
     users.foo-dogsquared.programs = {
@@ -28,7 +34,8 @@ in {
         mkFlags = name: [
           "--user-data-dir=${hmConfig.xdg.configHome}/${chromiumPackage.pname}-${name}"
         ];
-      in {
+      in
+      {
         programs.chromium-web-apps.apps = {
           google-workspace = {
             baseURL = "workspace.google.com";
@@ -57,7 +64,11 @@ in {
               desktopName = "Microsoft Teams";
               genericName = "Video Conferencing";
               comment = "Video conferencing software";
-              keywords = [ "Zoom" "Jitsi" "Work Chat" ];
+              keywords = [
+                "Zoom"
+                "Jitsi"
+                "Work Chat"
+              ];
             };
           };
 

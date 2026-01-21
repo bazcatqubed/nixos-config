@@ -1,7 +1,13 @@
-{ lib, config, pkgs, foodogsquaredLib, foodogsquaredUtils
-, foodogsquaredModulesPath
+{
+  lib,
+  config,
+  pkgs,
+  foodogsquaredLib,
+  foodogsquaredUtils,
+  foodogsquaredModulesPath,
 
-, ... }:
+  ...
+}:
 
 # Since this will be exported as an installer ISO, you'll have to keep in mind
 # about the added imports from nixos-generators. In this case, it simply adds
@@ -30,7 +36,9 @@
       # closure size smaller.
       workflows = {
         enable = [ "one.foodogsquared.AHappyGNOME" ];
-        workflows."one.foodogsquared.AHappyGNOME" = { extraApps = lib.mkForce [ ]; };
+        workflows."one.foodogsquared.AHappyGNOME" = {
+          extraApps = lib.mkForce [ ];
+        };
       };
 
       # Install the web browser of course. What would be a graphical installer

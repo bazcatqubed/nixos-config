@@ -1,6 +1,12 @@
 # NixVim config for some light software development. This is where language
 # support plugins mainly reside. Also formatters.
-{ config, pkgs, lib, hmConfig, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  hmConfig,
+  ...
+}:
 
 let
   inherit (config.plugins.treesitter.package) builtGrammars;
@@ -21,11 +27,23 @@ in
         bash = [ "shfmt" ];
         c = [ "clang_format" ];
         cpp = c;
-        javascript = [ "prettierd" "prettier" ];
+        javascript = [
+          "prettierd"
+          "prettier"
+        ];
         lua = [ "stylua" ];
-        nix = [ "nixpkgs-fmt" "alejandra" ];
-        python = [ "isort" "black" ];
-        ruby = [ "rubocop" "rufo" ];
+        nix = [
+          "nixpkgs-fmt"
+          "alejandra"
+        ];
+        python = [
+          "isort"
+          "black"
+        ];
+        ruby = [
+          "rubocop"
+          "rufo"
+        ];
         typescript = javascript;
         typst = [ "typstfmt" ];
       };
@@ -76,15 +94,26 @@ in
         wgsl
         wgsl_bevy
         zig
-      ] ++ (with pkgs.tree-sitter-grammars; [ tree-sitter-elisp tree-sitter-nu ])
-      ++ lib.optionals hmConfig.programs.git.enable (with builtGrammars; [
-        git_config
-        git_rebase
-        gitattributes
-        gitcommit
-        gitignore
-      ]);
+      ]
+      ++ (with pkgs.tree-sitter-grammars; [
+        tree-sitter-elisp
+        tree-sitter-nu
+      ])
+      ++ lib.optionals hmConfig.programs.git.enable (
+        with builtGrammars;
+        [
+          git_config
+          git_rebase
+          gitattributes
+          gitcommit
+          gitignore
+        ]
+      );
 
-    extraPlugins = with pkgs.vimPlugins; [ vim-nickel vim-nix zig-vim ];
+    extraPlugins = with pkgs.vimPlugins; [
+      vim-nickel
+      vim-nix
+      zig-vim
+    ];
   };
 }

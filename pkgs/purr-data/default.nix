@@ -1,5 +1,15 @@
-{ stdenv, lib, fetchFromGitHub, bison, fftw, libtool, libjack2, bluez, udev
-, wget, }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  bison,
+  fftw,
+  libtool,
+  libjack2,
+  bluez,
+  udev,
+  wget,
+}:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "pd-l2ork";
@@ -14,7 +24,14 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [ libtool ];
 
-  buildInputs = [ bison fftw libjack2 bluez udev wget ];
+  buildInputs = [
+    bison
+    fftw
+    libjack2
+    bluez
+    udev
+    wget
+  ];
 
   preBuild = ''
     patchShebangs l2ork_addons/*.sh

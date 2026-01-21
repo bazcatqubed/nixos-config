@@ -1,16 +1,23 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.programs.vs-code;
-in {
+in
+{
   options.users.foo-dogsquared.programs.vs-code.enable =
     lib.mkEnableOption "foo-dogsquared's Visual Studio Code setup";
 
   config = lib.mkIf cfg.enable {
     suites.editors.vscode.enable = true;
     programs.vscode.profiles.default = {
-      extensions = with pkgs.vscode-extensions;
+      extensions =
+        with pkgs.vscode-extensions;
         [
           # Additional language support.
           bbenoist.nix
@@ -30,14 +37,17 @@ in {
           editorconfig.editorconfig
           alefragnani.project-manager
           fill-labs.dependi
-        ] ++ lib.optionals userCfg.programs.browsers.firefox.enable
-        [ firefox-devtools.vscode-firefox-debug ]
-        ++ lib.optionals config.programs.python.enable
-        [ ms-toolsai.jupyter ms-toolsai.jupyter-renderers ]
-        ++ lib.optionals userCfg.setups.research.writing.enable
-        [ ltex-plus.vscode-ltex-plus ];
+        ]
+        ++ lib.optionals userCfg.programs.browsers.firefox.enable [ firefox-devtools.vscode-firefox-debug ]
+        ++ lib.optionals config.programs.python.enable [
+          ms-toolsai.jupyter
+          ms-toolsai.jupyter-renderers
+        ]
+        ++ lib.optionals userCfg.setups.research.writing.enable [ ltex-plus.vscode-ltex-plus ];
 
-      userSettings = { "extensions.ignoreRecommendations" = true; };
+      userSettings = {
+        "extensions.ignoreRecommendations" = true;
+      };
     };
 
     # We're using Visual Studio Code as a git difftool and mergetool which is

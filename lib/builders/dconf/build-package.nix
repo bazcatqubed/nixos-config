@@ -1,4 +1,8 @@
-{ lib, stdenvNoCC, dconf }:
+{
+  lib,
+  stdenvNoCC,
+  dconf,
+}:
 
 lib.extendMkDerivation {
   constructDrv = stdenvNoCC.mkDerivation;
@@ -29,18 +33,22 @@ lib.extendMkDerivation {
       enableSystemUserProfile ? false,
 
       ...
-    }
-    @args:
+    }@args:
     let
       profile' =
         lib.optionals (enableLocalUserProfile && !((lib.elemAt profile 0) == "user-db")) [ "user-db:user" ]
-        ++ lib.optionals (enableSystemUserProfile && !((lib.elemAt profile 1) == "system-db:${name}")) [ "system-db:${name}" ]
+        ++ lib.optionals (enableSystemUserProfile && !((lib.elemAt profile 1) == "system-db:${name}")) [
+          "system-db:${name}"
+        ]
         ++ profile;
     in
     {
       inherit keyfiles;
       profile = lib.concatStringsSep "\n" profile';
-      passAsFile = args.passAsFile or [ ] ++ [ "profile" "keyfiles" ];
+      passAsFile = args.passAsFile or [ ] ++ [
+        "profile"
+        "keyfiles"
+      ];
 
       buildInputs = args.buildInputs or [ ] ++ [ dconf ];
 

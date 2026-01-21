@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.texlive;
@@ -17,7 +22,7 @@ in
         Lambda containing a list of package to be included within the TexLive
         environment.
       '';
-      default = ps: [];
+      default = ps: [ ];
       example = lib.literalExpression ''
         ps: with ps; [
           texdoc

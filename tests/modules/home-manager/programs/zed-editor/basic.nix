@@ -1,4 +1,5 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
   programs.zed-editor = {
     enable = true;
     settings = {

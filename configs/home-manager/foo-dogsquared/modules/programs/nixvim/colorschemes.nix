@@ -1,10 +1,17 @@
-{ config, lib, helpers, ... }:
+{
+  config,
+  lib,
+  helpers,
+  ...
+}:
 
 let
   inherit (helpers) mkRaw;
 
-  initLushBase16 = acc: index: color:
-    acc + ''
+  initLushBase16 =
+    acc: index: color:
+    acc
+    + ''
       local ${index} = hsluv('#${color}')
     '';
 
@@ -12,7 +19,8 @@ let
 
   nixvimCfg = config.nixvimConfigs.fiesta-fds;
   cfg = nixvimCfg.setups.colorschemes;
-in {
+in
+{
   options.nixvimConfigs.fiesta-fds.setups.colorschemes.enable =
     lib.mkEnableOption "colorscheme setup with lush.nvim and the rest of Bahaghari colorschemes";
 
@@ -100,8 +108,12 @@ in {
             };
 
             TooLong.fg = mkRaw "base08";
-            Underlined = { fg = mkRaw "base08"; };
-            WarningMsg = { fg = mkRaw "base08"; };
+            Underlined = {
+              fg = mkRaw "base08";
+            };
+            WarningMsg = {
+              fg = mkRaw "base08";
+            };
             WildMenu = {
               fg = mkRaw "base08";
               bg = mkRaw "base0A";
@@ -112,7 +124,9 @@ in {
               fg = mkRaw "base00";
               bg = mkRaw "base05";
             };
-            NonText = { fg = mkRaw "base03"; };
+            NonText = {
+              fg = mkRaw "base03";
+            };
             LineNr = {
               fg = mkRaw "base02.lighten(25)";
               bg = mkRaw "base00";
@@ -121,7 +135,9 @@ in {
               fg = mkRaw "base02.lighten(25)";
               bg = mkRaw "base01";
             };
-            SignColumn = { fg = mkRaw "base01.lighten(40)"; };
+            SignColumn = {
+              fg = mkRaw "base01.lighten(40)";
+            };
             StatusLine = {
               fg = mkRaw "base02";
               bg = mkRaw "base01.darken(60)";
@@ -138,17 +154,27 @@ in {
               fg = mkRaw "base01.lighten(25)";
               bg = mkRaw "base01.darken(25)";
             };
-            CursorLine = { bg = mkRaw "base01.saturate(-5).darken(15)"; };
+            CursorLine = {
+              bg = mkRaw "base01.saturate(-5).darken(15)";
+            };
             CursorColumn = CursorLine;
             CursorLineNr.fg = mkRaw "base0A";
             Visual = {
               fg = mkRaw "base03.lighten(15)";
               bg = mkRaw "CursorColumn.bg.darken(15)";
             };
-            VisualNOS = { fg = mkRaw "base08"; };
-            QuickFixLine = { bg = mkRaw "base00"; };
-            QFFileName = { fg = mkRaw "base0A"; };
-            QFLineNr = { fg = mkRaw "base04"; };
+            VisualNOS = {
+              fg = mkRaw "base08";
+            };
+            QuickFixLine = {
+              bg = mkRaw "base00";
+            };
+            QFFileName = {
+              fg = mkRaw "base0A";
+            };
+            QFLineNr = {
+              fg = mkRaw "base04";
+            };
             PMenu = {
               fg = mkRaw "base05";
               bg = mkRaw "base01";
@@ -175,39 +201,89 @@ in {
             };
 
             # Standard syntax highlighting
-            Boolean = { fg = mkRaw "base09"; };
-            Character = { fg = mkRaw "base08"; };
+            Boolean = {
+              fg = mkRaw "base09";
+            };
+            Character = {
+              fg = mkRaw "base08";
+            };
             Comment = {
               fg = mkRaw "base03";
               gui = "italic";
             };
-            Conditional = { fg = mkRaw "base0E"; };
-            Constant = { fg = mkRaw "base09"; };
-            Define = { fg = mkRaw "base0E"; };
-            Delimiter = { fg = mkRaw "base0F.lighten(10)"; };
-            Float = { fg = mkRaw "base09"; };
-            Function = { fg = mkRaw "base0D"; };
-            Identifier = { fg = mkRaw "base0A"; };
-            Include = { fg = mkRaw "base0D"; };
-            Keyword = { fg = mkRaw "base0E"; };
-            Label = { fg = mkRaw "base0A"; };
-            Number = { fg = mkRaw "base03"; };
-            Operator = { fg = mkRaw "base03"; };
-            PreProc = { fg = mkRaw "base0A"; };
-            Repeat = { fg = mkRaw "base0A"; };
-            Special = { fg = mkRaw "base0C"; };
-            SpecialChar = { fg = mkRaw "base0F.lighten(15).saturate(10)"; };
-            Statement = { fg = mkRaw "base08"; };
-            StorageClass = { fg = mkRaw "base0A"; };
-            String = { fg = mkRaw "base0B"; };
-            Structure = { fg = mkRaw "base0E"; };
-            Tag = { fg = mkRaw "base0A"; };
+            Conditional = {
+              fg = mkRaw "base0E";
+            };
+            Constant = {
+              fg = mkRaw "base09";
+            };
+            Define = {
+              fg = mkRaw "base0E";
+            };
+            Delimiter = {
+              fg = mkRaw "base0F.lighten(10)";
+            };
+            Float = {
+              fg = mkRaw "base09";
+            };
+            Function = {
+              fg = mkRaw "base0D";
+            };
+            Identifier = {
+              fg = mkRaw "base0A";
+            };
+            Include = {
+              fg = mkRaw "base0D";
+            };
+            Keyword = {
+              fg = mkRaw "base0E";
+            };
+            Label = {
+              fg = mkRaw "base0A";
+            };
+            Number = {
+              fg = mkRaw "base03";
+            };
+            Operator = {
+              fg = mkRaw "base03";
+            };
+            PreProc = {
+              fg = mkRaw "base0A";
+            };
+            Repeat = {
+              fg = mkRaw "base0A";
+            };
+            Special = {
+              fg = mkRaw "base0C";
+            };
+            SpecialChar = {
+              fg = mkRaw "base0F.lighten(15).saturate(10)";
+            };
+            Statement = {
+              fg = mkRaw "base08";
+            };
+            StorageClass = {
+              fg = mkRaw "base0A";
+            };
+            String = {
+              fg = mkRaw "base0B";
+            };
+            Structure = {
+              fg = mkRaw "base0E";
+            };
+            Tag = {
+              fg = mkRaw "base0A";
+            };
             Todo = {
               fg = mkRaw "base0A";
               bg = mkRaw "base01";
             };
-            Type = { fg = mkRaw "base0A"; };
-            Typedef = { fg = mkRaw "base0A"; };
+            Type = {
+              fg = mkRaw "base0A";
+            };
+            Typedef = {
+              fg = mkRaw "base0A";
+            };
 
             # Help
             HelpDoc = {
@@ -221,22 +297,46 @@ in {
             };
 
             # C highlighting
-            cOperator = { fg = mkRaw "base0C"; };
-            cPreCondit = { fg = mkRaw "base0E"; };
+            cOperator = {
+              fg = mkRaw "base0C";
+            };
+            cPreCondit = {
+              fg = mkRaw "base0E";
+            };
 
             # C# highlighting
-            csClass = { fg = mkRaw "base0A"; };
-            csAttribute = { fg = mkRaw "base0A"; };
-            csModifier = { fg = mkRaw "base0E"; };
-            csType = { fg = mkRaw "base08"; };
-            csUnspecifiedStatement = { fg = mkRaw "base0D"; };
-            csContextualStatement = { fg = mkRaw "base0E"; };
-            csNewDecleration = { fg = mkRaw "base08"; };
+            csClass = {
+              fg = mkRaw "base0A";
+            };
+            csAttribute = {
+              fg = mkRaw "base0A";
+            };
+            csModifier = {
+              fg = mkRaw "base0E";
+            };
+            csType = {
+              fg = mkRaw "base08";
+            };
+            csUnspecifiedStatement = {
+              fg = mkRaw "base0D";
+            };
+            csContextualStatement = {
+              fg = mkRaw "base0E";
+            };
+            csNewDecleration = {
+              fg = mkRaw "base08";
+            };
 
             # CSS highlighting
-            cssBraces = { fg = mkRaw "base05"; };
-            cssClassName = { fg = mkRaw "base0E"; };
-            cssColor = { fg = mkRaw "base0C"; };
+            cssBraces = {
+              fg = mkRaw "base05";
+            };
+            cssClassName = {
+              fg = mkRaw "base0E";
+            };
+            cssColor = {
+              fg = mkRaw "base0C";
+            };
 
             # Diff highlighting
             DiffAdd = {
@@ -279,21 +379,43 @@ in {
             };
 
             # Git highlighting
-            gitcommitOverflow = { fg = mkRaw "base08"; };
-            gitcommitSummary = { fg = mkRaw "base0B"; };
-            gitcommitComment = { fg = mkRaw "base03"; };
-            gitcommitUntracked = { fg = mkRaw "base03"; };
-            gitcommitDiscarded = { fg = mkRaw "base03"; };
-            gitcommitSelected = { fg = mkRaw "base03"; };
-            gitcommitHeader = { fg = mkRaw "base0E"; };
-            gitcommitSelectedType = { fg = mkRaw "base0D"; };
-            gitcommitUnmergedType = { fg = mkRaw "base0D"; };
-            gitcommitDiscardedType = { fg = mkRaw "base0D"; };
+            gitcommitOverflow = {
+              fg = mkRaw "base08";
+            };
+            gitcommitSummary = {
+              fg = mkRaw "base0B";
+            };
+            gitcommitComment = {
+              fg = mkRaw "base03";
+            };
+            gitcommitUntracked = {
+              fg = mkRaw "base03";
+            };
+            gitcommitDiscarded = {
+              fg = mkRaw "base03";
+            };
+            gitcommitSelected = {
+              fg = mkRaw "base03";
+            };
+            gitcommitHeader = {
+              fg = mkRaw "base0E";
+            };
+            gitcommitSelectedType = {
+              fg = mkRaw "base0D";
+            };
+            gitcommitUnmergedType = {
+              fg = mkRaw "base0D";
+            };
+            gitcommitDiscardedType = {
+              fg = mkRaw "base0D";
+            };
             gitcommitBranch = {
               fg = mkRaw "base09";
               gui = "bold";
             };
-            gitcommitUntrackedFile = { fg = mkRaw "base0A"; };
+            gitcommitUntrackedFile = {
+              fg = mkRaw "base0A";
+            };
             gitcommitUnmergedFile = {
               fg = mkRaw "base08";
               gui = "bold";
@@ -308,42 +430,102 @@ in {
             };
 
             # HTML highlighting
-            htmlBold = { fg = mkRaw "base0A"; };
-            htmlItalic = { fg = mkRaw "base0E"; };
-            htmlEndTag = { fg = mkRaw "base05"; };
-            htmlTag = { fg = mkRaw "base05"; };
+            htmlBold = {
+              fg = mkRaw "base0A";
+            };
+            htmlItalic = {
+              fg = mkRaw "base0E";
+            };
+            htmlEndTag = {
+              fg = mkRaw "base05";
+            };
+            htmlTag = {
+              fg = mkRaw "base05";
+            };
 
             # JavaScript highlighting
-            javaScript = { fg = mkRaw "base05"; };
-            javaScriptBraces = { fg = mkRaw "base05"; };
-            javaScriptNumber = { fg = mkRaw "base09"; };
+            javaScript = {
+              fg = mkRaw "base05";
+            };
+            javaScriptBraces = {
+              fg = mkRaw "base05";
+            };
+            javaScriptNumber = {
+              fg = mkRaw "base09";
+            };
 
             # pangloss/vim-javascript highlighting
-            jsOperator = { fg = mkRaw "base0D"; };
-            jsStatement = { fg = mkRaw "base0E"; };
-            jsReturn = { fg = mkRaw "base0E"; };
-            jsThis = { fg = mkRaw "base08"; };
-            jsClassDefinition = { fg = mkRaw "base0A"; };
-            jsFunction = { fg = mkRaw "base0E"; };
-            jsFuncName = { fg = mkRaw "base0D"; };
-            jsFuncCall = { fg = mkRaw "base0D"; };
-            jsClassFuncName = { fg = mkRaw "base0D"; };
-            jsClassMethodType = { fg = mkRaw "base0E"; };
-            jsRegexpString = { fg = mkRaw "base0C"; };
-            jsGlobalObjects = { fg = mkRaw "base0A"; };
-            jsGlobalNodeObjects = { fg = mkRaw "base0A"; };
-            jsExceptions = { fg = mkRaw "base0A"; };
-            jsBuiltins = { fg = mkRaw "base0A"; };
+            jsOperator = {
+              fg = mkRaw "base0D";
+            };
+            jsStatement = {
+              fg = mkRaw "base0E";
+            };
+            jsReturn = {
+              fg = mkRaw "base0E";
+            };
+            jsThis = {
+              fg = mkRaw "base08";
+            };
+            jsClassDefinition = {
+              fg = mkRaw "base0A";
+            };
+            jsFunction = {
+              fg = mkRaw "base0E";
+            };
+            jsFuncName = {
+              fg = mkRaw "base0D";
+            };
+            jsFuncCall = {
+              fg = mkRaw "base0D";
+            };
+            jsClassFuncName = {
+              fg = mkRaw "base0D";
+            };
+            jsClassMethodType = {
+              fg = mkRaw "base0E";
+            };
+            jsRegexpString = {
+              fg = mkRaw "base0C";
+            };
+            jsGlobalObjects = {
+              fg = mkRaw "base0A";
+            };
+            jsGlobalNodeObjects = {
+              fg = mkRaw "base0A";
+            };
+            jsExceptions = {
+              fg = mkRaw "base0A";
+            };
+            jsBuiltins = {
+              fg = mkRaw "base0A";
+            };
 
             # Mail highlighting
-            mailQuoted1 = { fg = mkRaw "base0A"; };
-            mailQuoted2 = { fg = mkRaw "base0B"; };
-            mailQuoted3 = { fg = mkRaw "base0E"; };
-            mailQuoted4 = { fg = mkRaw "base0C"; };
-            mailQuoted5 = { fg = mkRaw "base0D"; };
-            mailQuoted6 = { fg = mkRaw "base0A"; };
-            mailURL = { fg = mkRaw "base0D"; };
-            mailEmail = { fg = mkRaw "base0D"; };
+            mailQuoted1 = {
+              fg = mkRaw "base0A";
+            };
+            mailQuoted2 = {
+              fg = mkRaw "base0B";
+            };
+            mailQuoted3 = {
+              fg = mkRaw "base0E";
+            };
+            mailQuoted4 = {
+              fg = mkRaw "base0C";
+            };
+            mailQuoted5 = {
+              fg = mkRaw "base0D";
+            };
+            mailQuoted6 = {
+              fg = mkRaw "base0A";
+            };
+            mailURL = {
+              fg = mkRaw "base0D";
+            };
+            mailEmail = {
+              fg = mkRaw "base0D";
+            };
 
             # Markdown highlighting
             markdownh1 = {
@@ -394,7 +576,9 @@ in {
               fg = mkRaw "base07";
               bg = mkRaw "base00";
             };
-            markdownCodeBlock = { fg = mkRaw "base0B"; };
+            markdownCodeBlock = {
+              fg = mkRaw "base0B";
+            };
             markdownFootnoteDefinition = {
               fg = mkRaw "base05";
               gui = "italic";
@@ -411,8 +595,12 @@ in {
               fg = mkRaw "base05";
               bg = mkRaw "base00";
             };
-            markdownHeadingDelimiter = { fg = mkRaw "base0D"; };
-            markdownUrl = { fg = mkRaw "base09"; };
+            markdownHeadingDelimiter = {
+              fg = mkRaw "base0D";
+            };
+            markdownUrl = {
+              fg = mkRaw "base09";
+            };
             markdownFootnote = {
               fg = mkRaw "base0E";
               gui = "italic";
@@ -427,45 +615,99 @@ in {
             };
 
             # PHP highlighting
-            phpMemberSelector = { fg = mkRaw "base05"; };
-            phpComparison = { fg = mkRaw "base05"; };
-            phpParent = { fg = mkRaw "base05"; };
-            phpMethodsVar = { fg = mkRaw "base0C"; };
+            phpMemberSelector = {
+              fg = mkRaw "base05";
+            };
+            phpComparison = {
+              fg = mkRaw "base05";
+            };
+            phpParent = {
+              fg = mkRaw "base05";
+            };
+            phpMethodsVar = {
+              fg = mkRaw "base0C";
+            };
 
             # Python highlighting
-            pythonOperator = { fg = mkRaw "base0E"; };
-            pythonRepeat = { fg = mkRaw "base0E"; };
-            pythonInclude = { fg = mkRaw "base0E"; };
-            pythonStatement = { fg = mkRaw "base0E"; };
+            pythonOperator = {
+              fg = mkRaw "base0E";
+            };
+            pythonRepeat = {
+              fg = mkRaw "base0E";
+            };
+            pythonInclude = {
+              fg = mkRaw "base0E";
+            };
+            pythonStatement = {
+              fg = mkRaw "base0E";
+            };
 
             # Ruby highlighting
-            rubyAttribute = { fg = mkRaw "base0D"; };
-            rubyConstant = { fg = mkRaw "base0A"; };
-            rubyInterpolationDelimiter = { fg = mkRaw "base0F"; };
-            rubyRegexp = { fg = mkRaw "base0C"; };
-            rubySymbol = { fg = mkRaw "base0B"; };
-            rubyStringDelimiter = { fg = mkRaw "base0B"; };
+            rubyAttribute = {
+              fg = mkRaw "base0D";
+            };
+            rubyConstant = {
+              fg = mkRaw "base0A";
+            };
+            rubyInterpolationDelimiter = {
+              fg = mkRaw "base0F";
+            };
+            rubyRegexp = {
+              fg = mkRaw "base0C";
+            };
+            rubySymbol = {
+              fg = mkRaw "base0B";
+            };
+            rubyStringDelimiter = {
+              fg = mkRaw "base0B";
+            };
 
             # SASS highlighting
-            sassidChar = { fg = mkRaw "base08"; };
-            sassClassChar = { fg = mkRaw "base09"; };
-            sassInclude = { fg = mkRaw "base0E"; };
-            sassMixing = { fg = mkRaw "base0E"; };
-            sassMixinName = { fg = mkRaw "base0D"; };
+            sassidChar = {
+              fg = mkRaw "base08";
+            };
+            sassClassChar = {
+              fg = mkRaw "base09";
+            };
+            sassInclude = {
+              fg = mkRaw "base0E";
+            };
+            sassMixing = {
+              fg = mkRaw "base0E";
+            };
+            sassMixinName = {
+              fg = mkRaw "base0D";
+            };
 
             # Spelling highlighting
-            SpellBad = { gui = "undercurl"; };
-            SpellCap = { gui = "undercurl"; };
-            SpellRare = { gui = "undercurl"; };
+            SpellBad = {
+              gui = "undercurl";
+            };
+            SpellCap = {
+              gui = "undercurl";
+            };
+            SpellRare = {
+              gui = "undercurl";
+            };
 
             # Java highlighting
-            javaOperator = { fg = mkRaw "base0D"; };
+            javaOperator = {
+              fg = mkRaw "base0D";
+            };
 
             # XML highlighting
-            xmlTagName = { fg = mkRaw "base0D"; };
-            xmlCdatastart = { fg = mkRaw "base0A"; };
-            xmlEndTag = { fg = mkRaw "xmlTagName.bg"; };
-            xmlCdataCdata = { fg = mkRaw "xmlCdatastart.bg"; };
+            xmlTagName = {
+              fg = mkRaw "base0D";
+            };
+            xmlCdatastart = {
+              fg = mkRaw "base0A";
+            };
+            xmlEndTag = {
+              fg = mkRaw "xmlTagName.bg";
+            };
+            xmlCdataCdata = {
+              fg = mkRaw "xmlCdatastart.bg";
+            };
 
             # MatchParen
             MatchParen = {
@@ -480,9 +722,15 @@ in {
             };
 
             # Diff highlighting
-            GitSignsAdd = { fg = mkRaw "base0B"; };
-            GitSignsDelete = { fg = mkRaw "base08"; };
-            GitSignsChange = { fg = mkRaw "base03"; };
+            GitSignsAdd = {
+              fg = mkRaw "base0B";
+            };
+            GitSignsDelete = {
+              fg = mkRaw "base08";
+            };
+            GitSignsChange = {
+              fg = mkRaw "base03";
+            };
           }
 
           (lib.mkIf config.plugins.telescope.enable {
@@ -514,33 +762,59 @@ in {
 
           # See `rb-delimiters-colors` help section for more details.
           (lib.mkIf config.plugins.rainbow-delimiters.enable {
-            RainbowDelimiterRed = { fg = mkRaw "base09"; };
-            RainbowDelimiterYellow = { fg = mkRaw "base0A"; };
-            RainbowDelimiterBlue = { fg = mkRaw "base0B"; };
-            RainbowDelimiterOrange = { fg = mkRaw "base0C"; };
-            RainbowDelimiterGreen = { fg = mkRaw "base0D"; };
-            RainbowDelimiterViolet = { fg = mkRaw "base0E"; };
-            RainbowDelimiterCyan = { fg = mkRaw "base0F"; };
+            RainbowDelimiterRed = {
+              fg = mkRaw "base09";
+            };
+            RainbowDelimiterYellow = {
+              fg = mkRaw "base0A";
+            };
+            RainbowDelimiterBlue = {
+              fg = mkRaw "base0B";
+            };
+            RainbowDelimiterOrange = {
+              fg = mkRaw "base0C";
+            };
+            RainbowDelimiterGreen = {
+              fg = mkRaw "base0D";
+            };
+            RainbowDelimiterViolet = {
+              fg = mkRaw "base0E";
+            };
+            RainbowDelimiterCyan = {
+              fg = mkRaw "base0F";
+            };
           })
 
           # See `lsp-highlight` help section for more details.
           (lib.mkIf config.plugins.lsp.enable {
-            LspDiagnosticsDefaultError = { fg = mkRaw "base08"; };
-            LspDiagnosticsDefaultWarning = { fg = mkRaw "base09"; };
-            LspDiagnosticsDefaultHint = { fg = mkRaw "base0A"; };
-            LspDiagnosticsDefaultInformation = { fg = mkRaw "base0B"; };
+            LspDiagnosticsDefaultError = {
+              fg = mkRaw "base08";
+            };
+            LspDiagnosticsDefaultWarning = {
+              fg = mkRaw "base09";
+            };
+            LspDiagnosticsDefaultHint = {
+              fg = mkRaw "base0A";
+            };
+            LspDiagnosticsDefaultInformation = {
+              fg = mkRaw "base0B";
+            };
           })
 
           # See `treesitter-highlight-groups` help section for more details.
           (lib.mkIf config.plugins.treesitter.enable {
             ${sym "@variable"} = helpers.listToUnkeyedAttrs [ (mkRaw "Normal") ];
-            ${sym "@tag.delimiter"} = { fg = mkRaw "base0A"; };
-            ${sym "@text.emphasis"} =
-              helpers.listToUnkeyedAttrs [ (mkRaw "Italic") ];
-            ${sym "@text.underline"} =
-              helpers.listToUnkeyedAttrs [ (mkRaw "Underlined") ];
-            ${sym "@text.strike"} = { gui = "strikethrough"; };
-            ${sym "@text.uri"} = { fg = mkRaw "base0C"; };
+            ${sym "@tag.delimiter"} = {
+              fg = mkRaw "base0A";
+            };
+            ${sym "@text.emphasis"} = helpers.listToUnkeyedAttrs [ (mkRaw "Italic") ];
+            ${sym "@text.underline"} = helpers.listToUnkeyedAttrs [ (mkRaw "Underlined") ];
+            ${sym "@text.strike"} = {
+              gui = "strikethrough";
+            };
+            ${sym "@text.uri"} = {
+              fg = mkRaw "base0C";
+            };
           })
 
           (lib.mkIf config.plugins.indent-blankline.enable {

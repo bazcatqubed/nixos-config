@@ -2,7 +2,10 @@
 
 lib.extendMkDerivation {
   constructDrv = stdenvNoCC.mkDerivation;
-  excludeDrvArgNames = [ "profile" "enableLocalUserProfile" ];
+  excludeDrvArgNames = [
+    "profile"
+    "enableLocalUserProfile"
+  ];
   extendDrvArgs =
     finalAttrs:
     {
@@ -11,8 +14,7 @@ lib.extendMkDerivation {
       enableLocalUserProfile ? false,
 
       ...
-    }
-    @args:
+    }@args:
     let
       profile' =
         lib.optionals (enableLocalUserProfile && !((lib.elemAt profile 0) == "user-db")) [ "user-db:user" ]

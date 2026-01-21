@@ -1,4 +1,11 @@
-{ hugo, go, cacert, gitMinimal, lib, stdenv, }:
+{
+  hugo,
+  go,
+  cacert,
+  gitMinimal,
+  lib,
+  stdenv,
+}:
 
 let
   vendorDir = "_vendor";
@@ -32,9 +39,18 @@ lib.extendMkDerivation {
     }@args:
     {
       inherit (go) GOOS GOARCH;
-      inherit CGO_ENABLED enableParallelBuilding GO111MODULE GOTOOLCHAIN;
+      inherit
+        CGO_ENABLED
+        enableParallelBuilding
+        GO111MODULE
+        GOTOOLCHAIN
+        ;
 
-      buildInputs = args.buildInputs or [ ] ++ [ go gitMinimal hugo ];
+      buildInputs = args.buildInputs or [ ] ++ [
+        go
+        gitMinimal
+        hugo
+      ];
 
       dontFixup = args.dontFixup or true;
       doCheck = args.doCheck or true;
@@ -90,17 +106,18 @@ lib.extendMkDerivation {
                 runHook postBuild
               '';
 
-            installPhase = args.modInstallPhase or ''
-              runHook preInstall
+            installPhase =
+              args.modInstallPhase or ''
+                runHook preInstall
 
-              cp -r --reflink=auto ${vendorDir} $out
-              if ! [ "$(ls -A $out)" ]; then
-                echo "vendor folder is empty, please set 'vendorHash = null;' in your expression"
-                exit 10
-              fi
+                cp -r --reflink=auto ${vendorDir} $out
+                if ! [ "$(ls -A $out)" ]; then
+                  echo "vendor folder is empty, please set 'vendorHash = null;' in your expression"
+                  exit 10
+                fi
 
-              runHook postInstall
-            '';
+                runHook postInstall
+              '';
 
             impureEnvVars = lib.fetchers.proxyImpureEnvVars ++ [
               "GIT_PROXY_COMMAND"
@@ -113,39 +130,45 @@ lib.extendMkDerivation {
             outputHashMode = "recursive";
             outputHash = finalAttrs.vendorHash;
             outputHashAlgo = if finalAttrs.vendorHash == "" then "sha256" else null;
-          }).overrideAttrs (finalAttrs.passthru.overrideModAttrs or overrideModAttrs);
+          }).overrideAttrs
+            (finalAttrs.passthru.overrideModAttrs or overrideModAttrs);
 
-      configurePhase = args.configurePhase or ''
-        runHook preConfigure
+      configurePhase =
+        args.configurePhase or ''
+          runHook preConfigure
 
-        rm -rf _vendor
-        cp -r --reflink=auto ${finalAttrs.hugoModules} _vendor
+          rm -rf _vendor
+          cp -r --reflink=auto ${finalAttrs.hugoModules} _vendor
 
-        runHook postConfigure
-      '';
+          runHook postConfigure
+        '';
 
-      buildFlags = args.buildFlags or [ ] ++ [ "--destination" "public" ];
-      buildPhase = args.buildPhase or ''
-        runHook preBuild
+      buildFlags = args.buildFlags or [ ] ++ [
+        "--destination"
+        "public"
+      ];
+      buildPhase =
+        args.buildPhase or ''
+          runHook preBuild
 
-        hugo ''${buildFlags[@]}
+          hugo ''${buildFlags[@]}
 
-        runHook postBuild
-      '';
+          runHook postBuild
+        '';
 
-      installPhase = args.installPhase or ''
-        runHook preInstall
+      installPhase =
+        args.installPhase or ''
+          runHook preInstall
 
-        mkdir -p $out && cp -r public/* $out
+          mkdir -p $out && cp -r public/* $out
 
-        runHook postInstall
-      '';
+          runHook postInstall
+        '';
 
-      passthru =
-        args.passthru or { } // {
-          inherit hugo go;
-          inherit (finalAttrs) hugoModules;
-          overrideModAttrs = lib.toExtension overrideModAttrs;
-        };
+      passthru = args.passthru or { } // {
+        inherit hugo go;
+        inherit (finalAttrs) hugoModules;
+        overrideModAttrs = lib.toExtension overrideModAttrs;
+      };
     };
 }

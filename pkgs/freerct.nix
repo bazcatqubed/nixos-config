@@ -1,4 +1,14 @@
-{ lib, stdenv, fetchFromGitHub, cmake, libpng, SDL2, SDL2_ttf, flex, bison }:
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  cmake,
+  libpng,
+  SDL2,
+  SDL2_ttf,
+  flex,
+  bison,
+}:
 
 stdenv.mkDerivation rec {
   pname = "freerct";
@@ -13,12 +23,17 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ cmake ];
 
-  buildInputs = [ libpng SDL2 SDL2_ttf flex bison ];
+  buildInputs = [
+    libpng
+    SDL2
+    SDL2_ttf
+    flex
+    bison
+  ];
 
   meta = with lib; {
     homepage = "https://freerct.net/";
-    description =
-      "Free and open source game aiming to capture the look and feel of RollerCoaster Tycoon.";
+    description = "Free and open source game aiming to capture the look and feel of RollerCoaster Tycoon.";
     license = licenses.gpl2Only;
   };
 }

@@ -26,7 +26,7 @@ func generateIcon(rawURL *url.URL, size int, fontName string) (draw.RGBA64Image,
 	resultingHash := convertToHash(hostname)
 	s := [32]byte([]byte(resultingHash))
 	r := rand.New(rand.NewChaCha8(s))
-	bgColor := color.RGBA{uint8(r.UintN(255)), uint8(r.UintN(255)), uint8(r.UintN(255)), 255 }
+	bgColor := color.RGBA{uint8(r.UintN(255)), uint8(r.UintN(255)), uint8(r.UintN(255)), 255}
 	draw.Draw(img, img.Bounds(), &image.Uniform{bgColor}, image.Point{0, 0}, draw.Src)
 
 	// Then render the text.
@@ -34,13 +34,17 @@ func generateIcon(rawURL *url.URL, size int, fontName string) (draw.RGBA64Image,
 	char := runes[0]
 
 	fonts, err := findFont(fontName)
-	if err != nil || len(fontName) <= 0 { return nil, err }
+	if err != nil || len(fontName) <= 0 {
+		return nil, err
+	}
 
 	// Just see findfont package for more information about this.
 	fontPath := fonts[0][2]
 
 	err = addLabel(img, &image.Point{0, 0}, char, fontPath)
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 
 	return img, nil
 }
@@ -51,19 +55,25 @@ func addLabel(img *image.RGBA, p *image.Point, label rune, fontPath string) erro
 	size := img.Bounds().Dx()
 
 	fontBytes, err := os.ReadFile(fontPath)
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	_font, err := opentype.Parse(fontBytes)
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	fontSize := float64(size) * 0.80
-	faceOptions := opentype.FaceOptions {
-		Size: fontSize,
-		DPI: 72,
+	faceOptions := opentype.FaceOptions{
+		Size:    fontSize,
+		DPI:     72,
 		Hinting: font.HintingNone,
 	}
-	fontface, err := opentype.NewFace(_font, &faceOptions);
-	if err != nil { return err }
+	fontface, err := opentype.NewFace(_font, &faceOptions)
+	if err != nil {
+		return err
+	}
 
 	d := &font.Drawer{
 		Dst:  img,
@@ -71,11 +81,11 @@ func addLabel(img *image.RGBA, p *image.Point, label rune, fontPath string) erro
 		Face: fontface,
 	}
 
-    boundingBox, _, _ := d.Face.GlyphBounds(label)
-    charWidth := intAbs(boundingBox.Min.X.Ceil()) + boundingBox.Max.X.Ceil()
+	boundingBox, _, _ := d.Face.GlyphBounds(label)
+	charWidth := intAbs(boundingBox.Min.X.Ceil()) + boundingBox.Max.X.Ceil()
 	charHeight := intAbs(boundingBox.Min.Y.Ceil()) + boundingBox.Max.Y.Ceil()
 
-    startingX := (size - charWidth) / 2
+	startingX := (size - charWidth) / 2
 	startingY := charHeight + ((size - charHeight) / 2)
 
 	d.Dot = fixed.P(startingX, startingY)

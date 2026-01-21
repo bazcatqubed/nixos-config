@@ -1,4 +1,10 @@
-{ stdenv, lib, meson, ninja, inputs ? [ ] }:
+{
+  stdenv,
+  lib,
+  meson,
+  ninja,
+  inputs ? [ ],
+}:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "run-workflow-with-vm";
@@ -6,7 +12,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   src = ./.;
 
-  nativeBuildInputs = [ meson ninja ];
+  nativeBuildInputs = [
+    meson
+    ninja
+  ];
 
   preConfigure = ''
     mesonFlagsArray+=("-Dinputs=[${lib.concatStringsSep "," inputs}]")

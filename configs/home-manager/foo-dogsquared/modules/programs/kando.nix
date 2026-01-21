@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }@attrs:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}@attrs:
 
 let
   userCfg = config.users.foo-dogsquared;

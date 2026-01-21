@@ -16,11 +16,9 @@
 # If anything else is pretty much in despair, we could always ste- I mean...
 # copy edolstra's flake-compat implementation.
 rec {
-  importFlakeMetadata = flakeLockfile:
-    builtins.fromJSON (builtins.readFile flakeLockfile);
+  importFlakeMetadata = flakeLockfile: builtins.fromJSON (builtins.readFile flakeLockfile);
 
-  fetchTree = metadata: inputName:
-    builtins.fetchTree metadata.nodes.${inputName}.locked;
+  fetchTree = metadata: inputName: builtins.fetchTree metadata.nodes.${inputName}.locked;
 
   fetchInput = metadata: inputName: (fetchTree metadata inputName).outPath;
 }

@@ -1,7 +1,11 @@
-{ pkgs ? import <nixpkgs> { overlays = [ (import ../overlays).default ]; } }:
+{
+  pkgs ? import <nixpkgs> { overlays = [ (import ../overlays).default ]; },
+}:
 
-let inherit (pkgs) callPackage;
-in {
+let
+  inherit (pkgs) callPackage;
+in
+{
   creatives = callPackage ./creatives.nix { };
   typicalDevenv = callPackage ./typical-devenv.nix { };
   rustBackend = callPackage ./rust-backend.nix { };

@@ -1,4 +1,7 @@
-{ disk ? "/dev/nvme1n1", ... }:
+{
+  disk ? "/dev/nvme1n1",
+  ...
+}:
 
 {
   disko.devices = {
@@ -17,8 +20,13 @@
 
               subvolumes = {
                 "/root" = {
-                  mountOptions =
-                    [ "rw" "user" "noauto" "nofail" "compress=zstd:10" ];
+                  mountOptions = [
+                    "rw"
+                    "user"
+                    "noauto"
+                    "nofail"
+                    "compress=zstd:10"
+                  ];
                   mountpoint = "/media/laptop-ssd";
                 };
               };

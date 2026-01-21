@@ -1,8 +1,15 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 
-let app = pkgs.callPackage ./. { };
-in pkgs.mkShell {
+let
+  app = pkgs.callPackage ./. { };
+in
+pkgs.mkShell {
   inputsFrom = [ app ];
 
-  packages = with pkgs; [ git clang-tools ];
+  packages = with pkgs; [
+    git
+    clang-tools
+  ];
 }

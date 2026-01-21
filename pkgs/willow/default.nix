@@ -1,4 +1,8 @@
-{ lib, buildGoModule, fetchFromGitHub }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+}:
 
 buildGoModule {
   pname = "willow";
@@ -16,7 +20,10 @@ buildGoModule {
   meta = with lib; {
     homepage = "https://github.com/Amolith/willow";
     description = "Forge-agnostic release tracker";
-    license = with licenses; [ mit asl20 ];
+    license = with licenses; [
+      mit
+      asl20
+    ];
     maintainers = with maintainers; [ foo-dogsquared ];
     mainProgram = "willow";
     platforms = platforms.unix;

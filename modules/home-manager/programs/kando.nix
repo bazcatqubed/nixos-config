@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.kando;
@@ -71,33 +76,39 @@ in
       '';
     };
 
-    themes = let
-      mkThemeOption = type: expectedOutputDir:
-        lib.mkOption {
-          type = with lib.types; listOf package;
-          default = [ ];
-          description = ''
-            A list of packages containing Kando ${type} themes expected at
-            {file}`${expectedOutputDir}`.
-          '';
-          example = lib.literalExpression ''
-            with pkgs.kandoThemes; [
-              doggo
-              catpuccin
-            ];
-          '';
-        };
-    in {
-      menus = mkThemeOption "menu" "$out/share/kando/menu-themes";
-      sounds = mkThemeOption "sound" "$out/share/kando/sound-themes";
-      icons = mkThemeOption "icon" "$out/share/kando/icon-themes";
-    };
+    themes =
+      let
+        mkThemeOption =
+          type: expectedOutputDir:
+          lib.mkOption {
+            type = with lib.types; listOf package;
+            default = [ ];
+            description = ''
+              A list of packages containing Kando ${type} themes expected at
+              {file}`${expectedOutputDir}`.
+            '';
+            example = lib.literalExpression ''
+              with pkgs.kandoThemes; [
+                doggo
+                catpuccin
+              ];
+            '';
+          };
+      in
+      {
+        menus = mkThemeOption "menu" "$out/share/kando/menu-themes";
+        sounds = mkThemeOption "sound" "$out/share/kando/sound-themes";
+        icons = mkThemeOption "icon" "$out/share/kando/icon-themes";
+      };
 
     enableGnomeInegration = lib.mkEnableOption "GNOME Shell integration";
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ cfg.package ] ++ lib.optionals cfg.enableGnomeInegration [
+    home.packages = [
+      cfg.package
+    ]
+    ++ lib.optionals cfg.enableGnomeInegration [
       pkgs.gnomeExtensions.kando-integration
     ];
 

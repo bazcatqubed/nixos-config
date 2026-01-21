@@ -1,9 +1,15 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
   cfg = hostCfg.setups.gaming;
-in {
+in
+{
   options.hosts.ni.setups.gaming.enable = lib.mkEnableOption "gaming setup";
 
   config = lib.mkIf cfg.enable {
@@ -14,7 +20,12 @@ in {
       retro-computing.enable = true;
     };
 
-    programs.retroarch.cores = with pkgs.libretro; [ pcsx2 dolphin citra mame ];
+    programs.retroarch.cores = with pkgs.libretro; [
+      pcsx2
+      dolphin
+      citra
+      mame
+    ];
 
     # Bring more of them games.
     environment.systemPackages = with pkgs; [
@@ -40,9 +51,16 @@ in {
       };
     };
 
-    programs.steam.extraCompatPackages = let
-      protonGEVersions = [ "9-27" "9-7" "10-14" "10-15" "10-24" ];
-    in
+    programs.steam.extraCompatPackages =
+      let
+        protonGEVersions = [
+          "9-27"
+          "9-7"
+          "10-14"
+          "10-15"
+          "10-24"
+        ];
+      in
       lib.map (v: pkgs."proton-ge-${v}-bin") protonGEVersions;
 
     xdg.desktopEntries.dwarf-fortress = lib.mkIf config.programs.dwarf-fortress.enable {

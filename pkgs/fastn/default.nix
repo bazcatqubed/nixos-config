@@ -1,4 +1,11 @@
-{ lib, rustPlatform, fetchFromGitHub, cmake, pkg-config, openssl }:
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  cmake,
+  pkg-config,
+  openssl,
+}:
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "fastn";
@@ -14,7 +21,11 @@ rustPlatform.buildRustPackage (finalAttrs: {
   cargoHash = "sha256-0hXOqfid2kyCCLJpg2Q/0aDUXIis6/YTEioQJWmCqcc=";
   cargoBuildFeatures = [ "edition2024" ];
 
-  nativeBuildInputs = [ rustPlatform.bindgenHook cmake pkg-config ];
+  nativeBuildInputs = [
+    rustPlatform.bindgenHook
+    cmake
+    pkg-config
+  ];
   buildInputs = [ openssl ];
 
   checkFlags = [ "--skip=tests::fbt" ];

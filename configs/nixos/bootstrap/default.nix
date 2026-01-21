@@ -1,4 +1,11 @@
-{ lib, config, pkgs, foodogsquaredLib, foodogsquaredModulesPath, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  foodogsquaredLib,
+  foodogsquaredModulesPath,
+  ...
+}:
 
 # Since this will be exported as an installer ISO, you'll have to keep in mind
 # about the added imports from nixos-generators. In this case, it simply adds

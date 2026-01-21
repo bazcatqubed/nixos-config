@@ -20,7 +20,10 @@
 
     opts = {
       encoding = "utf-8";
-      completeopt = [ "menuone" "noselect" ];
+      completeopt = [
+        "menuone"
+        "noselect"
+      ];
       expandtab = true;
       shiftwidth = 4;
       tabstop = 4;

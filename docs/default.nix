@@ -1,76 +1,110 @@
-{ pkgs ? import <nixpkgs> { overlays = [ (import ../overlays).default ]; } }:
+{
+  pkgs ? import <nixpkgs> { overlays = [ (import ../overlays).default ]; },
+}:
 
 let
   inherit (pkgs) lib nixosOptionsDoc;
 
   mkOptionsDoc =
-    args@{ class, modules, includeModuleSystemArguments ? false, ... }:
+    args@{
+      class,
+      modules,
+      includeModuleSystemArguments ? false,
+      ...
+    }:
     let
-      modulesEval = if class == "nixos" then
-        lib.evalModules {
-          modules = modules ++ lib.singleton {
-            imports = [
-              "${pkgs.path}/nixos/modules/misc/extra-arguments.nix"
+      modulesEval =
+        if class == "nixos" then
+          lib.evalModules {
+            modules =
+              modules
+              ++ lib.singleton {
+                imports = [
+                  "${pkgs.path}/nixos/modules/misc/extra-arguments.nix"
 
-              # One of the modules requires this to be included.
-              "${pkgs.path}/nixos/modules/config/xdg/mime.nix"
-            ];
-            _module.check = false;
-            _module.args.pkgs = pkgs;
-            fileSystems."/".device = "nodev";
+                  # One of the modules requires this to be included.
+                  "${pkgs.path}/nixos/modules/config/xdg/mime.nix"
+                ];
+                _module.check = false;
+                _module.args.pkgs = pkgs;
+                fileSystems."/".device = "nodev";
+              };
+          }
+        else if class == "homeManager" then
+          let
+            hmLib = import <home-manager/lib/stdlib-extended.nix> lib;
+          in
+          lib.evalModules {
+            modules =
+              modules
+              ++ lib.singleton {
+                _module.check = false;
+                _module.args.pkgs = pkgs;
+                lib = hmLib.hm;
+              };
+          }
+        else if class == "wrapperManager" then
+          let
+            wrapper-manager = import ../subprojects/wrapper-manager-fds { };
+          in
+          wrapper-manager.lib.eval {
+            inherit pkgs;
+            modules = modules ++ lib.singleton { _module.check = false; };
+          }
+        else
+          lib.evalModules {
+            modules =
+              modules
+              ++ lib.singleton {
+                _module.check = false;
+                _module.args.pkgs = pkgs;
+              };
           };
-        }
-      else if class == "homeManager" then
-        let hmLib = import <home-manager/lib/stdlib-extended.nix> lib;
-        in lib.evalModules {
-          modules = modules ++ lib.singleton {
-            _module.check = false;
-            _module.args.pkgs = pkgs;
-            lib = hmLib.hm;
-          };
-        }
-      else if class == "wrapperManager" then
-        let wrapper-manager = import ../subprojects/wrapper-manager-fds { };
-        in wrapper-manager.lib.eval {
-          inherit pkgs;
-          modules = modules ++ lib.singleton { _module.check = false; };
-        }
-      else
-        lib.evalModules {
-          modules = modules ++ lib.singleton {
-            _module.check = false;
-            _module.args.pkgs = pkgs;
-          };
-        };
 
       inherit (modulesEval) options;
-    in nixosOptionsDoc ({
-      options = if includeModuleSystemArguments then
-        options
-      else
-        builtins.removeAttrs options [ "_module" ];
-    } // builtins.removeAttrs args [
-      "modules"
-      "class"
-      "includeModuleSystemArguments"
-    ]);
+    in
+    nixosOptionsDoc (
+      {
+        options =
+          if includeModuleSystemArguments then options else builtins.removeAttrs options [ "_module" ];
+      }
+      // builtins.removeAttrs args [
+        "modules"
+        "class"
+        "includeModuleSystemArguments"
+      ]
+    );
 
-  mkManpage = { filename, optionsJSON, asciidocHeader }:
-    pkgs.runCommand "wrapper-manager-reference-manpage" {
-      nativeBuildInputs = with pkgs; [ nixos-render-docs asciidoctor ];
-    } ''
-      mkdir -p $out/share/man/man5
-      asciidoctor --attribute is-wider-scoped --backend manpage \
-        ${asciidocHeader} --out-file header.5
-      nixos-render-docs options manpage --revision ${pkgs.lib.version} \
-        --header ./header.5 --footer ${./manpages/footer.5} \
-        ${optionsJSON}/share/doc/nixos/options.json \
-        $out/share/man/man5/fds-extra-${filename}.5
-    '';
-in {
+  mkManpage =
+    {
+      filename,
+      optionsJSON,
+      asciidocHeader,
+    }:
+    pkgs.runCommand "wrapper-manager-reference-manpage"
+      {
+        nativeBuildInputs = with pkgs; [
+          nixos-render-docs
+          asciidoctor
+        ];
+      }
+      ''
+        mkdir -p $out/share/man/man5
+        asciidoctor --attribute is-wider-scoped --backend manpage \
+          ${asciidocHeader} --out-file header.5
+        nixos-render-docs options manpage --revision ${pkgs.lib.version} \
+          --header ./header.5 --footer ${./manpages/footer.5} \
+          ${optionsJSON}/share/doc/nixos/options.json \
+          $out/share/man/man5/fds-extra-${filename}.5
+      '';
+in
+{
   nixos = rec {
     optionsDoc = mkOptionsDoc {
-      modules = [ ../modules/nixos ../modules/nixos/_private ];
+      modules = [
+        ../modules/nixos
+        ../modules/nixos/_private
+      ];
       class = "nixos";
     };
 
@@ -83,7 +117,10 @@ in {
 
   home-manager = rec {
     optionsDoc = mkOptionsDoc {
-      modules = [ ../modules/home-manager ../modules/home-manager/_private ];
+      modules = [
+        ../modules/home-manager
+        ../modules/home-manager/_private
+      ];
       class = "homeManager";
     };
 
@@ -96,7 +133,10 @@ in {
 
   nixvim = rec {
     optionsDoc = mkOptionsDoc {
-      modules = [ ../modules/nixvim ../modules/nixvim/_private ];
+      modules = [
+        ../modules/nixvim
+        ../modules/nixvim/_private
+      ];
       class = "nixvim";
     };
 
@@ -109,8 +149,10 @@ in {
 
   wrapper-manager = rec {
     optionsDoc = mkOptionsDoc {
-      modules =
-        [ ../modules/wrapper-manager ../modules/wrapper-manager/_private ];
+      modules = [
+        ../modules/wrapper-manager
+        ../modules/wrapper-manager/_private
+      ];
       class = "wrapperManager";
     };
 

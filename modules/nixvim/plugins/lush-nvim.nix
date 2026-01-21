@@ -1,41 +1,51 @@
-{ config, lib, pkgs, helpers, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  helpers,
+  ...
+}:
 
 let
   cfg = config.colorschemes.lush;
 
-  schemeType = { config, lib, ... }: {
-    options = {
-      extraConfigLua = lib.mkOption {
-        type = lib.types.lines;
-        default = "";
-        description = ''
-          Theme-specific Lua code to be included for the colorscheme plugin.
-          This is mainly useful for organizing the color palette in your
-          preferred way.
-        '';
-      };
+  schemeType =
+    { config, lib, ... }:
+    {
+      options = {
+        extraConfigLua = lib.mkOption {
+          type = lib.types.lines;
+          default = "";
+          description = ''
+            Theme-specific Lua code to be included for the colorscheme plugin.
+            This is mainly useful for organizing the color palette in your
+            preferred way.
+          '';
+        };
 
-      highlights = lib.mkOption {
-        type = with lib.types; attrsOf anything;
-        default = { };
-        description = ''
-          The highlight group object to be exported with Lush. This is the data
-          to be exported with `lush()` function from lush.nvim.
-        '';
+        highlights = lib.mkOption {
+          type = with lib.types; attrsOf anything;
+          default = { };
+          description = ''
+            The highlight group object to be exported with Lush. This is the data
+            to be exported with `lush()` function from lush.nvim.
+          '';
+        };
       };
     };
-  };
 
-  mkLushColorSchemes = name: theme:
+  mkLushColorSchemes =
+    name: theme:
     let
       # Converts each of the highlight group into a function to be able parsed and
       # used by Lush.
-      highlightList = lib.mapAttrsToList
-        (highlight: arguments: "${highlight}(${helpers.toLuaObject arguments})")
-        theme.highlights;
+      highlightList = lib.mapAttrsToList (
+        highlight: arguments: "${highlight}(${helpers.toLuaObject arguments})"
+      ) theme.highlights;
       # This is based from rktjmp/lush-template. We'll improve on things from
       # here whenever necessary.
-    in lib.nameValuePair "colors/${name}.lua" {
+    in
+    lib.nameValuePair "colors/${name}.lua" {
       text = ''
         ${cfg.extraConfigLua}
         ${theme.extraConfigLua}
@@ -56,7 +66,8 @@ let
         lush(spec)
       '';
     };
-in {
+in
+{
   options.colorschemes.lush = {
     enable = lib.mkEnableOption "theming with lush.nvim";
 

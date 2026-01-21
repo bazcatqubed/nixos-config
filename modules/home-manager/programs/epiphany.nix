@@ -1,28 +1,36 @@
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.epiphany;
 
-  webAppsSubmodule = { name, config, ... }: {
-    options = {
-      url = lib.mkOption {
-        type = lib.types.str;
-        description = ''
-          The URL of the web app.
-        '';
-        example = "https://editor.graphite.rs";
-      };
+  webAppsSubmodule =
+    { name, config, ... }:
+    {
+      options = {
+        url = lib.mkOption {
+          type = lib.types.str;
+          description = ''
+            The URL of the web app.
+          '';
+          example = "https://editor.graphite.rs";
+        };
 
-      name = lib.mkOption {
-        type = lib.types.str;
-        default = name;
-        description = ''
-          The entry name of the desktop file generated for the web app.
-        '';
-        example = "Graphite";
+        name = lib.mkOption {
+          type = lib.types.str;
+          default = name;
+          description = ''
+            The entry name of the desktop file generated for the web app.
+          '';
+          example = "Graphite";
+        };
       };
     };
-  };
 in
 {
   options.programs.epiphany = {
@@ -39,12 +47,14 @@ in
       '';
       apply =
         let
-          updateAttr = acc: n: v:
+          updateAttr =
+            acc: n: v:
             if (lib.isAttrs v) then
               acc // { "org/gnome/epiphany/${n}" = v; }
             else
               lib.recursiveUpdate acc { "org/gnome/epiphany" = v; };
-        in lib.foldlAttrs updateAttr { };
+        in
+        lib.foldlAttrs updateAttr { };
       example = lib.literalExpression ''
         {
           homepage-url = "file://''${config.xdg.dataHome}/''${config.username}/homepage/index.html";
@@ -75,29 +85,30 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (lib.mkMerge [
-    {
-      home.packages = [ cfg.package ];
+  config = lib.mkIf cfg.enable (
+    lib.mkMerge [
+      {
+        home.packages = [ cfg.package ];
 
-      dconf.settings = cfg.settings;
-    }
+        dconf.settings = cfg.settings;
+      }
 
-    (lib.mkIf (cfg.webApps != { }) {
-      # TODO Install web apps through Dbus
-      # Set up the web app provider.
-      # Create a install token from somewhere(?).
-      systemd.user.services.epiphany-web-app-provider = {
-        Unit = {
-          Description = "Epiphany web app provider service";
+      (lib.mkIf (cfg.webApps != { }) {
+        # TODO Install web apps through Dbus
+        # Set up the web app provider.
+        # Create a install token from somewhere(?).
+        systemd.user.services.epiphany-web-app-provider = {
+          Unit = {
+            Description = "Epiphany web app provider service";
+          };
+
+          Service.ExecStart = "${cfg.package}/libexec/epiphany-webapp-provider";
+
+          Install.WantedBy = [ "default.target" ];
         };
 
-        Service.ExecStart = "${cfg.package}/libexec/epiphany-webapp-provider";
-
-        Install.WantedBy = [ "default.target" ];
-      };
-
-      home.activation.installEpiphanyWebApps = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      '';
-    })
-  ]);
+        home.activation.installEpiphanyWebApps = lib.hm.dag.entryAfter [ "writeBoundary" ] "";
+      })
+    ]
+  );
 }

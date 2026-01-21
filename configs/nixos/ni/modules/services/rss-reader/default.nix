@@ -1,13 +1,18 @@
-{ config, lib, foodogsquaredLib, ... }:
+{
+  config,
+  lib,
+  foodogsquaredLib,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
   cfg = hostCfg.services.rss-reader;
 
   port = config.state.ports.miniflux.value;
-in {
-  options.hosts.ni.services.rss-reader.enable =
-    lib.mkEnableOption "preferred RSS reader service";
+in
+{
+  options.hosts.ni.services.rss-reader.enable = lib.mkEnableOption "preferred RSS reader service";
 
   config = lib.mkIf cfg.enable {
     sops.secrets = foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml {
@@ -36,8 +41,7 @@ in {
     wrapper-manager.packages.miniflux-helper = {
       wrappers.miniflux-helper = {
         arg0 = lib.getExe' config.services.miniflux.package "miniflux";
-        env = lib.mapAttrs (_: value: { value = builtins.toString value; })
-          config.services.miniflux.config;
+        env = lib.mapAttrs (_: value: { value = builtins.toString value; }) config.services.miniflux.config;
       };
     };
   };

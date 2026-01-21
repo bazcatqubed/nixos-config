@@ -1,4 +1,10 @@
-{ config, lib, pkgs, helpers, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  helpers,
+  ...
+}:
 
 {
   imports = [ ./modules ];
@@ -27,7 +33,10 @@
 
     opts = {
       encoding = "utf-8";
-      completeopt = [ "menuone" "noselect" ];
+      completeopt = [
+        "menuone"
+        "noselect"
+      ];
       expandtab = true;
       shiftwidth = 4;
       tabstop = 4;
@@ -35,7 +44,10 @@
 
     keymaps = [
       {
-        mode = [ "i" "v" ];
+        mode = [
+          "i"
+          "v"
+        ];
         key = "jk";
         action = "<Esc>";
         options.desc = "Escape";

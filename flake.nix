@@ -2,10 +2,8 @@
   description = "foo-dogsquared's abomination of a NixOS configuration";
 
   nixConfig = {
-    extra-substituters =
-      "https://nix-community.cachix.org https://foo-dogsquared.cachix.org";
-    extra-trusted-public-keys =
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= foo-dogsquared.cachix.org-1:/2fmqn/gLGvCs5EDeQmqwtus02TUmGy0ZlAEXqRE70E=";
+    extra-substituters = "https://nix-community.cachix.org https://foo-dogsquared.cachix.org";
+    extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= foo-dogsquared.cachix.org-1:/2fmqn/gLGvCs5EDeQmqwtus02TUmGy0ZlAEXqRE70E=";
     commit-lockfile-summary = "flake.lock: update inputs";
   };
 
@@ -54,8 +52,7 @@
     nixvim-unstable.inputs.nixpkgs.follows = "nixos-unstable";
 
     # Make a wrapper.
-    wrapper-manager-fds.url =
-      "github:bazcatqubed/nix-module-wrapper-manager-fds";
+    wrapper-manager-fds.url = "github:bazcatqubed/nix-module-wrapper-manager-fds";
 
     # This is what AUR strives to be.
     nur.url = "github:nix-community/NUR";
@@ -102,18 +99,24 @@
     # Make a default.nix compatible stuff. Take note, we're giving this a
     # unique suffix since there are other flake inputs that uses the same flake
     # and we want our `default.nix` to refer to our version.
-    flake-compat-fds.url =
-      "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
+    flake-compat-fds.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
 
     # Someone had the idea to make the flake outputs be configured as a Nix
     # module and I love them for it.
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }:
+  outputs =
+    inputs@{ self, nixpkgs, ... }:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
 
-      imports = [ inputs.fds-core.flakeModules.default  ./configs/flake-parts ];
+      imports = [
+        inputs.fds-core.flakeModules.default
+        ./configs/flake-parts
+      ];
     };
 }

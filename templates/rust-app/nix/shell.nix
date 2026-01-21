@@ -1,7 +1,11 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 
-let app = pkgs.callPackage ./package.nix { };
-in pkgs.mkShell {
+let
+  app = pkgs.callPackage ./package.nix { };
+in
+pkgs.mkShell {
   inputsFrom = [ app ];
 
   # The rest of the development-related packages should be here.

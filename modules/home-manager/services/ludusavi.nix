@@ -1,15 +1,22 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.ludusavi;
 
   settingsFormat = pkgs.formats.yaml { };
 
-  configFile = if cfg.configFile == null then
-    settingsFormat.generate "ludusavi-service-config" cfg.settings
-  else
-    cfg.configFile;
-in {
+  configFile =
+    if cfg.configFile == null then
+      settingsFormat.generate "ludusavi-service-config" cfg.settings
+    else
+      cfg.configFile;
+in
+{
   disabledModules = [ "services/ludusavi.nix" ];
 
   options.services.ludusavi = {
@@ -40,7 +47,13 @@ in {
         Extra arguments to be passed to the game backup service.
       '';
       default = [ "--force" ];
-      example = [ "--force" "--compression" "zstd" "--compression-level" "13" ];
+      example = [
+        "--force"
+        "--compression"
+        "zstd"
+        "--compression-level"
+        "13"
+      ];
     };
 
     startAt = lib.mkOption {
@@ -69,8 +82,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      (lib.hm.assertions.assertPlatform "services.ludusavi" pkgs
-        lib.platforms.linux)
+      (lib.hm.assertions.assertPlatform "services.ludusavi" pkgs lib.platforms.linux)
     ];
 
     # We're putting it somewhere in the home directory instead of the typical
@@ -83,15 +95,14 @@ in {
         Description = "Periodic game backup";
         Documentation = [ "https://github.com/mtkennerly/ludusavi" ];
 
-        After = [ "network-online.target" "default.target" ];
+        After = [
+          "network-online.target"
+          "default.target"
+        ];
       };
 
       Service = {
-        ExecStart = "${
-            lib.getExe' cfg.package "ludusavi"
-          } --config ${config.xdg.dataHome}/ludusavi/hm-service-config.yaml backup ${
-            lib.concatStringsSep " " cfg.extraArgs
-          }";
+        ExecStart = "${lib.getExe' cfg.package "ludusavi"} --config ${config.xdg.dataHome}/ludusavi/hm-service-config.yaml backup ${lib.concatStringsSep " " cfg.extraArgs}";
         Restart = "on-failure";
       };
     };

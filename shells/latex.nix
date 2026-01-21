@@ -1,5 +1,9 @@
 # Ripperootskees for the disk space.
-{ mkShell, texlive, texlab }:
+{
+  mkShell,
+  texlive,
+  texlab,
+}:
 
 mkShell {
   packages = [

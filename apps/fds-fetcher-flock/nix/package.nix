@@ -1,10 +1,21 @@
-{ lib, buildGoModule, pkg-config, fontconfig, curl, openssl, installShellFiles }:
+{
+  lib,
+  buildGoModule,
+  pkg-config,
+  fontconfig,
+  curl,
+  openssl,
+  installShellFiles,
+}:
 
 buildGoModule (finalAttrs: {
   pname = "fds-flock-of-fetchers";
   version = "0.1.0";
 
-  nativeBuildInputs = [ pkg-config installShellFiles ];
+  nativeBuildInputs = [
+    pkg-config
+    installShellFiles
+  ];
   buildInputs = [
     fontconfig
     curl
@@ -18,7 +29,7 @@ buildGoModule (finalAttrs: {
     let
       testCases = [ ];
     in
-      lib.singleton "-skip=^${lib.concatStringsSep "$|^" testCases}$";
+    lib.singleton "-skip=^${lib.concatStringsSep "$|^" testCases}$";
 
   postInstall = ''
     ln -sf $out/bin/${finalAttrs.pname} $out/bin/ffof

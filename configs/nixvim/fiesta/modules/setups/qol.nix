@@ -1,11 +1,16 @@
-{ config, lib, helpers, ... }:
+{
+  config,
+  lib,
+  helpers,
+  ...
+}:
 
 let
   nixvimCfg = config.nixvimConfigs.fiesta;
   cfg = nixvimCfg.setups.devenvs;
-in {
-  options.nixvimConfigs.fiesta.setups.qol.enable =
-    lib.mkEnableOption "quality-of-life improvements";
+in
+{
+  options.nixvimConfigs.fiesta.setups.qol.enable = lib.mkEnableOption "quality-of-life improvements";
 
   config = lib.mkIf cfg.enable {
     plugins.mini = {
@@ -35,7 +40,10 @@ in {
     plugins.oil = {
       enable = true;
       settings = {
-        columns = [ "icon" "permissions" ];
+        columns = [
+          "icon"
+          "permissions"
+        ];
         default_file_explorer = true;
         view_options.show_hidden = true;
         keymaps = {
@@ -65,7 +73,11 @@ in {
       ++ lib.optionals config.plugins.flash.enable [
         {
           key = "s";
-          mode = [ "n" "x" "o" ];
+          mode = [
+            "n"
+            "x"
+            "o"
+          ];
           options.desc = "Flash jump";
           action = helpers.mkRaw ''
             function()
@@ -76,7 +88,11 @@ in {
 
         {
           key = "S";
-          mode = [ "n" "x" "o" ];
+          mode = [
+            "n"
+            "x"
+            "o"
+          ];
           options.desc = "Flash jump in treesitter nodes";
           action = helpers.mkRaw ''
             function()
@@ -98,7 +114,10 @@ in {
 
         {
           key = "R";
-          mode = [ "o" "x" ];
+          mode = [
+            "o"
+            "x"
+          ];
           options.desc = "Flash treesitter search";
           action = helpers.mkRaw ''
             function()

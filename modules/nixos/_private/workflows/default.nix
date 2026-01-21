@@ -20,8 +20,16 @@
       tmux configuration where it can be used inside of a TTY or something like
       that.
     '';
-    example = [ "one.foodogsquared.AHappyGNOME" "knome" "horizontal-hunger" ];
+    example = [
+      "one.foodogsquared.AHappyGNOME"
+      "knome"
+      "horizontal-hunger"
+    ];
   };
 
-  imports = [ ./a-happy-gnome ./knome ./horizontal-hunger ];
+  imports = [
+    ./a-happy-gnome
+    ./knome
+    ./horizontal-hunger
+  ];
 }

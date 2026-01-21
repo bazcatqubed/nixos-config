@@ -1,4 +1,8 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 lib.runTests {
   testImportYAML = {
@@ -6,7 +10,11 @@ lib.runTests {
     expected = {
       hello = "world";
       whoa = 4566;
-      list-of-names = [ "Cheesy" "Angry" "Ash" ];
+      list-of-names = [
+        "Cheesy"
+        "Angry"
+        "Ash"
+      ];
     };
   };
 
@@ -15,23 +23,31 @@ lib.runTests {
     expected = {
       hello = "world";
       whoa = 4566;
-      list-of-names = [ "Cheesy" "Angry" "Ash" ];
+      list-of-names = [
+        "Cheesy"
+        "Angry"
+        "Ash"
+      ];
     };
   };
 
   testRenderTeraTemplate = {
-    expr = builtins.readFile (self.data.renderTeraTemplate {
-      template = ./templates/sample.tera;
-      context = lib.importJSON ./data/sample.json;
-    });
+    expr = builtins.readFile (
+      self.data.renderTeraTemplate {
+        template = ./templates/sample.tera;
+        context = lib.importJSON ./data/sample.json;
+      }
+    );
     expected = builtins.readFile ./fixtures/sample.tera;
   };
 
   testRenderMustacheTemplate = {
-    expr = builtins.readFile (self.data.renderTeraTemplate {
-      template = ./templates/sample.mustache;
-      context = lib.importJSON ./data/sample.json;
-    });
+    expr = builtins.readFile (
+      self.data.renderTeraTemplate {
+        template = ./templates/sample.mustache;
+        context = lib.importJSON ./data/sample.json;
+      }
+    );
     # There the same lol.
     expected = builtins.readFile ./fixtures/sample.tera;
   };

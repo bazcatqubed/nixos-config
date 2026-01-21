@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.diceware;
@@ -33,14 +38,16 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (lib.mkMerge [
-    {
-      home.packages = [ cfg.package ];
-    }
+  config = lib.mkIf cfg.enable (
+    lib.mkMerge [
+      {
+        home.packages = [ cfg.package ];
+      }
 
-    (lib.mkIf (cfg.settings != { }) {
-      xdg.configFile."diceware/diceware.ini".source =
-        settingsFormat.generate "diceware-user-settings" cfg.settings;
-    })
-  ]);
+      (lib.mkIf (cfg.settings != { }) {
+        xdg.configFile."diceware/diceware.ini".source =
+          settingsFormat.generate "diceware-user-settings" cfg.settings;
+      })
+    ]
+  );
 }

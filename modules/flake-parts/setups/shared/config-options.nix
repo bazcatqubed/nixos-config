@@ -1,12 +1,21 @@
 { systems }:
 
-{ lib, name, config, ... }: {
+{
+  lib,
+  name,
+  config,
+  ...
+}:
+{
   options = {
     systems = lib.mkOption {
       type = with lib.types; listOf str;
       default = systems;
       defaultText = "config.systems";
-      example = [ "x86_64-linux" "aarch64-linux" ];
+      example = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
       description = ''
         A list of platforms that the environment config is supposed to be
         deployed on.
@@ -33,7 +42,7 @@
 
     firstSetupArgs = lib.mkOption {
       type = with lib.types; attrsOf anything;
-      default = {};
+      default = { };
       example = lib.literalExpression ''
         {
           baseSpecificConfigModules = [

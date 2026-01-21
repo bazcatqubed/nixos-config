@@ -1,11 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.ctrld;
 
   settingsFormat = pkgs.formats.toml { };
   settingsFile = settingsFile.generate "ctrld-proxy-settings" cfg.settings;
-in {
+in
+{
   options.services.ctrld = {
     enable = lib.mkEnableOption "ctrld, a DNS forwarding proxy";
     package = lib.mkPackageOption pkgs "ctrld" { };
@@ -80,7 +86,11 @@ in {
         ProtectKernelModules = true;
         ProtectKernelTunables = true;
         ProtectSystem = "full";
-        RestrictAddressFamilies = [ "AF_LOCAL" "AF_INET" "AF_INET6" ];
+        RestrictAddressFamilies = [
+          "AF_LOCAL"
+          "AF_INET"
+          "AF_INET6"
+        ];
         RestrictNamespaces = true;
         SystemCallArchitectures = [ "native" ];
         SystemCallFilter = [ "@system-service" ];

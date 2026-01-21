@@ -1,11 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.setups.fonts;
-in {
-  options.users.foo-dogsquared.setups.fonts.enable =
-    lib.mkEnableOption "foo-dogsquared's font setup";
+in
+{
+  options.users.foo-dogsquared.setups.fonts.enable = lib.mkEnableOption "foo-dogsquared's font setup";
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [

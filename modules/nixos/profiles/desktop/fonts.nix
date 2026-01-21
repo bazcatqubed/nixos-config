@@ -1,5 +1,10 @@
 # A subprofile for desktop handling the fonts.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   fonts.enableDefaultPackages = lib.mkDefault true;
@@ -10,9 +15,19 @@
     includeUserConf = true;
 
     defaultFonts = {
-      monospace = [ "Iosevka" "Jetbrains Mono" "Source Code Pro" ];
-      sansSerif = [ "Source Sans Pro" "Noto Sans" ];
-      serif = [ "Source Serif Pro" "Noto Serif" ];
+      monospace = [
+        "Iosevka"
+        "Jetbrains Mono"
+        "Source Code Pro"
+      ];
+      sansSerif = [
+        "Source Sans Pro"
+        "Noto Sans"
+      ];
+      serif = [
+        "Source Serif Pro"
+        "Noto Serif"
+      ];
       emoji = [ "Noto Color Emoji" ];
     };
   };

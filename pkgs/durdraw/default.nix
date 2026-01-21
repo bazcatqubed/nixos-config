@@ -1,4 +1,9 @@
-{ lib, buildPythonPackage, fetchFromGitHub, setuptools }:
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  setuptools,
+}:
 
 buildPythonPackage (finalAttrs: {
   pname = "durdraw";

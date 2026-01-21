@@ -3,7 +3,10 @@
 # just be used as a repository for a bunch of download services I put up as
 # well as a backup-backup NixOS installation device in case my external hard
 # drive gave up.
-{ disk ? "/dev/sda", ... }:
+{
+  disk ? "/dev/sda",
+  ...
+}:
 
 {
   disko.devices = {
@@ -55,7 +58,11 @@
                 };
                 "/home".mountpoint = "/home";
                 "/nix" = {
-                  mountOptions = [ "compress=zstd:6" "noatime" "noacl" ];
+                  mountOptions = [
+                    "compress=zstd:6"
+                    "noatime"
+                    "noacl"
+                  ];
                   mountpoint = "/nix";
                 };
 

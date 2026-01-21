@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
@@ -17,7 +22,8 @@ let
       newsgroup = "inbox.comp.systemd.devel";
     };
   };
-in {
+in
+{
   options.hosts.ni.services.mail-archive.enable =
     lib.mkEnableOption "preferred mail archiving service";
 
@@ -51,8 +57,7 @@ in {
     services.nginx.virtualHosts."mail.ni.internal" = {
       locations."/".return = "302 /inbox";
       locations."= /inbox".return = "302 /inbox/";
-      locations."/inbox".proxyPass =
-        "http://unix:${config.services.public-inbox.http.port}:/inbox";
+      locations."/inbox".proxyPass = "http://unix:${config.services.public-inbox.http.port}:/inbox";
       locations."= /style/light.css".alias = pkgs.writeText "light.css" ''
         * { background:#fff; color:#000 }
 

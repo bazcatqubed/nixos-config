@@ -1,8 +1,12 @@
-{ inputs, lib, config
+{
+  inputs,
+  lib,
+  config,
 
-, defaultNixConf
+  defaultNixConf,
 
-, ... }:
+  ...
+}:
 
 {
   setups.home-manager = {
@@ -30,10 +34,13 @@
           ];
         };
         homeManagerBranch = "home-manager-unstable";
-        systems = [ "aarch64-linux" "x86_64-linux" ];
+        systems = [
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
         firstSetupArgs = {
-          baseNixvimModules = config.setups.nixvim.configs.fiesta.modules
-            ++ config.setups.nixvim.sharedModules;
+          baseNixvimModules =
+            config.setups.nixvim.configs.fiesta.modules ++ config.setups.nixvim.sharedModules;
         };
         modules = [
           inputs.nur.modules.homeManager.default
@@ -74,30 +81,41 @@
       # is also to be used for sharing modules among home-manager users from
       # NixOS configurations with `nixpkgs.useGlobalPkgs` set to `true` so
       # avoid setting nixpkgs-related options here.
-      ({ pkgs, config, lib, ... }: {
-        manual = lib.mkDefault {
-          html.enable = true;
-          json.enable = true;
-          manpages.enable = true;
-        };
+      (
+        {
+          pkgs,
+          config,
+          lib,
+          ...
+        }:
+        {
+          manual = lib.mkDefault {
+            html.enable = true;
+            json.enable = true;
+            manpages.enable = true;
+          };
 
-        home.stateVersion = lib.mkDefault "23.11";
-      })
+          home.stateVersion = lib.mkDefault "23.11";
+        }
+      )
     ];
 
     standaloneConfigModules = [
       defaultNixConf
       ../../modules/home-manager/profiles/nix-conf.nix
 
-      ({ config, lib, ... }: {
-        # Don't create the user directories since they are assumed to
-        # be already created by a pre-installed system (which should
-        # already handle them).
-        xdg.userDirs.createDirectories = lib.mkForce false;
+      (
+        { config, lib, ... }:
+        {
+          # Don't create the user directories since they are assumed to
+          # be already created by a pre-installed system (which should
+          # already handle them).
+          xdg.userDirs.createDirectories = lib.mkForce false;
 
-        programs.home-manager.enable = lib.mkForce true;
-        targets.genericLinux.enable = lib.mkDefault true;
-      })
+          programs.home-manager.enable = lib.mkForce true;
+          targets.genericLinux.enable = lib.mkDefault true;
+        }
+      )
     ];
   };
 

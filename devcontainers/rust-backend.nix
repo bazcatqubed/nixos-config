@@ -1,8 +1,21 @@
-{ dockerTools, foodogsquaredLib, rustc, cargo, rust-bindgen, rust-analyzer
-, nodejs }:
+{
+  dockerTools,
+  foodogsquaredLib,
+  rustc,
+  cargo,
+  rust-bindgen,
+  rust-analyzer,
+  nodejs,
+}:
 
 foodogsquaredLib.buildDockerImage rec {
   name = "rust-backend";
   tag = name;
-  contents = [ cargo rust-bindgen rust-analyzer rustc nodejs ];
+  contents = [
+    cargo
+    rust-bindgen
+    rust-analyzer
+    rustc
+    nodejs
+  ];
 }

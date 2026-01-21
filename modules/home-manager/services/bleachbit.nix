@@ -1,9 +1,15 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.bleachbit;
 
-  cleaners = lib.lists.unique (cfg.cleaners
+  cleaners = lib.lists.unique (
+    cfg.cleaners
     ++ lib.optionals cfg.withBrowserCleanup [
       "brave.cache"
       "brave.form_history"
@@ -33,7 +39,8 @@ let
       "waterfox.forms"
       "waterfox.passwords"
       "waterfox.url_history"
-    ] ++ lib.optionals cfg.withChatCleanup [
+    ]
+    ++ lib.optionals cfg.withChatCleanup [
       "discord.cache"
       "discord.history"
       "skype.chat_logs"
@@ -47,8 +54,10 @@ let
       "thunderbird.index"
       "thunderbird.passwords"
       "thunderbird.sessionjson"
-    ]);
-in {
+    ]
+  );
+in
+{
   options.services.bleachbit = {
     enable = lib.mkEnableOption "automated cleanup with Bleachbit";
     startAt = lib.mkOption {
@@ -88,18 +97,19 @@ in {
       '';
     };
 
-    withBrowserCleanup =
-      lib.mkEnableOption "browser-related cleaners to be included in the list";
+    withBrowserCleanup = lib.mkEnableOption "browser-related cleaners to be included in the list";
 
-    withChatCleanup =
-      lib.mkEnableOption "communication apps-related cleaners to be included";
+    withChatCleanup = lib.mkEnableOption "communication apps-related cleaners to be included";
   };
 
   config = lib.mkIf cfg.enable {
     systemd.user.services.bleachbit = {
       Unit = {
         Description = "Periodic cleaning with Bleachbit";
-        Documentation = [ "man:bleachbit(1)" "https://www.bleachbit.org" ];
+        Documentation = [
+          "man:bleachbit(1)"
+          "https://www.bleachbit.org"
+        ];
       };
 
       Service.ExecStart = ''
@@ -110,7 +120,10 @@ in {
     systemd.user.timers.bleachbit = {
       Unit = {
         Description = "Periodic cleaning with Bleachbit";
-        Documentation = [ "man:bleachbit(1)" "https://www.bleachbit.org" ];
+        Documentation = [
+          "man:bleachbit(1)"
+          "https://www.bleachbit.org"
+        ];
         PartOf = [ "default.target" ];
       };
 

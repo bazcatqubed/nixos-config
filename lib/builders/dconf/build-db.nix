@@ -1,6 +1,11 @@
 # A standalone version of the dconf profile generation build step based from
 # the nixpkgs' NixOS dconf module.
-{ stdenvNoCC, lib, dconf, symlinkJoin }:
+{
+  stdenvNoCC,
+  lib,
+  dconf,
+  symlinkJoin,
+}:
 
 lib.extendMkDerivation {
   constructDrv = stdenvNoCC.mkDerivation;

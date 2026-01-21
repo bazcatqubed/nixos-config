@@ -1,7 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  services.borgmatic.jobs.personal = { settings = { hello = "WORLD"; }; };
+  services.borgmatic.jobs.personal = {
+    settings = {
+      hello = "WORLD";
+    };
+  };
 
   test.stubs.borgmatic = { };
 

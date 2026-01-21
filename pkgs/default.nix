@@ -1,16 +1,41 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 
-let inherit (pkgs) lib callPackage python3Packages qt5;
-in lib.makeScope pkgs.newScope (self: {
+let
+  inherit (pkgs)
+    lib
+    callPackage
+    python3Packages
+    qt5
+    ;
+in
+lib.makeScope pkgs.newScope (self: {
   # My custom nixpkgs extensions.
   foodogsquaredLib = import ../lib { inherit pkgs; };
   inherit (self.foodogsquaredLib.builders)
-    makeXDGMimeAssociationList makeXDGPortalConfiguration makeXDGDesktopEntry
-    buildHugoSite buildMdbookSite buildMkdocsSite buildAntoraSite buildFDSEnv
-    buildDconfDb buildDconfProfile buildDconfConf buildDconfPackage
-    buildDockerImage;
-  inherit (self.foodogsquaredLib.fetchers) fetchInternetArchive fetchUgeeDriver
-    fetchWebsiteIcon fetchPexelsImages fetchPexelsVideos fetchUnsplashImages;
+    makeXDGMimeAssociationList
+    makeXDGPortalConfiguration
+    makeXDGDesktopEntry
+    buildHugoSite
+    buildMdbookSite
+    buildMkdocsSite
+    buildAntoraSite
+    buildFDSEnv
+    buildDconfDb
+    buildDconfProfile
+    buildDconfConf
+    buildDconfPackage
+    buildDockerImage
+    ;
+  inherit (self.foodogsquaredLib.fetchers)
+    fetchInternetArchive
+    fetchUgeeDriver
+    fetchWebsiteIcon
+    fetchPexelsImages
+    fetchPexelsVideos
+    fetchUnsplashImages
+    ;
 
   # My custom packages.
   awesome-cli = callPackage ./awesome-cli { };
@@ -24,8 +49,7 @@ in lib.makeScope pkgs.newScope (self: {
   fastn = callPackage ./fastn { };
   flatsync = callPackage ./flatsync { };
   freerct = callPackage ./freerct.nix { };
-  gnome-search-provider-recoll =
-    callPackage ./gnome-search-provider-recoll.nix { };
+  gnome-search-provider-recoll = callPackage ./gnome-search-provider-recoll.nix { };
   #graphite-design-tool = callPackage ./graphite-design-tool { };
   go-avahi-cname = callPackage ./go-avahi-cname { };
   hush-shell = callPackage ./hush-shell.nix { };
@@ -37,12 +61,9 @@ in lib.makeScope pkgs.newScope (self: {
   mopidy-internetarchive = callPackage ./mopidy-internetarchive.nix { };
   mopidy-listenbrainz = callPackage ./mopidy-listenbrainz { };
   nautilus-annotations = callPackage ./nautilus-annotations { };
-  pop-launcher-plugin-brightness =
-    callPackage ./pop-launcher-plugin-brightness { };
-  pop-launcher-plugin-duckduckgo-bangs =
-    callPackage ./pop-launcher-plugin-duckduckgo-bangs.nix { };
-  pop-launcher-plugin-jetbrains =
-    callPackage ./pop-launcher-plugin-jetbrains { };
+  pop-launcher-plugin-brightness = callPackage ./pop-launcher-plugin-brightness { };
+  pop-launcher-plugin-duckduckgo-bangs = callPackage ./pop-launcher-plugin-duckduckgo-bangs.nix { };
+  pop-launcher-plugin-jetbrains = callPackage ./pop-launcher-plugin-jetbrains { };
   pigeon-mail = callPackage ./pigeon-mail { };
   swh = callPackage ./software-heritage {
     python3Packages = pkgs.python312Packages;

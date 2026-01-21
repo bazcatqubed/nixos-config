@@ -1,10 +1,16 @@
 # A private-use reverse proxy for certain system services.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
   cfg = hostCfg.services.reverse-proxy;
-in {
+in
+{
   options.hosts.ni.services.reverse-proxy.enable =
     lib.mkEnableOption "private-use reverse proxy setup";
 

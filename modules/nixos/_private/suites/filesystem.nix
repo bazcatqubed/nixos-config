@@ -6,20 +6,24 @@
 # Much of the filesystem setups are taking advantage of systemd's fstab
 # extended options which you can refer to at systemd.mount(5), mount(5), and
 # the filesystems' respective manual pages.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.suites.filesystem;
-in {
+let
+  cfg = config.suites.filesystem;
+in
+{
   options.suites.filesystem = {
     tools.enable = lib.mkEnableOption "filesystem-related settings";
     setups = {
       archive.enable = lib.mkEnableOption "automounting offline archive";
-      external-hdd.enable =
-        lib.mkEnableOption "automounting personal external hard drive";
-      personal-webstorage.enable =
-        lib.mkEnableOption "automounting of personal WebDAV directory";
-      laptop-ssd.enable =
-        lib.mkEnableOption "automounting a leftover laptop SSD";
+      external-hdd.enable = lib.mkEnableOption "automounting personal external hard drive";
+      personal-webstorage.enable = lib.mkEnableOption "automounting of personal WebDAV directory";
+      laptop-ssd.enable = lib.mkEnableOption "automounting a leftover laptop SSD";
     };
   };
 
@@ -29,7 +33,10 @@ in {
       services.davfs2.enable = true;
 
       # Installing filesystem debugging utilities.
-      environment.systemPackages = with pkgs; [ afuse ntfs3g ];
+      environment.systemPackages = with pkgs; [
+        afuse
+        ntfs3g
+      ];
     })
 
     (lib.mkIf cfg.setups.archive.enable {
@@ -61,8 +68,7 @@ in {
       state.paths.external-hdd = "/media/external-storage";
 
       fileSystems."${config.state.paths.external-hdd}" = {
-        device =
-          lib.mkDefault "/dev/disk/by-partlabel/disk-live-installer-root";
+        device = lib.mkDefault "/dev/disk/by-partlabel/disk-live-installer-root";
         fsType = "btrfs";
         noCheck = true;
         options = lib.mkDefault [
@@ -77,13 +83,15 @@ in {
     })
 
     (lib.mkIf cfg.setups.personal-webstorage.enable {
-      assertions = [{
-        assertion = config.services.davfs2.enable;
-        message = ''
-          Mounting WebDAVs is not possible since davfs2 NixOS service is not
-          enabled.
-        '';
-      }];
+      assertions = [
+        {
+          assertion = config.services.davfs2.enable;
+          message = ''
+            Mounting WebDAVs is not possible since davfs2 NixOS service is not
+            enabled.
+          '';
+        }
+      ];
 
       # You have to set up the secrets for this somewhere.
       fileSystems."/media/personal-webdav" = {

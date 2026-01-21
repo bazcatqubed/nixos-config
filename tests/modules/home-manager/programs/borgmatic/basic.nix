@@ -1,12 +1,21 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.borgmatic = {
     enable = true;
     backups = {
-      personal.settings = { hello = "WORLD"; };
+      personal.settings = {
+        hello = "WORLD";
+      };
 
-      bizness.settings = { hello = "MONEY"; };
+      bizness.settings = {
+        hello = "MONEY";
+      };
     };
   };
 

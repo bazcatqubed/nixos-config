@@ -1,4 +1,10 @@
-{ stdenv, lib, python3Packages, aiohttp-utils, ... }:
+{
+  stdenv,
+  lib,
+  python3Packages,
+  aiohttp-utils,
+  ...
+}:
 
 with python3Packages;
 buildPythonPackage rec {

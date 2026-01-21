@@ -12,9 +12,18 @@
     ruby-nix-bundix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, ruby-nix, nixpkgs, ... }:
-    let systems = inputs.flake-utils.lib.defaultSystems;
-    in inputs.flake-utils.lib.eachSystem systems (system:
+  outputs =
+    inputs@{
+      self,
+      ruby-nix,
+      nixpkgs,
+      ...
+    }:
+    let
+      systems = inputs.flake-utils.lib.defaultSystems;
+    in
+    inputs.flake-utils.lib.eachSystem systems (
+      system:
       let
         pkgs = import nixpkgs { inherit system; };
         gems = ruby-nix.lib pkgs {
@@ -22,14 +31,18 @@
           ruby = pkgs.ruby_3_1;
           gemset = ./gemset.nix;
         };
-      in {
+      in
+      {
         devShells.default = import ./shell.nix {
           inherit pkgs;
-          extraBuildInputs = [ gems.env gems.ruby ];
-          extraPackages =
-            [ inputs.ruby-nix-bundix.packages."${system}".default ];
+          extraBuildInputs = [
+            gems.env
+            gems.ruby
+          ];
+          extraPackages = [ inputs.ruby-nix-bundix.packages."${system}".default ];
         };
 
         formatter = pkgs.treefmt;
-      });
+      }
+    );
 }

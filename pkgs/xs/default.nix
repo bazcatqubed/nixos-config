@@ -1,5 +1,17 @@
-{ stdenv, lib, fetchFromGitHub, boost, boehmgc, bison, meson, ninja, pkg-config
-, libffi, readline, git }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  boost,
+  boehmgc,
+  bison,
+  meson,
+  ninja,
+  pkg-config,
+  libffi,
+  readline,
+  git,
+}:
 
 stdenv.mkDerivation rec {
   pname = "xs";
@@ -12,9 +24,20 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-Yx6zWLZlnlckZyTljgTVCjCPtNfUbM+o4RfuOPpn8ZQ=";
   };
 
-  nativeBuildInputs = [ meson ninja pkg-config ];
+  nativeBuildInputs = [
+    meson
+    ninja
+    pkg-config
+  ];
 
-  buildInputs = [ boost bison boehmgc libffi readline git ];
+  buildInputs = [
+    boost
+    bison
+    boehmgc
+    libffi
+    readline
+    git
+  ];
 
   patches = [ ./update-build.patch ];
   postPatch = ''
@@ -23,8 +46,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     homepage = "https://github.com/TieDyedDevil/XS";
-    description =
-      "Extensible shell with functional semantics and conventional syntax";
+    description = "Extensible shell with functional semantics and conventional syntax";
 
     # See doc/ANCENSTORS and doc/COPYING files for more details.
     license = licenses.publicDomain;

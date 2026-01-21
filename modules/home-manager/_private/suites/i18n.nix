@@ -1,10 +1,16 @@
 # Instant setup for using internationalized languages.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.suites.i18n;
-in {
-  options.suites.i18n.enable =
-    lib.mkEnableOption "fcitx5 as input method engine";
+let
+  cfg = config.suites.i18n;
+in
+{
+  options.suites.i18n.enable = lib.mkEnableOption "fcitx5 as input method engine";
 
   config = lib.mkIf cfg.enable {
     fonts.fontconfig.enable = true;

@@ -1,16 +1,24 @@
-{ config, lib, pkgs, foodogsquaredLib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
   cfg = hostCfg.services.penpot;
 
   port = builtins.toString config.state.ports.penpot-frontend.value;
-in {
-  options.hosts.ni.services.penpot.enable =
-    lib.mkEnableOption "self-hosted Penpot design tool";
+in
+{
+  options.hosts.ni.services.penpot.enable = lib.mkEnableOption "self-hosted Penpot design tool";
 
   config = lib.mkIf cfg.enable {
-    state.ports = { penpot-frontend.value = 9001; };
+    state.ports = {
+      penpot-frontend.value = 9001;
+    };
 
     sops.secrets = foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml {
       "penpot/env" = { };
@@ -23,7 +31,10 @@ in {
 
     virtualisation.oci-containers.containers.penpot-frontend = {
       image = "docker.io/penpotapp/frontend:latest";
-      dependsOn = [ "penpot-backend" "penpot-exporter" ];
+      dependsOn = [
+        "penpot-backend"
+        "penpot-exporter"
+      ];
       ports = lib.singleton "127.0.0.1:${port}:${port}";
       extraOptions = [ "--network=penpot" ];
       volumes = [ "penpot_assets:/opt/data/assets" ];
@@ -40,7 +51,10 @@ in {
       image = "docker.io/penpotapp/backend:latest";
       volumes = [ "penpot_assets:/opt/data/assets" ];
       extraOptions = [ "--network=penpot" ];
-      dependsOn = [ "penpot-postgres" "penpot-redis" ];
+      dependsOn = [
+        "penpot-postgres"
+        "penpot-redis"
+      ];
       environmentFiles = [ config.sops.secrets."penpot/env".path ];
       environment = {
         PENPOT_FLAGS = lib.concatStringsSep " " [

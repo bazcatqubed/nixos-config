@@ -1,4 +1,5 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
   programs.diceware = {
     enable = true;
     settings.diceware = {

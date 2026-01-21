@@ -1,4 +1,10 @@
-{ lib, fetchFromGitHub, maven, libwebp, vorbis-tools, }:
+{
+  lib,
+  fetchFromGitHub,
+  maven,
+  libwebp,
+  vorbis-tools,
+}:
 
 maven.buildMavenPackage rec {
   pname = "rotp-fusion";
@@ -15,7 +21,10 @@ maven.buildMavenPackage rec {
 
   mvnHash = "";
 
-  nativeBuildInputs = [ libwebp vorbis-tools ];
+  nativeBuildInputs = [
+    libwebp
+    vorbis-tools
+  ];
 
   meta = with lib; {
     description = "Mod of Remnants of the Precursors with more features";

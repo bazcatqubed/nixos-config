@@ -1,11 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   hostCfg = config.hosts.ni;
   cfg = hostCfg.services.dns-server;
-in {
-  options.hosts.ni.services.dns-server.enable =
-    lib.mkEnableOption "preferred DNS server";
+in
+{
+  options.hosts.ni.services.dns-server.enable = lib.mkEnableOption "preferred DNS server";
 
   config = lib.mkIf cfg.enable {
     services.nsd = {

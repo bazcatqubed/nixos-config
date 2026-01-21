@@ -1,9 +1,16 @@
-{ config, lib, pkgs, utils, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  utils,
+  ...
+}:
 
 let
   cfg = config.programs.sessiond;
 
-  sessionPackages = lib.mapAttrsToList (_: session:
+  sessionPackages = lib.mapAttrsToList (
+    _: session:
     let
       displaySession = ''
         [Desktop Entry]
@@ -19,43 +26,64 @@ let
 
         ${lib.getExe' cfg.package "sessionctl"} run "${session.name}.target"
       '';
-    in pkgs.runCommandLocal "${session.name}-desktop-session-files" {
-      inherit displaySession sessionScript;
-      passAsFile = [ "displaySession" "sessionScript" ];
-      passthru.providedSessions = [ session.name ];
-    } ''
-      SESSION_SCRIPT="$out/libexec/${session.name}-session"
-      install -Dm0755 "$sessionScriptPath" "$SESSION_SCRIPT"
-      substituteAllInPlace "$SESSION_SCRIPT"
+    in
+    pkgs.runCommandLocal "${session.name}-desktop-session-files"
+      {
+        inherit displaySession sessionScript;
+        passAsFile = [
+          "displaySession"
+          "sessionScript"
+        ];
+        passthru.providedSessions = [ session.name ];
+      }
+      ''
+        SESSION_SCRIPT="$out/libexec/${session.name}-session"
+        install -Dm0755 "$sessionScriptPath" "$SESSION_SCRIPT"
+        substituteAllInPlace "$SESSION_SCRIPT"
 
-      DISPLAY_SESSION_FILE="$out/share/xsessions/${session.name}.desktop"
-      install -Dm0644 "$displaySessionPath" "$DISPLAY_SESSION_FILE"
-      substituteAllInPlace "$DISPLAY_SESSION_FILE"
-    '') cfg.sessions;
+        DISPLAY_SESSION_FILE="$out/share/xsessions/${session.name}.desktop"
+        install -Dm0644 "$displaySessionPath" "$DISPLAY_SESSION_FILE"
+        substituteAllInPlace "$DISPLAY_SESSION_FILE"
+      ''
+  ) cfg.sessions;
 
-  sessionSystemdUnits = lib.concatMapAttrs (name: session:
+  sessionSystemdUnits = lib.concatMapAttrs (
+    name: session:
     let
       inherit (utils.systemdUtils.lib)
-        pathToUnit serviceToUnit targetToUnit timerToUnit socketToUnit;
+        pathToUnit
+        serviceToUnit
+        targetToUnit
+        timerToUnit
+        socketToUnit
+        ;
 
-      mkSystemdUnits = name: component:
+      mkSystemdUnits =
+        name: component:
         {
           "${component.id}.service" = serviceToUnit component.serviceUnit;
           "${component.id}.target" = targetToUnit component.targetUnit;
-        } // lib.optionalAttrs (component.socketUnit != null) {
+        }
+        // lib.optionalAttrs (component.socketUnit != null) {
           "${component.id}.socket" = socketToUnit component.socketUnit;
-        } // lib.optionalAttrs (component.timerUnit != null) {
+        }
+        // lib.optionalAttrs (component.timerUnit != null) {
           "${component.id}.timer" = timerToUnit component.timerUnit;
-        } // lib.optionalAttrs (component.pathUnit != null) {
+        }
+        // lib.optionalAttrs (component.pathUnit != null) {
           "${component.id}.path" = pathToUnit component.pathUnit;
         };
 
       sessionComponents = lib.concatMapAttrs mkSystemdUnits session.components;
-    in sessionComponents // {
+    in
+    sessionComponents
+    // {
       "${session.name}.service" = serviceToUnit session.serviceUnit;
       "${session.name}.target" = targetToUnit session.targetUnit;
-    }) cfg.sessions;
-in {
+    }
+  ) cfg.sessions;
+in
+{
   options.programs.sessiond = {
     package = lib.mkOption {
       type = lib.types.package;
@@ -69,7 +97,8 @@ in {
     };
 
     sessions = lib.mkOption {
-      type = with lib.types;
+      type =
+        with lib.types;
         attrsOf (submoduleWith {
           specialArgs = {
             inherit utils pkgs;

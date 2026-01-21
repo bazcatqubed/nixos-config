@@ -1,4 +1,10 @@
-{ config, pkgs, lib, foodogsquaredModulesPath, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  foodogsquaredModulesPath,
+  ...
+}:
 
 {
   imports = [

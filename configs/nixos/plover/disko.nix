@@ -41,7 +41,11 @@
                   mountpoint = "/home";
                 };
                 "/nix" = {
-                  mountOptions = [ "compress=zstd:8" "noatime" "noacl" ];
+                  mountOptions = [
+                    "compress=zstd:8"
+                    "noatime"
+                    "noacl"
+                  ];
                   mountpoint = "/nix";
                 };
               };

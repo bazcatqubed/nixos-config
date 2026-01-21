@@ -1,4 +1,10 @@
-{ stdenv, lib, fetchFromGitHub, brightnessctl, python3Packages }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  brightnessctl,
+  python3Packages,
+}:
 
 python3Packages.buildPythonPackage rec {
   pname = "pop-launcher-plugin-brightness";

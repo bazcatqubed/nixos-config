@@ -1,10 +1,17 @@
 # A custom flake-parts module to configure my NixOS images generated with
 # nixos-generators. For more details, see the "Declarative hosts management"
 # section from the documentation.
-{ config, lib, flake-parts-lib, ... }:
+{
+  config,
+  lib,
+  flake-parts-lib,
+  ...
+}:
 
-let inherit (flake-parts-lib) mkSubmoduleOptions mkPerSystemOption;
-in {
+let
+  inherit (flake-parts-lib) mkSubmoduleOptions mkPerSystemOption;
+in
+{
   options = {
     flake = mkSubmoduleOptions {
       images = lib.mkOption {
@@ -35,10 +42,12 @@ in {
   };
 
   config = {
-    flake.images = lib.mapAttrs (k: v: v.images)
-      (lib.filterAttrs (k: v: v.images != { }) config.allSystems);
+    flake.images = lib.mapAttrs (k: v: v.images) (
+      lib.filterAttrs (k: v: v.images != { }) config.allSystems
+    );
 
-    perInput = system: flake:
+    perInput =
+      system: flake:
       lib.optionalAttrs (flake ? images.${system}) {
         images = flake.images.${system};
       };

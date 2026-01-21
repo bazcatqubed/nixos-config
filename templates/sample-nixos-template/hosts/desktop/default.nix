@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   fileSystems."/".label = "root";
@@ -16,12 +21,19 @@
 
   users.users.nixos = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+    ];
     initialHashedPassword = "";
   };
 
   nix = {
     package = pkgs.nixUnstable;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 }

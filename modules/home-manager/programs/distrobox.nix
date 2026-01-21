@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.distrobox;
@@ -9,7 +14,8 @@ let
   toDistroboxConf = lib.generators.toKeyValue {
     listsAsDuplicateKeys = false;
     mkKeyValue = lib.generators.mkKeyValueDefault {
-      mkValueString = v:
+      mkValueString =
+        v:
         if v == true then
           "1"
         else if v == false then
@@ -25,16 +31,29 @@ let
     } "=";
   };
 
-  distroboxConf = { }: {
-    type = with lib.types;
-      let
-        valueType = (oneOf [ bool float int path str (listOf valueType) ]) // {
-          description = "Distrobox settings value";
-        };
-      in attrsOf valueType;
+  distroboxConf =
+    { }:
+    {
+      type =
+        with lib.types;
+        let
+          valueType =
+            (oneOf [
+              bool
+              float
+              int
+              path
+              str
+              (listOf valueType)
+            ])
+            // {
+              description = "Distrobox settings value";
+            };
+        in
+        attrsOf valueType;
 
-    generate = name: value: pkgs.writeText name (toDistroboxConf value);
-  };
+      generate = name: value: pkgs.writeText name (toDistroboxConf value);
+    };
 
   settingsFormat = distroboxConf { };
 
@@ -42,7 +61,8 @@ let
     ${toDistroboxConf cfg.settings}
     ${cfg.extraConfig}
   '';
-in {
+in
+{
   options.programs.distrobox = {
     settings = lib.mkOption {
       type = settingsFormat.type;

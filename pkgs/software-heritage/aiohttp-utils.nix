@@ -1,4 +1,9 @@
-{ stdenv, lib, python3Packages, ... }:
+{
+  stdenv,
+  lib,
+  python3Packages,
+  ...
+}:
 
 with python3Packages;
 buildPythonPackage rec {
@@ -14,7 +19,11 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  propagatedBuildInputs = [ aiohttp gunicorn python-mimeparse ];
+  propagatedBuildInputs = [
+    aiohttp
+    gunicorn
+    python-mimeparse
+  ];
 
   meta = with lib; {
     homepage = "https://github.com/sloria/aiohttp-utils";

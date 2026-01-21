@@ -1,4 +1,8 @@
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 lib.runTests {
   testToFloat = {
@@ -30,7 +34,9 @@ lib.runTests {
       a = 4;
     };
     expected = {
-      ok = { a = 4; };
+      ok = {
+        a = 4;
+      };
       notOk = {
         e = 5;
         f = 7;
@@ -144,12 +150,18 @@ lib.runTests {
 
   testSplitStringOnce = {
     expr = self.trivial.splitStringOnce "/" "foodogsquared/hello/there";
-    expected = [ "foodogsquared" "hello/there" ];
+    expected = [
+      "foodogsquared"
+      "hello/there"
+    ];
   };
 
   testSplitStringOnce2 = {
     expr = self.trivial.splitStringOnce "/" "foo@.service/10-hello.conf";
-    expected = [ "foo@.service" "10-hello.conf" ];
+    expected = [
+      "foo@.service"
+      "10-hello.conf"
+    ];
   };
 
   testSplitStringOnce3 = {

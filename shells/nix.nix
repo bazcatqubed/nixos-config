@@ -1,6 +1,16 @@
 # For usual Nix projects such as overlays, package repositories, and whatnot.
 # Also, it's fun to have a file named `nix.nix`.
-{ mkShell, lib, deadnix, jq, nil, nix-tree, nixfmt, nixpkgs-hammering, nurl }:
+{
+  mkShell,
+  lib,
+  deadnix,
+  jq,
+  nil,
+  nix-tree,
+  nixfmt,
+  nixpkgs-hammering,
+  nurl,
+}:
 
 mkShell {
   packages = [

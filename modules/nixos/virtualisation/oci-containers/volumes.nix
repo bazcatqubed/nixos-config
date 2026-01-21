@@ -1,63 +1,78 @@
-{ config, lib, options, pkgs, ... }:
+{
+  config,
+  lib,
+  options,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.virtualisation.oci-containers;
   inherit (lib) escapeShellArg;
 
-  volumeModule = { config, lib, ... }: {
-    options = {
-      labels = lib.mkOption {
-        type = with lib.types; attrsOf str;
-        default = { };
-        description = ''
-          A list of labels to be attached to the volume at runtime.
-        '';
-        example = { "foo" = "baz"; };
+  volumeModule =
+    { config, lib, ... }:
+    {
+      options = {
+        labels = lib.mkOption {
+          type = with lib.types; attrsOf str;
+          default = { };
+          description = ''
+            A list of labels to be attached to the volume at runtime.
+          '';
+          example = {
+            "foo" = "baz";
+          };
+        };
+
+        extraOptions = lib.mkOption {
+          type = with lib.types; listOf str;
+          description = ''
+            A list of extra arguments to be passed to {command}`$OCI_CONTAINERS_RUNTIME_DEFAULT run`.
+          '';
+          default = [ ];
+        };
+
+        preRunExtraOptions = lib.mkOption {
+          type = with lib.types; listOf str;
+          description = ''
+            A list of extra arguments to be passed to {command}`$OCI_CONTAINERS_RUNTIME_DEFAULT`.
+          '';
+          default = [ ];
+        };
       };
 
-      extraOptions = lib.mkOption {
-        type = with lib.types; listOf str;
-        description = ''
-          A list of extra arguments to be passed to {command}`$OCI_CONTAINERS_RUNTIME_DEFAULT run`.
-        '';
-        default = [ ];
-      };
-
-      preRunExtraOptions = lib.mkOption {
-        type = with lib.types; listOf str;
-        description = ''
-          A list of extra arguments to be passed to {command}`$OCI_CONTAINERS_RUNTIME_DEFAULT`.
-        '';
-        default = [ ];
-      };
+      config.extraOptions = lib.mapAttrsToList (name: value: "--label ${name}=${value}") config.labels;
     };
 
-    config.extraOptions =
-      lib.mapAttrsToList (name: value: "--label ${name}=${value}")
-      config.labels;
-  };
-
-  mkService = name: value:
+  mkService =
+    name: value:
     let
-      removeScript = if cfg.backend == "podman" then
-        "podman volume rm --force ${name}"
-      else
-        "${cfg.backend} volume rm -f ${name}";
+      removeScript =
+        if cfg.backend == "podman" then
+          "podman volume rm --force ${name}"
+        else
+          "${cfg.backend} volume rm -f ${name}";
 
-      preStartScript =
-        pkgs.writeShellScript "pre-start-oci-container-volume-${name}" ''
-          ${removeScript}
-        '';
-    in {
-      path = if cfg.backend == "docker" then
-        [ config.virtualisation.docker.package ]
-      else if cfg.backend == "podman" then
-        [ config.virtualisation.podman.package ]
-      else
-        throw "Unhandled backend: ${cfg.backend}";
-      script = lib.concatStringsSep "  \\\n  " ([ "exec ${cfg.backend} " ]
-        ++ (map escapeShellArg value.preRunExtraOptions) ++ [ "volume create" ]
-        ++ (map escapeShellArg value.extraOptions) ++ [ name ]);
+      preStartScript = pkgs.writeShellScript "pre-start-oci-container-volume-${name}" ''
+        ${removeScript}
+      '';
+    in
+    {
+      path =
+        if cfg.backend == "docker" then
+          [ config.virtualisation.docker.package ]
+        else if cfg.backend == "podman" then
+          [ config.virtualisation.podman.package ]
+        else
+          throw "Unhandled backend: ${cfg.backend}";
+      script = lib.concatStringsSep "  \\\n  " (
+        [ "exec ${cfg.backend} " ]
+        ++ (map escapeShellArg value.preRunExtraOptions)
+        ++ [ "volume create" ]
+        ++ (map escapeShellArg value.extraOptions)
+        ++ [ name ]
+      );
       postStop = removeScript;
 
       serviceConfig = {
@@ -69,7 +84,8 @@ let
       before = [ "multi-user.target" ];
       wantedBy = [ "multi-user.target" ];
     };
-in {
+in
+{
   options.virtualisation.oci-containers.volumes = lib.mkOption {
     type = with lib.types; attrsOf (submodule volumeModule);
     description = ''
@@ -78,13 +94,15 @@ in {
     default = { };
     example = {
       penpot = { };
-      foo.labels = { bar = "baz"; };
+      foo.labels = {
+        bar = "baz";
+      };
     };
   };
 
   config = lib.mkIf (cfg.volumes != { }) {
-    systemd.services = lib.mapAttrs'
-      (n: v: lib.nameValuePair "${cfg.backend}-volume-${n}" (mkService n v))
-      cfg.volumes;
+    systemd.services = lib.mapAttrs' (
+      n: v: lib.nameValuePair "${cfg.backend}-volume-${n}" (mkService n v)
+    ) cfg.volumes;
   };
 }

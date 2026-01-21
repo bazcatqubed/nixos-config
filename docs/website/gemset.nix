@@ -46,7 +46,10 @@
     version = "1.2023.5";
   };
   asciidoctor-foodogsquared-extensions = {
-    dependencies = [ "asciidoctor" "rugged" ];
+    dependencies = [
+      "asciidoctor"
+      "rugged"
+    ];
     groups = [ "default" ];
     platforms = [ ];
     source = {
@@ -57,7 +60,10 @@
     version = "1.0.1";
   };
   ast = {
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -77,7 +83,10 @@
     version = "1.2.2";
   };
   json = {
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -87,7 +96,11 @@
     version = "2.6.3";
   };
   language_server-protocol = {
-    groups = [ "default" "development" "lint" ];
+    groups = [
+      "default"
+      "development"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -107,7 +120,10 @@
     version = "1.0.0";
   };
   parallel = {
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -117,8 +133,14 @@
     version = "1.23.0";
   };
   parser = {
-    dependencies = [ "ast" "racc" ];
-    groups = [ "default" "lint" ];
+    dependencies = [
+      "ast"
+      "racc"
+    ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -128,7 +150,10 @@
     version = "3.2.2.3";
   };
   prettier_print = {
-    groups = [ "default" "development" ];
+    groups = [
+      "default"
+      "development"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -138,7 +163,10 @@
     version = "1.2.1";
   };
   racc = {
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -148,7 +176,10 @@
     version = "1.7.1";
   };
   rainbow = {
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -168,7 +199,10 @@
     version = "13.0.6";
   };
   regexp_parser = {
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -178,7 +212,10 @@
     version = "2.8.1";
   };
   rexml = {
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -221,7 +258,10 @@
   };
   rubocop-ast = {
     dependencies = [ "parser" ];
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -231,8 +271,11 @@
     version = "1.29.0";
   };
   ruby-lsp = {
-    dependencies =
-      [ "language_server-protocol" "sorbet-runtime" "syntax_tree" ];
+    dependencies = [
+      "language_server-protocol"
+      "sorbet-runtime"
+      "syntax_tree"
+    ];
     groups = [ "development" ];
     platforms = [ ];
     source = {
@@ -243,7 +286,10 @@
     version = "0.6.2";
   };
   ruby-progressbar = {
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -263,7 +309,10 @@
     version = "1.6.3";
   };
   slim = {
-    dependencies = [ "temple" "tilt" ];
+    dependencies = [
+      "temple"
+      "tilt"
+    ];
     groups = [ "default" ];
     platforms = [ ];
     source = {
@@ -274,7 +323,10 @@
     version = "5.1.1";
   };
   sorbet-runtime = {
-    groups = [ "default" "development" ];
+    groups = [
+      "default"
+      "development"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -285,7 +337,10 @@
   };
   syntax_tree = {
     dependencies = [ "prettier_print" ];
-    groups = [ "default" "development" ];
+    groups = [
+      "default"
+      "development"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];
@@ -315,7 +370,10 @@
     version = "2.2.0";
   };
   unicode-display_width = {
-    groups = [ "default" "lint" ];
+    groups = [
+      "default"
+      "lint"
+    ];
     platforms = [ ];
     source = {
       remotes = [ "https://rubygems.org" ];

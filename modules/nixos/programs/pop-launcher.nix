@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.pop-launcher;
@@ -9,7 +14,8 @@ let
     name = "pop-launcher-plugins-system";
     paths = lib.map (p: "${p}/share/pop-launcher") cfg.plugins;
   };
-in {
+in
+{
   options.programs.pop-launcher = {
     enable = lib.mkOption {
       description = ''

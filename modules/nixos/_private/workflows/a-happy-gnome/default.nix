@@ -1,46 +1,54 @@
-{ config, lib, pkgs, foodogsquaredLib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  ...
+}:
 
 let
   workflowName = "one.foodogsquared.AHappyGNOME";
   cfg = config.workflows.workflows.${workflowName};
 
-  isGnomeVersionAtLeast = v:
-    lib.versionAtLeast pkgs.gnome-shell.version v;
+  isGnomeVersionAtLeast = v: lib.versionAtLeast pkgs.gnome-shell.version v;
 
-  requiredApps = with pkgs;
-    [
-      # The application menu.
-      junction
+  requiredApps = with pkgs; [
+    # The application menu.
+    junction
 
-      # The application launcher for your one-handed keyboard handling (the
-      # other is in the mouse, if you're thinking something else).
-      kando
+    # The application launcher for your one-handed keyboard handling (the
+    # other is in the mouse, if you're thinking something else).
+    kando
 
-      # Valent...ines 'tis season to share... phone data or something.
-      valent
-    ];
+    # Valent...ines 'tis season to share... phone data or something.
+    valent
+  ];
 
   # All of the shell extensions plus their required extensions.
-  shellExtensions' = cfg.shellExtensions ++ (with pkgs.gnomeExtensions; [
-    valent
-    kando-integration
-    paperwm
-  ]);
+  shellExtensions' =
+    cfg.shellExtensions
+    ++ (with pkgs.gnomeExtensions; [
+      valent
+      kando-integration
+      paperwm
+    ]);
 
-  workspaceSubmodule = { name, ... }: {
-    freeformType = with lib.types; attrsOf anything;
-    options = {
-      name = lib.mkOption {
-        type = lib.types.str;
-        default = name;
-        description = "The formal name of the workspace.";
-        example = "Software development";
+  workspaceSubmodule =
+    { name, ... }:
+    {
+      freeformType = with lib.types; attrsOf anything;
+      options = {
+        name = lib.mkOption {
+          type = lib.types.str;
+          default = name;
+          description = "The formal name of the workspace.";
+          example = "Software development";
+        };
       };
     };
-  };
-in {
-  options.workflows.enable =
-    lib.mkOption { type = with lib.types; listOf (enum [ workflowName ]); };
+in
+{
+  options.workflows.enable = lib.mkOption { type = with lib.types; listOf (enum [ workflowName ]); };
 
   options.workflows.workflows.${workflowName} = {
     shellExtensions = lib.mkOption {
@@ -78,53 +86,58 @@ in {
     extraApps = lib.mkOption {
       type = with lib.types; listOf package;
       description = "A list of applications to be included in the theme.";
-      default = with pkgs; [
-        adw-gtk3 # A nice theme for GTK3.
-        amberol # An unambitious music player.
-        authenticator # 2-factor codes for 2-factor storages.
-        blanket # Zen...
-        dialect # Your gateway to polyglotting.
-        eyedropper # Some nice eyedropper tool.
-        flowtime # Some nice timer for those overworking.
-        fractal # Your gateway to the matrix.
-        gapless # Like your teeth, probably.
-        gnome-decoder # Go with them QR codes.
-        gnome-frog # Graphical OCR with Tesseract that I always wanted.
-        gnome-solanum # Cute little matodor timers.
-        gradia # Your cool screenshot is ready.
-        dconf-editor # A saner version of Windows registry.
-        gnome-boxes # Virtual machines, son.
-        mission-center # It is your duty to monitor your system.
-        packet # Quick sharing between two phones.
-        polari # Your gateway to one of the most hidden and cobweb-ridden parts of the internet. ;)
-        handbrake # Take a break from those custom ffmpeg conversion scripts.
-        shortwave # Yer' humble internet radio.
-        symbolic-preview # Them symbols... it's important.
-        icon-library # Them symbols... it's hard to find.
-        gtranslator # It's not a Google translator app, I'll tell you that.
-        tangram # Your social media manager, probably.
-        ymuse # I muse with a simple MPD client.
-        gnome-secrets # Feel the secureness, O Keeper of Secrets.
-        varia # Your internet download manager.
+      default =
+        with pkgs;
+        [
+          adw-gtk3 # A nice theme for GTK3.
+          amberol # An unambitious music player.
+          authenticator # 2-factor codes for 2-factor storages.
+          blanket # Zen...
+          dialect # Your gateway to polyglotting.
+          eyedropper # Some nice eyedropper tool.
+          flowtime # Some nice timer for those overworking.
+          fractal # Your gateway to the matrix.
+          gapless # Like your teeth, probably.
+          gnome-decoder # Go with them QR codes.
+          gnome-frog # Graphical OCR with Tesseract that I always wanted.
+          gnome-solanum # Cute little matodor timers.
+          gradia # Your cool screenshot is ready.
+          dconf-editor # A saner version of Windows registry.
+          gnome-boxes # Virtual machines, son.
+          mission-center # It is your duty to monitor your system.
+          packet # Quick sharing between two phones.
+          polari # Your gateway to one of the most hidden and cobweb-ridden parts of the internet. ;)
+          handbrake # Take a break from those custom ffmpeg conversion scripts.
+          shortwave # Yer' humble internet radio.
+          symbolic-preview # Them symbols... it's important.
+          icon-library # Them symbols... it's hard to find.
+          gtranslator # It's not a Google translator app, I'll tell you that.
+          tangram # Your social media manager, probably.
+          ymuse # I muse with a simple MPD client.
+          gnome-secrets # Feel the secureness, O Keeper of Secrets.
+          varia # Your internet download manager.
 
-        gnome-backgrounds # Default backgrounds.
+          gnome-backgrounds # Default backgrounds.
 
-        gnome-extension-manager # The cooler GNOME extensions app.
-        gnome-search-provider-recoll # This is here for some reason.
+          gnome-extension-manager # The cooler GNOME extensions app.
+          gnome-search-provider-recoll # This is here for some reason.
 
-        # Nautilus extensions
-        nautilus-python
-        nautilus-annotations
-        nautilus-open-any-terminal
+          # Nautilus extensions
+          nautilus-python
+          nautilus-annotations
+          nautilus-open-any-terminal
 
-        # Extra background images.
-        fedora-backgrounds.f38
-        fedora-backgrounds.f37
-      ]
-      ++ lib.optionals config.suites.dev.enable (with pkgs; [
-          devtoolbox
-          turtle
-        ]);
+          # Extra background images.
+          fedora-backgrounds.f38
+          fedora-backgrounds.f37
+        ]
+        ++ lib.optionals config.suites.dev.enable (
+          with pkgs;
+          [
+            devtoolbox
+            turtle
+          ]
+        );
       example = lib.literalExpression ''
         with pkgs; [
           polari
@@ -147,8 +160,7 @@ in {
     };
 
     disableSearchProviders = lib.mkOption {
-      type = with lib.types;
-        listOf (coercedTo str (lib.removeSuffix ".desktop") str);
+      type = with lib.types; listOf (coercedTo str (lib.removeSuffix ".desktop") str);
       description = ''
         A list of the application filenames (without the `.desktop` part) where
         its GNOME Shell search provider is to be disabled.
@@ -229,10 +241,12 @@ in {
       };
 
       winprops = lib.mkOption {
-        type = let
-          inherit (lib.types) listOf;
-          settingsFormat = pkgs.formats.json { };
-        in listOf (settingsFormat.type);
+        type =
+          let
+            inherit (lib.types) listOf;
+            settingsFormat = pkgs.formats.json { };
+          in
+          listOf (settingsFormat.type);
         description = ''
           A list of default winprops settings for PaperWM.
         '';
@@ -328,8 +342,7 @@ in {
             disabled = cfg.disableSearchProviders;
           };
           "org/gnome/shell" = {
-            enabled-extensions =
-              lib.map (p: p.extensionUuid) shellExtensions';
+            enabled-extensions = lib.map (p: p.extensionUuid) shellExtensions';
           };
 
           "org/gnome/mutter" = {
@@ -337,7 +350,8 @@ in {
             experimental-features =
               lib.optionals (isGnomeVersionAtLeast "47") [
                 "scale-monitor-framebuffer"
-              ] ++ lib.optionals (isGnomeVersionAtLeast "49") [
+              ]
+              ++ lib.optionals (isGnomeVersionAtLeast "49") [
                 "variable-refresh-rate"
                 "autoclose-wayland"
                 "xwayland-native-scaling"
@@ -356,24 +370,24 @@ in {
         # Disable all of the messenger's notification (only the annoying
         # ones).
         (lib.pipe cfg.disableNotifications [
-          (lib.map (app:
-            lib.nameValuePair
-            "org/gnome/desktop/notifications/application/${app}" {
+          (lib.map (
+            app:
+            lib.nameValuePair "org/gnome/desktop/notifications/application/${app}" {
               show-banners = false;
-            }))
+            }
+          ))
 
           lib.listToAttrs
         ])
 
         (lib.mkIf (cfg.paperwm.winprops != [ ]) {
-          "org/gnome/shell/extensions/paperwm".winprops =
-            lib.map lib.strings.toJSON cfg.paperwm.winprops;
+          "org/gnome/shell/extensions/paperwm".winprops = lib.map lib.strings.toJSON cfg.paperwm.winprops;
         })
 
         (lib.mkIf (cfg.paperwm.workspaces != { }) (
           let
-            mkWorkspaceConfig = name: value:
-              lib.nameValuePair "org/gnome/shell/extensions/paperwm/workspaces/${name}" value;
+            mkWorkspaceConfig =
+              name: value: lib.nameValuePair "org/gnome/shell/extensions/paperwm/workspaces/${name}" value;
 
             workspaces = lib.attrNames cfg.paperwm.workspaces;
           in
@@ -491,7 +505,6 @@ in {
       };
     };
 
-    environment.systemPackages = requiredApps ++ shellExtensions'
-      ++ cfg.extraApps;
+    environment.systemPackages = requiredApps ++ shellExtensions' ++ cfg.extraApps;
   };
 }

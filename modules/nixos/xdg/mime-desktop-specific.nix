@@ -1,20 +1,30 @@
-{ config, lib, options, ... }:
+{
+  config,
+  lib,
+  options,
+  ...
+}:
 
 let
   cfg = config.xdg.mime;
 
-  mkMimeSource = name: value:
-    lib.nameValuePair "xdg/${name}-mimeapps.list"
-    (lib.mkIf (value.defaultApplications != { }) {
-      text = lib.generators.toINI { } {
-        "Default Applications" = value.defaultApplications;
-      };
-    });
+  mkMimeSource =
+    name: value:
+    lib.nameValuePair "xdg/${name}-mimeapps.list" (
+      lib.mkIf (value.defaultApplications != { }) {
+        text = lib.generators.toINI { } {
+          "Default Applications" = value.defaultApplications;
+        };
+      }
+    );
 
-  xdgMimeAssociations = { name, lib, ... }: {
-    options.defaultApplications = options.xdg.mime.defaultApplications;
-  };
-in {
+  xdgMimeAssociations =
+    { name, lib, ... }:
+    {
+      options.defaultApplications = options.xdg.mime.defaultApplications;
+    };
+in
+{
   options.xdg.mime.desktops = lib.mkOption {
     type = with lib.types; attrsOf (submodule xdgMimeAssociations);
     description = ''
@@ -27,7 +37,9 @@ in {
     '';
     default = { };
     example = {
-      gnome.defaultApplications = { "application/pdf" = "firefox.desktop"; };
+      gnome.defaultApplications = {
+        "application/pdf" = "firefox.desktop";
+      };
     };
   };
 

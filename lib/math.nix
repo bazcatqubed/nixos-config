@@ -1,5 +1,9 @@
 # Math subset.
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 rec {
   /**
@@ -55,16 +59,16 @@ rec {
     => 1296
     ```
   */
-  pow = base: exponent:
+  pow =
+    base: exponent:
     # Just to be a contrarian, I'll just make this as a tail recursive function
     # instead lol.
     let
       absValue = abs exponent;
-      iter = product: counter: maxCount:
-        if counter > maxCount then
-          product
-        else
-          iter (product * base) (counter + 1) maxCount;
+      iter =
+        product: counter: maxCount:
+        if counter > maxCount then product else iter (product * base) (counter + 1) maxCount;
       value = iter 1 1 absValue;
-    in if exponent < 0 then (1 / value) else value;
+    in
+    if exponent < 0 then (1 / value) else value;
 }

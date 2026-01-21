@@ -20,21 +20,31 @@ func getIconFromHTML(rawURL string) (*http.Response, error) {
 
 	// We're also anticipating if the request is invalid (e.g., not a
 	// reachable/real domain).
-	if err != nil || res == nil { return res, err }
+	if err != nil || res == nil {
+		return res, err
+	}
 	defer res.Body.Close()
 
-	if res.StatusCode != http.StatusOK { return res, err }
+	if res.StatusCode != http.StatusOK {
+		return res, err
+	}
 
 	icons, err := extractIcon(res.Body, rawURL)
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 
 	// This is for pages with no icons at all which basically means it's up to
 	// generating our own at this point.
-	if len(icons) <= 0 { return nil, nil }
+	if len(icons) <= 0 {
+		return nil, nil
+	}
 
 	icon := findLargestIcon(icons)
 	iconURL, err := url.JoinPath(rawURL, icon.path)
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 
 	return http.Get(iconURL)
 }
@@ -148,6 +158,7 @@ type webManifestIcon struct {
 }
 
 type IconType uint
+
 const (
 	NormalIcon IconType = iota
 	FluidIcon
@@ -155,15 +166,15 @@ const (
 )
 
 type Icon struct {
-	path  string
-	sizes []uint
+	path     string
+	sizes    []uint
 	priority IconType
 }
 
 func NewIcon(path string, size string, iconType IconType) Icon {
 	return Icon{
-		path:  path,
-		sizes: parseSize(size),
+		path:     path,
+		sizes:    parseSize(size),
 		priority: iconType,
 	}
 }
@@ -177,7 +188,7 @@ func NewIcon(path string, size string, iconType IconType) Icon {
 func findLargestIcon(icons []Icon) *Icon {
 	var (
 		largestIconSize uint
-		icon *Icon
+		icon            *Icon
 	)
 
 	for _, i := range icons {

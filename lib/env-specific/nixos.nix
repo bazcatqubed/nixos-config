@@ -1,5 +1,9 @@
 # All of the functions suitable only for NixOS.
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 {
   # Checks if the NixOS configuration is part of the nixos-generator build.
@@ -15,21 +19,25 @@
   # which makes it possible to have them installed side-by-side with their own
   # set of applications and everything (except for overlapping NixOS services
   # that will just add them into the NixOS environment itself).
-  mkNixoslikeEnvironment = config: args:
-    pkgs.buildEnv (args // {
-      inherit (config.environment) pathsToLink extraOutputsToInstall;
-      ignoreCollisions = true;
-      postBuild = ''
-        # Remove wrapped binaries, they shouldn't be accessible via PATH.
-        find $out/bin -maxdepth 1 -name ".*-wrapped" -type l -delete
+  mkNixoslikeEnvironment =
+    config: args:
+    pkgs.buildEnv (
+      args
+      // {
+        inherit (config.environment) pathsToLink extraOutputsToInstall;
+        ignoreCollisions = true;
+        postBuild = ''
+          # Remove wrapped binaries, they shouldn't be accessible via PATH.
+          find $out/bin -maxdepth 1 -name ".*-wrapped" -type l -delete
 
-        if [ -x $out/bin/glib-compile-schemas -a -w $out/share/glib-2.0/schemas ]; then
-            $out/bin/glib-compile-schemas $out/share/glib-2.0/schemas
-        fi
+          if [ -x $out/bin/glib-compile-schemas -a -w $out/share/glib-2.0/schemas ]; then
+              $out/bin/glib-compile-schemas $out/share/glib-2.0/schemas
+          fi
 
-        ${config.environment.extraSetup}
-      '';
-    });
+          ${config.environment.extraSetup}
+        '';
+      }
+    );
 
   # Given an environment (built with `pkgs.buildEnv`), create a systemd
   # environment attrset meant to be used as part of the desktop service.
@@ -48,25 +56,32 @@
 
   # Create a range object (as [start + 1, end + 1] in notation) that is typically used
   # in module options that accept them except that the starting port is included.
-  makeRange' = start: range:
-    let start' = start + 1;
-    in {
+  makeRange' =
+    start: range:
+    let
+      start' = start + 1;
+    in
+    {
       from = start';
       to = start' + range;
     };
 
   # A specific function that checks if specific filesystem setups are set.
-  isFilesystemSet = config: setupName:
-    config.suites.filesystem.setups.${setupName}.enable or false;
+  isFilesystemSet = config: setupName: config.suites.filesystem.setups.${setupName}.enable or false;
 
   # Get the path from the state variable.
   getFilesystem = config: setupName: config.state.paths.${setupName};
 
-  mkGnomeSessionTargetUnit = config: workflowName: requiredComponents:
+  mkGnomeSessionTargetUnit =
+    config: workflowName: requiredComponents:
     let
       sessionConfig = config.programs.gnome-session.sessions.${workflowName};
-      getId = lib.foldlAttrs (acc: _: v: acc ++ [ "${v.id}.target" ]) [ ];
-    in {
+      getId = lib.foldlAttrs (
+        acc: _: v:
+        acc ++ [ "${v.id}.target" ]
+      ) [ ];
+    in
+    {
       requires = getId (lib.filterAttrs (n: _: lib.elem n requiredComponents) sessionConfig.components);
       wants = getId (lib.attrsets.removeAttrs sessionConfig.components requiredComponents);
     };

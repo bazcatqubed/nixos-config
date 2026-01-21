@@ -1,25 +1,44 @@
 # My user shell of choice because I'm not a hipster.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.programs.shell;
-in {
-  options.users.foo-dogsquared.programs.shell.enable = lib.mkEnableOption
-    "configuration of foo-dogsquared's shell of choice and its toolbelt";
+in
+{
+  options.users.foo-dogsquared.programs.shell.enable =
+    lib.mkEnableOption "configuration of foo-dogsquared's shell of choice and its toolbelt";
 
   config = lib.mkIf cfg.enable {
     suites.dev.shell.enable = lib.mkDefault true;
 
     programs.bash = {
       enable = true;
-      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
-      historyIgnore = [ "cd" "exit" "lf" "ls" "nvim" ];
+      historyControl = [
+        "erasedups"
+        "ignoredups"
+        "ignorespace"
+      ];
+      historyIgnore = [
+        "cd"
+        "exit"
+        "lf"
+        "ls"
+        "nvim"
+      ];
     };
 
     # Additional formatting thingies for your fuzzy finder.
-    programs.fzf.defaultOptions =
-      [ "--height=40%" "--bind=ctrl-z:ignore" "--reverse" ];
+    programs.fzf.defaultOptions = [
+      "--height=40%"
+      "--bind=ctrl-z:ignore"
+      "--reverse"
+    ];
 
     # Compile all of the completions.
     programs.carapace.enable = true;

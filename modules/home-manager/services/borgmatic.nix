@@ -9,37 +9,49 @@
 #
 # As a design constraint, you should still be able to do what the upstream
 # service module with a little bit of elbow grease.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.borgmatic;
   programCfg = config.programs.borgmatic;
   settingsFormat = pkgs.formats.yaml { };
 
-  borgmaticProgramModule = { name, lib, ... }: {
-    options = {
-      initService = {
-        enable = lib.mkEnableOption
-          "include this particular backup as part of Borgmatic jobset at {option}`services.borgmatic.jobs`";
+  borgmaticProgramModule =
+    { name, lib, ... }:
+    {
+      options = {
+        initService = {
+          enable = lib.mkEnableOption "include this particular backup as part of Borgmatic jobset at {option}`services.borgmatic.jobs`";
 
-        startAt = lib.mkOption {
-          type = lib.types.nonEmptyStr;
-          description = ''
-            Indicates how often the associated service occurs. Accepts value as
-            found from {manpage}`systemd.time(7)`.
-          '';
-          default = "daily";
-          example = "04:30";
+          startAt = lib.mkOption {
+            type = lib.types.nonEmptyStr;
+            description = ''
+              Indicates how often the associated service occurs. Accepts value as
+              found from {manpage}`systemd.time(7)`.
+            '';
+            default = "daily";
+            example = "04:30";
+          };
         };
       };
     };
-  };
 
-  borgmaticJobModule = { config, lib, name, ... }:
+  borgmaticJobModule =
+    {
+      config,
+      lib,
+      name,
+      ...
+    }:
     let
-      settingsFile =
-        settingsFormat.generate "borgmatic-job-config-${name}" config.settings;
-    in {
+      settingsFile = settingsFormat.generate "borgmatic-job-config-${name}" config.settings;
+    in
+    {
       options = {
         settings = lib.mkOption {
           type = settingsFormat.type;
@@ -102,19 +114,23 @@ let
         extraArgs = lib.mkMerge [
           cfg.extraArgs
 
-          (lib.optionals (config.settings != { })
-            (lib.mkBefore [ "--config" settingsFile ]))
+          (lib.optionals (config.settings != { }) (
+            lib.mkBefore [
+              "--config"
+              settingsFile
+            ]
+          ))
         ];
       };
     };
 
   formatUnitName = name: "borgmatic-job-${name}";
-  mkBorgmaticServiceUnit = n: v:
+  mkBorgmaticServiceUnit =
+    n: v:
     lib.nameValuePair (formatUnitName n) {
       Unit = {
         Description = "Borgmatic backup job '${n}'";
-        Documentation =
-          [ "https://torsion.org/borgmatic/docs/reference/configuration" ];
+        Documentation = [ "https://torsion.org/borgmatic/docs/reference/configuration" ];
         ConditionACPower = true;
         StartLimitBurst = 5;
       };
@@ -131,16 +147,15 @@ let
         LogRateLimitIntervalSec = 0;
 
         ExecStart = ''
-          ${lib.getExe' cfg.package "borgmatic"} ${
-            lib.concatStringsSep " " v.extraArgs
-          }
+          ${lib.getExe' cfg.package "borgmatic"} ${lib.concatStringsSep " " v.extraArgs}
         '';
 
         PrivateTmp = true;
       };
     };
 
-  mkBorgmaticTimerUnit = n: v:
+  mkBorgmaticTimerUnit =
+    n: v:
     lib.nameValuePair (formatUnitName n) {
       Unit.Description = "Borgmatic backup job '${n}'";
 
@@ -153,13 +168,17 @@ let
       Install.WantedBy = [ "timers.target" ];
     };
 
-  mkBorgmaticServiceFromConfig = n: v:
+  mkBorgmaticServiceFromConfig =
+    n: v:
     lib.nameValuePair "borgmatic-config-${n}" {
       inherit (v.initService) startAt;
-      extraArgs =
-        [ "--config" "${config.xdg.configHome}/borgmatic.d/${n}.yaml" ];
+      extraArgs = [
+        "--config"
+        "${config.xdg.configHome}/borgmatic.d/${n}.yaml"
+      ];
     };
-in {
+in
+{
   disabledModules = [ "services/borgmatic.nix" ];
   options.programs.borgmatic.backups = lib.mkOption {
     type = with lib.types; attrsOf (submodule borgmaticProgramModule);
@@ -174,7 +193,11 @@ in {
         Global list of additional arguments for all of the jobs.
       '';
       default = [ ];
-      example = [ "--stats" "--verbosity" "1" ];
+      example = [
+        "--stats"
+        "--verbosity"
+        "1"
+      ];
     };
 
     jobs = lib.mkOption {
@@ -219,9 +242,10 @@ in {
 
     systemd.user.timers = lib.mapAttrs' mkBorgmaticTimerUnit cfg.jobs;
 
-    services.borgmatic.jobs = let
-      validService =
-        lib.filterAttrs (n: v: v.initService.enable) programCfg.backups;
-    in lib.mapAttrs' mkBorgmaticServiceFromConfig validService;
+    services.borgmatic.jobs =
+      let
+        validService = lib.filterAttrs (n: v: v.initService.enable) programCfg.backups;
+      in
+      lib.mapAttrs' mkBorgmaticServiceFromConfig validService;
   };
 }

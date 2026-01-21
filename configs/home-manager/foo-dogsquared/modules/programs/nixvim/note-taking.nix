@@ -1,4 +1,11 @@
-{ config, lib, pkgs, helpers, hmConfig, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  helpers,
+  hmConfig,
+  ...
+}:
 
 let
   nixvimCfg = config.nixvimConfigs.fiesta-fds;
@@ -26,7 +33,9 @@ in
           "core.concealer" = helpers.emptyTable;
 
           # Dear diary...
-          "core.journal".config = { strategy = "flat"; };
+          "core.journal".config = {
+            strategy = "flat";
+          };
 
           # Norg ripping a page from org-mode.
           "core.ui.calendar" = helpers.emptyTable;
@@ -64,10 +73,12 @@ in
       ]
       # Install the tree-sitter parsers required for the core.defaults Neorg
       # module.
-      ++ lib.optionals (config.plugins.neorg.settings ? load."core.defaults")
-      (with pkgs.tree-sitter-grammars; [
-        tree-sitter-norg
-        tree-sitter-norg-meta
-      ]);
+      ++ lib.optionals (config.plugins.neorg.settings ? load."core.defaults") (
+        with pkgs.tree-sitter-grammars;
+        [
+          tree-sitter-norg
+          tree-sitter-norg-meta
+        ]
+      );
   };
 }

@@ -1,5 +1,8 @@
-{ pkgs ? import <nixpkgs> { }, lib ? pkgs.lib
-, self ? import ../../lib { inherit pkgs; }, }:
+{
+  pkgs ? import <nixpkgs> { },
+  lib ? pkgs.lib,
+  self ? import ../../lib { inherit pkgs; },
+}:
 
 {
   testsInternetArchiveFetcher = self.fetchers.fetchInternetArchive {
@@ -10,7 +13,10 @@
 
   testsInternetArchiveFetcher2 = self.fetchers.fetchInternetArchive {
     id = "md_music_sonic_the_hedgehog";
-    formats = [ "TEXT" "PNG" ];
+    formats = [
+      "TEXT"
+      "PNG"
+    ];
     hash = "sha256-xbhasJ/wEgcY+EcBAJp5UoYB4N4It3QV/iIeGGdCET8=";
   };
 

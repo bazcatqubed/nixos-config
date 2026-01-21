@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.shared-setups.server.crowdsec;
-in {
+let
+  cfg = config.shared-setups.server.crowdsec;
+in
+{
   options.shared-setups.server.crowdsec.enable =
     lib.mkEnableOption "typical Crowdsec setup for public-facing servers";
 

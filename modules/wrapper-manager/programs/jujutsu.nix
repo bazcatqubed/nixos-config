@@ -1,10 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.jujutsu;
 
   settingsFormat = pkgs.formats.toml { };
-in {
+in
+{
   options.programs.jujutsu = {
     enable = lib.mkEnableOption "Jujutsu, a Git-compatible DVCS";
 
@@ -62,8 +68,7 @@ in {
       })
 
       (lib.mkIf (cfg.settings != { } && cfg.configFile == null) {
-        env.JJ_CONFIG.value =
-          settingsFormat.generate "wrapper-manager-jujutsu-config" cfg.settings;
+        env.JJ_CONFIG.value = settingsFormat.generate "wrapper-manager-jujutsu-config" cfg.settings;
       })
     ];
   };

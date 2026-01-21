@@ -13,24 +13,27 @@ lib.extendMkDerivation {
     }@args:
     {
       buildFlags = args.buildFlags or [ ] ++ [
-        "--site-dir" buildDir
+        "--site-dir"
+        buildDir
       ];
 
-      buildPhase = args.buildPhase or ''
-        runHook preBuild
+      buildPhase =
+        args.buildPhase or ''
+          runHook preBuild
 
-        mkdocs ''${buildFlags[@]}
+          mkdocs ''${buildFlags[@]}
 
-        runHook postBuild
-      '';
+          runHook postBuild
+        '';
 
-      installPhase = args.installPhase or ''
-        runHook preInstall
+      installPhase =
+        args.installPhase or ''
+          runHook preInstall
 
-        mkdir -p $out && cp -r ${buildDir}/* $out/
+          mkdir -p $out && cp -r ${buildDir}/* $out/
 
-        runHook postInstall
-      '';
+          runHook postInstall
+        '';
 
       dontFixup = args.dontFixup or true;
       doCheck = args.doCheck or true;

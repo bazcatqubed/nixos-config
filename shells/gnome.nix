@@ -3,16 +3,36 @@
 # projects.
 #
 # These include toolkits for C, Rust, and GNOME JavaScript.
-{ mkShell, cmake, meson, ninja, gtk4, libadwaita, gjs, pkg-config
+{
+  mkShell,
+  cmake,
+  meson,
+  ninja,
+  gtk4,
+  libadwaita,
+  gjs,
+  pkg-config,
 
-, blueprint-compiler, desktop-file-utils, librsvg, gdk-pixbuf, gst_all_1
-, gettext, glib, appstream-glib, json-glib, gobject-introspection
-, glib-networking, glib-testing, libsoup_3
+  blueprint-compiler,
+  desktop-file-utils,
+  librsvg,
+  gdk-pixbuf,
+  gst_all_1,
+  gettext,
+  glib,
+  appstream-glib,
+  json-glib,
+  gobject-introspection,
+  glib-networking,
+  glib-testing,
+  libsoup_3,
 
-, nodePackages
+  nodePackages,
 
-# Rust
-, cargo, rustc }:
+  # Rust
+  cargo,
+  rustc,
+}:
 
 mkShell {
   packages = [
@@ -55,5 +75,9 @@ mkShell {
     blueprint-compiler
   ];
 
-  inputsFrom = [ gjs gtk4 gobject-introspection ];
+  inputsFrom = [
+    gjs
+    gtk4
+    gobject-introspection
+  ];
 }

@@ -8,17 +8,21 @@
 
 (buildFHSEnv {
   name = "cloud-admin-env";
-  targetPkgs = pkgs:
+  targetPkgs =
+    pkgs:
     (with pkgs; [
       awscli2 # For Amazon Web Services.
       azure-cli # For Microsoft Azure.
 
       # For Google Cloud Platform.
-      (google-cloud-sdk.withExtraComponents (with google-cloud-sdk.components; [
-        gke-gcloud-auth-plugin
-        gcloud-man-pages
-        cloud-run-proxy
-      ]))
+      (google-cloud-sdk.withExtraComponents (
+        with google-cloud-sdk.components;
+        [
+          gke-gcloud-auth-plugin
+          gcloud-man-pages
+          cloud-run-proxy
+        ]
+      ))
 
       kubectl # For managing Kubernetes cluster if it is on one.
       hcloud # For Hetzner Cloud.

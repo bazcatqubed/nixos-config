@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.wezterm;
@@ -7,7 +12,8 @@ let
     source ${pkgs.bash-preexec}/share/bash/bash-preexec.sh
     source ${cfg.package}/etc/profile.d/wezterm.sh
   '';
-in {
+in
+{
   options.programs.wezterm = {
     enable = lib.mkEnableOption "Wezterm terminal emulator";
     package = lib.mkOption {

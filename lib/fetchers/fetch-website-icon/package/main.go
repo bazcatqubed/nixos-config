@@ -13,12 +13,12 @@ import (
 )
 
 var (
-	rawURL string
-	size uint
-	outDir string
+	rawURL      string
+	size        uint
+	outDir      string
 	largestOnly bool
-	verbose bool
-	fontName string
+	verbose     bool
+	fontName    string
 
 	// Indicates whether to disable downloading and parsing the HTML document
 	// for fetching the icon.
@@ -100,7 +100,9 @@ func downloadFromHTMLDocument(initialUrl *url.URL) {
 
 	// Since we're requesting a domain ourselves instead of using a favicon
 	// service, we'll have to make sure it is a valid response.
-	if err != nil { log.Println(err) }
+	if err != nil {
+		log.Println(err)
+	}
 	if res != nil {
 		defer res.Body.Close()
 
@@ -133,7 +135,9 @@ func downloadFromGoogleIcons(initialUrl *url.URL) {
 func downloadFromDuckduckgoIcons(initialUrl *url.URL) {
 	duckduckgoIcon := DuckduckgoDownloader{domain: initialUrl.Host}
 	res, err := duckduckgoIcon.Download()
-	if err != nil { log.Println(err) }
+	if err != nil {
+		log.Println(err)
+	}
 	defer res.Body.Close()
 
 	if res.StatusCode == http.StatusOK {
@@ -148,10 +152,14 @@ func downloadFromDuckduckgoIcons(initialUrl *url.URL) {
 // generating an icon for local services.
 func generateIconFromURL(initialUrl *url.URL, size uint, fontName string) {
 	fallbackIcon, err := generateIcon(initialUrl, int(size), fontName)
-	if err != nil { log.Fatal(err) }
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	f, err := os.Create(path.Join(outDir, "icon"))
-	if err != nil { log.Fatal(err) }
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer f.Close()
 
 	if err = png.Encode(f, fallbackIcon); err != nil {

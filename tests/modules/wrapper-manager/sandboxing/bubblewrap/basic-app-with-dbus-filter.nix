@@ -1,5 +1,10 @@
 # Based from the examples from NixPak.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   build.variant = "shell";

@@ -1,4 +1,9 @@
-{ lib, dotnet-runtime, dotnet-sdk, mkShell }:
+{
+  lib,
+  dotnet-runtime,
+  dotnet-sdk,
+  mkShell,
+}:
 
 mkShell {
   packages = [

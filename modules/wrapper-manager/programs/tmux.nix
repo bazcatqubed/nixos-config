@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.programs.tmux;
-in {
+let
+  cfg = config.programs.tmux;
+in
+{
   options.programs.tmux = {
     enable = lib.mkEnableOption "configuring a tmux wrapper";
 

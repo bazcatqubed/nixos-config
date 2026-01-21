@@ -1,15 +1,23 @@
 { lib, flake-parts-lib, ... }:
 
 let
-  deployType = { config, lib, pkgs, ... }: {
-    options.nodes = lib.mkOption {
-      type = with lib.types; attrsOf anything;
-      description = ''
-        A set of deploy-rs nodes.
-      '';
+  deployType =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      options.nodes = lib.mkOption {
+        type = with lib.types; attrsOf anything;
+        description = ''
+          A set of deploy-rs nodes.
+        '';
+      };
     };
-  };
-in {
+in
+{
   options = {
     flake = flake-parts-lib.mkSubmoduleOptions {
       deploy = lib.mkOption {

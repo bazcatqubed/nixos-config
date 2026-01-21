@@ -1,7 +1,15 @@
-{ config, lib, pkgs, helpers, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  helpers,
+  ...
+}:
 
-let cfg = config.plugins.nvim-config-local;
-in {
+let
+  cfg = config.plugins.nvim-config-local;
+in
+{
   options.plugins.nvim-config-local = {
     enable = lib.mkEnableOption "nvim-config-local";
 
@@ -13,7 +21,11 @@ in {
         options = {
           config_files = lib.mkOption {
             type = with lib.types; listOf str;
-            default = [ ".nvim.lua" ".nvimrc" ".exrc" ];
+            default = [
+              ".nvim.lua"
+              ".nvimrc"
+              ".exrc"
+            ];
             example = [ "config/nvim.lua" ];
             description = ''
               A list of patterns to load (includes Lua configurations).

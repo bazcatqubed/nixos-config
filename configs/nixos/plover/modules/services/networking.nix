@@ -5,10 +5,14 @@ let
   cfg = hostCfg.services.networking;
 
   # This is just referring to the same interface just with alternative names.
-  mainEthernetInterfaceNames = [ "eth0" "enp1s0" ];
+  mainEthernetInterfaceNames = [
+    "eth0"
+    "enp1s0"
+  ];
   internalEthernetInterfaceNames = [ "enp7s0" ];
   inherit (config.state.network) interfaces;
-in {
+in
+{
   options.hosts.plover.services.networking = {
     enable = lib.mkEnableOption "preferred networking setup";
 
@@ -66,61 +70,68 @@ in {
       # For more information, you can look at Hetzner documentation from
       # https://docs.hetzner.com/robot/dedicated-server/ip/additional-ip-adresses/
       networks = {
-        "10-wan" = let inherit (interfaces) wan;
-        in {
-          matchConfig = {
-            Name = lib.concatStringsSep " " mainEthernetInterfaceNames;
-            PermanentMACAddress = cfg.macAddress;
+        "10-wan" =
+          let
+            inherit (interfaces) wan;
+          in
+          {
+            matchConfig = {
+              Name = lib.concatStringsSep " " mainEthernetInterfaceNames;
+              PermanentMACAddress = cfg.macAddress;
+            };
+
+            networkConfig = {
+              DHCP = "ipv4";
+              LinkLocalAddressing = "ipv6";
+              IPv6AcceptRA = true;
+            };
+
+            dhcpV4Config = {
+              RouteMetric = 100;
+              UseMTU = true;
+            };
+
+            address = [ "${wan.ipv6}/64" ];
+            dns = [
+              "2a01:4ff:ff00::add:2"
+              "2a01:4ff:ff00::add:1"
+            ];
+
+            routes = [
+              {
+                Gateway = wan.ipv4Gateway;
+                GatewayOnLink = true;
+              }
+
+              {
+                Gateway = wan.ipv6Gateway;
+                GatewayOnLink = true;
+              }
+            ]
+            ++ lib.optionals cfg.restrictLocalOnWAN [
+              {
+                Destination = "176.16.0.0/12";
+                Type = "unreachable";
+              }
+
+              {
+                Destination = "10.0.0.0/8";
+                Type = "unreachable";
+              }
+
+              {
+                Destination = "192.168.0.0/16";
+                Type = "unreachable";
+              }
+
+              {
+                Destination = "fc00::/7";
+                Type = "unreachable";
+              }
+            ];
+
+            linkConfig.RequiredForOnline = "routable";
           };
-
-          networkConfig = {
-            DHCP = "ipv4";
-            LinkLocalAddressing = "ipv6";
-            IPv6AcceptRA = true;
-          };
-
-          dhcpV4Config = {
-            RouteMetric = 100;
-            UseMTU = true;
-          };
-
-          address = [ "${wan.ipv6}/64" ];
-          dns = [ "2a01:4ff:ff00::add:2" "2a01:4ff:ff00::add:1" ];
-
-          routes = [
-            {
-              Gateway = wan.ipv4Gateway;
-              GatewayOnLink = true;
-            }
-
-            {
-              Gateway = wan.ipv6Gateway;
-              GatewayOnLink = true;
-            }
-          ] ++ lib.optionals cfg.restrictLocalOnWAN [
-            {
-              Destination = "176.16.0.0/12";
-              Type = "unreachable";
-            }
-
-            {
-              Destination = "10.0.0.0/8";
-              Type = "unreachable";
-            }
-
-            {
-              Destination = "192.168.0.0/16";
-              Type = "unreachable";
-            }
-
-            {
-              Destination = "fc00::/7";
-              Type = "unreachable";
-            }
-          ];
-
-          linkConfig.RequiredForOnline = "routable";
-        };
       };
     };
   };

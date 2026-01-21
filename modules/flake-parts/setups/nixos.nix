@@ -2,7 +2,13 @@
 # It also enforces a structure for declarative NixOS setups such a deploy-rs
 # node, a hostname and an optional domain, and deploy-rs-related options so it
 # isn't really made to be generic or anything like that.
-{ config, options, lib, inputs, ... }:
+{
+  config,
+  options,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   cfg = config.setups.nixos;
@@ -10,15 +16,21 @@ let
 
   # A thin wrapper around the NixOS configuration function.
   mkHost =
-    { pkgs, lib ? pkgs.lib, system, extraModules ? [ ], specialArgs ? { }, }:
+    {
+      pkgs,
+      lib ? pkgs.lib,
+      system,
+      extraModules ? [ ],
+      specialArgs ? { },
+    }:
     let
       # Evaluating the system ourselves (which is trivial) instead of relying
       # on nixpkgs.lib.nixosSystem flake output.
       nixosSystem = args: import "${pkgs.path}/nixos/lib/eval-config.nix" args;
-    in (lib.makeOverridable nixosSystem) {
+    in
+    (lib.makeOverridable nixosSystem) {
       inherit pkgs specialArgs;
-      modules = extraModules
-        ++ [{ nixpkgs.hostPlatform = lib.mkForce system; }];
+      modules = extraModules ++ [ { nixpkgs.hostPlatform = lib.mkForce system; } ];
 
       # Since we're setting it through nixpkgs.hostPlatform, we'll have to pass
       # this as null.
@@ -26,70 +38,96 @@ let
     };
 
   # The nixos-generators modules set as well as our custom-made ones.
-  nixosGeneratorsModulesSet = let
-    importNixosGeneratorModule = (_: modulePath: {
-      imports = [ modulePath "${inputs.nixos-generators}/format-module.nix" ];
-    });
+  nixosGeneratorsModulesSet =
+    let
+      importNixosGeneratorModule = (
+        _: modulePath: {
+          imports = [
+            modulePath
+            "${inputs.nixos-generators}/format-module.nix"
+          ];
+        }
+      );
 
-    customFormats = lib.mapAttrs importNixosGeneratorModule {
-      install-iso-graphical = ../../nixos-generators/install-iso-graphical.nix;
-    };
-  in inputs.nixos-generators.nixosModules // customFormats;
+      customFormats = lib.mapAttrs importNixosGeneratorModule {
+        install-iso-graphical = ../../nixos-generators/install-iso-graphical.nix;
+      };
+    in
+    inputs.nixos-generators.nixosModules // customFormats;
 
   # A very very thin wrapper around `mkHost` to build with the given format.
-  mkImage = { pkgs, system, extraModules ? [ ], format ? "iso", specialArgs ? { } }:
+  mkImage =
+    {
+      pkgs,
+      system,
+      extraModules ? [ ],
+      format ? "iso",
+      specialArgs ? { },
+    }:
     let
       extraModules' = extraModules ++ [ nixosGeneratorsModulesSet.${format} ];
       image = mkHost {
         inherit pkgs system specialArgs;
         extraModules = extraModules';
       };
-    in image.config.system.build.${image.config.formatAttr};
+    in
+    image.config.system.build.${image.config.formatAttr};
 
-  deployNodeType = { config, lib, ... }: {
-    freeformType = with lib.types; attrsOf anything;
-    imports = [ ./shared/deploy-node-type.nix ];
+  deployNodeType =
+    { config, lib, ... }:
+    {
+      freeformType = with lib.types; attrsOf anything;
+      imports = [ ./shared/deploy-node-type.nix ];
 
-    options = {
-      profiles = lib.mkOption {
-        type = with lib.types; functionTo (attrsOf anything);
-        default = os: {
-          system = {
-            sshUser = "admin";
-            user = "root";
-            path = inputs.deploy.lib.${os.system}.activate.nixos os.config;
-          };
-        };
-        defaultText = lib.literalExpression ''
-          os: {
+      options = {
+        profiles = lib.mkOption {
+          type = with lib.types; functionTo (attrsOf anything);
+          default = os: {
             system = {
-              sshUser = "root";
-              user = "admin";
-              path = <deploy-rs>.lib.''${os.system}.activate.nixos os.config;
+              sshUser = "admin";
+              user = "root";
+              path = inputs.deploy.lib.${os.system}.activate.nixos os.config;
             };
-          }
-        '';
-        description = ''
-          A set of profiles for the resulting deploy node.
+          };
+          defaultText = lib.literalExpression ''
+            os: {
+              system = {
+                sshUser = "root";
+                user = "admin";
+                path = <deploy-rs>.lib.''${os.system}.activate.nixos os.config;
+              };
+            }
+          '';
+          description = ''
+            A set of profiles for the resulting deploy node.
 
-          Since each config can result in more than one NixOS system, it has to
-          be a function where the passed argument is an attribute set with the
-          following values:
+            Since each config can result in more than one NixOS system, it has to
+            be a function where the passed argument is an attribute set with the
+            following values:
 
-          * `name` is the attribute name from `configs`.
-          * `config` is the NixOS configuration itself.
-          * `system` is a string indicating the platform of the NixOS system.
+            * `name` is the attribute name from `configs`.
+            * `config` is the NixOS configuration itself.
+            * `system` is a string indicating the platform of the NixOS system.
 
-          If unset, it will create a deploy-rs node profile called `system`
-          similar to those from nixops.
-        '';
+            If unset, it will create a deploy-rs node profile called `system`
+            similar to those from nixops.
+          '';
+        };
       };
     };
-  };
 
-  configType = { options, config, name, lib, ... }:
-    let setupConfig = config;
-    in {
+  configType =
+    {
+      options,
+      config,
+      name,
+      lib,
+      ...
+    }:
+    let
+      setupConfig = config;
+    in
+    {
       options = {
         formats = lib.mkOption {
           type = with lib.types; nullOr (listOf str);
@@ -153,19 +191,22 @@ let
         "${partsConfig.setups.configDir}/nixos/${config.configName}"
 
         # Setting up the typical configuration.
-        ({ config, lib, ... }: {
-          config = lib.mkMerge [
-            {
-              nixpkgs.overlays = setupConfig.nixpkgs.overlays;
-              networking.hostName = lib.mkDefault setupConfig.hostname;
-              nix.nixPath = lib.singleton "nixos-config=${partsConfig.setups.configDir}/nixos/${setupConfig.configName}";
-            }
+        (
+          { config, lib, ... }:
+          {
+            config = lib.mkMerge [
+              {
+                nixpkgs.overlays = setupConfig.nixpkgs.overlays;
+                networking.hostName = lib.mkDefault setupConfig.hostname;
+                nix.nixPath = lib.singleton "nixos-config=${partsConfig.setups.configDir}/nixos/${setupConfig.configName}";
+              }
 
-            (lib.mkIf (setupConfig.domain != null) {
-              networking.domain = lib.mkDefault setupConfig.domain;
-            })
-          ];
-        })
+              (lib.mkIf (setupConfig.domain != null) {
+                networking.domain = lib.mkDefault setupConfig.domain;
+              })
+            ];
+          }
+        )
 
         (import ./shared/nix-conf.nix {
           inherit inputs;
@@ -175,7 +216,8 @@ let
         })
       ];
     };
-in {
+in
+{
   options.setups.nixos = {
     sharedNixpkgsConfig = options.setups.sharedNixpkgsConfig // {
       description = ''
@@ -207,7 +249,8 @@ in {
     };
 
     configs = lib.mkOption {
-      type = with lib.types;
+      type =
+        with lib.types;
         attrsOf (submodule [
           (import ./shared/config-options.nix { inherit (config) systems; })
           ./shared/nixpkgs-options.nix
@@ -282,79 +325,98 @@ in {
 
     (lib.mkIf (cfg.configs != { }) {
 
-      flake = let
-        # A quick data structure we can pass through multiple build pipelines.
-        pureNixosConfigs = let
-          validConfigs =
-            lib.filterAttrs (_: v: v.shouldBePartOfNixOSConfigurations)
-            cfg.configs;
-
-          generatePureConfigs = hostname: metadata:
-            lib.listToAttrs (lib.map (system:
-              let
-                nixpkgs = inputs.${metadata.nixpkgs.branch};
-
-                # We won't apply the overlays here since it is set
-                # modularly.
-                pkgs = import nixpkgs {
-                  inherit system;
-                  inherit (metadata.nixpkgs) config;
-                };
-              in lib.nameValuePair system (mkHost {
-                inherit pkgs system;
-                inherit (metadata) specialArgs;
-                extraModules = cfg.sharedModules ++ metadata.modules;
-              })) metadata.systems);
-        in lib.mapAttrs generatePureConfigs validConfigs;
-      in {
-        nixosConfigurations = let
-          renameSystem = name: system: config:
-            lib.nameValuePair "${name}-${system}" config;
-        in lib.concatMapAttrs
-        (name: configs: lib.mapAttrs' (renameSystem name) configs)
-        pureNixosConfigs;
-
-        deploy.nodes = let
-          validConfigs =
-            lib.filterAttrs (name: _: cfg.configs.${name}.deploy != null)
-            pureNixosConfigs;
-
-          generateDeployNode = name: system: config:
-            lib.nameValuePair "nixos-${name}-${system}"
-            (let deployConfig = cfg.configs.${name}.deploy;
-            in deployConfig // {
-              profiles = cfg.configs.${name}.deploy.profiles {
-                inherit name config system;
-              };
-            });
-        in lib.concatMapAttrs
-        (name: configs: lib.mapAttrs' (generateDeployNode name) configs)
-        validConfigs;
-      };
-
-      perSystem = { system, lib, ... }: {
-        images = let
-          validImages = lib.filterAttrs (host: metadata:
-            metadata.formats != null && (lib.elem system metadata.systems))
-            cfg.configs;
-
-          generateImages = name: metadata:
+      flake =
+        let
+          # A quick data structure we can pass through multiple build pipelines.
+          pureNixosConfigs =
             let
-              buildImage = format:
-                lib.nameValuePair "${name}-${format}" (mkImage {
-                  inherit format system;
-                  inherit (metadata) specialArgs;
-                  pkgs = import inputs.${metadata.nixpkgs.branch} {
-                    inherit system;
-                    inherit (metadata.nixpkgs) config;
-                  };
-                  extraModules = cfg.sharedModules ++ metadata.modules;
-                });
+              validConfigs = lib.filterAttrs (_: v: v.shouldBePartOfNixOSConfigurations) cfg.configs;
 
-              images = lib.map buildImage metadata.formats;
-            in lib.listToAttrs images;
-        in lib.concatMapAttrs generateImages validImages;
-      };
+              generatePureConfigs =
+                hostname: metadata:
+                lib.listToAttrs (
+                  lib.map (
+                    system:
+                    let
+                      nixpkgs = inputs.${metadata.nixpkgs.branch};
+
+                      # We won't apply the overlays here since it is set
+                      # modularly.
+                      pkgs = import nixpkgs {
+                        inherit system;
+                        inherit (metadata.nixpkgs) config;
+                      };
+                    in
+                    lib.nameValuePair system (mkHost {
+                      inherit pkgs system;
+                      inherit (metadata) specialArgs;
+                      extraModules = cfg.sharedModules ++ metadata.modules;
+                    })
+                  ) metadata.systems
+                );
+            in
+            lib.mapAttrs generatePureConfigs validConfigs;
+        in
+        {
+          nixosConfigurations =
+            let
+              renameSystem =
+                name: system: config:
+                lib.nameValuePair "${name}-${system}" config;
+            in
+            lib.concatMapAttrs (name: configs: lib.mapAttrs' (renameSystem name) configs) pureNixosConfigs;
+
+          deploy.nodes =
+            let
+              validConfigs = lib.filterAttrs (name: _: cfg.configs.${name}.deploy != null) pureNixosConfigs;
+
+              generateDeployNode =
+                name: system: config:
+                lib.nameValuePair "nixos-${name}-${system}" (
+                  let
+                    deployConfig = cfg.configs.${name}.deploy;
+                  in
+                  deployConfig
+                  // {
+                    profiles = cfg.configs.${name}.deploy.profiles {
+                      inherit name config system;
+                    };
+                  }
+                );
+            in
+            lib.concatMapAttrs (name: configs: lib.mapAttrs' (generateDeployNode name) configs) validConfigs;
+        };
+
+      perSystem =
+        { system, lib, ... }:
+        {
+          images =
+            let
+              validImages = lib.filterAttrs (
+                host: metadata: metadata.formats != null && (lib.elem system metadata.systems)
+              ) cfg.configs;
+
+              generateImages =
+                name: metadata:
+                let
+                  buildImage =
+                    format:
+                    lib.nameValuePair "${name}-${format}" (mkImage {
+                      inherit format system;
+                      inherit (metadata) specialArgs;
+                      pkgs = import inputs.${metadata.nixpkgs.branch} {
+                        inherit system;
+                        inherit (metadata.nixpkgs) config;
+                      };
+                      extraModules = cfg.sharedModules ++ metadata.modules;
+                    });
+
+                  images = lib.map buildImage metadata.formats;
+                in
+                lib.listToAttrs images;
+            in
+            lib.concatMapAttrs generateImages validImages;
+        };
     })
-];
+  ];
 }

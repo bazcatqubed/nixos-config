@@ -1,5 +1,12 @@
-{ config, lib, pkgs, foodogsquaredLib, foodogsquaredUtils
-, foodogsquaredModulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  foodogsquaredUtils,
+  foodogsquaredModulesPath,
+  ...
+}:
 
 {
   imports = [
@@ -39,8 +46,7 @@
   };
 
   # Overriding the kernel version for ourselves.
-  boot.kernelPackages =
-    lib.mkOverride 500 pkgs.linuxKernel.packages.linux_6_11_hardened;
+  boot.kernelPackages = lib.mkOverride 500 pkgs.linuxKernel.packages.linux_6_11_hardened;
 
   # We're using our own VPN configuration for this one.
   suites.vpn.personal.enable = true;
@@ -122,8 +128,7 @@
   security.acme.defaults = {
     email = "admin+acme@foodogsquared.one";
     dnsProvider = "hetzner";
-    environmentFile =
-      config.sops.secrets."lego/env".path or "/var/lib/secrets/acme.env";
+    environmentFile = config.sops.secrets."lego/env".path or "/var/lib/secrets/acme.env";
     enableDebugLogs = true;
   };
 

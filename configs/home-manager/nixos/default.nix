@@ -1,6 +1,11 @@
 # This is mostly just the same as the Alice user except it used for installers.
 # It should be niiiiiiiiiice enough for the usual cases, you feel me.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ ./modules ];
@@ -23,8 +28,18 @@
   # My user shell of choice because I'm not a hipster.
   programs.bash = {
     enable = true;
-    historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
-    historyIgnore = [ "cd" "exit" "lf" "ls" "nvim" ];
+    historyControl = [
+      "erasedups"
+      "ignoredups"
+      "ignorespace"
+    ];
+    historyIgnore = [
+      "cd"
+      "exit"
+      "lf"
+      "ls"
+      "nvim"
+    ];
   };
 
   home.stateVersion = "23.11";

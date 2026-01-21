@@ -1,19 +1,28 @@
 final: prev:
 
 let
-  mkProtonOverride = displayName: { repoHash ? null, ... }@overrideAttrsArgs:
-    (prev.proton-ge-bin.override { steamDisplayName = displayName; }).overrideAttrs (overrideAttrsArgs
+  mkProtonOverride =
+    displayName:
+    {
+      repoHash ? null,
+      ...
+    }@overrideAttrsArgs:
+    (prev.proton-ge-bin.override { steamDisplayName = displayName; }).overrideAttrs (
+      overrideAttrsArgs
       // prev.lib.optionalAttrs (repoHash != null) {
         version = displayName;
         src = prev.fetchzip {
           url = getReleaseUrl displayName;
           hash = repoHash;
         };
-      });
-  getReleaseUrl = version:
+      }
+    );
+  getReleaseUrl =
+    version:
     "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}.tar.gz";
 
-  getGEProton = version: repoHash:
+  getGEProton =
+    version: repoHash:
     mkProtonOverride "GE-Proton${version}" {
       inherit repoHash;
       pname = "proton-ge-${version}-bin";

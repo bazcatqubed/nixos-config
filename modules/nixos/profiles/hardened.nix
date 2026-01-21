@@ -1,6 +1,11 @@
 # A extended hardened configuration from nixpkgs for desktop and server
 # systems.
-{ pkgs, lib, modulesPath, ... }:
+{
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ "${modulesPath}/profiles/hardened.nix" ];

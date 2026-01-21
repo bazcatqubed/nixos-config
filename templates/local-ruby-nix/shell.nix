@@ -1,4 +1,8 @@
-{ pkgs ? import <nixpkgs> { }, extraBuildInputs ? [ ], extraPackages ? [ ] }:
+{
+  pkgs ? import <nixpkgs> { },
+  extraBuildInputs ? [ ],
+  extraPackages ? [ ],
+}:
 
 with pkgs;
 
@@ -11,5 +15,6 @@ mkShell {
 
     # Language servers
     rnix-lsp
-  ] ++ extraPackages;
+  ]
+  ++ extraPackages;
 }

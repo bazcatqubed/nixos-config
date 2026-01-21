@@ -3,9 +3,9 @@
 let
   nixvimCfg = config.nixvimConfigs.trovebelt;
   cfg = nixvimCfg.setups.debugging;
-in {
-  options.nixvimConfigs.trovebelt.setups.debugging.enable =
-    lib.mkEnableOption "debugging setup";
+in
+{
+  options.nixvimConfigs.trovebelt.setups.debugging.enable = lib.mkEnableOption "debugging setup";
 
   config = lib.mkIf cfg.enable {
     # The main star of the show.
@@ -15,10 +15,15 @@ in {
     plugins.dap.adapters.executables = {
       gdb = {
         command = "gdb";
-        args = [ "-i" "dap" ];
+        args = [
+          "-i"
+          "dap"
+        ];
       };
 
-      lldb = { command = "lldb-dap"; };
+      lldb = {
+        command = "lldb-dap";
+      };
 
       dart = {
         command = "dart";

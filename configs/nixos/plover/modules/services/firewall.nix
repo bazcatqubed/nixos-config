@@ -1,11 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   hostCfg = config.hosts.plover;
   cfg = hostCfg.services.firewall;
-in {
-  options.hosts.plover.services.firewall.enable =
-    lib.mkEnableOption "firewall setup";
+in
+{
+  options.hosts.plover.services.firewall.enable = lib.mkEnableOption "firewall setup";
 
   config = lib.mkIf cfg.enable {
     networking = {

@@ -4,8 +4,15 @@
 # parts from the config are conditionally setting up NixGL wrapping. Though,
 # you have to use NixOS systems in order to actually use it. We probably should
 # have a specialized launcher for this.
-let sources = import ./npins;
-in { lib, pkgs, wrapperManagerLib, ... }@moduleArgs:
+let
+  sources = import ./npins;
+in
+{
+  lib,
+  pkgs,
+  wrapperManagerLib,
+  ...
+}@moduleArgs:
 
 let
   inherit (sources) dotfiles nixgl;
@@ -13,14 +20,19 @@ let
   getDotfiles = path: "${dotfiles}/${path}";
   isInNonNixOS = !(moduleArgs ? nixosConfig);
 
-  wrapNixGL = arg0:
-    if isInNonNixOS then {
-      nixgl.enable = true;
-      nixgl.wraparound.arg0 = arg0;
-    } else {
-      inherit arg0;
-    };
-in {
+  wrapNixGL =
+    arg0:
+    if isInNonNixOS then
+      {
+        nixgl.enable = true;
+        nixgl.wraparound.arg0 = arg0;
+      }
+    else
+      {
+        inherit arg0;
+      };
+in
+{
   # This wrapper needs runtime expansion which is not possible with binary
   # wrappers.
   build.variant = "shell";
@@ -49,8 +61,7 @@ in {
     {
       env.EMACSDIR.value = builtins.toString sources.doom-emacs;
       env.DOOMDIR.value = getDotfiles "emacs";
-      env.DOOMPROFILELOADFILE.value =
-        lib.escapeShellArg "$XDG_CACHE_HOME/doom/profiles.el";
+      env.DOOMPROFILELOADFILE.value = lib.escapeShellArg "$XDG_CACHE_HOME/doom/profiles.el";
 
       # TODO: This will be removed in Doom Emacs 3.0 as far as I can tell so we'll
       # remove it once that happens.

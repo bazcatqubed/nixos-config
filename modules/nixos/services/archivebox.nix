@@ -1,47 +1,56 @@
-{ config, lib, pkgs, utils, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  utils,
+  ...
+}:
 
 let
   cfg = config.services.archivebox;
   jobUnitName = name: "archivebox-job-${utils.escapeSystemdPath name}";
-  jobType = { name, options, ... }: {
-    options = {
-      urls = lib.mkOption {
-        type = with lib.types; listOf str;
-        description = "List of links to archive.";
-        example = lib.literalExpression ''
-          [
-            "https://guix.gnu.org/feeds/blog.atom"
-            "https://nixos.org/blog/announcements-rss.xml"
-          ]
-        '';
-      };
+  jobType =
+    { name, options, ... }:
+    {
+      options = {
+        urls = lib.mkOption {
+          type = with lib.types; listOf str;
+          description = "List of links to archive.";
+          example = lib.literalExpression ''
+            [
+              "https://guix.gnu.org/feeds/blog.atom"
+              "https://nixos.org/blog/announcements-rss.xml"
+            ]
+          '';
+        };
 
-      extraArgs = lib.mkOption {
-        type = with lib.types; listOf str;
-        description = ''
-          Additional arguments for adding links (i.e., {command}`archivebox add
-          $LINK`) from {option}`links`.
-        '';
-        default = [ ];
-        example = lib.literalExpression ''
-          [ "--depth" "1" ]
-        '';
-      };
+        extraArgs = lib.mkOption {
+          type = with lib.types; listOf str;
+          description = ''
+            Additional arguments for adding links (i.e., {command}`archivebox add
+            $LINK`) from {option}`links`.
+          '';
+          default = [ ];
+          example = lib.literalExpression ''
+            [ "--depth" "1" ]
+          '';
+        };
 
-      startAt = lib.mkOption {
-        type = with lib.types; str;
-        description = ''
-          Indicates how frequent the scheduled archiving will occur. Should be
-          a valid string format as described from {manpage}`systemd.time(5)`.
-        '';
-        default = "weekly";
-        defaultText = "weekly";
-        example = "*-*-01/2";
+        startAt = lib.mkOption {
+          type = with lib.types; str;
+          description = ''
+            Indicates how frequent the scheduled archiving will occur. Should be
+            a valid string format as described from {manpage}`systemd.time(5)`.
+          '';
+          default = "weekly";
+          defaultText = "weekly";
+          example = "*-*-01/2";
+        };
       };
     };
-  };
 
-  mkJobService = name: value:
+  mkJobService =
+    name: value:
     lib.nameValuePair (jobUnitName name) {
       description = "Archivebox download group '${name}'";
       after = [ "network-online.target" ];
@@ -71,7 +80,11 @@ let
         ProtectHome = true;
         ProtectSystem = "strict";
 
-        RestrictAddressFamilies = [ "AF_LOCAL" "AF_INET" "AF_INET6" ];
+        RestrictAddressFamilies = [
+          "AF_LOCAL"
+          "AF_INET"
+          "AF_INET6"
+        ];
         RestrictNamespaces = true;
 
         SystemCallFilter = [ "@system-service" ];
@@ -81,7 +94,8 @@ let
       };
     };
 
-  mkTimerUnit = name: value:
+  mkTimerUnit =
+    name: value:
     lib.nameValuePair (jobUnitName name) {
       description = "Archivebox download job '${name}'";
       documentation = [ "https://docs.archivebox.io/" ];
@@ -92,7 +106,8 @@ let
       };
       wantedBy = [ "timers.target" ];
     };
-in {
+in
+{
   options.services.archivebox = {
     enable = lib.mkEnableOption "Archivebox service";
 
@@ -113,8 +128,14 @@ in {
         };
 
         research = {
-          urls = [ "https://arxiv.org/rss/cs" "https://distill.pub/" ];
-          extraArgs = [ "--depth" "1" ];
+          urls = [
+            "https://arxiv.org/rss/cs"
+            "https://distill.pub/"
+          ];
+          extraArgs = [
+            "--depth"
+            "1"
+          ];
           startAt = "daily";
         };
       };
@@ -127,8 +148,16 @@ in {
         default, it sets the optional dependencies of ArchiveBox for additional
         download formats and capabilities.
       '';
-      default = with pkgs;
-        [ chromium nodejs_latest wget curl yt-dlp readability-cli ]
+      default =
+        with pkgs;
+        [
+          chromium
+          nodejs_latest
+          wget
+          curl
+          yt-dlp
+          readability-cli
+        ]
         ++ lib.optional config.programs.git.enable config.programs.git.package;
       defaultText = ''
         Chromium, NodeJS, wget, yt-dlp, and git if enabled.
@@ -153,59 +182,62 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable (lib.mkMerge [
-    {
-      systemd.services = lib.mapAttrs' mkJobService cfg.jobs;
-      systemd.timers = lib.mapAttrs' mkTimerUnit cfg.jobs;
+  config = lib.mkIf cfg.enable (
+    lib.mkMerge [
+      {
+        systemd.services = lib.mapAttrs' mkJobService cfg.jobs;
+        systemd.timers = lib.mapAttrs' mkTimerUnit cfg.jobs;
 
-      users.groups.archivebox = { };
+        users.groups.archivebox = { };
 
-      users.users.archivebox = {
-        group = config.users.groups.archivebox.name;
-        isNormalUser = true;
-        home = "/var/lib/archivebox";
-      };
-    }
-
-    (lib.mkIf cfg.webserver.enable {
-      systemd.services.archivebox-server = {
-        description = "Archivebox web server";
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
-        documentation = [ "https://docs.archivebox.io/" ];
-        wantedBy = [ "graphical-session.target" ];
-        serviceConfig = {
-          User = "archivebox";
-          Group = "archivebox";
-
-          ExecStart =
-            "${lib.getExe' cfg.package "archivebox"} server localhost:${
-              toString cfg.webserver.port
-            }";
-
-          CapabilityBoundingSet = [ "CAP_NET_BIND_SERVICE" ];
-
-          Restart = "on-failure";
-          LockPersonality = true;
-          NoNewPrivileges = true;
-
-          PrivateTmp = true;
-          PrivateUsers = true;
-          PrivateDevices = true;
-          ProtectControlGroups = true;
-          ProtectClock = true;
-          ProtectKernelLogs = true;
-          ProtectKernelModules = true;
-          ProtectKernelTunables = true;
-
-          RestrictAddressFamilies = [ "AF_LOCAL" "AF_INET" "AF_INET6" ];
-          RestrictNamespaces = true;
-
-          SystemCallFilter = [ "@system-service" ];
-          SystemCallErrorNumber = "EPERM";
-          StateDirectory = "archivebox";
+        users.users.archivebox = {
+          group = config.users.groups.archivebox.name;
+          isNormalUser = true;
+          home = "/var/lib/archivebox";
         };
-      };
-    })
-  ]);
+      }
+
+      (lib.mkIf cfg.webserver.enable {
+        systemd.services.archivebox-server = {
+          description = "Archivebox web server";
+          after = [ "network-online.target" ];
+          wants = [ "network-online.target" ];
+          documentation = [ "https://docs.archivebox.io/" ];
+          wantedBy = [ "graphical-session.target" ];
+          serviceConfig = {
+            User = "archivebox";
+            Group = "archivebox";
+
+            ExecStart = "${lib.getExe' cfg.package "archivebox"} server localhost:${toString cfg.webserver.port}";
+
+            CapabilityBoundingSet = [ "CAP_NET_BIND_SERVICE" ];
+
+            Restart = "on-failure";
+            LockPersonality = true;
+            NoNewPrivileges = true;
+
+            PrivateTmp = true;
+            PrivateUsers = true;
+            PrivateDevices = true;
+            ProtectControlGroups = true;
+            ProtectClock = true;
+            ProtectKernelLogs = true;
+            ProtectKernelModules = true;
+            ProtectKernelTunables = true;
+
+            RestrictAddressFamilies = [
+              "AF_LOCAL"
+              "AF_INET"
+              "AF_INET6"
+            ];
+            RestrictNamespaces = true;
+
+            SystemCallFilter = [ "@system-service" ];
+            SystemCallErrorNumber = "EPERM";
+            StateDirectory = "archivebox";
+          };
+        };
+      })
+    ]
+  );
 }

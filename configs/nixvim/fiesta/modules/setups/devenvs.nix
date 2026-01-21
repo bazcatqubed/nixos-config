@@ -1,9 +1,15 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   nixvimCfg = config.nixvimConfigs.fiesta;
   cfg = nixvimCfg.setups.devenvs;
-in {
+in
+{
   options.nixvimConfigs.fiesta.setups.devenvs.enable =
     lib.mkEnableOption "integration for typical devenvs";
 

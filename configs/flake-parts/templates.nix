@@ -1,5 +1,6 @@
 # Cookiecutter templates for your mama.
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   flake.templates = {
     default = inputs.self.templates.basic-devshell;
     basic-devshell = {

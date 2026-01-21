@@ -2,5 +2,9 @@
 # here should be enough in common to the typical desktop setups found on
 # non-NixOS systems.
 {
-  imports = [ ./fonts.nix ./audio.nix ./hardware.nix ];
+  imports = [
+    ./fonts.nix
+    ./audio.nix
+    ./hardware.nix
+  ];
 }

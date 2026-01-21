@@ -1,21 +1,28 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.xdg.desktopEntries;
 
-  xdgDesktopEntrySubmodule = { name, ... }: {
-    freeformType = with lib.types; attrsOf anything;
-    options = {
-      name = lib.mkOption {
-        type = lib.types.nonEmptyStr;
-        default = name;
-        description = ''
-          Filename of the desktop entry.
-        '';
-        example = "hello";
+  xdgDesktopEntrySubmodule =
+    { name, ... }:
+    {
+      freeformType = with lib.types; attrsOf anything;
+      options = {
+        name = lib.mkOption {
+          type = lib.types.nonEmptyStr;
+          default = name;
+          description = ''
+            Filename of the desktop entry.
+          '';
+          example = "hello";
+        };
       };
     };
-  };
 in
 {
   options.xdg.desktopEntries = lib.mkOption {
@@ -41,12 +48,15 @@ in
   config = lib.mkIf (cfg != { }) {
     environment.systemPackages =
       let
-        mkXDGDesktopEntry = _: v:
-          pkgs.makeDesktopItem (v // {
-            destination = "/share/applications";
-          });
+        mkXDGDesktopEntry =
+          _: v:
+          pkgs.makeDesktopItem (
+            v
+            // {
+              destination = "/share/applications";
+            }
+          );
       in
       lib.mapAttrsToList mkXDGDesktopEntry cfg;
   };
 }
-

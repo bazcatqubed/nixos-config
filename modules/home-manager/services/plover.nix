@@ -1,12 +1,19 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.plover;
 
-  toPloverINI = with lib;
+  toPloverINI =
+    with lib;
     generators.toINI {
       mkKeyValue = generators.mkKeyValueDefault {
-        mkValueString = v:
+        mkValueString =
+          v:
           if v == true then
             "True"
           else if v == false then
@@ -16,15 +23,17 @@ let
       } " = ";
     };
 
-  ploverIniFormat = { }: {
-    type = (pkgs.formats.ini { }).type;
-    generate = name: value: pkgs.writeText name (toPloverINI value);
-  };
+  ploverIniFormat =
+    { }:
+    {
+      type = (pkgs.formats.ini { }).type;
+      generate = name: value: pkgs.writeText name (toPloverINI value);
+    };
 
   settingsFormat = ploverIniFormat { };
-  settingsFile = settingsFormat.generate "plover-config-${config.home.username}"
-    cfg.settings;
-in {
+  settingsFile = settingsFormat.generate "plover-config-${config.home.username}" cfg.settings;
+in
+{
   options.services.plover = {
     enable = lib.mkEnableOption "Plover stenography engine service";
 
@@ -42,9 +51,13 @@ in {
       default = { };
       defaultText = lib.literalExpression "{}";
       example = {
-        "Output Configuration" = { undo_levels = 100; };
+        "Output Configuration" = {
+          undo_levels = 100;
+        };
 
-        "Stroke Display" = { show = true; };
+        "Stroke Display" = {
+          show = true;
+        };
       };
     };
 
@@ -61,14 +74,12 @@ in {
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      (lib.hm.assertions.assertPlatform "services.plover" pkgs
-        lib.platforms.linux)
+      (lib.hm.assertions.assertPlatform "services.plover" pkgs lib.platforms.linux)
     ];
 
     home.packages = [ cfg.package ];
 
-    xdg.configFile."plover/plover.cfg".source =
-      lib.mkIf (cfg.settings != { }) settingsFile;
+    xdg.configFile."plover/plover.cfg".source = lib.mkIf (cfg.settings != { }) settingsFile;
 
     systemd.user.services.plover = {
       Unit = {
@@ -77,9 +88,7 @@ in {
         PartOf = "default.target";
       };
 
-      Service.ExecStart = "${lib.getExe' cfg.package "plover"} ${
-          lib.concatStringsSep " " cfg.extraOptions
-        }";
+      Service.ExecStart = "${lib.getExe' cfg.package "plover"} ${lib.concatStringsSep " " cfg.extraOptions}";
 
       Install.WantedBy = [ "default.target" ];
     };

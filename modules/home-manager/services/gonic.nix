@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.gonic;
@@ -8,7 +13,8 @@ let
     listsAsDuplicateKeys = true;
   };
   settingsFile = settingsFormat.generate "gonic-settings-config" cfg.settings;
-in {
+in
+{
   options.services.gonic = {
     enable = lib.mkEnableOption "Gonic, a Subsonic-compatible music server";
 
@@ -31,8 +37,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      (lib.hm.assertions.assertPlatform "services.gonic" pkgs
-        lib.platforms.linux)
+      (lib.hm.assertions.assertPlatform "services.gonic" pkgs lib.platforms.linux)
     ];
 
     systemd.user.services.gonic = {
@@ -43,8 +48,7 @@ in {
       };
 
       Service = {
-        ExecStart =
-          "${lib.getExe' cfg.package "gonic"} -config-path ${settingsFile}";
+        ExecStart = "${lib.getExe' cfg.package "gonic"} -config-path ${settingsFile}";
         Restart = "on-failure";
       };
 

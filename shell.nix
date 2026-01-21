@@ -1,11 +1,16 @@
-{ pkgs ? import <nixpkgs> { }, extraPackages ? [ ] }:
+{
+  pkgs ? import <nixpkgs> { },
+  extraPackages ? [ ],
+}:
 
 let
   run-workflow-in-vm = pkgs.callPackage ./apps/run-workflow-with-vm { };
   fetch-website-icon = pkgs.callPackage ./lib/fetchers/fetch-website-icon/package/package.nix { };
   fds-flock-of-fetchers = pkgs.callPackage ./apps/fds-fetcher-flock/nix/package.nix { };
-in pkgs.mkShell {
-  packages = with pkgs;
+in
+pkgs.mkShell {
+  packages =
+    with pkgs;
     [
       # My internal applications.
       run-workflow-in-vm
@@ -52,5 +57,6 @@ in pkgs.mkShell {
 
       # Debuggers...
       delve
-    ] ++ extraPackages;
+    ]
+    ++ extraPackages;
 }

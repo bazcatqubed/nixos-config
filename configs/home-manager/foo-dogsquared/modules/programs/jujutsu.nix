@@ -1,9 +1,15 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.programs.jujutsu;
-in {
+in
+{
   options.users.foo-dogsquared.programs.jujutsu.enable =
     lib.mkEnableOption "foo-dogsquared's Jujutsu configuration";
 
@@ -17,12 +23,19 @@ in {
         ui.diff-editor = "diffedit3";
 
         "merge-tools.diffoscope" = {
-          merge-args = [ "$left" "$right" ];
+          merge-args = [
+            "$left"
+            "$right"
+          ];
           program = lib.getExe' pkgs.diffoscope "diffoscope";
         };
 
         "merge-tools.diffedit3" = {
-          merge-args = [ "$left" "$right" "$output" ];
+          merge-args = [
+            "$left"
+            "$right"
+            "$output"
+          ];
           program = lib.getExe' pkgs.diffedit3 "diffedit3";
         };
       };

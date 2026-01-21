@@ -1,10 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.foo;
 
   settingsFormat = pkgs.format.json { };
-in {
+in
+{
   options.programs.foo = {
     enable = lib.mkEnableOption "foo, a sample program";
     package = lib.mkPackageOption pkgs "foo" { };

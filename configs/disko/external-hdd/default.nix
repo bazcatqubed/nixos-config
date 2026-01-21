@@ -1,7 +1,10 @@
 # A simple external HDD filesystem primarily used as a persistent live
 # installer. We're using btrfs since we don't have any significant work with
 # other systems for now so we can afford to do this.
-{ disk ? "/dev/sda", ... }:
+{
+  disk ? "/dev/sda",
+  ...
+}:
 
 {
   disko.devices = {
@@ -53,7 +56,11 @@
                 };
                 "/home".mountpoint = "/home";
                 "/nix" = {
-                  mountOptions = [ "compress=zstd:6" "noatime" "noacl" ];
+                  mountOptions = [
+                    "compress=zstd:6"
+                    "noatime"
+                    "noacl"
+                  ];
                   mountpoint = "/nix";
                 };
 

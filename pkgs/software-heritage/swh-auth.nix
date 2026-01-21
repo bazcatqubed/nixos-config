@@ -1,4 +1,10 @@
-{ stdenv, lib, python3Packages, swh-core, ... }:
+{
+  stdenv,
+  lib,
+  python3Packages,
+  swh-core,
+  ...
+}:
 
 with python3Packages;
 

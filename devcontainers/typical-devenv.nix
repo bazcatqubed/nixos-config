@@ -1,4 +1,9 @@
-{ dockerTools, neovim, nushell, foodogsquaredLib, }:
+{
+  dockerTools,
+  neovim,
+  nushell,
+  foodogsquaredLib,
+}:
 
 foodogsquaredLib.buildDockerImage rec {
   name = "typical-devenv";

@@ -1,9 +1,17 @@
-{ config, lib, pkgs, foodogsquaredLib, bahaghariLib, ... }@attrs:
+{
+  config,
+  lib,
+  pkgs,
+  foodogsquaredLib,
+  bahaghariLib,
+  ...
+}@attrs:
 
 let
   inherit (bahaghariLib.tinted-theming) importScheme;
   userCfg = config.users.foo-dogsquared;
-in {
+in
+{
   imports = [ ./modules ];
 
   # All of the home-manager-user-specific setup are here.
@@ -22,8 +30,7 @@ in {
           # Merge the upstream since any new files will be overridden. It also
           # allows us to attach data to it such as new links to the hardcoded
           # sections.
-          (lib.importTOML
-            "${config.users.foo-dogsquared.programs.custom-homepage.package.src}/data/foodogsquared-homepage/links.toml")
+          (lib.importTOML "${config.users.foo-dogsquared.programs.custom-homepage.package.src}/data/foodogsquared-homepage/links.toml")
 
           {
             services = {
@@ -41,44 +48,37 @@ in {
 
           (lib.mkIf config.services.archivebox.webserver.enable {
             services.links = lib.singleton {
-              url = "http://localhost:${
-                  builtins.toString
-                  config.state.ports.archivebox-webserver.value
-                }";
+              url = "http://localhost:${builtins.toString config.state.ports.archivebox-webserver.value}";
               text = "Archive webserver";
             };
 
-            YOHOOHOOHOOHOO.links = lib.mkBefore (lib.singleton {
-              url = "http://localhost:${
-                  builtins.toString
-                  config.state.ports.archivebox-webserver.value
-                }";
-              text = "ArchiveBox webserver";
-            });
+            YOHOOHOOHOOHOO.links = lib.mkBefore (
+              lib.singleton {
+                url = "http://localhost:${builtins.toString config.state.ports.archivebox-webserver.value}";
+                text = "ArchiveBox webserver";
+              }
+            );
           })
 
-          (lib.mkIf
-            (attrs.nixosConfig.suites.filesystem.setups.archive.enable or false) {
-              YOHOOHOOHOOHOO.links = lib.mkBefore (lib.singleton {
+          (lib.mkIf (attrs.nixosConfig.suites.filesystem.setups.archive.enable or false) {
+            YOHOOHOOHOOHOO.links = lib.mkBefore (
+              lib.singleton {
                 url = "file://${attrs.nixosConfig.state.paths.archive}";
                 text = "Personal archive";
-              });
-            })
+              }
+            );
+          })
 
           (lib.mkIf (attrs.nixosConfig.services.miniflux.enable or false) {
             services.links = lib.singleton {
-              url = "http://localhost:${
-                  builtins.toString attrs.nixosConfig.state.ports.miniflux.value
-                }";
+              url = "http://localhost:${builtins.toString attrs.nixosConfig.state.ports.miniflux.value}";
               text = "RSS reader";
             };
           })
 
           (lib.mkIf (attrs.nixosConfig.services.kavita.enable or false) {
             services.links = lib.singleton {
-              url = "http://localhost:${
-                builtins.toString attrs.nixosConfig.state.ports.kavita.value
-              }";
+              url = "http://localhost:${builtins.toString attrs.nixosConfig.state.ports.kavita.value}";
               text = "Book reader";
             };
           })
@@ -125,8 +125,7 @@ in {
 
   # Add our own projects directory since most programs can't decide where it is
   # properly.
-  xdg.userDirs.extraConfig.XDG_PROJECTS_DIR =
-    "${config.home.homeDirectory}/Projects";
+  xdg.userDirs.extraConfig.XDG_PROJECTS_DIR = "${config.home.homeDirectory}/Projects";
 
   # Only enable autostart inside of NixOS systems.
   xdg.autostart.enable = attrs ? nixosConfig;
@@ -145,13 +144,13 @@ in {
   state.packages = {
     diff = lib.mkDefault pkgs.diffoscope;
     pager = lib.mkDefault config.programs.bat.package;
-    editor = if userCfg.programs.nixvim.enable then
-      config.wrapper-manager.packages.neovim-flavors.build.toplevel
-    else
-      config.programs.neovim.package;
+    editor =
+      if userCfg.programs.nixvim.enable then
+        config.wrapper-manager.packages.neovim-flavors.build.toplevel
+      else
+        config.programs.neovim.package;
     browser = lib.mkDefault config.programs.chromium.package;
-    chromiumWrapper =
-      config.programs.google-chrome.package or pkgs.google-chrome;
+    chromiumWrapper = config.programs.google-chrome.package or pkgs.google-chrome;
   };
 
   wrapper-manager.sharedModules = lib.singleton {
@@ -168,15 +167,13 @@ in {
   home.mutableFile = {
     # ...my gopass secrets,...
     ".local/share/gopass/stores/personal" = {
-      url =
-        "gitea@code.foodogsquared.one:foodogsquared/gopass-secrets-personal.git";
+      url = "gitea@code.foodogsquared.one:foodogsquared/gopass-secrets-personal.git";
       type = "gopass";
     };
 
     # ...and my custom theme to be a showoff.
     "${config.xdg.dataHome}/base16/bark-on-a-tree" = {
-      url =
-        "https://github.com/foo-dogsquared/base16-bark-on-a-tree-scheme.git";
+      url = "https://github.com/foo-dogsquared/base16-bark-on-a-tree-scheme.git";
       type = "git";
     };
   };
@@ -184,9 +181,7 @@ in {
   _module.args.defaultScheme = "bark-on-a-tree";
 
   bahaghari.tinted-theming.schemes = {
-    bark-on-a-tree =
-      importScheme ./files/tinted-theming/base16/bark-on-a-tree.yaml;
-    albino-bark-on-a-tree =
-      importScheme ./files/tinted-theming/base16/albino-bark-on-a-tree.yaml;
+    bark-on-a-tree = importScheme ./files/tinted-theming/base16/bark-on-a-tree.yaml;
+    albino-bark-on-a-tree = importScheme ./files/tinted-theming/base16/albino-bark-on-a-tree.yaml;
   };
 }

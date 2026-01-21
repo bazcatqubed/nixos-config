@@ -1,4 +1,9 @@
-{ buildGoModule, lib, pkg-config, fontconfig }:
+{
+  buildGoModule,
+  lib,
+  pkg-config,
+  fontconfig,
+}:
 
 buildGoModule (finalAttrs: {
   pname = "foodogsquared-extract-website-icon";

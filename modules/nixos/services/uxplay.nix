@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.services.uxplay;
-in {
+let
+  cfg = config.services.uxplay;
+in
+{
   options.services.uxplay = {
     enable = lib.mkEnableOption "uxplay, an Airplay mirroring server";
 
@@ -13,7 +20,10 @@ in {
         Extra arguments to passed onto the service executable.
       '';
       default = [ ];
-      example = [ "-p" "4747" ];
+      example = [
+        "-p"
+        "4747"
+      ];
     };
   };
 
@@ -32,9 +42,7 @@ in {
       after = [ "network.target" ];
       documentation = [ "man:uxplay(1)" ];
       wantedBy = [ "multi-user.target" ];
-      script = "${lib.getExe' cfg.package "uxplay"} ${
-          lib.escapeShellArgs cfg.extraArgs
-        }";
+      script = "${lib.getExe' cfg.package "uxplay"} ${lib.escapeShellArgs cfg.extraArgs}";
       serviceConfig = {
         DynamicUser = true;
         User = "uxplay";
@@ -59,10 +67,17 @@ in {
         ProtectKernelTunables = true;
 
         RestrictRealtime = true;
-        RestrictAddressFamilies = [ "AF_LOCAL" "AF_INET" "AF_INET6" ];
+        RestrictAddressFamilies = [
+          "AF_LOCAL"
+          "AF_INET"
+          "AF_INET6"
+        ];
         RestrictNamespaces = true;
 
-        SystemCallFilter = [ "@system-service" "~@privileged" ];
+        SystemCallFilter = [
+          "@system-service"
+          "~@privileged"
+        ];
         SystemCallArchitectures = "native";
         SystemCallErrorNumber = "EPERM";
       };

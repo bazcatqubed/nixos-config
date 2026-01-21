@@ -1,4 +1,14 @@
-{ lib, callPackage, stdenv, cacert, pkg-config, makeFontsConf, fontconfig, noto-fonts, noto-fonts-color-emoji }:
+{
+  lib,
+  callPackage,
+  stdenv,
+  cacert,
+  pkg-config,
+  makeFontsConf,
+  fontconfig,
+  noto-fonts,
+  noto-fonts-color-emoji,
+}:
 
 let
   extractWebsiteIcon = callPackage ./package/package.nix { };
@@ -27,7 +37,10 @@ lib.extendMkDerivation {
       # A list of fonts to be included within the environment. This is mainly
       # used for the backup icon generation in the program which uses
       # fontconfig utilities to access the fonts.
-      fonts ? [ noto-fonts noto-fonts-color-emoji ],
+      fonts ? [
+        noto-fonts
+        noto-fonts-color-emoji
+      ],
 
       disableHTMLDownload ? false,
       disableGoogleIconsDownload ? false,
@@ -45,16 +58,26 @@ lib.extendMkDerivation {
 
       enableParallelBuilding = true;
       name = args.name or "fetch-website-icon";
-      nativeBuildInputs = [ pkg-config cacert ];
-      buildInputs = [ fontconfig extractWebsiteIcon ];
-      buildFlags = buildFlags ++ [
-        "--url" url
-        "--largest-only"
-        "--size" size
-      ]
-      ++ lib.optionals disableHTMLDownload [ "--disable-html-download" ]
-      ++ lib.optionals disableGoogleIconsDownload [ "--disable-google-icons" ]
-      ++ lib.optionals disableDuckduckgoIconsDownload [ "--disable-duckduckgo-icons" ];
+      nativeBuildInputs = [
+        pkg-config
+        cacert
+      ];
+      buildInputs = [
+        fontconfig
+        extractWebsiteIcon
+      ];
+      buildFlags =
+        buildFlags
+        ++ [
+          "--url"
+          url
+          "--largest-only"
+          "--size"
+          size
+        ]
+        ++ lib.optionals disableHTMLDownload [ "--disable-html-download" ]
+        ++ lib.optionals disableGoogleIconsDownload [ "--disable-google-icons" ]
+        ++ lib.optionals disableDuckduckgoIconsDownload [ "--disable-duckduckgo-icons" ];
 
       impureEnvVars = lib.fetchers.proxyImpureEnvVars;
 
@@ -68,4 +91,4 @@ lib.extendMkDerivation {
       outputHash = args.hash;
       outputHashAlgo = if args.hash == "" then "sha512" else null;
     };
-  }
+}

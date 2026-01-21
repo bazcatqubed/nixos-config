@@ -1,9 +1,16 @@
-{ config, lib, pkgs, helpers, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  helpers,
+  ...
+}:
 
 let
   nixvimCfg = config.nixvimConfigs.fiesta;
   cfg = nixvimCfg.setups.note-taking;
-in {
+in
+{
   options.nixvimConfigs.fiesta.setups.note-taking.enable =
     lib.mkEnableOption "basic note-taking setup";
 
@@ -25,9 +32,12 @@ in {
     # Install the tree-sitter parsers.
     plugins.treesitter.grammarPackages =
       lib.mkIf (config.plugins.neorg.settings ? load."core.defaults")
-      (with pkgs.tree-sitter-grammars; [
-        tree-sitter-norg
-        tree-sitter-norg-meta
-      ]);
+        (
+          with pkgs.tree-sitter-grammars;
+          [
+            tree-sitter-norg
+            tree-sitter-norg-meta
+          ]
+        );
   };
 }

@@ -1,9 +1,14 @@
 # Custom libraries for home-manager library.
-{ pkgs, lib, self }:
+{
+  pkgs,
+  lib,
+  self,
+}:
 
 rec {
-  /* Checks if there is the `osConfig` attribute and get the attribute path from
-     its system configuration.
+  /*
+    Checks if there is the `osConfig` attribute and get the attribute path from
+    its system configuration.
   */
   hasNixOSConfigAttr =
     # The configuration attribute set of the home-manager configuration.
@@ -25,8 +30,7 @@ rec {
 
     # The default value when `attrPath` is missing.
     default:
-    attrs ? darwinConfig
-    && pkgs.lib.attrByPath attrPath default attrs.darwinConfig;
+    attrs ? darwinConfig && pkgs.lib.attrByPath attrPath default attrs.darwinConfig;
 
   # A quick function to check if the optional NixOS system module is enabled.
   hasOSModuleEnabled =

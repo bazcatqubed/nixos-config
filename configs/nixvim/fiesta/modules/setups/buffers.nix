@@ -1,4 +1,9 @@
-{ config, lib, helpers, ... }:
+{
+  config,
+  lib,
+  helpers,
+  ...
+}:
 
 let
   nixvimCfg = config.nixvimConfigs.fiesta;
@@ -8,12 +13,12 @@ let
   bindingPrefix' = k: "${bindingPrefix}${k}";
 in
 {
-  options.nixvimConfigs.fiesta.setups.buffers.enable =
-    lib.mkEnableOption "buffers setup";
+  options.nixvimConfigs.fiesta.setups.buffers.enable = lib.mkEnableOption "buffers setup";
 
   config = lib.mkIf cfg.enable {
-    plugins.which-key.settings.spec = lib.singleton
-      (helpers.listToUnkeyedAttrs [ bindingPrefix ] // { group = "Buffers"; });
+    plugins.which-key.settings.spec = lib.singleton (
+      helpers.listToUnkeyedAttrs [ bindingPrefix ] // { group = "Buffers"; }
+    );
 
     plugins.gitsigns = {
       enable = true;
@@ -23,8 +28,7 @@ in
           ignore_whitespace = true;
         };
 
-        on_attach = helpers.mkRaw
-          /* lua */ ''
+        on_attach = helpers.mkRaw /* lua */ ''
           function(bufnr)
             local gitsigns = require("gitsigns")
 

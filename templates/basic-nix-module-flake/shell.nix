@@ -1,5 +1,12 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 
 with pkgs;
 
-mkShell { packages = [ nixpkgs-fmt treefmt ]; }
+mkShell {
+  packages = [
+    nixpkgs-fmt
+    treefmt
+  ];
+}
