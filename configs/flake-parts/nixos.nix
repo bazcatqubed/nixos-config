@@ -15,8 +15,14 @@ in {
         nixpkgs.branch = "nixos-unstable";
 
         # This is to make an exception for Archivebox.
-        nixpkgs.config.permittedInsecurePackages =
-          [ "archiver-3.5.1" "python3.12-django-3.1.14" "python3.13-django-3.1.14" "beekeeper-studio-5.2.12" "qtwebengine-5.15.19" ];
+        nixpkgs.config.permittedInsecurePackages = [
+          "archiver-3.5.1"
+          "python3.12-django-3.1.14"
+          "python3.13-django-3.1.14"
+          "beekeeper-studio-5.5.3"
+          "qtwebengine-5.15.19"
+          "nexusmods-app-0.21.1"
+        ];
 
         systems = [ "x86_64-linux" ];
         formats = null;
