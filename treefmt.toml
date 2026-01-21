@@ -1,7 +1,6 @@
-[global]
 excludes = [
   "pkgs/firefox-addons/default.nix",
-  "subprojects",
+  "subprojects/*",
 ]
 
 [formatter.lua]
