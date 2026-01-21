@@ -65,6 +65,7 @@ pkgs.lib.makeExtensible (
       makeXDGDesktopEntry
       buildHugoSite
       buildMdbookSite
+      buildZolaSite
       buildMkdocsSite
       buildAntoraSite
       buildFDSEnv
@@ -73,6 +74,7 @@ pkgs.lib.makeExtensible (
       buildDconfConf
       buildDconfPackage
       buildDockerImage
+      buildBlenderAddons
       ;
     inherit (self.trivial)
       countAttrs

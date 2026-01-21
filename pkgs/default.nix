@@ -19,6 +19,7 @@ lib.makeScope pkgs.newScope (self: {
     makeXDGDesktopEntry
     buildHugoSite
     buildMdbookSite
+    buildZolaSite
     buildMkdocsSite
     buildAntoraSite
     buildFDSEnv
@@ -27,6 +28,7 @@ lib.makeScope pkgs.newScope (self: {
     buildDconfConf
     buildDconfPackage
     buildDockerImage
+    buildBlenderAddons
     ;
   inherit (self.foodogsquaredLib.fetchers)
     fetchInternetArchive
