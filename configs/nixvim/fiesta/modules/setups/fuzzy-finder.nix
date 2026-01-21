@@ -37,6 +37,16 @@ in {
         options.desc = "List buffers";
         action = helpers.mkRaw "require('telescope.builtin').buffers";
       };
+      "B" = {
+        options.desc = "Grep through opened files";
+        action = helpers.mkRaw ''
+          function()
+            require('telescope.builtin').live_grep {
+              grep_open_files = true,
+            }
+          end
+        '';
+      };
       "f" = {
         options.desc = "Find files";
         action = helpers.mkRaw ''
@@ -61,8 +71,18 @@ in {
         action = helpers.mkRaw "require('telescope.builtin').git_files";
       };
       "g" = {
-        options.desc = "Live grep for the whole project";
+        options.desc = "Grep for the whole project";
         action = helpers.mkRaw "require('telescope.builtin').live_grep";
+      };
+      "G" = {
+        options.desc = "Grep through the current directory";
+        action = helpers.mkRaw ''
+          function()
+            require('telescope.builtin').live_grep {
+              cwd = require('telescope.utils').buffer_dir(),
+            }
+          end
+        '';
       };
       "h" = {
         options.desc = "Find section from help tags";

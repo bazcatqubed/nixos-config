@@ -4,7 +4,6 @@ let
   inherit (hmConfig.xdg) userDirs;
   nixvimCfg = config.nixvimConfigs.fiesta-fds;
   cfg = nixvimCfg.setups.fuzzy-finding;
-  telescopeExtensions = config.plugins.telescope.extensions;
 in {
   options.nixvimConfigs.fiesta-fds.setups.fuzzy-finding.enable =
     lib.mkEnableOption "fuzzy finding setup within fiesta-fds";
@@ -24,16 +23,5 @@ in {
         };
       };
     };
-
-    plugins.telescope.extensions.live-grep-args = { enable = true; };
-
-    keymaps = lib.optionals telescopeExtensions.live-grep-args.enable
-      (lib.singleton {
-        mode = "n";
-        key = "<leader>fG";
-        options.desc = "Live grep (with args) for the whole project";
-        action = helpers.mkRaw
-          "require('telescope').extensions.live_grep_args.live_grep_args";
-      });
   };
 }
