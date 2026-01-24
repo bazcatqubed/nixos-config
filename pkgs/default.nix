@@ -84,4 +84,5 @@ lib.makeScope pkgs.newScope (self: {
   willow = callPackage ./willow { };
   wzmach = callPackage ./wzmach { };
   xs = callPackage ./xs { };
+  yolk = callPackage ./yolk { };
 })
