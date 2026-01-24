@@ -78,7 +78,6 @@ lib.makeScope pkgs.newScope (self: {
   sqlc-gen-from-template = callPackage ./sqlc-gen-from-template { };
   simple-icons = callPackage ./simple-icons { };
   tic-80-unstable = callPackage ./tic-80 { };
-  smile = callPackage ./smile { };
   sessiond = callPackage ./sessiond { };
   vgc = qt5.callPackage ./vgc { };
   watc = callPackage ./watc { };
