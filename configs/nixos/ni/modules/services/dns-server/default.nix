@@ -37,7 +37,7 @@ in
       '';
     };
 
-    services.resolved.domains = [ "~foodogsquared.internal" ];
+    services.resolved.settings.Resolve.Domains = [ "~foodogsquared.internal" ];
     networking.nameservers = [ "127.0.0.1" ];
   };
 }
