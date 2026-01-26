@@ -113,10 +113,11 @@ in
         }
 
         {
-          key = "R";
+          key = "<c-s>";
           mode = [
-            "o"
+            "n"
             "x"
+            "o"
           ];
           options.desc = "Flash treesitter search";
           action = helpers.mkRaw ''
