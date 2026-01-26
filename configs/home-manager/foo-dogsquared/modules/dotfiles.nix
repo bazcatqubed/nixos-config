@@ -17,8 +17,19 @@ let
   getDotfiles = path: "${dotfiles'}/${path}";
 in
 {
-  options.users.foo-dogsquared.dotfiles.enable =
-    lib.mkEnableOption "custom outside dotfiles for other programs";
+  options.users.foo-dogsquared.dotfiles = {
+    enable = lib.mkEnableOption "custom outside dotfiles for other programs";
+
+    reimplementation.enable = lib.mkEnableOption null // {
+      description = ''
+        Whether to enable various reimplementations found in the dotfiles.
+
+        :::{.caution}
+        May disable some configurations and replacing them with their own.
+        :::
+      '';
+    };
+  };
 
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
@@ -69,20 +80,16 @@ in
       })
 
       (lib.mkIf config.programs.nushell.enable {
-        home.file."${config.xdg.dataHome}/nushell/vendor/autoload".source = getDotfiles "nu/autoload";
-        home.file."${config.xdg.configHome}/nushell/foodogsquared".source = getDotfiles "nu/foodogsquared";
+        programs.nushell.environmentVariables.NU_LIB_DIRS =
+          lib.singleton "${config.xdg.configHome}/nushell/foodogsquared";
+
+        home.file."${config.xdg.configHome}/nushell/autoload".source = getDotfiles "nu/autoload";
+        home.file."${config.xdg.configHome}/nushell/scripts".source = getDotfiles "nu/scripts";
 
         home.sessionVariables = {
           FZF_ALT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --unrestricted";
           FZF_ALT_SHIFT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --full-path --max-depth 4 . ../";
         };
-      })
-
-      (lib.mkIf config.programs.helix.enable {
-        # Force unset them configs for our dotfiles.
-        programs.helix.settings = lib.mkForce { };
-
-        xdg.configFile.helix.source = getDotfiles "helix";
       })
 
       (lib.mkIf (lib.elem "one.foodogsquared.AHappyGNOME" attrs.nixosConfig.workflows.enable or [ ]) {
@@ -97,6 +104,23 @@ in
           source = getDotfiles "nautilus-extensions";
           recursive = true;
         };
+      })
+
+      (lib.mkIf (cfg.reimplementation.enable && config.programs.helix.enable) {
+        # Force unset them configs for our dotfiles.
+        programs.helix.settings = lib.mkForce { };
+
+        xdg.configFile.helix.source = getDotfiles "helix";
+      })
+
+      # We're just replacing it with our own implmentation of the following
+      # programs.
+      (let
+        hasNushellAsDefaultShell =
+          attrs.nixosConfig.users.users.${config.home.username}.shell or null == config.programs.nushell.package;
+      in lib.mkIf (cfg.reimplementation.enable && hasNushellAsDefaultShell) {
+        # Replacing it with our own implementation of autojump.
+        programs.zoxide.enable = lib.mkForce false;
       })
     ]
   );
