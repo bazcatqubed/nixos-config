@@ -107,6 +107,8 @@ in
             miller # Another data query language.
             devbox # Create a Nix devshell without Nixlang.
             kanidm_1_8 # What is you?
+            shellcheck # Magic conch shell check.
+            shfmt # Decorate them horrible code a little bit.
 
             # Testing REST and all about backend development.
             httpie
@@ -304,13 +306,13 @@ in
         home.packages = with pkgs; [
           geogebra6
           marimo
-          # julia
+          julia
         ];
 
         programs.python.modules =
           ps: with ps; [
             jupyter
-            # jupyter-book
+            jupyter-book
             notebook
           ];
       })

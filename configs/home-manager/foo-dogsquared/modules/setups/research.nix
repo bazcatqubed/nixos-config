@@ -162,9 +162,10 @@ in
             vale # Make writing docs a welcoming night.
             goldendict-ng # A golden dictionary for perfecting your diction.
             ascii-draw # Super emoticons.
-            # exhibit # View them 3D boats.
+            exhibit # View them 3D boats.
             eloquent # Reach a higher caliber for your wordsmithing, indubitably.
             harper # A grammer checker with yer' Grandma..er.
+            typesetter # If you want to get fancier than a Markdown document, here you go.
           ]
           ++ lib.optionals config.programs.typst.enable [
             tinymist

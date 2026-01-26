@@ -29,10 +29,8 @@ in
       aisleriot
       crosswords
 
-      # freecad
+      freecad
       leocad
-
-      aider-chat-full
     ];
 
     users.foo-dogsquared = {
