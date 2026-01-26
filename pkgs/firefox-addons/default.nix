@@ -23,10 +23,10 @@
     };
     "dearrow" = buildFirefoxXpiAddon {
       pname = "dearrow";
-      version = "2.2.1";
+      version = "2.2.3";
       addonId = "deArrow@ajay.app";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4634684/dearrow-2.2.1.xpi";
-      sha256 = "9fefe049ccc9995bd0ccf517efff8d651cbfe7352af3f98d21ad028f7728c053";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4656721/dearrow-2.2.3.xpi";
+      sha256 = "7d5986ce0d92019c10f0ad62ab23a3293ec83c0f090a3c8c57379efb9455820c";
       meta = with lib;
       {
         homepage = "https://dearrow.ajay.app";
@@ -67,10 +67,10 @@
     };
     "font-inspect" = buildFirefoxXpiAddon {
       pname = "font-inspect";
-      version = "0.6.3.1";
+      version = "0.6.4";
       addonId = "{a658a273-612e-489e-b4f1-5344e672f4f5}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4510426/font_inspect-0.6.3.1.xpi";
-      sha256 = "5ab50fcdde1bd4e8cf620107d4f5fba605d26da420538a4933591776b2dcc3f9";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4660325/font_inspect-0.6.4.xpi";
+      sha256 = "960ea56d3ff916bccc2b33e9e024606a921c8bef99d77a8a07391476451f0f47";
       meta = with lib;
       {
         homepage = "https://webextension.org/listing/font-finder.html";
@@ -191,10 +191,10 @@
     };
     "private-grammar-checker-harper" = buildFirefoxXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "1.4.1";
+      version = "1.5.1";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4660884/private_grammar_checker_harper-1.4.1.xpi";
-      sha256 = "86a009462865ab2e0fc60d604cf6780789f9137d312f8afdbbece78a7471ef69";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4672920/private_grammar_checker_harper-1.5.1.xpi";
+      sha256 = "d570632485d934aead2941712c92f030f42d825874d1a70de8cd2465b9c99e69";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
@@ -205,10 +205,10 @@
     };
     "refined-github-" = buildFirefoxXpiAddon {
       pname = "refined-github-";
-      version = "26.1.18";
+      version = "26.1.24";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4669016/refined_github-26.1.18.xpi";
-      sha256 = "7783de3e1dbeeec1fb9947a1d6e63cda259bcf4dd06b9f5d6d49e9baede60b4a";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4674175/refined_github-26.1.24.xpi";
+      sha256 = "ba36e08ec22ee45a14ba8893f84ed3a8b1e27bfa89e356ffcedecd0e769542a2";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
