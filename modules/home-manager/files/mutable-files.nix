@@ -12,7 +12,6 @@ let
     with pkgs;
     [
       coreutils
-      archiver
       curl
       git
       gopass
