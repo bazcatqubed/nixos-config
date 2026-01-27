@@ -28,6 +28,7 @@
     ./services/archivebox
     ./services/backup
 
+    ./setups/ai.nix
     ./setups/business.nix
     ./setups/desktop.nix
     ./setups/development.nix

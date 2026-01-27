@@ -94,6 +94,7 @@ in
     services.backup.enable = true;
 
     setups = {
+      ai.enable = true;
       business.enable = true;
       desktop.enable = true;
       development = {
