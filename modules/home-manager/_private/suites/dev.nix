@@ -41,6 +41,10 @@ in
           dasel # Universal version of jq.
           moor # More 'more'.
           perlPackages.vidir # Bulk rename for your organizing needs in the terminal.
+
+          grant # Automatic licensing thingy.
+          syft # Time to pay your servers with a bill.
+          reuse # Just like recycling, licensing is an afterthought.
         ];
 
         # Git interface for the lazy who cannot be asked to add hunks properly.
