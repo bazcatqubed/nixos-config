@@ -99,6 +99,7 @@ in
             comma # You come and go.
             cachix # Compile no more by using someone's binary cache!
             regex-cli # Save some face of confusion for yourself.
+            duckdb # If it talks like a duck and waddles like a duck and migrate like a duck and queries like a duck...
             dt # Get that functional gawk.
             jq # Get that JSON querying tool.
             fq # Get that binary querying tool.
@@ -123,9 +124,6 @@ in
 
             # Testing out Kubernetes.
             kind
-
-            # Testing out LLMs.
-            plandex
 
             # Testing out your web app #532.
             dbeaver-bin
@@ -285,6 +283,7 @@ in
               cyclone
             ]
           ))
+          plugdata
           shader-slang
           material-maker
         ];
