@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Essentially a derivative of nix-colors module that closely follows Tinted
 # Theming "standard" and can hold multiple palettes suitable for generating
 # multiple configuration files for organization purposes.

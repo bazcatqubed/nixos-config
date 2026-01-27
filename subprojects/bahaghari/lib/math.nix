@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A little math utility for common operations. Don't expect any high-level
 # mathematical operations nor godly optimizations expected from a typical math
 # library, it's just basic high school type of shit in all aspects.

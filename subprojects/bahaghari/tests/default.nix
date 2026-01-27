@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This is the unit cases for our Nix project. It should only require a nixpkgs
 # instance and we'll have to make it easy to test between the unstable and
 # stable version of home-manager and NixOS.

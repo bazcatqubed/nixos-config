@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Being a math library implementation, we should be careful of making tests
 # here to be consistent with the other math libraries. All of the answers here
 # should be sourced from another tool such as a calculator.

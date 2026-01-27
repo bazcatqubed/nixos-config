@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # HSLuv implementation in Nix. This is taken from the reference implementation,
 # specifically from the JavaScript implementation at
 # https://github.com/hsluv/hsluv-javascript.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Similar to RGB, we're also going to base our implementation from looking
 # after the W3 CSS Color Module Level 4 specification simply because it is the
 # most common one.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Bahaghari's set of library. This requires nixpkgs' package set which has its
 # library anyways. This set is mostly copied over from nixpkgs' way of doing
 # things.

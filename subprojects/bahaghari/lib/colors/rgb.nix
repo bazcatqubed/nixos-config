@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The most antiquated colorspace like ever. For this implementation, we will be
 # looking after the RGB specification (especially the hexadecimal notation) as
 # specified from W3 CSS Color Module Level 4

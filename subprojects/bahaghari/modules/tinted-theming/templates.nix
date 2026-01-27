@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A set of Tinted Theming templates to be applied somewhere. At its current
 # state, this module is useless itself that it only holds a global set of
 # templates for now.

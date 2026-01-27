@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The user entrypoint for Bahaghari. Basically, the most important piece to
 # maintain. Just keep in mind we shouldn't have anything requiring from the
 # npins sources in here.

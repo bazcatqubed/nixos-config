@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A small utility library for manipulating hexadecimal numbers. It's made in 15
 # minutes with a bunch of duct tape on it but it's working for its intended
 # purpose.
