@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # All of the development-related shtick for this project is over here.
 { inputs, ... }:
 {

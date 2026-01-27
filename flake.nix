@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 {
   description = "foo-dogsquared's abomination of a NixOS configuration";
 

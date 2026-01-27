@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 baseURL = 'https://foo-dogsquared.github.io/nixos-config'
 defaultContentLanguage = 'en'
 title = "foodogsquared's NixOS config"

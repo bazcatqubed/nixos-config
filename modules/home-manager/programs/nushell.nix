@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This is just an extended implementation of exporting Nushell session
 # variables since the one from home-manager is only in POSIX sh script.
 {

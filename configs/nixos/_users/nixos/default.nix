@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This is the user usually used for installers. Don't treat it like a normal
 # user, pls. It will override several things just to teach you a lesson. :)
 { lib, pkgs, ... }:

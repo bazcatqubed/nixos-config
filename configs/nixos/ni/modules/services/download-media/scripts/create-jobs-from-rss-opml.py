@@ -1,6 +1,10 @@
 #!/usr/bin/env nix-shell
 #! nix-shell -i python3 -p python3
 
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # NOTE: If you're using Thunderbird and you're using a folder structure in your
 # feeds folder where one folder == one feed. It's going to be messy for you.
 

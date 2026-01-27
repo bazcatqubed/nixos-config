@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # System-wide i18n options. This is primarily used for desktop installations.
 # Unless there is really good reasons for setting i18n options on the server,
 # this module will stay aiming for desktop.

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+//
+// SPDX-License-Identifier: MIT
+
 // A nifty little app for resolving flakerefs to the locked input. Because the
 // C++ API is mostly unstable, this is confirmed to be working with Nix v2.18.2
 // just for reference.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # An extended version of the headless profile from nixpkgs. We're only covering
 # the most basic settings here. This will be used both for desktop and server
 # systems.

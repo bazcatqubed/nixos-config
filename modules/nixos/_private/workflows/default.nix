@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Themes are your graphical sessions. It also contains your aesthetics even
 # specific workflow and whatnots. You can also show your desktop being
 # modularized like this.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Basically a poor man's version of NixVim or those configuration options from
 # either NixOS or home-manager, really.
 {

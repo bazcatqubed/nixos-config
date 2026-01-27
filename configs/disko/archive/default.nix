@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The archive storage for whatever trash that will be stored for the rest of
 # time. It's more like a collection of whatever things I find, also it might
 # just be used as a repository for a bunch of download services I put up as

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This module supports both the built-in and systemd-managed desktop sessions
 # for simplicity's sake and it is up to the user to configure one or the other
 # (or both but in practice, the user will make use only one of them at a time

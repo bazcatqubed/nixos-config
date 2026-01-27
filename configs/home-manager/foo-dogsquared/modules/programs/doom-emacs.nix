@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # I only use Emacs for org-roam (seriously... I only learned Emacs for
 # that). Take note this profile doesn't setup Emacs-as-a-development-tool
 # thing, rather Emacs-as-a-note-taking tool thing with the complete

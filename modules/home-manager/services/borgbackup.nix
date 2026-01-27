@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A home-manager port of NixOS' `services.borgbackup` module. I tried to make
 # it as close to it as possible plus some other options such as adding pattern
 # files (since it is my preference of indicating which files are included).

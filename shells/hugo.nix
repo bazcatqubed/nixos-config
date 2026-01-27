@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # My usual toolchain for developing Hugo projects.
 {
   mkShell,

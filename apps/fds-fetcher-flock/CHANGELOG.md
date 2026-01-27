@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2025-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+
+SPDX-License-Identifier: BSD-3-Clause
+-->
+
 # Changelog
 
 ## 0.1.0

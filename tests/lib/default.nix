@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # For the environment-specific subset, we'll be simulating the configurations
 # as a simple attribute set since that's what they are anyways.
 {

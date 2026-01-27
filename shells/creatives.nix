@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Trying to be creative with coding while endlessly referring to some tutorials
 # on the internet.
 {

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # My editor configurations. Take note I try to avert as much settings to create
 # the configuration files with Nix. I prefer to handle the text editor
 # configurations by hand as they are very chaotic and it is a hassle going

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A custom flake-parts module to configure my NixOS images generated with
 # nixos-generators. For more details, see the "Declarative hosts management"
 # section from the documentation.

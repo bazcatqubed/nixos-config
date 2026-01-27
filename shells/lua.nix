@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # It is much more recommended to create a project-specific development
 # environment for Lua projects instead.
 {

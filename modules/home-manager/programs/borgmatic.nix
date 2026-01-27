@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A replacement module for the Borgmatic home-manager module. It is quite
 # limited and also feels janky to use.
 {

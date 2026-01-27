@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Take note, this already assumes we're using on top of an already existing
 # NixVim configuration. See the declarative users configuration for more
 # details.

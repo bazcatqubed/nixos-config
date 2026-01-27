@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 [ActivityManager]
 _k_friendly_name=Activity Manager
 switch-to-activity-df51cee4-5dad-43e0-bbd7-c77d4c80fe02=Meta+1,Meta+1,Switch to activity "Default"

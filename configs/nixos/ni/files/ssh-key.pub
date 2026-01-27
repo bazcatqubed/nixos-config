@@ -1,1 +1,5 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ4X7YXsEmMW3jP2dfU9l/KrF9jUZqN0sVXSvkag8VFH root@ni

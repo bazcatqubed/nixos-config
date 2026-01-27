@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A custom nixos-generator module to set as a graphical installation with a
 # graphical installer profile. Useful for hosts that can be used both as a
 # persistent live installer or as a graphical ISO. Based from the original

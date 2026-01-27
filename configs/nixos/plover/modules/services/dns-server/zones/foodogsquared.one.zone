@@ -1,3 +1,7 @@
+; SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+;
+; SPDX-License-Identifier: MIT
+
 ; This is trying to be discrete with certain information. This should be copied
 ; and replaced with more confidential information somewhere.
 $TTL 12h

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # My custom shell for developing Flatpak manifests.
 # This is not suitable outside of NixOS, unfortunately.
 {

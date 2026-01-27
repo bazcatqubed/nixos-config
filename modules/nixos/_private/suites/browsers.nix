@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Browsers for your enterprise needs (seriously though, they're configured
 # differently and typically for "enterprise" use cases in mind and what I mean
 # "enterprise" is for all of the users which is me, myself, and I).

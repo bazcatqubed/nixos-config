@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A bunch of predefined filesystem configurations for several devices. This is
 # nice for setting up shop for certain tasks with the flick of the switch to ON
 # (e.g., `config.suites.filesystem.archive.enable = true`) and not have

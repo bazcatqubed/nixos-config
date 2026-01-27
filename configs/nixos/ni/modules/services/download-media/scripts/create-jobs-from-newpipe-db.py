@@ -1,6 +1,10 @@
 #!/usr/bin/env nix-shell
 #! nix-shell -i python3 -p python3
 
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This script is used for generating a JSON object from a Newpipe database to
 # be used for multimedia archive task (i.e.,
 # `config.tasks.multimedia-archive`).

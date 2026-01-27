@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Arsenal for development (which is rare nowadays). ;p
 # If you're looking for text editors, go to `./editors.nix`.
 {

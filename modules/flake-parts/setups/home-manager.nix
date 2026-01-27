@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This is the declarative user management converted into a flake-parts module.
 # Take note, it reinforces mandatory import of home-manager to its composed
 # environments such as NixOS.

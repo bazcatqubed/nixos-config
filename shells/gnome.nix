@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The usual development shell of GNOME-related projects. It isn't really
 # complete, it is more of a list of common applications for these types of
 # projects.

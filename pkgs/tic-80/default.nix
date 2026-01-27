@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Build the TIC-80 virtual computer console with the PRO version. The
 # developers are kind enough to make it easy to compile it if you know
 # how.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # All of the settings related to server systems. Take note they cannot be used
 # alongside the desktop profile since there are conflicting configurations
 # between them.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This shouldn't be a part of the foodogsquared's library set. These are simply
 # environment builders used to build consistent environments throughout flake-
 # and non-flake-based Nix environments. Much of the things here are unofficial

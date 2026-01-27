@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A bunch of common hardware settings for desktop systems. Mostly, we're just
 # adding drivers for common gaming peripherals.
 { lib, ... }:

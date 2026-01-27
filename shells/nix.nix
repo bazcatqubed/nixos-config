@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # For usual Nix projects such as overlays, package repositories, and whatnot.
 # Also, it's fun to have a file named `nix.nix`.
 {

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 keys:
   - &foo-dogsquared 7C7F9DC0694508015FE4C9F2DD5E7C08041214EE
   - &foo-dogsquared-old 8FCE86932583783E515B6FE55F2B001E20ED3763

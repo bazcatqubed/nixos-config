@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # All-encompassing environment for cloud platform management. I'm using only
 # one so far but apparently these providers have some tool to enable easy
 # access and usage for their platform.

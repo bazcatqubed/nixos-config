@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Module revolving around the specialized launcher. It is managed as a separate
 # project in the launcher subdirectory. Just look into the source code as you
 # would spelunk any other project. So far, the subproject itself doesn't have a

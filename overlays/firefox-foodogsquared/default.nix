@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # My personalized Firefox installation.
 final: prev:
 

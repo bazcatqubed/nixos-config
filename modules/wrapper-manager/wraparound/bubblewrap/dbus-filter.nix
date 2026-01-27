@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The D-Bus integration for Bubblewrap-wrapped wrappers. As noted from the
 # Bubblewrap's README, it encourages to use something like xdg-dbus-proxy to
 # limit reach to overarching services such as systemd's so we're doing it here.

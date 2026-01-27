@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The default shared configuration for the entire list of hosts for
 # this cluster. Take note to only set as minimal configuration as
 # possible since we're also using this with the stable version of

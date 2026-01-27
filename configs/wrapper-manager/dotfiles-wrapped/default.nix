@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # All of the programs with my outside dotfiles from
 # https://github.com/foo-dogsquared/dotfiles. Pretty nifty for me to have,
 # yeah? This should work on both NixOS and non-NixOS system considering that

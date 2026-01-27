@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A simple external HDD filesystem primarily used as a persistent live
 # installer. We're using btrfs since we don't have any significant work with
 # other systems for now so we can afford to do this.

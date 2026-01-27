@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This is the declarative host management converted into a flake-parts module.
 # It also enforces a structure for declarative NixOS setups such a deploy-rs
 # node, a hostname and an optional domain, and deploy-rs-related options so it

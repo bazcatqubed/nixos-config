@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This is mostly just the same as the Alice user except it used for installers.
 # It should be niiiiiiiiiice enough for the usual cases, you feel me.
 {

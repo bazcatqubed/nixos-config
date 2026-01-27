@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The declarative environment management modules. Basically the backbone of my
 # flake. Most of the modules here should have some things integrated within
 # each other such as the ability to easily declare home-manager users (or a

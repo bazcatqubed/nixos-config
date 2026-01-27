@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 /*
   This is where all workflow-specific configuration should go (unless it's
   mainly composed of dconf settings).

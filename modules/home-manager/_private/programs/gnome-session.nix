@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A home-manager module that simply uses the wrapper-manager module under the
 # hood. I just did this because I don't want to reimplement the entire thing
 # from scratch lmao.

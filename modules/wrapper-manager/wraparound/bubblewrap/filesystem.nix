@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Essentially a poor man's version of NixOS filesystem module except that is
 # made for Bubblewrap environment. Everything here should only make use of
 # Bubblewrap's filesystem options from the command-line application.

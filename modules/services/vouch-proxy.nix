@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # All of the non-modular-arguments are going to be put here (mainly things from
 # the nixpkgs instance).
 { formats }:

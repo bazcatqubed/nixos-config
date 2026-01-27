@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A flake-parts module containing definition for my custom wrapper-manager
 # packages which should have its own flake output attribute at
 # `wrapperManagerPackages` containing the derivations that can be run or build.

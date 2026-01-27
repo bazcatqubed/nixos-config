@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The DNS server for my domains. Take note it uses a hidden master setup with
 # the secondary nameservers of the service (as of 2023-10-05, we're using
 # Hetzner's secondary nameservers).

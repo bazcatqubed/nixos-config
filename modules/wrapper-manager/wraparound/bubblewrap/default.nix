@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Bubblewrap integration within wrapper-manager. Several parts were inspired
 # from the source code's given examples (at `demo` directory) as well as a few
 # Nix projects integrating with it such as `nix-bubblewrap`

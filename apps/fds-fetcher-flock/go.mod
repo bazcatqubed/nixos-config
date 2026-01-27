@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+//
+// SPDX-License-Identifier: BSD-3-Clause
+
 module fds-flock-of-fetchers
 
 go 1.24.2

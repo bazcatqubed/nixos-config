@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Anything that has to do with interacting with data especially with external
 # ones (that is, anything that is not represented as a Nix object).
 # Unfortunately, most of these functions are surely going to use packages found

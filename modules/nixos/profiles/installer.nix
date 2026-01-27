@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A dedicated profile for installers with some niceties in it. This is also
 # used for persistent live installers so you'll have to exclude setting up shop
 # and do that in the respective NixOS configuration instead.

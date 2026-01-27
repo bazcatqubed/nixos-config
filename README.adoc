@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2020-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+//
+// SPDX-License-Identifier: GFDL-1.3-or-later
+
 = foo-dogsquared's NixOS config
 :toc:
 :devos_link: https://github.com/divnix/digga/tree/580fc57ffaaf9cf3a582372235759dccfe44ac92/examples/devos

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A declarative setup for Disko scripts... Yeah, why not. Seriously though,
 # this is only used to offer partitioning scripts for the rest of the system
 # outside of NixOS even though we can easily write dedicated shell scripts for

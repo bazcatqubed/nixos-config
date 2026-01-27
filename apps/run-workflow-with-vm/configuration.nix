@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A very basic NixOS VM configuration intended for testing out the given
 # workflow module. It's a good thing the baseline for the configuration is not
 # tedious to set up for simpler configs like this. Just take note this is

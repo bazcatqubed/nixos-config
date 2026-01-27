@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # An alternative implementation of Bitwarden written in Rust. The project
 # being written in Rust is a insta-self-hosting material right there.
 {

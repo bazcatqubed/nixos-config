@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A re-implementation of the Borgmatic service home-manager module. The
 # reimplementation basically separates all of the configurations instead of a
 # oneshot where it will execute Borgmatic with all present configurations

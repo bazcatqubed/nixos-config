@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The entrypoint of the core. We're just requiring an empty attrset for now for
 # forward compatibility in case it changes (90% it won't but I don't trust the
 # remaining 10% ;p).

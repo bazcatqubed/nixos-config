@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2020-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The entrypoint for our custom library set.
 #
 # Take note, this is modularly included as part of the environment so we cannot

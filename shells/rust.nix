@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This is just for a quick development setup. Otherwise, I recommend
 # to use the `rust` template from `nixpkgs` or whatever you prefer.
 {

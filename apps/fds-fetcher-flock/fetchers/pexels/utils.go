@@ -31,9 +31,10 @@ func findClosestSize[T fetchers.TwoDimensional](width, height float64, objs []T)
 	return o
 }
 
-// Following code was based from https://github.com/kosa3/pexels-go.
 // Copyright © 2021 kosa3
-// Generate query values based from the given struct.
+// SPDX-FileCopyrightText: 2025-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+//
+// SPDX-License-Identifier: BSD-3-Clause
 func generateQueryValues(o any) *url.Values {
 	q := url.Values{}
 

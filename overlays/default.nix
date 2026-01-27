@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A bunch of custom overlays. This is more suitable for larger and more
 # established packages that needed extensive customization. Take note each of
 # the values in the attribute set is a separate overlay function so you'll

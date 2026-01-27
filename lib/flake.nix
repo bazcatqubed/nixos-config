@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # No, this is not a flake of the library set, it is a library subset for
 # flake-related shtick. This should be used VERY RARELY in most parts of the
 # configuration because they are set up to be usable both in flakes and

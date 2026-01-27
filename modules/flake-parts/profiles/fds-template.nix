@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The baseline configuration for all of the setup type in this cluster. Take
 # note this is also exported as a flake-parts module to be easily used in
 # private configurations.

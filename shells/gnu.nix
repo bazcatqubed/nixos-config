@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # The GNU build system. Commonly used for projects at GNU and anyone who wants
 # to be a GNU fanatic.
 #

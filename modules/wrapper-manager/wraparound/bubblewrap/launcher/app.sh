@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A specialized launcher intended to handle a bunch of things in runtime such
 # as adding flags when in certain systems and running xdg-dbus-proxy if
 # required. Take note, we don't enforce any security model whatsoever, it's

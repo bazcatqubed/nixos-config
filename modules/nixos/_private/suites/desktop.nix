@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This is where extra desktop goodies can be found.
 # As a note, this is not where you set the aesthetics of your graphical sessions.
 # That can be found in the `themes` module.

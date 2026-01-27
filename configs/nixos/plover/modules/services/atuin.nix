@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A nice little sync server for my supercharged shell history done by Atuin.
 # It's nice to have but not exactly what I need. It's just here because I want
 # to give it a try.

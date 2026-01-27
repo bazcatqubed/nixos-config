@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # A deploy-rs submodule to be shared among other deploy-rs-related options in
 # different environments. Take note this is supposed to be imported inside of a
 # deploy-rs-related option, not in the top-level `configs` option.

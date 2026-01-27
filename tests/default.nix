@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 let
   flakeUtils = import ../lib/flake.nix;
   flake = flakeUtils.importFlakeMetadata ../flake.lock;

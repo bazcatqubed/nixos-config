@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # Declarative NixVim configurations because everything under the Nix ecosystem
 # must be so declarative so we're setting up declarative ways of declaring
 # those accursed setups to be exported in this flake.

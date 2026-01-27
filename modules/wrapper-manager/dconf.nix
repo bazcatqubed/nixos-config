@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # This is a terrible idea (at least from the app developer's perspective)
 # because what we're doing is a massive hack. We're essentially instilling a
 # forced isolated environment for the settings backend to look into. This will

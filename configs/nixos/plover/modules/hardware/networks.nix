@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # It just contains a set of network-related variables mainly used for
 # network-related services. Make sure to change this every time you migrate to
 # a new server.

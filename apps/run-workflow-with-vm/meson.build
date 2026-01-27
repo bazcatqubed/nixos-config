@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 project('run-workflow-with-vm',
   version: '2024-05-17',
   license: 'GPL-3.0-or-later',

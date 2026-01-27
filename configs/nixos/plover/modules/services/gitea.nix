@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # My code forge service of choice. I'm pretty excited for the federation
 # feature in particular to see how this plays out. It might not be toppling
 # over the popular services but it is interesting to see new spaces for this
