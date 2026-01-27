@@ -12,12 +12,12 @@ path = [
   "**/flake.lock",
 ]
 precedence = "closest"
-SPDX-FileCopyrightText = "Gabriel Arazas<foodogsquared@foodogsquared.one>"
+SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"
 SPDX-License-Identifier = "MIT"
 
 [[annotations]]
 path = [ "docs/website/static/**" ]
-SPDX-FileCopyrightText = "Gabriel Arazas<foodogsquared@foodogsquared.one>"
+SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"
 SPDX-License-Identifier = "CC-BY-NC-SA-4.0"
 
 [[annotations]]
@@ -28,13 +28,13 @@ path = [
   "**/*.bin",
 ]
 precedence = "closest"
-SPDX-FileCopyrightText = "Gabriel Arazas<foodogsquared@foodogsquared.one>"
+SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"
 SPDX-License-Identifier = "MIT"
 
 [[annotations]]
 path = "tests/**"
 precedence = "closest"
-SPDX-FileCopyrightText = "Gabriel Arazas<foodogsquared@foodogsquared.one>"
+SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"
 SPDX-License-Identifier = "MIT"
 
 [[annotations]]
@@ -43,5 +43,5 @@ SPDX-License-Identifier = "NONE"
 
 [[annotations]]
 path = "**/*.patch"
-SPDX-FileCopyrightText = "Gabriel Arazas<foodogsquared@foodogsquared.one>"
+SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"
 SPDX-License-Identifier = "MIT"
