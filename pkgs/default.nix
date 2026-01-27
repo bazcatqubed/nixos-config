@@ -58,6 +58,7 @@ lib.makeScope pkgs.newScope (self: {
   gnome-search-provider-recoll = callPackage ./gnome-search-provider-recoll.nix { };
   #graphite-design-tool = callPackage ./graphite-design-tool { };
   go-avahi-cname = callPackage ./go-avahi-cname { };
+  grant = callPackage ./grant { };
   hush-shell = callPackage ./hush-shell.nix { };
   kip = callPackage ./kip { };
   lwp = callPackage ./lwp { };
