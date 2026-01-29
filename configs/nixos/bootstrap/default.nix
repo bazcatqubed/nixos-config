@@ -3,10 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 {
-  lib,
-  config,
   pkgs,
-  foodogsquaredLib,
+  foodogsquaredUtils,
   foodogsquaredModulesPath,
   ...
 }:
@@ -17,31 +15,30 @@
 #
 # This means, there will be a "nixos" user among other things.
 {
-  imports = [ "${foodogsquaredModulesPath}/profiles/installer.nix" ];
+  imports = [
+    ./disko.nix
+    ./modules
 
-  config = lib.mkMerge [
-    {
-      boot.kernelPackages = pkgs.linuxPackages_6_12;
-
-      # Assume that this will be used for remote installations.
-      services.openssh = {
-        enable = true;
-        allowSFTP = true;
-      };
-
-      system.stateVersion = "23.11";
-    }
-
-    (lib.mkIf (foodogsquaredLib.nixos.isFormat config "isoImage") {
-      isoImage = {
-        isoBaseName = lib.mkForce "${config.networking.hostName}-${config.isoImage.edition}-${config.system.nixos.label}-${pkgs.stdenv.hostPlatform.system}";
-        edition = "minimal";
-
-        squashfsCompression = "zstd -Xcompression-level 11";
-
-        makeEfiBootable = true;
-        makeUsbBootable = true;
-      };
-    })
+    "${foodogsquaredModulesPath}/profiles/installer.nix"
+    (foodogsquaredUtils.mapHomeManagerUser "nixos" { })
   ];
+
+  config = {
+    hosts.bootstrap.variant = "graphical";
+
+    boot.kernelPackages = pkgs.linuxPackages_6_12;
+    boot.loader.systemd-boot = {
+      enable = true;
+      netbootxyz.enable = true;
+    };
+    boot.loader.efi.canTouchEfiVariables = true;
+
+    # Assume that this will be used for remote installations.
+    services.openssh = {
+      enable = true;
+      allowSFTP = true;
+    };
+
+    system.stateVersion = "23.11";
+  };
 }

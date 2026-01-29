@@ -4,7 +4,7 @@
 
 {
   inputs,
-
+  lib,
   defaultNixConf,
 
   ...
@@ -123,26 +123,17 @@ in
 
       # The barely customized non-graphical installer.
       bootstrap = {
-        nixpkgs.branch = "nixos-unstable-small";
-        home-manager.branch = "home-manager-unstable";
-        systems = [
-          "aarch64-linux"
-          "x86_64-linux"
-        ];
-        formats = [ "install-iso" ];
-        shouldBePartOfNixOSConfigurations = true;
-      };
-
-      # The barely customized graphical installer.
-      graphical-installer = {
         nixpkgs.branch = "nixos-unstable";
         home-manager.branch = "home-manager-unstable";
         systems = [
           "aarch64-linux"
           "x86_64-linux"
         ];
-        formats = [ "install-iso-graphical" ];
-        diskoConfigs = [ "external-hdd" ];
+        formats = {
+          install-iso.additionalModules = lib.singleton ../nixos/bootstrap/modules/profiles/install-iso.nix;
+          install-iso-graphical.additionalModules = lib.singleton ../nixos/bootstrap/modules/profiles/install-iso-graphical.nix;
+        };
+        modules = [ inputs.disko.nixosModules.disko ];
         shouldBePartOfNixOSConfigurations = true;
       };
 

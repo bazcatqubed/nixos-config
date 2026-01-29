@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
+{
+  imports = [
+    ./variant.nix
+  ];
+}
