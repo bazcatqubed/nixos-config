@@ -96,6 +96,8 @@ in
         home.packages =
           with pkgs;
           [
+            bobby # Testing out your local desktop apps database.
+            biblioteca # This is what the Wizard of Oz used back when they developed their project.
             comma # You come and go.
             cachix # Compile no more by using someone's binary cache!
             regex-cli # Save some face of confusion for yourself.
@@ -126,7 +128,6 @@ in
             kind
 
             # Testing out your web app #532.
-            dbeaver-bin
             beekeeper-studio
             turso-cli
           ]
