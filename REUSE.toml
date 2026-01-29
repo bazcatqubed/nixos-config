@@ -8,8 +8,12 @@ SPDX-PackageName = "nixos-config-foodogsquared"
 [[annotations]]
 path = [
   "docs/website/**",
+
+  # All generated files are automatically handled.
   "**/.terraform.lock.hcl",
   "**/flake.lock",
+  "**/gemset.nix"
+  "**/Gemfile.lock"
 ]
 precedence = "closest"
 SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"

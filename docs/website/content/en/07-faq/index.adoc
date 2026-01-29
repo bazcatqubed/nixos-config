@@ -24,7 +24,7 @@ Fortunately footnote:[Or unfortunately from a different perspective.], it is mos
 For a more practical start, I recommend to look into several configurations to see the general gist of configuration with Nix.
 Here's a few I personally dug into:
 
-* github:divnix/digga[rev={devos-example-commit}, path=examples/devos]
+* github:divnix/digga[path=examples/devos]
 * github:hlissner/dotfiles[]
 * github:thiagokokada/nix-configs[]
 --

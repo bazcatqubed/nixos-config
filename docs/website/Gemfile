@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
@@ -9,6 +13,9 @@ gem 'open-uri-cached'
 gem 'rouge'
 gem 'slim'
 gem 'tilt'
+gem 'base64'
+gem 'logger'
+gem 'ostruct'
 
 group :development do
   gem 'rake'

@@ -6,14 +6,14 @@
   lib,
   buildHugoSite,
   bundlerEnv,
-  ruby_3_4,
+  ruby_4_0,
   writeShellScriptBin,
 }:
 
 let
   gems = bundlerEnv {
     name = "foodogsquared-docs-gemset";
-    ruby = ruby_3_4;
+    ruby = ruby_4_0;
     gemdir = ./.;
   };
 

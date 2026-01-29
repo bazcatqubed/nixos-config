@@ -23,12 +23,6 @@ This allows us to easily configure more than one home-manager user.
 
 For NixOS systems, there are multiple ways to impart a home-manager user.
 The simplest way is to have it as a NixOS user and import it from there.
-Here's an example of a NixOS user with a home-manager config.
-
-[source, nix]
-----
-include::../../../../../configs/nixos/_users/plover/default.nix[]
-----
 
 On the host configuration, you can then import it like so.
 
