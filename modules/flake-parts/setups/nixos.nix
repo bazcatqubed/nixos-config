@@ -18,6 +18,38 @@ let
   cfg = config.setups.nixos;
   partsConfig = config;
 
+  formatSubmodule =
+    { lib, ... }:
+    {
+      options = {
+        additionalModules = lib.mkOption {
+          type = with lib.types; listOf deferredModule;
+          description = ''
+            List of additional modules to be imported to the configuration. This
+            is mainly used for output-specific options that are imported to the
+            resulting NixOS configuration such as the `isoImage` option imported
+            from the ISO installer module.
+          '';
+          default = [ ];
+          example = lib.literalExpression ''
+            lib.singleton (
+              { config, lib, pkgs, ... }: {
+                isoImage = {
+                  isoBaseName = lib.mkForce "hello-nixos";
+                  edition = "minimal";
+
+                  squashfsCompression = "zstd -Xcompression-level 11";
+
+                  makeEfiBootable = true;
+                  makeUsbBootable = true;
+                };
+              }
+            )
+          '';
+        };
+      };
+    };
+
   # A thin wrapper around the NixOS configuration function.
   mkHost =
     {
@@ -134,13 +166,19 @@ let
     {
       options = {
         formats = lib.mkOption {
-          type = with lib.types; nullOr (listOf str);
-          default = [ "iso" ];
+          type = with lib.types; nullOr (attrsOf (submodule formatSubmodule));
+          default = null;
           description = ''
             The image formats to be generated from nixos-generators. When given
             as `null`, it is listed as part of `nixosConfigurations` and excluded
             from `images` flake output which is often the case for desktop NixOS
             systems.
+          '';
+          example = lib.literalExpression ''
+            {
+              installer-iso.additionalModules = lib.singleton ../configs/bootstrap/profiles/installer-iso.nix;
+              installer-iso-graphical.additionalModules = lib.singleton ../configs/bootstrap/profiles/installer-iso-graphical.nix;
+            }
           '';
         };
 
@@ -303,7 +341,10 @@ in
           server = {
             systems = [ "x86_64-linux" "aarch64-linux" ];
             domain = "work.example.com";
-            formats = [ "do" "linode" ];
+            formats = {
+              do = { };
+              linode = { };
+            };
             nixpkgs.branch = "nixos-unstable-small";
             deploy = {
               autoRollback = true;
@@ -311,9 +352,18 @@ in
             };
           };
 
+          installer = {
+            systems = [ "x86_64-linux" "aarch64-linux" ];
+            nixpkgs.branch = "nixos-unstable";
+            formats = {
+              installer-iso.additionalModules = lib.singleton ../configs/bootstrap/profiles/installer-iso.nix;
+              installer-iso-graphical.additionalModules = lib.singleton ../configs/bootstrap/profiles/installer-iso-graphical.nix;
+            };
+          };
+
           vm = {
             systems = [ "x86_64-linux" "aarch64-linux" ];
-            formats = [ "vm" ];
+            formats.vm = { };
           };
         }
       '';
@@ -404,7 +454,7 @@ in
                 name: metadata:
                 let
                   buildImage =
-                    format:
+                    format: formatMetadata:
                     lib.nameValuePair "${name}-${format}" (mkImage {
                       inherit format system;
                       inherit (metadata) specialArgs;
@@ -412,10 +462,10 @@ in
                         inherit system;
                         inherit (metadata.nixpkgs) config;
                       };
-                      extraModules = cfg.sharedModules ++ metadata.modules;
+                      extraModules = cfg.sharedModules ++ metadata.modules ++ formatMetadata.additionalModules;
                     });
 
-                  images = lib.map buildImage metadata.formats;
+                  images = lib.mapAttrsToList buildImage metadata.formats;
                 in
                 lib.listToAttrs images;
             in
