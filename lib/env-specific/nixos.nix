@@ -53,9 +53,9 @@
 
   # Create a range object (as [start, end) in notation) that is typically used
   # in module options that accept them.
-  makeRange = start: range: {
+  makeRange = start: end: {
     from = start;
-    to = start + range;
+    to = end;
   };
 
   # Create a range object (as [start + 1, end + 1] in notation) that is typically used
