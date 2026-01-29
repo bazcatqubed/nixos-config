@@ -32,6 +32,7 @@ in
         services.kanidm = {
           enableServer = true;
           enablePam = true;
+          package = pkgs.kanidm_1_8;
 
           serverSettings = {
             domain = authDomain;
@@ -58,7 +59,7 @@ in
 
           unixSettings = {
             use_etc_skel = false;
-            pam_allowed_login_groups = [ "kanidm" ];
+            kanidm.pam_allowed_login_groups = [ "kanidm" ];
           };
         };
 

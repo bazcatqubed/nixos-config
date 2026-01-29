@@ -8,6 +8,7 @@
   pkgs,
   modulesPath,
   foodogsquaredLib,
+  foodogsquaredUtils,
   ...
 }:
 
@@ -15,7 +16,7 @@
   imports = [
     "${modulesPath}/profiles/minimal.nix"
 
-    (foodogsquaredLib.mapHomeManagerUser "winnow" {
+    (foodogsquaredUtils.mapHomeManagerUser "winnow" {
       extraGroups = [
         "wheel"
         "docker"
@@ -32,7 +33,6 @@
   wsl = {
     enable = true;
     defaultUser = "winnow";
-    nativeSystemd = true;
   };
 
   programs.bash.loginShellInit = "nixos-wsl-welcome";

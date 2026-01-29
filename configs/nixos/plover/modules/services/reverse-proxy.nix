@@ -37,7 +37,6 @@ in
           # Some more server-sided compressions.
           recommendedBrotliSettings = true;
           recommendedGzipSettings = true;
-          recommendedZstdSettings = true;
 
           proxyCachePath.apps = {
             enable = true;
