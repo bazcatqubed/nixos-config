@@ -84,8 +84,7 @@ in
       })
 
       (lib.mkIf config.programs.nushell.enable {
-        programs.nushell.environmentVariables.NU_LIB_DIRS =
-          lib.singleton "${config.xdg.configHome}/nushell/foodogsquared";
+        programs.nushell.environmentVariables.NU_LIB_DIRS = lib.singleton "${config.xdg.configHome}/nushell/foodogsquared";
 
         home.file."${config.xdg.configHome}/nushell/autoload".source = getDotfiles "nu/autoload";
         home.file."${config.xdg.configHome}/nushell/scripts".source = getDotfiles "nu/scripts";
@@ -119,13 +118,17 @@ in
 
       # We're just replacing it with our own implmentation of the following
       # programs.
-      (let
-        hasNushellAsDefaultShell =
-          attrs.nixosConfig.users.users.${config.home.username}.shell or null == config.programs.nushell.package;
-      in lib.mkIf (cfg.reimplementation.enable && hasNushellAsDefaultShell) {
-        # Replacing it with our own implementation of autojump.
-        programs.zoxide.enable = lib.mkForce false;
-      })
+      (
+        let
+          hasNushellAsDefaultShell =
+            attrs.nixosConfig.users.users.${config.home.username}.shell or null
+            == config.programs.nushell.package;
+        in
+        lib.mkIf (cfg.reimplementation.enable && hasNushellAsDefaultShell) {
+          # Replacing it with our own implementation of autojump.
+          programs.zoxide.enable = lib.mkForce false;
+        }
+      )
     ]
   );
 }

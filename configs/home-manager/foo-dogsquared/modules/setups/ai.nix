@@ -6,7 +6,12 @@
 # solely as a fuzzier search engine. Not so much AI coding in the terminal yet
 # but who knows... Still don't trust them for basic coding tasks for the most
 # part.
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   userCfg = config.users.foo-dogsquared;
@@ -20,8 +25,10 @@ in
     home.packages = with pkgs; [
       aider-chat-full # Invite an uninviting robot in your programming session.
       plandex # Roleplay/train your senior role by training a junior to fuck up your project.
-      newelle # Now see them robits with a graphical app.
     ];
+
+    # Now see them robits with a graphical app.
+    programs.newelle.enable = true;
 
     programs.opencode = {
       enable = true;
