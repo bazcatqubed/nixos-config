@@ -11,6 +11,7 @@
     ./programs/pipewire.nix
     ./programs/pop-launcher.nix
     ./programs/borgmatic.nix
+    ./programs/newelle.nix
     ./programs/texlive.nix
     ./programs/diceware.nix
     ./programs/nushell.nix

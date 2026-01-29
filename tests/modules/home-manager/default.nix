@@ -65,6 +65,7 @@ import nmt {
       #./programs/borgmatic
       ./programs/kando
       ./programs/diceware
+      ./programs/newelle
       ./programs/sesh
       ./programs/pipewire
       ./programs/pop-launcher
