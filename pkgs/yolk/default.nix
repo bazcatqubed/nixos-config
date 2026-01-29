@@ -2,7 +2,11 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ lib, fetchFromGitHub, rustPlatform }:
+{
+  lib,
+  fetchFromGitHub,
+  rustPlatform,
+}:
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "yolk";

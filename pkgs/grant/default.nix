@@ -2,7 +2,11 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ lib, buildGoModule, fetchFromGitHub }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+}:
 
 buildGoModule (finalAttrs: {
   pname = "grant";

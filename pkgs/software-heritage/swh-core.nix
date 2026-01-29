@@ -30,7 +30,7 @@ buildPythonPackage rec {
     deprecated
     pyyaml
     python-magic
-    sentry-sdk_2
+    sentry-sdk
 
     # swh.core.db
     psycopg2

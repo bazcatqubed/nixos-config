@@ -34,7 +34,7 @@ buildPythonPackage rec {
     # Requirements for Django
     django
     djangorestframework
-    sentry-sdk_2
+    sentry-sdk
 
     # Requirements for Starlette
     starlette

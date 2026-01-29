@@ -2,7 +2,23 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ stdenv, lib, fetchFromGitHub, rustPlatform, meson, ninja, pkg-config, wrapGAppsHook4, glib, gtk4, libadwaita, cargo, rustc, desktop-file-utils, appstream-glib }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  rustPlatform,
+  meson,
+  ninja,
+  pkg-config,
+  wrapGAppsHook4,
+  glib,
+  gtk4,
+  libadwaita,
+  cargo,
+  rustc,
+  desktop-file-utils,
+  appstream-glib,
+}:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "bobby";
