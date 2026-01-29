@@ -96,6 +96,7 @@ in
           adw-gtk3 # A nice theme for GTK3.
           amberol # An unambitious music player.
           authenticator # 2-factor codes for 2-factor storages.
+          bazaar # ...and a cathedral you can explore too.
           blanket # Zen...
           dialect # Your gateway to polyglotting.
           eyedropper # Some nice eyedropper tool.
@@ -510,5 +511,9 @@ in
     };
 
     environment.systemPackages = requiredApps ++ shellExtensions' ++ cfg.extraApps;
+
+    environment.gnome.excludePackages = lib.optionals (lib.elem pkgs.bazaar cfg.extraApps) [
+      pkgs.gnome-software
+    ];
   };
 }
