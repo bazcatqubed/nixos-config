@@ -10,7 +10,7 @@
   lua,
   luarocks,
   stylua,
-  sumneko-lua-language-server,
+  lua-language-server,
 }:
 
 mkShell {
@@ -18,7 +18,7 @@ mkShell {
     lua
     luarocks
     stylua
-    sumneko-lua-language-server
+    lua-language-server
   ];
 
   inputsFrom = [

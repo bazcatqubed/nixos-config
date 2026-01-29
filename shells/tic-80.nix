@@ -7,14 +7,13 @@
 # development with plain text cartridges.
 {
   mkShell,
-  tic-80,
+  tic-80-unstable,
   imagemagick,
 }:
 
 mkShell {
   packages = [
-    tic-80
-    tic-80.dev
+    tic-80-unstable
     imagemagick
   ];
 }
