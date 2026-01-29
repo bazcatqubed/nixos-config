@@ -18,14 +18,11 @@
     };
 
     trovebelt = {
-      components = lib.cartesianProduct {
-        nixpkgsBranch = [ "nixos-unstable" ];
-        nixvimBranch = [ "nixvim-unstable" ];
-        neovimPackage = [ (pkgs: pkgs.neovim) ];
-        overlays = [
-          [ inputs.neovim-nightly-overlay.overlays.default ]
-          [ ]
-        ];
+      components = lib.singleton {
+        nixpkgsBranch = "nixos-unstable";
+        nixvimBranch = "nixvim-unstable";
+        neovimPackage = pkgs: pkgs.neovim;
+        overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
       };
     };
   };

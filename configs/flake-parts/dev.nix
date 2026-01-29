@@ -6,8 +6,6 @@
 { inputs, ... }:
 {
   flake = {
-    lib = import ../../lib { lib = inputs.nixpkgs.lib; };
-
     foodogsquaredLib = ../../lib;
   };
 
