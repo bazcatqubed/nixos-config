@@ -31,6 +31,16 @@ let
       ...
     }:
     {
+      imports = [
+        (lib.mkAliasOptionModule
+          [ "wrapperManagerBranch" ]
+          [
+            "wrapper-manager"
+            "branch"
+          ]
+        )
+      ];
+
       options.wrapper-manager = {
         additionalModules = lib.mkOption {
           type = with lib.types; listOf deferredModule;
@@ -95,6 +105,16 @@ let
     }:
     {
       options = {
+        wrapperManagerBranch = lib.mkOption {
+          type = with lib.types; nullOr nonEmptyStr;
+          description = ''
+            Input of the wrapper-manager-fds module to be used for module
+            evaluation.
+          '';
+          default = "wrapper-manager-fds";
+          example = "wrapper-manager-fds-unstable";
+        };
+
         standaloneConfigModules = options.setups.wrapper-manager.standaloneConfigModules // {
           description = ''
             A list of config-specific modules to be included when the
@@ -251,8 +271,7 @@ in
             in
             mkWrapperManagerPackage {
               inherit pkgs;
-              inherit (metadata) specialArgs;
-              wrapperManagerBranch = metadata.wrapper-manager.branch;
+              inherit (metadata) specialArgs wrapperManagerBranch;
               modules =
                 cfg.sharedModules
                 ++ cfg.standaloneConfigModules
