@@ -19,40 +19,21 @@ in
 }@moduleArgs:
 
 let
-  inherit (sources) dotfiles nixgl;
+  inherit (sources) dotfiles;
 
   getDotfiles = path: "${dotfiles}/${path}";
-  isInNonNixOS = !(moduleArgs ? nixosConfig);
-
-  wrapNixGL =
-    arg0:
-    if isInNonNixOS then
-      {
-        nixgl.enable = true;
-        nixgl.wraparound.arg0 = arg0;
-      }
-    else
-      {
-        inherit arg0;
-      };
 in
 {
   # This wrapper needs runtime expansion which is not possible with binary
   # wrappers.
   build.variant = "shell";
 
-  nixgl.src = nixgl;
-
   wrappers.wezterm = lib.mkMerge [
     { env.WEZTERM_CONFIG_FILE.value = getDotfiles "wezterm/wezterm.lua"; }
-
-    (wrapNixGL (lib.getExe' pkgs.wezterm "wezterm"))
   ];
 
   wrappers.kitty = lib.mkMerge [
     { env.KITTY_CONFIG_DIRECTORY.value = getDotfiles "kitty"; }
-
-    (wrapNixGL (lib.getExe' pkgs.kitty "kitty"))
   ];
 
   wrappers.nvim = {
@@ -73,8 +54,6 @@ in
 
       pathAdd = wrapperManagerLib.getBin [ sources.doom-emacs ];
     }
-
-    (wrapNixGL (lib.getExe' pkgs.emacs "emacs"))
   ];
 
   wrappers.zellij = {

@@ -79,6 +79,6 @@ let
     };
 in
 if version == 3 then
-  lib.mapAttrs (_: mkSource) data.pins
+  builtins.mapAttrs (_: mkSource) data.pins
 else
   throw "Unsupported format version ${toString version} in sources.json. Try running `npins upgrade`"
