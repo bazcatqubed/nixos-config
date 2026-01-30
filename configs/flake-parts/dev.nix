@@ -40,7 +40,7 @@
           type = "app";
           program =
             let
-              package = pkgs.callPackage ../../apps/fds-fetcher-flock { };
+              package = pkgs.callPackage ../../apps/fds-fetcher-flock/nix/package.nix { };
             in
             lib.getExe package;
         };
