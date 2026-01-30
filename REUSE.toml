@@ -12,8 +12,8 @@ path = [
   # All generated files are automatically handled.
   "**/.terraform.lock.hcl",
   "**/flake.lock",
-  "**/gemset.nix"
-  "**/Gemfile.lock"
+  "**/gemset.nix",
+  "**/Gemfile.lock",
 ]
 precedence = "closest"
 SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"
@@ -23,6 +23,14 @@ SPDX-License-Identifier = "MIT"
 path = [ "docs/website/static/**" ]
 SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"
 SPDX-License-Identifier = "CC-BY-NC-SA-4.0"
+
+[[annotations]]
+path = [
+  "docs/website/static/icons/avatars/**",
+  "docs/website/static/favicon.png",
+]
+SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"
+SPDX-License-Identifier = "LicenseRef-foodogsquared"
 
 [[annotations]]
 path = [
