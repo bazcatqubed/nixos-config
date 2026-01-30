@@ -36,13 +36,13 @@
 
 stdenv.mkDerivation rec {
   pname = "domterm";
-  version = "unstable-2023-07-22";
+  version = "unstable-2026-01-29";
 
   src = fetchFromGitHub {
     owner = "PerBothner";
     repo = "DomTerm";
-    rev = "33ca5ad96cd8fc274b8e97533123dd8c33fb1938";
-    hash = "sha256-H1Nzqzz7dv4j9hkb08FCExLeq69EkFNXGzhhl/e+uxI=";
+    rev = "d75f9062e659600f6f1c09949e3d7285fc546b33";
+    hash = "sha256-S4LnOg7UmjaxFGCl0IvaJXfR1uEyM+M7oiMDYtwAJZo=";
   };
 
   configureFlags = [
@@ -74,8 +74,8 @@ stdenv.mkDerivation rec {
     unixtools.xxd
     zlib
   ]
-  ++ lib.optional withKddockwidgets kddockwidgets
-  ++ lib.optional withAsciidoctor asciidoctor
+  ++ lib.optionals withKddockwidgets [ kddockwidgets ]
+  ++ lib.optionals withAsciidoctor [ asciidoctor ]
   ++ lib.optionals withDocbook [
     docbook-xsl-ns
     libxslt
@@ -86,5 +86,6 @@ stdenv.mkDerivation rec {
     description = "Terminal emulator based on web technologies.";
     license = licenses.bsd3;
     maintainers = with maintainers; [ foo-dogsquared ];
+    broken = true;
   };
 }
