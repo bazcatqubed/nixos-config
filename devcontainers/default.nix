@@ -17,4 +17,5 @@ in
   ruby_3_3 = callPackage ./ruby-on-rails.nix { ruby = pkgs.ruby_3_3; };
   ruby_3_4 = callPackage ./ruby-on-rails.nix { ruby = pkgs.ruby_3_4; };
   ruby_3_5 = callPackage ./ruby-on-rails.nix { ruby = pkgs.ruby_3_5; };
+  ruby_4_0 = callPackage ./ruby-on-rails.nix { ruby = pkgs.ruby_4_0; };
 }
