@@ -55,6 +55,10 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
+        environment.systemPackages = with pkgs; [
+          conntrack-tools
+        ];
+
         # Set your time zone.
         time.timeZone = "Asia/Manila";
 
@@ -187,14 +191,11 @@ in
             protocols = [ "tcp" ];
             openFirewall = true;
           };
-
-          # This is for user-specific services that would need to be exposed to
-          # the local network.
-          userland = {
-            value = foodogsquaredLib.nixos.makeRange 20000 30000;
-            openFirewall = true;
-          };
         };
+
+        networking.firewall.extraInputRules = ''
+          iifname "wlp4s0" accept
+        '';
       })
     ]
   );
