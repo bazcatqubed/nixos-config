@@ -57,8 +57,7 @@ in
     xdg.configFile."Newelle/extensions" = lib.mkIf (cfg.extensions != [ ]) {
       source = pkgs.symlinkJoin {
         name = "newelle-extensions";
-        paths =
-          lib.concatMap (p: [ "${p}/share/Newelle/extensions" ]) cfg.extensions;
+        paths = lib.concatMap (p: [ "${p}/share/Newelle/extensions" ]) cfg.extensions;
       };
       recursive = true;
     };

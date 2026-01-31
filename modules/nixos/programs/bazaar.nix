@@ -2,7 +2,12 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.bazaar;
@@ -10,11 +15,15 @@ let
   settingsFormat = pkgs.formats.yaml { };
   settingsFile = settingsFormat.generate "bazaar-settings" cfg.settings;
 
-  finalPkg = cfg.package.overrideAttrs (final: prev: {
-    mesonFlags = prev.mesonFlags or [ ] ++ (lib.optionals (cfg.settings != { }) [
-      (lib.mesonOption "hardcoded_main_config_path" settingsFile)
-    ]);
-  });
+  finalPkg = cfg.package.overrideAttrs (
+    final: prev: {
+      mesonFlags =
+        prev.mesonFlags or [ ]
+        ++ (lib.optionals (cfg.settings != { }) [
+          (lib.mesonOption "hardcoded_main_config_path" settingsFile)
+        ]);
+    }
+  );
 in
 {
   options.programs.bazaar = {

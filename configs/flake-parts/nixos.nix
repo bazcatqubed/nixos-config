@@ -121,7 +121,7 @@ in
         ];
       };
 
-      # The barely customized non-graphical installer.
+      # The barely customized installer.
       bootstrap = {
         nixpkgs.branch = "nixos-unstable";
         home-manager.branch = "home-manager-unstable";

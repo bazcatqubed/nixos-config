@@ -4,6 +4,7 @@
 
 excludes = [
   "pkgs/firefox-addons/default.nix",
+  "**/gemset.nix",
   "subprojects/*",
 ]
 

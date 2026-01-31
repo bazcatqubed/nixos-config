@@ -512,13 +512,15 @@ in
 
     environment.systemPackages = requiredApps ++ shellExtensions' ++ cfg.extraApps;
 
-    environment.gnome.excludePackages = let
-      isInAppsList = pkg: lib.elem pkg cfg.extraApps;
-    in lib.optionals (isInAppsList pkgs.bazaar) [
-      pkgs.gnome-software
-    ]
-    ++ lib.optionals (isInAppsList pkgs.mission-center) [
-      pkgs.gnome-system-monitor
-    ];
+    environment.gnome.excludePackages =
+      let
+        isInAppsList = pkg: lib.elem pkg cfg.extraApps;
+      in
+      lib.optionals (isInAppsList pkgs.bazaar) [
+        pkgs.gnome-software
+      ]
+      ++ lib.optionals (isInAppsList pkgs.mission-center) [
+        pkgs.gnome-system-monitor
+      ];
   };
 }
