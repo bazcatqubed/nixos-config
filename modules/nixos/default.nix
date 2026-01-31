@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./programs/bazaar.nix
     ./programs/blender.nix
     ./programs/dwarf-fortress.nix
     ./programs/distrobox.nix
