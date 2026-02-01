@@ -130,6 +130,32 @@
         platforms = platforms.all;
       };
     };
+    "gopass-bridge" = buildFirefoxXpiAddon {
+      pname = "gopass-bridge";
+      version = "2.1.1";
+      addonId = "{eec37db0-22ad-4bf1-9068-5ae08df8c7e9}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4630675/gopass_bridge-2.1.1.xpi";
+      sha256 = "e8ac742baf8fd9954672b778440acf9d87666d93df470d8d7be53e2cb051141f";
+      meta = with lib;
+      {
+        homepage = "https://github.com/gopasspw/gopassbridge";
+        description = "Gopass Bridge allows searching, inserting and managing login credentials from the gopass password manager.";
+        license = licenses.mit;
+        mozPermissions = [
+          "<all_urls>"
+          "activeTab"
+          "clipboardWrite"
+          "storage"
+          "nativeMessaging"
+          "notifications"
+          "webRequest"
+          "webRequestBlocking"
+          "http://*/*"
+          "https://*/*"
+        ];
+        platforms = platforms.all;
+      };
+    };
     "microsoft-container" = buildFirefoxXpiAddon {
       pname = "microsoft-container";
       version = "1.0.4";
