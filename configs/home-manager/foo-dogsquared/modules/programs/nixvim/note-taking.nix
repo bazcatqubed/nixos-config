@@ -25,8 +25,6 @@ in
 
     # Set it up, set it up, set it up.
     plugins.neorg.settings = {
-      lazy_loading = true;
-
       load = lib.mkMerge [
         {
           # Pretty much required with tree-sitter integration and all.

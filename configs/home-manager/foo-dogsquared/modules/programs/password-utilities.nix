@@ -21,6 +21,8 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       gopass # An improved version of the password manager for hipsters.
+      gopass-jsonapi # JSON API which is nice.
+      gopass-hibp # See if you caught slipping.
     ];
 
     programs.diceware = {

@@ -35,6 +35,9 @@ let
         { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # GNOME Shell integration
         { id = "jfnifeihccihocjbfcfhicmmgpjicaec"; } # GSConnect
       ]
+  ++ lib.optionals userCfg.programs.password-utilities.enable [
+    { id = "kkhfnlkhiapbiehimabddjbimfaijdhk"; } # Gopass Bridge
+  ]
   ++ lib.optionals userCfg.services.archivebox.enable [
     { id = "habonpimjphpdnmcfkaockjnffodikoj"; } # ArchiveBox Extractor
   ]
@@ -160,6 +163,9 @@ in
                 refined-github-
               ])
               ++ lib.optionals config.programs.mpv.enable (with pkgs.nur.repos.rycee.firefox-addons; [ ff2mpv ])
+              ++ lib.optionals userCfg.programs.password-utilities.enable (
+                with pkgs.firefox-addons; [ gopass-bridge ]
+              )
               ++ lib.optionals config.services.activitywatch.enable (
                 with pkgs.nur.repos.rycee.firefox-addons; [ aw-watcher-web ]
               )
