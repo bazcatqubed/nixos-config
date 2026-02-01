@@ -27,10 +27,10 @@ var (
 	}
 
 	pexelsFetchVideosByIdCmd = &cobra.Command{
-		Use: "videos-by-id ID [ID...]",
+		Use:   "videos-by-id ID [ID...]",
 		Short: "fetch Pexels videos by its id",
-		Args: cobra.MinimumNArgs(1),
-		Run: runPexelsFetchVideosByIdCmd,
+		Args:  cobra.MinimumNArgs(1),
+		Run:   runPexelsFetchVideosByIdCmd,
 	}
 
 	pexelsFetchFromCurationFeed = &cobra.Command{
@@ -40,9 +40,9 @@ var (
 	}
 
 	pexelsFetchFromPopularVideosCmd = &cobra.Command{
-		Use: "popular-videos",
+		Use:   "popular-videos",
 		Short: "fetch videos from Pexels' popular video feed",
-		Run: runPexelsFetchFromPopularVideosCmd,
+		Run:   runPexelsFetchFromPopularVideosCmd,
 	}
 )
 
@@ -129,7 +129,9 @@ func runPexelsFetchFromCurationFeedCmd(cmd *cobra.Command, args []string) {
 	client := pexels.NewClient(apiKey)
 
 	perPage, err := cmd.Flags().GetUint("count")
-	if err != nil { cobra.CheckErr(err) }
+	if err != nil {
+		cobra.CheckErr(err)
+	}
 
 	page, err := client.GetCuratedPhotos(&pexels.PhotoPageParams{
 		PerPage: int(perPage),
@@ -154,7 +156,9 @@ func runPexelsFetchFromPopularVideosCmd(cmd *cobra.Command, args []string) {
 	client := pexels.NewClient(apiKey)
 
 	perPage, err := cmd.Flags().GetUint("count")
-	if err != nil { cobra.CheckErr(err) }
+	if err != nil {
+		cobra.CheckErr(err)
+	}
 
 	videoParams := &pexels.VideoPageParams{
 		PerPage: int(perPage),
@@ -162,11 +166,15 @@ func runPexelsFetchFromPopularVideosCmd(cmd *cobra.Command, args []string) {
 
 	if v, err := cmd.Flags().GetUint("min-width"); err == nil {
 		videoParams.MinWidth = int(v)
-	} else { cobra.CheckErr(err) }
+	} else {
+		cobra.CheckErr(err)
+	}
 
 	if v, err := cmd.Flags().GetUint("max-width"); err == nil {
 		videoParams.MaxWidth = int(v)
-	} else { cobra.CheckErr(err) }
+	} else {
+		cobra.CheckErr(err)
+	}
 
 	page, err := client.GetPopularVideos(videoParams)
 	if err != nil {

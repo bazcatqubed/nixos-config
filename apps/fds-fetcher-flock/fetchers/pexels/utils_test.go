@@ -11,59 +11,59 @@ import (
 var (
 	mockTestVideoFiles = []*VideoFile{
 		{
-			Width: 640,
+			Width:  640,
 			Height: 360,
 		},
 
 		{
-			Width: 960,
+			Width:  960,
 			Height: 540,
 		},
 
 		{
-			Width: 1280,
+			Width:  1280,
 			Height: 720,
 		},
 
 		{
-			Width: 1920,
+			Width:  1920,
 			Height: 1080,
 		},
 	}
 )
 
 func TestClosestSize(t *testing.T) {
-	cases := []struct{
-		name string
-		width float64
-		height float64
+	cases := []struct {
+		name     string
+		width    float64
+		height   float64
 		expected *VideoFile
 	}{
 		{
-			name: "StrictLargestSize",
-			width: 1920,
-			height: 1020,
+			name:     "StrictLargestSize",
+			width:    1920,
+			height:   1020,
 			expected: mockTestVideoFiles[len(mockTestVideoFiles)-1],
 		},
 
 		{
-			name: "StrictSmallestSize",
-			width: 640,
-			height: 360,
+			name:     "StrictSmallestSize",
+			width:    640,
+			height:   360,
 			expected: mockTestVideoFiles[0],
 		},
 
 		{
-			name: "StrictSmallestSizeWithZeroHeight",
-			width: 640,
-			height: 0,
+			name:     "StrictSmallestSizeWithZeroHeight",
+			width:    640,
+			height:   0,
 			expected: mockTestVideoFiles[0],
 		},
 
 		{
-			name: "LargestSizeWithNonZeroValues",
-			width: -1,
-			height: -1,
+			name:     "LargestSizeWithNonZeroValues",
+			width:    -1,
+			height:   -1,
 			expected: mockTestVideoFiles[len(mockTestVideoFiles)-1],
 		},
 	}
@@ -78,32 +78,32 @@ func TestClosestSize(t *testing.T) {
 }
 
 func TestSnakeCase(t *testing.T) {
-	cases := []struct{
-		name string
-		input string
+	cases := []struct {
+		name     string
+		input    string
 		expected string
 	}{
 		{
-			name: "ScreamingSnakeCase",
-			input: "HELLO_WORLD",
+			name:     "ScreamingSnakeCase",
+			input:    "HELLO_WORLD",
 			expected: "hello_world",
 		},
 
 		{
-			name: "PascalCase",
-			input: "HelloWorldOutThere",
+			name:     "PascalCase",
+			input:    "HelloWorldOutThere",
 			expected: "hello_world_out_there",
 		},
 
 		{
-			name: "CamelCase",
-			input: "whoaThereSport",
+			name:     "CamelCase",
+			input:    "whoaThereSport",
 			expected: "whoa_there_sport",
 		},
 
 		{
-			name: "AnotherSnakeCase",
-			input: "hello_world",
+			name:     "AnotherSnakeCase",
+			input:    "hello_world",
 			expected: "hello_world",
 		},
 	}
@@ -118,20 +118,20 @@ func TestSnakeCase(t *testing.T) {
 }
 
 type testQuery struct {
-	Name string
+	Name                string
 	PaginationDirection string
 }
 
 func TestGenerateQuery(t *testing.T) {
-	cases := []struct{
-		name string
-		input any
+	cases := []struct {
+		name     string
+		input    any
 		expected string
 	}{
 		{
 			name: "BasicTestQuery",
 			input: &testQuery{
-				Name: "hello",
+				Name:                "hello",
 				PaginationDirection: "welp",
 			},
 			expected: "name=hello&pagination_direction=welp",
@@ -139,11 +139,11 @@ func TestGenerateQuery(t *testing.T) {
 
 		{
 			name: "InlineStructWithScreamingSnakeCase",
-			input: &struct{
-				WHY_HELLO_THERE string
+			input: &struct {
+				WHY_HELLO_THERE    string
 				THIS_IS_ACCEPTABLE int
 			}{
-				WHY_HELLO_THERE: "HEHEHEHE",
+				WHY_HELLO_THERE:    "HEHEHEHE",
 				THIS_IS_ACCEPTABLE: 45,
 			},
 			expected: "this_is_acceptable=45&why_hello_there=HEHEHEHE",
@@ -151,9 +151,9 @@ func TestGenerateQuery(t *testing.T) {
 
 		{
 			name: "SomeFieldsHaveZeroValues",
-			input: &struct{
-				ZeroInt int
-				ZeroString string
+			input: &struct {
+				ZeroInt        int
+				ZeroString     string
 				PageParameters string
 			}{
 				PageParameters: "WELLWELL",
@@ -163,11 +163,11 @@ func TestGenerateQuery(t *testing.T) {
 
 		{
 			name: "AllFieldsAreEmpty",
-			input: &struct{
-				ZeroInt int
+			input: &struct {
+				ZeroInt    int
 				ZeroString string
-				ZeroUint uint
-			}{ },
+				ZeroUint   uint
+			}{},
 			expected: "",
 		},
 	}

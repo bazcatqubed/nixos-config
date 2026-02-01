@@ -107,7 +107,9 @@ func runUnsplashFetchByEditorialFeedCmd(cmd *cobra.Command, args []string) {
 	}
 
 	photos, err := client.GetPhotoEditorialFeed(query)
-	if err != nil { cobra.CheckErr(err) }
+	if err != nil {
+		cobra.CheckErr(err)
+	}
 
 	for _, photo := range photos {
 		dlOpts := make(map[string]string)
@@ -162,7 +164,9 @@ func runUnsplashFetchByRandomCmd(cmd *cobra.Command, args []string) {
 	}
 
 	photos, err := client.GetRandomPhotos(query)
-	if err != nil { cobra.CheckErr(err) }
+	if err != nil {
+		cobra.CheckErr(err)
+	}
 
 	for _, photo := range photos {
 		dlOpts := make(map[string]string)

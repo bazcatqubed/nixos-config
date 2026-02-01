@@ -5,12 +5,12 @@
 package unsplash
 
 import (
-	"fmt"
 	"fds-flock-of-fetchers/fetchers"
-	"net/url"
-	"net/http"
-	"time"
+	"fmt"
 	"image"
+	"net/http"
+	"net/url"
+	"time"
 )
 
 // A Unsplash photo response typically found in HTTP API response.

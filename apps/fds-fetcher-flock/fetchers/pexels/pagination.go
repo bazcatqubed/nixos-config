@@ -9,10 +9,10 @@ import (
 )
 
 type Pagination struct {
-	Page int `json:"page"`
-	PerPage int `json:"per_page"`
-	Total int `json:"total_results"`
-	URL string `json:"url,omitempty"`
+	Page    int    `json:"page"`
+	PerPage int    `json:"per_page"`
+	Total   int    `json:"total_results"`
+	URL     string `json:"url,omitempty"`
 
 	PrevPage string `json:"prev_page,omitempty"`
 	NextPage string `json:"next_page,omitempty"`
@@ -33,16 +33,17 @@ type PageParameters struct {
 type PhotoPageParams PageParameters
 
 type VideoPageParams struct {
-	Page int `schema:"page,default:1"`
-	PerPage int `schema:"per_page,default:5"`
-	MinWidth int `schema:"min_width"`
-	MaxWidth int `schema:"max_width"`
-	MinHeight int `schema:"min_height"`
+	Page        int `schema:"page,default:1"`
+	PerPage     int `schema:"per_page,default:5"`
+	MinWidth    int `schema:"min_width"`
+	MaxWidth    int `schema:"max_width"`
+	MinHeight   int `schema:"min_height"`
 	MinDuration int `schema:"min_duration"`
 	MaxDuration int `schema:"max_duration"`
 }
 
 type PaginationDirection string
+
 const (
 	PaginationNext PaginationDirection = "next"
 	PaginationPrev PaginationDirection = "prev"

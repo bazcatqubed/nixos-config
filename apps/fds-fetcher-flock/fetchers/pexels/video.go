@@ -46,7 +46,9 @@ func (v *Video) RequestFile(dlOpts map[string]string) (*http.Response, error) {
 		width = -1
 	} else {
 		w, err := strconv.Atoi(v)
-		if err != nil { return nil, err }
+		if err != nil {
+			return nil, err
+		}
 		width = w
 	}
 
@@ -54,7 +56,9 @@ func (v *Video) RequestFile(dlOpts map[string]string) (*http.Response, error) {
 		height = -1
 	} else {
 		h, err := strconv.Atoi(v)
-		if err != nil { return nil, err }
+		if err != nil {
+			return nil, err
+		}
 		height = h
 	}
 
