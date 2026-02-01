@@ -14,6 +14,7 @@ path = [
   "**/flake.lock",
   "**/gemset.nix",
   "**/Gemfile.lock",
+  "pkgs/firefox-addons/default.nix"
 ]
 precedence = "closest"
 SPDX-FileCopyrightText = "Gabriel Arazas <foodogsquared@foodogsquared.one>"

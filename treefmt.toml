@@ -26,6 +26,6 @@ options = [ "fmt" ]
 includes = [ "*.tf" ]
 
 [formatter.go]
-command = "go"
-options = [ "fmt" ]
+command = "gofmt"
+options = [ "-w" ]
 includes = [ "*.go" ]
