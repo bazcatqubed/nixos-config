@@ -193,7 +193,6 @@ in
           {
             fullName = "GNOME (minimal)";
             description = "Minimal GNOME session";
-            display = [ "wayland" "xorg" ];
             extraArgs = [ "--systemd" ];
 
             requiredComponents =
