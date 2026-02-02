@@ -105,7 +105,7 @@ in
       (lib.mkIf cfg.video.enable {
         home.packages = with pkgs; [
           ffmpeg-full # Ah yes, everyman's multimedia swiss army knife.
-          kdePackages.kdenlive # YOU! Edit this video and live in a den, 'k?
+          # kdePackages.kdenlive # YOU! Edit this video and live in a den, 'k?
           # davinci-resolve # Michaelangelo once used this, I think.
           gnome-video-effects # A bunch of stock video effects.
         ];

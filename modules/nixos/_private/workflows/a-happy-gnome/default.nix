@@ -112,7 +112,7 @@ in
           mission-center # It is your duty to monitor your system.
           packet # Quick sharing between two phones.
           polari # Your gateway to one of the most hidden and cobweb-ridden parts of the internet. ;)
-          handbrake # Take a break from those custom ffmpeg conversion scripts.
+          # handbrake # Take a break from those custom ffmpeg conversion scripts.
           shortwave # Yer' humble internet radio.
           symbolic-preview # Them symbols... it's important.
           icon-library # Them symbols... it's hard to find.
