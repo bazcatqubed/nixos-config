@@ -1,8 +1,3 @@
-# SPDX-FileCopyrightText: 2023-2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
-# SPDX-FileCopyrightText: 2023-2026 bazcatqubed <218956209+bazcatqubed@users.noreply.github.com>
-#
-# SPDX-License-Identifier: MIT
-
 { buildFirefoxXpiAddon, fetchurl, lib, stdenv }:
   {
     "cookies-txt" = buildFirefoxXpiAddon {
