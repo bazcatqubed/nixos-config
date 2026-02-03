@@ -23,6 +23,19 @@ in
 
       mutableUserDebug = true;
       mutableUserKeymaps = true;
+
+      extensions = [
+        "nix"
+        "toml"
+        "latex"
+        "scheme"
+        "xml"
+        "lua"
+        "ruby"
+        "git-firefly"
+        "dart"
+      ]
+      ++ lib.optionals userCfg.programs.nushell.enable [ "nu" ];
     };
   };
 }
