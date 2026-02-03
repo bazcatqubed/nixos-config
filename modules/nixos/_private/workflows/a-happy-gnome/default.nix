@@ -11,6 +11,8 @@
 }:
 
 let
+  isInAppsList = pkg: lib.elem pkg cfg.extraApps;
+  isInExtensions = pkg: lib.elem pkg cfg.shellExtensions;
   workflowName = "one.foodogsquared.AHappyGNOME";
   cfg = config.workflows.workflows.${workflowName};
 
@@ -372,6 +374,15 @@ in
           };
         }
 
+        # Conditional upstream module options, hell yeah. This is my
+        # preferred system monitor, all right?
+        (lib.mkIf (isInAppsList pkgs.mission-center && isInExtensions pkgs.gnomeExtensions.runcat) {
+          "org/gnome/shell/extensions/runcat" = {
+            custom-system-monitor-enabled = true;
+            custom-system-monitor-command = pkgs.mission-center.meta.mainProgram;
+          };
+        })
+
         # Disable all of the messenger's notification (only the annoying
         # ones).
         (lib.pipe cfg.disableNotifications [
@@ -513,9 +524,6 @@ in
     environment.systemPackages = requiredApps ++ shellExtensions' ++ cfg.extraApps;
 
     environment.gnome.excludePackages =
-      let
-        isInAppsList = pkg: lib.elem pkg cfg.extraApps;
-      in
       lib.optionals (isInAppsList pkgs.bazaar) [
         pkgs.gnome-software
       ]
