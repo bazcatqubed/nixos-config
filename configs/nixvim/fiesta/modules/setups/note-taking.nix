@@ -24,8 +24,6 @@ in
 
     # Set it up, set it up.
     plugins.neorg.settings = {
-      lazy_loading = true;
-
       # The basic bare essentials.
       load = {
         "core.defaults" = helpers.emptyTable;
