@@ -125,8 +125,9 @@ in
             == config.programs.nushell.package;
         in
         lib.mkIf (cfg.reimplementation.enable && hasNushellAsDefaultShell) {
-          # Replacing it with our own implementation of autojump.
+          # Replacing it with our own implementation of autojump and Atuin.
           programs.zoxide.enable = lib.mkForce false;
+          programs.atuin.enable = lib.mkForce false;
         }
       )
     ]
