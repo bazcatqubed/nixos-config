@@ -118,8 +118,8 @@ in
             shfmt # Decorate them horrible code a little bit.
 
             # Testing REST and all about backend development.
-            httpie
-            httpie-desktop
+            xh
+            bruno
             hurl
             grpcurl
             steampipe
