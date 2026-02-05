@@ -13,7 +13,7 @@ let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.dotfiles;
 
-  projectsDir = config.xdg.userDirs.extraConfig.XDG_PROJECTS_DIR;
+  projectsDir = config.xdg.userDirs.extraConfig.PROJECTS;
 
   dotfiles = "${projectsDir}/packages/dotfiles";
   dotfilePackages = import "${dotfiles}/_packages/nix" { inherit pkgs; };

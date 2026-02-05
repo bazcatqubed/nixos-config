@@ -29,8 +29,8 @@ in
         show_unindexed = true;
         workspaces = {
           writings = "${userDirs.documents}/Writings";
-          packages = "${userDirs.extraConfig.XDG_PROJECTS_DIR}/packages";
-          software = "${userDirs.extraConfig.XDG_PROJECTS_DIR}/software";
+          packages = "${userDirs.extraConfig.PROJECTS}/packages";
+          software = "${userDirs.extraConfig.PROJECTS}/software";
         };
       };
     };
