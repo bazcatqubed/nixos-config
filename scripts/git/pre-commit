@@ -1,0 +1,12 @@
+#!/usr/bin/env nu
+
+# SPDX-FileCopyrightText: 2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+#
+# SPDX-License-Identifier: MIT
+
+let against = ^git rev-parse --verify HEAD
+
+^treefmt
+^reuse lint
+
+^git diff-index --check --cached $against --
