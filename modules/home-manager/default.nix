@@ -15,6 +15,7 @@
     ./programs/texlive.nix
     ./programs/diceware.nix
     ./programs/nushell.nix
+    ./programs/pure-data.nix
     ./programs/python.nix
     ./programs/typst.nix
     ./services/archivebox.nix
