@@ -450,7 +450,13 @@ in
         let
           wmIndexOf = name: cfg.paperwm.workspaces.${name}.index.value;
         in
-        lib.optionals (cfg.paperwm.enablePresetWinprops) [
+        [
+          {
+            wm_class = "kando";
+            scratch_layer = true;
+          }
+        ]
+        ++ lib.optionals (cfg.paperwm.enablePresetWinprops) [
           {
             wm_class = "re.sonny.Junction";
             scratch_layer = true;
