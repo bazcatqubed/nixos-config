@@ -71,7 +71,10 @@ in
                       };
 
                     winpropRules =
-                      lib.optionals userCfg.setups.development.enable [
+                      # It doesn't cascade since all of it is just stored in
+                      # one key and not in a relocatable schema.
+                      attrs.nixosConfig.workflows.workflows."one.foodogsquared.AHappyGNOME".paperwm.winprops
+                      ++ lib.optionals userCfg.setups.development.enable [
                         {
                           wm_class = "org.wezfurlong.wezterm";
                           preferredWidth = "100%";

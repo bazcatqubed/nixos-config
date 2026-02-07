@@ -277,17 +277,19 @@ in
           supercollider-with-plugins
           sonic-pi
           processing
-          (puredata-with-plugins (
-            with pkgs;
-            [
-              zexy
-              cyclone
-            ]
-          ))
           plugdata
           shader-slang
           material-maker
         ];
+
+        programs.pure-data = {
+          enable = true;
+          plugins = with pkgs; [
+            zexy
+            cyclone
+            pd-else
+          ];
+        };
 
         xdg.desktopEntries.decker = {
           name = "Decker";
