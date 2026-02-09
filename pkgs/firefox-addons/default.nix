@@ -181,10 +181,10 @@
     };
     "open-access-helper" = buildFirefoxXpiAddon {
       pname = "open-access-helper";
-      version = "2025.11";
+      version = "2026.2";
       addonId = "info@oahelper.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4610394/open_access_helper-2025.11.xpi";
-      sha256 = "8bc1ab3ccd5b13bab9ecbb928b9f234351fd4fb1c383b614d052ab23a7a9ec7b";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4687629/open_access_helper-2026.2.xpi";
+      sha256 = "b2abdf12b567427c337b016c2b5159240a5418b5760ce4b2a9becbe69ea311ea";
       meta = with lib;
       {
         homepage = "https://www.oahelper.org";
@@ -217,10 +217,10 @@
     };
     "private-grammar-checker-harper" = buildFirefoxXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "1.5.1";
+      version = "1.6.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4672920/private_grammar_checker_harper-1.5.1.xpi";
-      sha256 = "d570632485d934aead2941712c92f030f42d825874d1a70de8cd2465b9c99e69";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4685080/private_grammar_checker_harper-1.6.0.xpi";
+      sha256 = "0bba1f442aaf47ad7089ce83e2e5c35f05c215aa26f881f74b6e6b7a4a2cabd8";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
@@ -231,10 +231,10 @@
     };
     "refined-github-" = buildFirefoxXpiAddon {
       pname = "refined-github-";
-      version = "26.1.24";
+      version = "26.2.2";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4674175/refined_github-26.1.24.xpi";
-      sha256 = "ba36e08ec22ee45a14ba8893f84ed3a8b1e27bfa89e356ffcedecd0e769542a2";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4682198/refined_github-26.2.2.xpi";
+      sha256 = "020f040a973b700dbac9fae6611ad1b516ab80d46e30e296b74a81e0f14bd9f4";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
@@ -298,10 +298,10 @@
     };
     "simple-translate" = buildFirefoxXpiAddon {
       pname = "simple-translate";
-      version = "3.0.0";
+      version = "3.0.1";
       addonId = "simple-translate@sienori";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4286113/simple_translate-3.0.0.xpi";
-      sha256 = "c9e36d1d8e32a223da367bdc83133f2436103eb5f16460c7cce2096376e78b68";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4674724/simple_translate-3.0.1.xpi";
+      sha256 = "f8442e973cba5f3400fd3af8741b8692a98b486240ad9eb7014b84620693c996";
       meta = with lib;
       {
         homepage = "https://simple-translate.sienori.com";
