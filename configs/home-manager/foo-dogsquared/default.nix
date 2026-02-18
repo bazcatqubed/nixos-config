@@ -106,7 +106,6 @@ in
       fonts.enable = true;
       music.enable = true;
       music.mpd.enable = true;
-      music.spotify.enable = true;
       research = {
         enable = true;
         writing.enable = true;
