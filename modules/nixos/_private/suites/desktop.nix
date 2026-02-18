@@ -80,7 +80,7 @@ in
           enable = true;
           libraries =
             let
-              xorgLibs = with pkgs.xorg; [
+              xorgLibs = with pkgs; [
                 libX11
                 libXScrnSaver
                 libXcomposite
