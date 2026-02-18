@@ -48,7 +48,7 @@ in
 
     # Losing only means more possibilities to play.
     programs.dwarf-fortress = {
-      enable = false;
+      enable = true;
       wrapperSettings = {
         enableIntro = true;
         enableFPS = true;
