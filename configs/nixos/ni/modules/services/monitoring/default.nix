@@ -6,6 +6,7 @@
   config,
   lib,
   pkgs,
+  foodogsquaredLib,
   ...
 }:
 
@@ -18,6 +19,18 @@ in
     lib.mkEnableOption "enable local desktop monitoring service";
 
   config = lib.mkIf cfg.enable {
+    sops.secrets =
+      let
+        grafanaFileAttributes = {
+          owner = config.users.users.grafana.name;
+          group = config.users.users.grafana.group;
+          mode = "0400";
+        };
+      in
+      foodogsquaredLib.sops.getSecrets ./secrets.yaml {
+        "grafana/secret_key" = grafanaFileAttributes;
+      };
+
     state.ports.grafana.value = 24532;
 
     services.grafana.enable = true;
@@ -36,6 +49,7 @@ in
       security = {
         admin_password = "admin";
         admin_user = "admin";
+        secret_key = "$__file{${config.sops.secrets."grafana/secret_key".path}";
       };
     };
   };

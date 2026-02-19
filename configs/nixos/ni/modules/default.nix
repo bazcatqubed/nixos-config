@@ -11,7 +11,7 @@
     ./services/backup
     ./services/mail-archive.nix
     ./services/reverse-proxy.nix
-    ./services/monitoring.nix
+    ./services/monitoring
     ./services/download-media
     ./services/rss-reader
     ./services/reading-server
