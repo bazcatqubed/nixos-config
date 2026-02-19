@@ -37,9 +37,6 @@ in
 
         freecad
         leocad
-      ]
-      ++ lib.optionals userCfg.setups.music.enable [
-        famistudio
       ];
 
     users.foo-dogsquared = {

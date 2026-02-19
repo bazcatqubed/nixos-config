@@ -39,8 +39,30 @@ in
           milkytracker # Mommy, mommy, I want milky music.
           sunvox # Synthesize them sunshine and rainbows.
           helm # Take 'yer synthesizing at 'yer head.
-          surge-XT # FM
+          surge-xt # FM
+          famistudio # Take a trip back to the past.
         ];
+
+        # Based from the FlatHub's version of their desktop file.
+        # https://github.com/flathub/org.famistudio.FamiStudio/blob/0e23515e70f879c32876aa2ceb0fdcc3f46e7774/org.famistudio.FamiStudio.desktop
+        xdg.desktopEntries."org.famistudio.FamiStudio" = {
+          name = "FamiStudio";
+          comment = "NES Music Editor";
+          genericName = "Music Tracker";
+          exec = lib.getExe pkgs.famistudio;
+          icon = pkgs.fetchurl {
+            url = "https://github.com/flathub/org.famistudio.FamiStudio/blob/0e23515e70f879c32876aa2ceb0fdcc3f46e7774/org.famistudio.FamiStudio.svg?raw=true";
+            hash = "sha256-+MhtGoUd0TIdO/OsP3BKvDmNUpe2IO9ETS7qDeXli/g=";
+          };
+          terminal = false;
+          categories = [
+            "Audio"
+            "AudioVideo"
+            "AudioVideoEditing"
+            "Music"
+            "Sequencer"
+          ];
+        };
 
         wrapper-manager.packages.music-setup = {
           wrappers.yt-dlp-music = {
