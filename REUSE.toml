@@ -35,9 +35,11 @@ SPDX-License-Identifier = "LicenseRef-foodogsquared"
 
 [[annotations]]
 path = [
+  "**/secrets/*.yaml",
+  "**/secrets/*.toml",
+  "**/secrets.yaml",
+  "**/secrets.toml",
   "**/*.json",
-  "**/*.json",
-  "**/*.bin",
   "**/*.bin",
 ]
 precedence = "closest"
