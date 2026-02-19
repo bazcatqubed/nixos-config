@@ -22,20 +22,25 @@ in
   config = lib.mkIf cfg.enable {
     state.ports.activitywatch.value = 5600;
 
-    home.packages = with pkgs; [
-      komikku
-      bitwarden-cli # Manage them passwords terminally.
-      bitwarden-desktop # Manage them passwords on a stick.
-      comaps # Triangulating them locations.
-      parabolic # Download them clips.
+    home.packages =
+      with pkgs;
+      [
+        komikku
+        bitwarden-cli # Manage them passwords terminally.
+        bitwarden-desktop # Manage them passwords on a stick.
+        comaps # Triangulating them locations.
+        parabolic # Download them clips.
 
-      # Games make you productive, right?
-      aisleriot
-      crosswords
+        # Games make you productive, right?
+        aisleriot
+        crosswords
 
-      freecad
-      leocad
-    ];
+        freecad
+        leocad
+      ]
+      ++ lib.optionals userCfg.setups.music.enable [
+        famistudio
+      ];
 
     users.foo-dogsquared = {
       programs = {
@@ -58,7 +63,7 @@ in
     # Install all of the desktop stuff.
     suites.desktop = {
       enable = true;
-      audio.enable = true;
+      audio.enable = userCfg.setups.music.enable;
       audio.pipewire.enable = true;
       graphics.enable = true;
       video.enable = true;
