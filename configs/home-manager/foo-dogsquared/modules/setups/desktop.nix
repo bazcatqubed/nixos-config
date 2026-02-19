@@ -22,22 +22,20 @@ in
   config = lib.mkIf cfg.enable {
     state.ports.activitywatch.value = 5600;
 
-    home.packages =
-      with pkgs;
-      [
-        komikku
-        bitwarden-cli # Manage them passwords terminally.
-        bitwarden-desktop # Manage them passwords on a stick.
-        comaps # Triangulating them locations.
-        parabolic # Download them clips.
+    home.packages = with pkgs; [
+      komikku
+      bitwarden-cli # Manage them passwords terminally.
+      bitwarden-desktop # Manage them passwords on a stick.
+      comaps # Triangulating them locations.
+      parabolic # Download them clips.
 
-        # Games make you productive, right?
-        aisleriot
-        crosswords
+      # Games make you productive, right?
+      aisleriot
+      crosswords
 
-        freecad
-        leocad
-      ];
+      freecad
+      leocad
+    ];
 
     users.foo-dogsquared = {
       programs = {
