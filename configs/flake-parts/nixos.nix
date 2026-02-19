@@ -26,7 +26,7 @@ in
           "archiver-3.5.1"
           "python3.12-django-3.1.14"
           "python3.13-django-3.1.14"
-          "beekeeper-studio-5.5.3"
+          "beekeeper-studio-5.5.5"
           "qtwebengine-5.15.19"
           "quickjs-2025-09-13-2"
           "nexusmods-app-0.21.1"
