@@ -178,7 +178,12 @@ in
           in
           foodogsquaredLib.sops-nix.getSecrets ../../secrets/secrets.yaml {
             "grafana/oauth_client_secret" = grafanaFileAttributes;
+            "grafana/secret_key" = grafanaFileAttributes;
           };
+
+        services.grafana.settings = {
+          security.secret_key = "$__file{${config.sops.secrets."grafana/secret_key".path}}";
+        };
 
         services.grafana.settings."auth.generic_oauth" = {
           enabled = true;
