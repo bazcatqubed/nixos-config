@@ -27,7 +27,7 @@ in
           mode = "0400";
         };
       in
-      foodogsquaredLib.sops.getSecrets ./secrets.yaml {
+      foodogsquaredLib.sops-nix.getSecrets ./secrets.yaml {
         "grafana/secret_key" = grafanaFileAttributes;
       };
 
