@@ -20,11 +20,6 @@ in
   config = lib.mkIf cfg.enable {
     plugins.telescope.enable = true;
 
-    plugins.project-nvim = {
-      enable = lib.mkDefault true;
-      enableTelescope = true;
-    };
-
     plugins.which-key.settings.spec = lib.optionals config.plugins.telescope.enable [
       (helpers.listToUnkeyedAttrs [ bindingPrefix ] // { group = "Telescope"; })
     ];
