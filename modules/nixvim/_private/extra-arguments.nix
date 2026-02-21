@@ -16,11 +16,15 @@ let
 in
 {
   _module.args.foodogsquaredLib = foodogsquaredLib.extend (
-    final: prev: {
+    final: prev:
+    {
       nixvim = import ../../../lib/env-specific/nixvim.nix {
         inherit pkgs lib;
         self = final;
       };
+    }
+    // {
+      extra = config.foodogsquared.lib.extra;
     }
   );
 }

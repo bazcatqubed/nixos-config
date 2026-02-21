@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./fds-lib.nix
     ./extra-arguments.nix
     ./shared-setups/server
     ./state

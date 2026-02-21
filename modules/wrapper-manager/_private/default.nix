@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ../../nixos/_private/fds-lib.nix
     ./extra-arguments.nix
     ./programs/chromium-web-apps.nix
     ./programs/gnome-session.nix

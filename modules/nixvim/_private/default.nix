@@ -2,4 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ imports = [ ./extra-arguments.nix ]; }
+{
+  imports = [
+    ../../nixos/_private/fds-lib.nix
+    ./extra-arguments.nix
+  ];
+}

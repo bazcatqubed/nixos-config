@@ -5,6 +5,7 @@
 # All of the extra module arguments to be passed as part of the home-manager
 # environment.
 {
+  config,
   pkgs,
   lib,
   options,
@@ -40,6 +41,9 @@ in
         inherit pkgs lib;
         self = final;
       };
+    }
+    // {
+      extra = config.foodogsquared.lib.extra;
     }
   );
 }

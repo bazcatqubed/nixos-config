@@ -2,18 +2,27 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   foodogsquaredLib = import ../../../lib { inherit pkgs; };
 in
 {
   _module.args.foodogsquaredLib = foodogsquaredLib.extend (
-    final: prev: {
+    final: prev:
+    {
       wrapper-manager = import ../../../lib/env-specific/wrapper-manager.nix {
         inherit pkgs lib;
         self = final;
       };
+    }
+    // {
+      extra = config.foodogsquared.lib.extra;
     }
   );
 }
