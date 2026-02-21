@@ -222,7 +222,6 @@ in
           "one.foodogsquared.SimpleWay" = {
             fullName = "Simple Way";
             description = "A desktop environment featuring Sway window manager.";
-            display = [ "wayland" ];
             extraArgs = [ "--systemd" ];
 
             components = {
