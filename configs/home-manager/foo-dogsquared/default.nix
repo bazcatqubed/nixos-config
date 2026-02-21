@@ -163,9 +163,16 @@ in
   };
 
   # This is for setting up the rest of the web apps.
-  wrapper-manager.packages.web-apps.programs.chromium-web-apps = {
-    enable = lib.mkDefault true;
-    flags = foodogsquaredLib.wrapper-manager.commonChromiumFlags;
+  wrapper-manager.packages.web-apps = {
+    foodogsquared.lib.extra = {
+      mkCommonChromiumFlags = name: [
+        "--user-data-dir=${config.xdg.configHome}/${config.state.packages.chromiumWrapper.pname}-${name}"
+      ];
+    };
+    programs.chromium-web-apps = {
+      enable = lib.mkDefault true;
+      flags = foodogsquaredLib.wrapper-manager.commonChromiumFlags;
+    };
   };
 
   # Automating some files to be fetched on activation.

@@ -136,21 +136,18 @@ in
     };
 
     wrapper-manager.packages.web-apps = lib.mkIf userCfg.programs.browsers.google-chrome.enable (
-      { hmConfig, config, ... }:
-
-      let
-        chromiumPackage = config.programs.chromium-web-apps.package;
-
-        mkFlags = name: [
-          "--user-data-dir=${hmConfig.xdg.configHome}/${chromiumPackage.pname}-${name}"
-        ];
-      in
+      {
+        hmConfig,
+        config,
+        foodogsquaredLib,
+        ...
+      }:
       {
         programs.chromium-web-apps.apps = lib.mkMerge [
           (lib.mkIf hmConfig.suites.desktop.graphics.enable {
             penpot = {
               baseURL = "design.penpot.app";
-              flags = mkFlags "penpot";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "penpot";
               desktopEntrySettings = {
                 icon = pkgs.fetchurl {
                   url = "https://github.com/penpot.png?s=460";
@@ -170,7 +167,7 @@ in
 
             graphite = {
               baseURL = "editor.graphite.rs";
-              flags = mkFlags "graphite";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "graphite";
               desktopEntrySettings = {
                 icon = pkgs.fetchurl {
                   url = "https://static.graphite.rs/logos/graphite-logo-color-480x480.png";
@@ -192,7 +189,7 @@ in
             canva = {
               baseURL = "canva.com";
               imageHash = "sha512-jpXHNmTRi7Up6nK4i1//H0DyTE8ADRvcA0wvnB2rZ2Td2t3qw6eSUM8mIT7FbYqbQ5sDAfKGpeD3VQVcMx6f8Q==";
-              flags = mkFlags "canva";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "canva";
               desktopEntrySettings = {
                 desktopName = "Canva";
                 genericName = "Visual Design Editor";
@@ -208,7 +205,7 @@ in
             coolors = {
               baseURL = "coolors.co";
               imageHash = "sha512-dWfZaUNuMP9C57PxhOWhFugcOdz4ol/BMLqe3DklkbHvJkMUKD4INlOZu26PcTV+NKWiSjyVdQjS6eRRoNxgRw==";
-              flags = mkFlags "coolors";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "coolors";
               desktopEntrySettings = {
                 desktopName = "Coolors";
                 genericName = "Color Palette Generator";
@@ -225,7 +222,7 @@ in
             google-maps = {
               baseURL = "maps.google.com";
               imageHash = "sha512-vjo1kMyvm/q/N6zF+hwgRYuIjjJ3MHjgNVGQd4SbvMZZzS3Df+CzqCKDHPPfPYjKwSA+ustuIlEzE8FrmKDgzA==";
-              flags = mkFlags "google-maps";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "google-maps";
               desktopEntrySettings = {
                 desktopName = "Google Maps";
                 genericName = "Map Viewer";
@@ -243,7 +240,7 @@ in
             google-earth = {
               baseURL = "earth.google.com";
               imageHash = "sha512-nNhrwyQStOU/yMDVcFP/qL2QOLORynhbGG0tu4Yh5Y8x/FfhCAR8+sxVfKQ1KG2LDopo6icUrSWn0bshrSlWQw==";
-              flags = mkFlags "google-earth";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "google-earth";
               desktopEntrySettings = {
                 desktopName = "Google Earth";
                 genericName = "3D Planet Viewer";
@@ -260,7 +257,7 @@ in
           (lib.mkIf hmConfig.suites.desktop.documents.enable {
             snapchat = {
               baseURL = "snapchat.com";
-              flags = mkFlags "snapchat";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "snapchat";
               desktopEntrySettings = {
                 desktopName = "Snapchat";
                 genericName = "Messaging client";
@@ -277,7 +274,7 @@ in
 
             whatsapp = {
               baseURL = "web.whatsapp.com";
-              flags = mkFlags "whatsapp";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "whatsapp";
               desktopEntrySettings = {
                 desktopName = "WhatsApp";
                 genericName = "Messaging Client";
@@ -295,7 +292,7 @@ in
 
             telegram = {
               baseURL = "web.telegram.org";
-              flags = mkFlags "telegram";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "telegram";
               imageHash = "sha512-qxxTdmmM6GUWqoNLjs8CxFDUd5RBY8K3icWVaTBcQsUe/3saBaKD9e82Q7rG5rICne8dAnYRWQbtFJtGh2zy+Q==";
               desktopEntrySettings = {
                 desktopName = "Telegram";
@@ -311,7 +308,7 @@ in
             netflix = {
               baseURL = "netflix.com";
               imageHash = "sha512-V5TfMR+Je7QNS8Nsh+M8M0I7KU2oxDnqPVcu1LS2wa/gkf67V6fQeWW0Q5AzzIdNbMy1Vp9CEw0DkAotRcvkDg==";
-              flags = mkFlags "netflix" ++ [
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "netflix" ++ [
                 "--enable-nacl"
               ];
               desktopEntrySettings = {

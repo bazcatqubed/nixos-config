@@ -159,50 +159,41 @@ in
           ))
         ];
 
-        wrapper-manager.packages.web-apps.wrappers =
-          let
-            inherit (foodogsquaredLib.wrapper-manager) commonChromiumFlags wrapChromiumWebApp;
-            chromiumPackage = config.state.packages.chromiumWrapper;
-
-            mkFlags =
-              name:
-              commonChromiumFlags
-              ++ [
-                "--user-data-dir=${config.xdg.configHome}/${chromiumPackage.pname}-${name}"
-              ];
-          in
+        wrapper-manager.packages.web-apps = (
+          { foodogsquaredLib, ... }:
           {
-            yt-music = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "yt-music";
-              baseURL = "music.youtube.com";
-              imageHash = "sha512-h0LO75CcxTKuU+JBzC4EkFxikl0mGz3+YpxRRH8vkw4PqGGSbqR+N5nNcLZldSDroiJ5C6XEnEsQi6sLs1OkEA==";
-              imageBuildFlags = [
-                # Because the service only accepts browser views.
-                "--disable-html-download"
-              ];
-              appendArgs = mkFlags name ++ [
-                # This is required for DRM.
-                "--enable-nacl"
-              ];
-              xdg.desktopEntry.settings = {
-                desktopName = "YouTube Music";
-                genericName = "Music Streaming Service";
-                comment = "Music streaming from YouTube";
-                categories = [
-                  "Audio"
-                  "Music"
-                  "Player"
-                  "AudioVideo"
+            programs.chromium-web-apps.apps = {
+              yt-music = {
+                baseURL = "music.youtube.com";
+                imageHash = "sha512-h0LO75CcxTKuU+JBzC4EkFxikl0mGz3+YpxRRH8vkw4PqGGSbqR+N5nNcLZldSDroiJ5C6XEnEsQi6sLs1OkEA==";
+                imageFetcherArgs = [
+                  # Because the service only accepts browser views.
+                  "--disable-html-download"
                 ];
-                keywords = [
-                  "YouTube"
-                  "Music Player"
-                  "Online Music Streaming"
+                flags = foodogsquaredLib.extra.mkCommonChromiumFlags "yt-music" ++ [
+                  # This is required for DRM.
+                  "--enable-nacl"
                 ];
+                desktopEntrySettings = {
+                  desktopName = "YouTube Music";
+                  genericName = "Music Streaming Service";
+                  comment = "Music streaming from YouTube";
+                  categories = [
+                    "Audio"
+                    "Music"
+                    "Player"
+                    "AudioVideo"
+                  ];
+                  keywords = [
+                    "YouTube"
+                    "Music Player"
+                    "Online Music Streaming"
+                  ];
+                };
               };
             };
-          };
+          }
+        );
       }
 
       (lib.mkIf cfg.spotify.enable {
@@ -217,47 +208,37 @@ in
           extraConfigFiles = lib.singleton config.sops.secrets."mopidy/spotify".path;
         };
 
-        wrapper-manager.packages.web-apps.wrappers =
-          let
-            inherit (foodogsquaredLib.wrapper-manager) wrapChromiumWebApp commonChromiumFlags;
-
-            chromiumPackage = config.state.packages.chromiumWrapper;
-
-            mkFlags =
-              name:
-              commonChromiumFlags
-              ++ [
-                "--user-data-dir=${config.xdg.configHome}/${chromiumPackage.pname}-${name}"
-              ];
-          in
+        wrapper-manager.packages.web-apps = (
+          { foodogsquaredLib, ... }:
           {
-            spotify = wrapChromiumWebApp rec {
-              inherit chromiumPackage;
-              name = "spotify";
-              baseURL = "open.spotify.com";
-              imageHash = "sha512-caFOXceJa0q+/LVOrKbR5wviSJFwrahehdZ2Dmv+BTmAkDhfWjwl6tpf690vI17S998Ohe+J9trLMjYX+BihEQ==";
-              appendArgs = mkFlags name ++ [
-                # This is required for DRM.
-                "--enable-nacl"
-              ];
-              xdg.desktopEntry.settings = {
-                desktopName = "Spotify";
-                genericName = "Music Streaming Client";
-                comment = "Play with a music library from millions of artists";
-                mimeTypes = [ "x-scheme-handler/spotify" ];
-                categories = [
-                  "Audio"
-                  "Music"
-                  "Player"
-                  "AudioVideo"
+            programs.chromium-web-apps.apps = {
+              spotify = {
+                baseURL = "open.spotify.com";
+                imageHash = "sha512-caFOXceJa0q+/LVOrKbR5wviSJFwrahehdZ2Dmv+BTmAkDhfWjwl6tpf690vI17S998Ohe+J9trLMjYX+BihEQ==";
+                flags = foodogsquaredLib.extra.mkCommonChromiumFlags "spotify" ++ [
+                  # This is required for DRM.
+                  "--enable-nacl"
                 ];
-                keywords = [
-                  "Music Player"
-                  "Online Music Streaming"
-                ];
+                desktopEntrySettings = {
+                  desktopName = "Spotify";
+                  genericName = "Music Streaming Client";
+                  comment = "Play with a music library from millions of artists";
+                  mimeTypes = [ "x-scheme-handler/spotify" ];
+                  categories = [
+                    "Audio"
+                    "Music"
+                    "Player"
+                    "AudioVideo"
+                  ];
+                  keywords = [
+                    "Music Player"
+                    "Online Music Streaming"
+                  ];
+                };
               };
             };
-          };
+          }
+        );
       })
 
       (lib.mkIf (cfg.spotify.enable && !(attrs.nixosConfig.services.spotifyd.enable or false)) {

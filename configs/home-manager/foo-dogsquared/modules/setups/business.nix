@@ -30,21 +30,18 @@ in
     ];
 
     wrapper-manager.packages.web-apps = lib.mkIf userCfg.programs.browsers.google-chrome.enable (
-      { hmConfig, config, ... }:
-
-      let
-        chromiumPackage = config.programs.chromium-web-apps.package;
-
-        mkFlags = name: [
-          "--user-data-dir=${hmConfig.xdg.configHome}/${chromiumPackage.pname}-${name}"
-        ];
-      in
+      {
+        hmConfig,
+        config,
+        foodogsquaredLib,
+        ...
+      }:
       {
         programs.chromium-web-apps.apps = {
           google-workspace = {
             baseURL = "workspace.google.com";
             imageHash = "sha512-fdbTvnDTU7DQLSGth8hcsnTNWnBK1qc8Rvmak4oaOE+35YTJ9G8q+BdTqoYxUBxq9Dv9TkAB8Vu7UKjZL1GMcQ==";
-            flags = mkFlags "google-workspace";
+            flags = foodogsquaredLib.extra.mkCommonChromiumFlags "google-workspace";
             desktopEntrySettings = {
               desktopName = "Google Workspace";
               genericName = "Cloud Software Suite";
@@ -63,7 +60,7 @@ in
           microsoft-teams = {
             baseURL = "teams.microsoft.com";
             imageHash = "sha512-p71hFz3xGNCThfzgA00icEpmH8XKeRHLxwIwDruiixBmwFa/LbCkzwrkXZS4xntPrysObCsM7L0vvWl6Iq1ZAA==";
-            flags = mkFlags "microsoft-teams";
+            flags = foodogsquaredLib.extra.mkCommonChromiumFlags "microsoft-teams";
             desktopEntrySettings = {
               desktopName = "Microsoft Teams";
               genericName = "Video Conferencing";
@@ -79,7 +76,7 @@ in
           messenger = {
             baseURL = "www.messenger.com";
             imageHash = "sha512-3rbCuiW14TVu8G+VU7hEDsmW4Q7XTx6ZLeEeFtY3XUB9ylzkNSJPwz6U8EiA5vOF1f6qeO4RVWVi8n5jibPouQ==";
-            flags = mkFlags "messenger";
+            flags = foodogsquaredLib.extra.mkCommonChromiumFlags "messenger";
             desktopEntrySettings = {
               desktopName = "Messenger";
               genericName = "Instant Messaging Client";
@@ -99,7 +96,7 @@ in
             imageFetcherArgs = [
               "--disable-html-download"
             ];
-            flags = mkFlags "discord";
+            flags = foodogsquaredLib.extra.mkCommonChromiumFlags "discord";
             desktopEntrySettings = {
               desktopName = "Discord";
               genericName = "Group Messaging Client";
@@ -118,7 +115,7 @@ in
           zoom = {
             baseURL = "zoom.us";
             imageHash = "sha512-l0XEVskMHJXBEdqqZBkDTgGp+F50ux22d1KHH63/Bu83awQP4v80/p3Csuiz4IfIowEu27nucDkIg/nmLotvhQ==";
-            flags = mkFlags "zoom";
+            flags = foodogsquaredLib.extra.mkCommonChromiumFlags "zoom";
             desktopEntrySettings = {
               desktopName = "Zoom";
               genericName = "Video Conferencing";

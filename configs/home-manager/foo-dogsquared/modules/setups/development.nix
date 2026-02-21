@@ -214,19 +214,18 @@ in
 
       (lib.mkIf userCfg.programs.browsers.google-chrome.enable {
         wrapper-manager.packages.web-apps = (
-          { config, hmConfig, ... }:
-          let
-            chromiumPackage = config.programs.chromium-web-apps.package;
-            mkFlags = name: [
-              "--user-data-dir=${hmConfig.xdg.configHome}/${chromiumPackage.pname}-${name}"
-            ];
-          in
+          {
+            config,
+            hmConfig,
+            foodogsquaredLib,
+            ...
+          }:
           {
             programs.chromium-web-apps.apps = {
               devdocs = {
                 baseURL = "devdocs.io";
                 imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
-                flags = mkFlags "devdocs";
+                flags = foodogsquaredLib.extra.mkCommonChromiumFlags "devdocs";
                 desktopEntrySettings = {
                   desktopName = "DevDocs";
                   genericName = "Documentation Browser";
@@ -244,7 +243,7 @@ in
               gnome-devdocs = {
                 baseURL = "gjs-docs.gnome.org";
                 imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
-                flags = mkFlags "gnome-devdocs";
+                flags = foodogsquaredLib.extra.mkCommonChromiumFlags "gnome-devdocs";
                 desktopEntrySettings = {
                   desktopName = "GNOME DevDocs";
                   genericName = "Documentation Browser";
