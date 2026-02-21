@@ -544,7 +544,35 @@
     }
     ```
   */
-  buildDockerImage = pkgs.callPackage ./build-docker-image.nix { foodogsquaredLib = self; };
+  buildDockerImage = pkgs.callPackage ./oci/build-docker-image.nix { foodogsquaredLib = self; };
+
+  /**
+    A thin wrapper around nixpkgs' `dockerTools.buildLayeredImage` with custom
+    modifications set as default.
+
+    # Arguments
+
+    Same arguments as `buildDockerImage`, just with the rest of the arguments
+    being passed to `dockerTools.buildLayeredImage`.
+
+    # Example
+
+    ```nix
+    buildLayeredImage {
+      name = "typical-webdev";
+      contents = with pkgs; [
+        hello
+        ruby
+        npm
+        pnpm
+      ];
+      enableTypicalSetup = true;
+    }
+    ```
+  */
+  buildLayeredDockerImage = pkgs.callPackage ./oci/build-layered-docker-image.nix {
+    foodogsquaredLib = self;
+  };
 
   /**
     Builder for creating a Blender resource folder containing addons and assets.

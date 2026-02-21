@@ -78,6 +78,7 @@ pkgs.lib.makeExtensible (
       buildDconfConf
       buildDconfPackage
       buildDockerImage
+      buildLayeredDockerImage
       buildBlenderAddons
       ;
     inherit (self.trivial)

@@ -45,6 +45,8 @@ dockerTools.buildImage (
         );
     };
 
+    compressor = attrs.compressor or "zstd";
+
     runAsRoot = ''
       ${lib.optionalString enableTypicalSetup ''
         mkdir -p /data
