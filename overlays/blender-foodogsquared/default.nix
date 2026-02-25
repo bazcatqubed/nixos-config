@@ -5,11 +5,14 @@
 final: prev:
 
 {
-  blender-foodogsquared = prev.blender.withPackages (
+  blender-foodogsquared = final.blender.withPackages (
     p: with p; [
       pandas
       scipy
       pillow
+      (colour-science.override {
+        optionalFeatures = false;
+      })
     ]
   );
 }

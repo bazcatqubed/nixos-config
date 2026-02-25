@@ -8,6 +8,7 @@
 # simply have to append them as a list (i.e., `lib.attrValues`).
 {
   default = final: prev: import ../pkgs { pkgs = prev; };
+  python-set-foodogsquared = import ./python-set-foodogsquared;
   ffmpeg-foodogsquared = import ./ffmpeg-foodogsquared;
   firefox-foodogsquared = import ./firefox-foodogsquared;
   blender-foodogsquared = import ./blender-foodogsquared;
