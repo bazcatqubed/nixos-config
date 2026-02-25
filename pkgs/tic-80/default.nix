@@ -20,9 +20,7 @@
   freeglut,
   git,
   gtk3,
-  dbus,
   libGLU,
-  libX11,
   libglvnd,
   libsamplerate,
   mesa,
@@ -67,15 +65,15 @@
 }:
 
 # TODO: Fix the timestamp in the help section.
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "tic-80";
-  version = "unstable-2025-11-02";
+  version = "unstable-2026-02-23";
 
   src = fetchFromGitHub {
     owner = "nesbox";
     repo = "TIC-80";
-    rev = "b3feccf7704fa32d33d458d722d1eeff886c54ab";
-    hash = "sha256-/3ncpl4AQO/Qdz3u9e4pboqUDP3KWAMB2SMW8BeeHaA=";
+    rev = "ae1195a9d0fbda243bf0ebd861d6876d072a979e";
+    hash = "sha256-oXXLTCkMfB1q16mIq612fieTkleRYN/tP7SBtlRIEKA=";
     fetchSubmodules = true;
   };
 
@@ -151,4 +149,4 @@ stdenv.mkDerivation rec {
     homepage = "https://tic80.com/";
     license = licenses.mit;
   };
-}
+})
