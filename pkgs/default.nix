@@ -49,6 +49,7 @@ lib.makeScope pkgs.newScope (self: {
   base16-builder-go = callPackage ./base16-builder-go { };
   blender-blendergis = python3Packages.callPackage ./blender-blendergis { };
   blender-machin3tools = python3Packages.callPackage ./blender-machin3tools { };
+  colour-science = python3Packages.callPackage ./colour-science { };
   clidle = callPackage ./clidle.nix { };
   ctrld = callPackage ./ctrld { };
   domterm = qt5.callPackage ./domterm { };
