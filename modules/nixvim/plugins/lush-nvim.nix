@@ -50,7 +50,7 @@ let
       # here whenever necessary.
     in
     lib.nameValuePair "colors/${name}.lua" {
-      text = ''
+      text = /* lua */ ''
         ${cfg.extraConfigLua}
         ${theme.extraConfigLua}
 
@@ -79,10 +79,10 @@ in
 
     extraConfigLua = lib.mkOption {
       type = lib.types.lines;
-      default = ''
+      default = /* lua */ ''
         local lush = require('lush')
       '';
-      example = ''
+      example = /* lua */ ''
         local lush = require('lush')
         local hsl = lush.hsl
         local hsluv = lush.hsluv
