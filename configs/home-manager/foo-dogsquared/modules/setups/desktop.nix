@@ -103,18 +103,28 @@ in
       enable = true;
       startAt = "daily";
       settings = {
-        topdirs = "~/Downloads ~/Documents ~/library";
+        topdirs =
+          let
+            inherit (config.xdg) userDirs;
+          in
+          builtins.toString [
+            userDirs.music
+            userDirs.documents
+            userDirs.extraConfig.PROJECTS
+            userDirs.download
+          ];
+
         "skippedNames+" =
           let
             inherit (config.state.paths) ignoreDirectories;
           in
           lib.concatStringsSep " " ignoreDirectories;
 
-        "~/library/projects" = {
+        "${config.xdg.userDirs.extraConfig.PROJECTS}" = {
           "skippedNames+" = ".editorconfig .gitignore result flake.lock go.sum";
         };
 
-        "~/library/projects/software" = {
+        "${config.xdg.userDirs.extraConfig.PROJECTS}/software" = {
           "skippedNames+" = "target result";
         };
       };

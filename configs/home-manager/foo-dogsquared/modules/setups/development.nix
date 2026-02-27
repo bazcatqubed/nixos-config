@@ -96,15 +96,15 @@ in
         home.packages =
           with pkgs;
           [
-            bobby # Testing out your local desktop apps database.
+            bobby # Turns tables... into a viewable spreadsheet.
             biblioteca # This is what the Wizard of Oz used back when they developed their project.
             comma # You come and go.
             cachix # Compile no more by using someone's binary cache!
             regex-cli # Save some face of confusion for yourself.
             duckdb # If it talks like a duck and waddles like a duck and migrate like a duck and queries like a duck...
             dt # Get that functional gawk.
-            jq # Get that JSON querying tool.
-            fq # Get that binary querying tool.
+            jq # and
+            fq # ??? Ewwww...
             recode # Convert between different encodings.
             go-migrate # Go potential migraines.
             oils-for-unix # Rev them up, reverent admin.
@@ -139,7 +139,7 @@ in
               (config.services.podman.enable || attrs.nixosConfig.virtualisation.podman.enable or false)
               [
                 podman-desktop
-                pods
+                pods # Tide.
                 toolbox
                 ptyxis
               ];
@@ -277,14 +277,14 @@ in
           sonic-pi
           processing
           plugdata
-          shader-slang
+          shader-slang # Just don't make it full or shady slurs.
           material-maker
         ];
 
         programs.pure-data = {
           enable = true;
           plugins = with pkgs; [
-            zexy
+            zexy # smexy, all for the price of one
             cyclone
             pd-else
           ];
@@ -300,23 +300,26 @@ in
 
       (lib.mkIf cfg.gamedev.enable {
         home.packages = with pkgs; [
-          tic-80-unstable
-          godot_4
+          tic-80-unstable # Fantasy computer inside of your computer.
+          godot_4 # Does blue still appear in red?
           godot_4-export-templates-bin
-          gdtoolkit_4
+          gdtoolkit_4 # Set of things to make things in blue.
+
+          # KISS KISS FALL IN
+          love
         ];
       })
 
       (lib.mkIf cfg.math.enable {
         home.packages = with pkgs; [
           geogebra6
-          marimo
-          julia
+          marimo # Reproducible notes make for a reproducible experiments. SCIENCE!
+          julia # Your math secretary.
         ];
 
         programs.python.modules =
           ps: with ps; [
-            jupyter
+            jupyter # Just like the planet, a very big gaseous thing with a big red spot (i.e., the deployment).
             jupyter-book
             notebook
           ];
