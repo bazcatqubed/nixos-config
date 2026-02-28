@@ -46,13 +46,19 @@ in
     };
 
     dconf.settings = {
-      "info/febvre/Komikku".pinned-servers = [
-        "mangabin"
-        "tapas"
-        "webtoon"
-        "xkcd"
-        "peppercarrot"
-      ];
+      "info/febvre/Komikku" = {
+        pinned-servers = [
+          "comix"
+          "mangabin"
+          "tapas"
+          "webtoon"
+          "xkcd"
+          "peppercarrot"
+        ];
+        "system-accent-colors" = true;
+        "long-strip-detection" = true;
+        "reading-mode" = "webtoon";
+      };
     };
 
     # Install all of the desktop stuff.
