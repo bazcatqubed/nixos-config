@@ -91,6 +91,12 @@ in
         key = "gt";
         lspBufAction = "type_definition";
       }
+
+      {
+        options.desc = "Code action";
+        key = "gA";
+        lspBufAction = "code_action";
+      }
     ];
 
     # Make those diagnostics fit the screen, GODDAMNIT!
