@@ -63,6 +63,7 @@ lib.makeScope pkgs.newScope (self: {
   grant = callPackage ./grant { };
   hush-shell = callPackage ./hush-shell.nix { };
   kip = callPackage ./kip { };
+  lektra = callPackage ./lektra { };
   lwp = callPackage ./lwp { };
   moac = callPackage ./moac.nix { };
   mopidy-beets = callPackage ./mopidy-beets.nix { };
