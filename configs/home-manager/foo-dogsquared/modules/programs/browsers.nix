@@ -52,6 +52,9 @@ let
   ]
   ++ lib.optionals userCfg.setups.development.enable [
     { id = "dgjhfomjieaadpoljlnidmbgkdffpack"; } # Sourcegraph
+  ]
+  ++ lib.optionals (lib.elem "one.foodogsquared.AHappyGNOME" attrs.nixosConfig.workflows.enable) [
+    { id = "dacakhfljjhgdfdlgjpabkkjhbpcmiff"; } # Varia integrator
   ];
 in
 {
@@ -179,6 +182,9 @@ in
               )
               ++ lib.optionals (userCfg.setups.research.enable && userCfg.setups.research.writing.enable) (
                 with pkgs.firefox-addons; [ private-grammar-checker-harper ]
+              )
+              ++ lib.optionals (lib.elem "one.foodogsquared.AHappyGNOME" attrs.nixosConfig.workflows.enable) (
+                with pkgs.firefox-addons; [ varia-integrator ]
               );
 
             # Much of the settings are affected by the policies set in the
