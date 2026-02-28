@@ -217,10 +217,10 @@
     };
     "private-grammar-checker-harper" = buildFirefoxXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "1.8.0";
+      version = "1.9.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4698974/private_grammar_checker_harper-1.8.0.xpi";
-      sha256 = "37e7c252f61659d37be37496527cf8285b480bd0f91babc2370b418b69b79e33";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4708425/private_grammar_checker_harper-1.9.0.xpi";
+      sha256 = "e49daf5a4f40b42a631f48667b64406f037cdce6cd3fc249c277879d703ca47a";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
@@ -399,6 +399,21 @@
         description = "Check archival state of a source code repository and propose to update it if needed.";
         license = licenses.mit;
         mozPermissions = [ "<all_urls>" "storage" "tabs" "activeTab" ];
+        platforms = platforms.all;
+      };
+    };
+    "varia-integrator" = buildFirefoxXpiAddon {
+      pname = "varia-integrator";
+      version = "1.4";
+      addonId = "giantpinkrobots@protonmail.com";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4556398/varia_integrator-1.4.xpi";
+      sha256 = "58f6143ae499f19e931af43ea5403fd3397dcd9b823115ccec59e2c9d847fbd2";
+      meta = with lib;
+      {
+        homepage = "https://giantpinkrobots.github.io/varia/";
+        description = "Route all downloads to Varia if it's running.";
+        license = licenses.mpl20;
+        mozPermissions = [ "downloads" "storage" "<all_urls>" "tabs" ];
         platforms = platforms.all;
       };
     };
