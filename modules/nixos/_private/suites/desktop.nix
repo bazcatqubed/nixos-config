@@ -150,7 +150,7 @@ in
       (lib.mkIf cfg.windows-compatibility.enable {
         environment.systemPackages = with pkgs; [
           # Setup the WINE environment.
-          wineWowPackages.stable
+          wineWow64Packages.stable
           bottles # The Windows environment package manager.
         ];
       })
