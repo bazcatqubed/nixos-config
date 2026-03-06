@@ -10,6 +10,7 @@
   config,
   lib,
   pkgs,
+  foodogsquaredLib,
   ...
 }@attrs:
 
@@ -39,6 +40,7 @@ in
             gnomeExtensions.vitals
           ];
           inherit (attrs.nixosConfig.workflows) workflows;
+          workflowId = "one.foodogsquared.AHappyGNOME";
         in
         {
           home.packages =
@@ -46,6 +48,10 @@ in
             ++ lib.optionals userCfg.services.backup.enable [ pkgs.pika-backup ]
             ++ lib.optionals userCfg.setups.development.enable [ pkgs.devhelp ]
             ++ lib.optionals userCfg.programs.vs-code.enable [ pkgs.gnomeExtensions.vscode-search-provider ];
+
+          xdg.autostart.entries = lib.optionals (lib.elem pkgs.varia workflows.${workflowId}.extraApps) (
+            lib.singleton (foodogsquaredLib.xdg.getXdgDesktop pkgs.varia "io.github.giantpinkrobots.varia")
+          );
 
           dconf.settings = lib.mkMerge [
             {
