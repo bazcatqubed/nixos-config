@@ -60,6 +60,10 @@ in
             enable = true;
             dates = "weekly";
           };
+          extraArgs = [
+            "--cache-failures"
+            "--discover=yes"
+          ];
         };
 
         # Userland schedulers.
