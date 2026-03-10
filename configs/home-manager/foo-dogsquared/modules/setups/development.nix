@@ -274,7 +274,7 @@ in
           decker
           uxn
           supercollider-with-plugins
-          sonic-pi
+          # sonic-pi
           processing
           plugdata
           shader-slang # Just don't make it full or shady slurs.

@@ -26,7 +26,7 @@ in
       komikku
       bitwarden-cli # Manage them passwords terminally.
       bitwarden-desktop # Manage them passwords on a stick.
-      comaps # Triangulating them locations.
+      # comaps # Triangulating them locations.
       parabolic # Download them clips.
 
       # Games make you productive, right?
