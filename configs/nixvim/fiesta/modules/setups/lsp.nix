@@ -70,7 +70,7 @@ in
 
       {
         options.desc = "Go to references";
-        key = "gD";
+        key = "gr";
         lspBufAction = "references";
       }
 
@@ -82,7 +82,7 @@ in
 
       {
         options.desc = "Go to implementation";
-        key = "gi";
+        key = "gD";
         lspBufAction = "implementation";
       }
 
