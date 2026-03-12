@@ -27,3 +27,11 @@ jobs:
           NIXPKGS_ALLOW_UNFREE: "1"
           NIXPKGS_ALLOW_INSECURE: "1"
           NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM: "1"
+  check-reuse-compliant:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: DeterminateSystems/nix-installer-action@v21
+      - name: Check if project is REUSE-compliant
+        run: |
+          nix develop --command reuse lint
