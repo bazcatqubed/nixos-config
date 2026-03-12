@@ -4,6 +4,7 @@
 
 {
   config,
+  options,
   lib,
   pkgs,
   ...
@@ -63,6 +64,16 @@ in
           extraArgs = [
             "--cache-failures"
             "--discover=yes"
+          ];
+
+          substituters.authorizedKeys = options.services.guix.substituters.authorizedKeys.default ++ [
+            (builtins.fetchurl {
+              url = "https://substitutes.nonguix.org/signing-key.pub";
+            })
+          ];
+
+          substituters.urls = options.services.guix.substituters.urls.default ++ [
+            "https://substitutes.nonguix.org"
           ];
         };
 
