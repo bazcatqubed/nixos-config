@@ -35,6 +35,20 @@ in
         "ls"
         "nvim"
       ];
+      bashrcExtra = lib.optionalString userCfg.dotfiles.enable (
+        lib.mkAfter /* bash */ ''
+          function wezterm_osc7() {
+            if hash wezterm 2>/dev/null ; then
+              wezterm set-working-directory 2>/dev/null && return 0
+              # If the command failed (perhaps the installed wezterm
+              # is too old?) then fall back to the simple version below.
+            fi
+            printf "\033]7;file://%s%s\033\\" "''${HOSTNAME}" "''${PWD}"
+          }
+
+          starship_precmd_user_func="wezterm_osc7"
+        ''
+      );
     };
 
     # Additional formatting thingies for your fuzzy finder.
