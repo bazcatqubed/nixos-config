@@ -65,6 +65,9 @@ in
         # Enable font-related options for more smoother and consistent experience.
         fonts.fontconfig.enable = true;
 
+        # Replace our good 'ol TTY.
+        services.kmscon.enable = true;
+
         # Create a neat interface for making system diffs.
         # Based on https://discourse.nixos.org/t/nvd-simple-nix-nixos-version-diff-tool/12397/42
         system.activationScripts.preActivation = ''
