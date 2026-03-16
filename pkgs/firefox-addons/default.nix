@@ -1,6 +1,6 @@
-{ buildFirefoxXpiAddon, fetchurl, lib, stdenv }:
+{ buildMozillaXpiAddon, fetchurl, lib, stdenv }:
   {
-    "cookies-txt" = buildFirefoxXpiAddon {
+    "cookies-txt" = buildMozillaXpiAddon {
       pname = "cookies-txt";
       version = "1.0";
       addonId = "{12cf650b-1822-40aa-bff0-996df6948878}";
@@ -21,7 +21,7 @@
         platforms = platforms.all;
       };
     };
-    "dearrow" = buildFirefoxXpiAddon {
+    "dearrow" = buildMozillaXpiAddon {
       pname = "dearrow";
       version = "2.2.3";
       addonId = "deArrow@ajay.app";
@@ -46,7 +46,7 @@
         platforms = platforms.all;
       };
     };
-    "extended-color-management" = buildFirefoxXpiAddon {
+    "extended-color-management" = buildMozillaXpiAddon {
       pname = "extended-color-management";
       version = "1.1.2";
       addonId = "{816dd215-0e91-4621-9d89-3bac78798e6f}";
@@ -65,7 +65,7 @@
         platforms = platforms.all;
       };
     };
-    "font-inspect" = buildFirefoxXpiAddon {
+    "font-inspect" = buildMozillaXpiAddon {
       pname = "font-inspect";
       version = "0.6.4";
       addonId = "{a658a273-612e-489e-b4f1-5344e672f4f5}";
@@ -86,7 +86,7 @@
         platforms = platforms.all;
       };
     };
-    "get-rss-feed-url" = buildFirefoxXpiAddon {
+    "get-rss-feed-url" = buildMozillaXpiAddon {
       pname = "get-rss-feed-url";
       version = "2.2";
       addonId = "{15bdb1ce-fa9d-4a00-b859-66c214263ac0}";
@@ -106,7 +106,7 @@
         platforms = platforms.all;
       };
     };
-    "google-container" = buildFirefoxXpiAddon {
+    "google-container" = buildMozillaXpiAddon {
       pname = "google-container";
       version = "1.5.4";
       addonId = "@contain-google";
@@ -130,7 +130,7 @@
         platforms = platforms.all;
       };
     };
-    "gopass-bridge" = buildFirefoxXpiAddon {
+    "gopass-bridge" = buildMozillaXpiAddon {
       pname = "gopass-bridge";
       version = "2.1.1";
       addonId = "{eec37db0-22ad-4bf1-9068-5ae08df8c7e9}";
@@ -156,7 +156,7 @@
         platforms = platforms.all;
       };
     };
-    "microsoft-container" = buildFirefoxXpiAddon {
+    "microsoft-container" = buildMozillaXpiAddon {
       pname = "microsoft-container";
       version = "1.0.4";
       addonId = "@contain-microsoft";
@@ -179,7 +179,7 @@
         platforms = platforms.all;
       };
     };
-    "open-access-helper" = buildFirefoxXpiAddon {
+    "open-access-helper" = buildMozillaXpiAddon {
       pname = "open-access-helper";
       version = "2026.2";
       addonId = "info@oahelper.org";
@@ -201,7 +201,7 @@
         platforms = platforms.all;
       };
     };
-    "open-in-visual-studio-code" = buildFirefoxXpiAddon {
+    "open-in-visual-studio-code" = buildMozillaXpiAddon {
       pname = "open-in-visual-studio-code";
       version = "1.0.2";
       addonId = "{90404617-2d7e-4bde-9d55-e9eda31ca5b3}";
@@ -215,21 +215,26 @@
         platforms = platforms.all;
       };
     };
-    "private-grammar-checker-harper" = buildFirefoxXpiAddon {
+    "private-grammar-checker-harper" = buildMozillaXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "1.9.0";
+      version = "1.10.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4708425/private_grammar_checker_harper-1.9.0.xpi";
-      sha256 = "e49daf5a4f40b42a631f48667b64406f037cdce6cd3fc249c277879d703ca47a";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4722849/private_grammar_checker_harper-1.10.0.xpi";
+      sha256 = "be273deaef3ebb4d273e66c93dabd6f7e025b91b66a95a86f826c8a20e1e63cf";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
         description = "A private grammar checker for 21st Century English";
-        mozPermissions = [ "storage" "tabs" "<all_urls>" ];
+        mozPermissions = [
+          "storage"
+          "tabs"
+          "https://docs.google.com/document/*"
+          "<all_urls>"
+        ];
         platforms = platforms.all;
       };
     };
-    "refined-github-" = buildFirefoxXpiAddon {
+    "refined-github-" = buildMozillaXpiAddon {
       pname = "refined-github-";
       version = "26.3.3";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
@@ -252,7 +257,7 @@
         platforms = platforms.all;
       };
     };
-    "regretsreporter" = buildFirefoxXpiAddon {
+    "regretsreporter" = buildMozillaXpiAddon {
       pname = "regretsreporter";
       version = "2.1.2";
       addonId = "regrets-reporter@mozillafoundation.org";
@@ -273,7 +278,7 @@
         platforms = platforms.all;
       };
     };
-    "rsshub-radar" = buildFirefoxXpiAddon {
+    "rsshub-radar" = buildMozillaXpiAddon {
       pname = "rsshub-radar";
       version = "1.10.3";
       addonId = "i@diygod.me";
@@ -296,7 +301,7 @@
         platforms = platforms.all;
       };
     };
-    "simple-translate" = buildFirefoxXpiAddon {
+    "simple-translate" = buildMozillaXpiAddon {
       pname = "simple-translate";
       version = "3.0.1";
       addonId = "simple-translate@sienori";
@@ -317,7 +322,7 @@
         platforms = platforms.all;
       };
     };
-    "sourcegraph-for-firefox" = buildFirefoxXpiAddon {
+    "sourcegraph-for-firefox" = buildMozillaXpiAddon {
       pname = "sourcegraph-for-firefox";
       version = "23.4.14.1343";
       addonId = "sourcegraph-for-firefox@sourcegraph.com";
@@ -337,7 +342,7 @@
         platforms = platforms.all;
       };
     };
-    "tineye-reverse-image-search" = buildFirefoxXpiAddon {
+    "tineye-reverse-image-search" = buildMozillaXpiAddon {
       pname = "tineye-reverse-image-search";
       version = "2.0.9";
       addonId = "tineye@ideeinc.com";
@@ -352,7 +357,7 @@
         platforms = platforms.all;
       };
     };
-    "tor-control" = buildFirefoxXpiAddon {
+    "tor-control" = buildMozillaXpiAddon {
       pname = "tor-control";
       version = "0.1.5";
       addonId = "{d22a1484-dcef-44e9-ab52-80f0f4a331a3}";
@@ -373,7 +378,7 @@
         platforms = platforms.all;
       };
     };
-    "unpaywall" = buildFirefoxXpiAddon {
+    "unpaywall" = buildMozillaXpiAddon {
       pname = "unpaywall";
       version = "3.98";
       addonId = "{f209234a-76f0-4735-9920-eb62507a54cd}";
@@ -388,7 +393,7 @@
         platforms = platforms.all;
       };
     };
-    "updateswh" = buildFirefoxXpiAddon {
+    "updateswh" = buildMozillaXpiAddon {
       pname = "updateswh";
       version = "0.6.8";
       addonId = "{157eb9f0-9814-4fcc-b0b7-586b3093c641}";
@@ -402,7 +407,7 @@
         platforms = platforms.all;
       };
     };
-    "varia-integrator" = buildFirefoxXpiAddon {
+    "varia-integrator" = buildMozillaXpiAddon {
       pname = "varia-integrator";
       version = "1.4";
       addonId = "giantpinkrobots@protonmail.com";
@@ -417,7 +422,7 @@
         platforms = platforms.all;
       };
     };
-    "worldbrain" = buildFirefoxXpiAddon {
+    "worldbrain" = buildMozillaXpiAddon {
       pname = "worldbrain";
       version = "3.20.9";
       addonId = "info@worldbrain.io";
@@ -442,7 +447,7 @@
         platforms = platforms.all;
       };
     };
-    "zhongwen" = buildFirefoxXpiAddon {
+    "zhongwen" = buildMozillaXpiAddon {
       pname = "zhongwen";
       version = "5.16.0";
       addonId = "{dedb3663-6f13-4c6c-bf0f-5bd111cb2c79}";
