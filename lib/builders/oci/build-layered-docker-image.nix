@@ -11,7 +11,6 @@
 {
   name,
   contents ? [ ],
-  pathsToLink ? [ ],
   enableTypicalSetup ? true,
   ...
 }@attrs:
@@ -27,7 +26,9 @@ in
 dockerTools.buildLayeredImage (
   attrs'
   // {
-    inherit name;
+    name = "fds-${name}";
+
+    compressor = attrs.compressor or "zstd";
 
     contents =
       contents
