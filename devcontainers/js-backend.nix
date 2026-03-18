@@ -10,7 +10,7 @@
   pnpm,
 }:
 
-foodogsquaredLib.buildDockerImage rec {
+foodogsquaredLib.buildLayeredDockerImage rec {
   name = "js-backend";
   tag = name;
   contents = [

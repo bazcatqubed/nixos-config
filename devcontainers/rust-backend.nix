@@ -12,7 +12,7 @@
   nodejs,
 }:
 
-foodogsquaredLib.buildDockerImage rec {
+foodogsquaredLib.buildLayeredDockerImage rec {
   name = "rust-backend";
   tag = name;
   contents = [

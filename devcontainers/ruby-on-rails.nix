@@ -11,7 +11,7 @@
   foodogsquaredLib,
 }:
 
-foodogsquaredLib.buildDockerImage {
+foodogsquaredLib.buildLayeredDockerImage {
   name = "ruby-on-rails-${ruby.version}";
   tag = "ror-${ruby.version}";
   contents = [

@@ -12,8 +12,8 @@
   shaderc,
 }:
 
-foodogsquaredLib.buildDockerImage rec {
-  name = "fds-creatives";
+foodogsquaredLib.buildLayeredDockerImage rec {
+  name = "creatives";
   tag = name;
   contents = [
     (puredata-with-plugins [ zexy ])

@@ -3,13 +3,10 @@
 # SPDX-License-Identifier: MIT
 
 {
-  dockerTools,
-  neovim,
-  nushell,
   foodogsquaredLib,
 }:
 
-foodogsquaredLib.buildDockerImage rec {
+foodogsquaredLib.buildLayeredDockerImage rec {
   name = "typical-devenv";
   tag = name;
   contents = foodogsquaredLib.stdenv;
