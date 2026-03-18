@@ -170,6 +170,7 @@ in
             eloquent # Reach a higher caliber for your wordsmithing, indubitably.
             harper # A grammer checker with yer' Grandma..er.
             typesetter # If you want to get fancier than a Markdown document, here you go.
+            cook-cli # We need to cook.
           ]
           ++ lib.optionals config.programs.typst.enable [
             tinymist

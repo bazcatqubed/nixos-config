@@ -84,12 +84,11 @@ in
       })
 
       (lib.mkIf config.programs.nushell.enable {
-        programs.nushell.environmentVariables.NU_LIB_DIRS = lib.singleton "${config.xdg.configHome}/nushell/foodogsquared";
-
         home.file."${config.xdg.configHome}/nushell/autoload".source = getDotfiles "nu/autoload";
         home.file."${config.xdg.configHome}/nushell/scripts".source = getDotfiles "nu/scripts";
 
         home.sessionVariables = {
+          NU_LIB_DIRS = "${config.xdg.configHome}/nushell/foodogsquared";
           FZF_ALT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --unrestricted";
           FZF_ALT_SHIFT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --full-path --max-depth 4 . ../";
         };
