@@ -6,7 +6,6 @@
   config,
   lib,
   pkgs,
-  helpers,
   ...
 }:
 
@@ -44,7 +43,7 @@ in
     extraPlugins = [ cfg.package ];
 
     extraConfigLua = ''
-      require("config-local").setup(${helpers.toLuaConfig cfg.settings})
+      require("config-local").setup(${lib.nixvim.toLuaConfig cfg.settings})
     '';
   };
 }

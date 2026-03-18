@@ -5,7 +5,6 @@
 {
   config,
   lib,
-  helpers,
   ...
 }:
 
@@ -28,7 +27,7 @@ in
         mode = [ "n" ];
         key = "<leader>Li";
         options.desc = "Toggle inlay hints";
-        action = helpers.mkRaw ''
+        action = lib.nixvim.mkRaw ''
           function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
           end
@@ -45,7 +44,7 @@ in
       {
         options.desc = "Go to next diagnostic";
         key = "gj";
-        action = helpers.mkRaw /* lua */ ''
+        action = lib.nixvim.mkRaw /* lua */ ''
           function()
             vim.diagnostic.jump({ count = -1, float = true })
           end
@@ -55,7 +54,7 @@ in
       {
         options.desc = "Go to previous diagnostic";
         key = "gk";
-        action = helpers.mkRaw /* lua */ ''
+        action = lib.nixvim.mkRaw /* lua */ ''
           function()
             vim.diagnostic.jump({ count = 1, float = true })
           end

@@ -30,7 +30,7 @@
   programs.nix-index.enable = true;
 
   # Improve the state of documentation (even if it's just a bit out-of-date).
-  documentation.man.generateCaches = true;
+  documentation.man.cache.enable = true;
 
   # BOOOOOOOOOOOOO! Somebody give me a tomato!
   services.xserver.excludePackages = with pkgs; [ xterm ];

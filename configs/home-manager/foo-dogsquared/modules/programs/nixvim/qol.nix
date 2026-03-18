@@ -6,7 +6,6 @@
   config,
   lib,
   pkgs,
-  helpers,
   hmConfig,
   ...
 }:
@@ -51,14 +50,14 @@ in
     };
 
     plugins.which-key.settings.spec = lib.singleton (
-      helpers.listToUnkeyedAttrs [ bindingPrefix ] // { group = "Git"; }
+      lib.nixvim.listToUnkeyedAttrs [ bindingPrefix ] // { group = "Git"; }
     );
 
     keymaps = [
       {
         options.desc = "Open blame lines for the current line";
         key = bindingPrefix' "b";
-        action = helpers.mkRaw ''
+        action = lib.nixvim.mkRaw ''
           function()
                     Snacks.git.blame_line()
                   end
@@ -69,7 +68,7 @@ in
       {
         options.desc = "Open lazygit";
         key = bindingPrefix' "g";
-        action = helpers.mkRaw ''
+        action = lib.nixvim.mkRaw ''
           function()
                     Snacks.lazygit()
                   end
@@ -79,7 +78,7 @@ in
       {
         options.desc = "Open current file history in lazygit";
         key = bindingPrefix' "f";
-        action = helpers.mkRaw ''
+        action = lib.nixvim.mkRaw ''
           function()
                     Snacks.lazygit.log_file()
                   end

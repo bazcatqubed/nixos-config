@@ -5,7 +5,6 @@
 {
   config,
   lib,
-  helpers,
   ...
 }:
 
@@ -67,7 +66,7 @@ in
         {
           key = "<C-->";
           options.desc = "Open Oil file explorer in root directory";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               require("oil").open(vim.fn.getcwd())
             end
@@ -83,7 +82,7 @@ in
             "o"
           ];
           options.desc = "Flash jump";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               require("flash").jump()
             end
@@ -98,7 +97,7 @@ in
             "o"
           ];
           options.desc = "Flash jump in treesitter nodes";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               require("flash").treesitter()
             end
@@ -109,7 +108,7 @@ in
           key = "r";
           mode = "o";
           options.desc = "Remote flash jump";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               require("flash").remote()
             end
@@ -124,7 +123,7 @@ in
             "o"
           ];
           options.desc = "Flash treesitter search";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               require("flash").treesitter_search()
             end
@@ -135,7 +134,7 @@ in
           key = "<c-s>";
           mode = "c";
           options.desc = "Toggle flash search";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               require("flash").toggle()
             end

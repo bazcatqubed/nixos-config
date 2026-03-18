@@ -5,7 +5,6 @@
 {
   config,
   lib,
-  helpers,
   ...
 }:
 
@@ -52,7 +51,7 @@ in
         // {
           key = "<C-j>";
           options.desc = "Jump to next node";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               ls = require("luasnip")
               if ls.jumpable(1) then
@@ -68,7 +67,7 @@ in
         // {
           key = "<C-k>";
           options.desc = "Jump to previous node";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               ls = require("luasnip")
               if ls.jumpable(-1) then
@@ -84,7 +83,7 @@ in
         // {
           key = "<C-l>";
           options.desc = "Expand or jump to next node";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               ls = require("luasnip")
               if ls.expand_or_jumpable() then
@@ -100,7 +99,7 @@ in
         // {
           key = "<C-u>";
           options.desc = "Show extra choices";
-          action = helpers.mkRaw ''
+          action = lib.nixvim.mkRaw ''
             function()
               require("luasnip.extras.select_choice")()
             end

@@ -112,7 +112,7 @@ in
 
         home.packages = with pkgs; [ lighttpd ];
 
-        programs.git.extraConfig.instaweb = {
+        programs.git.settings.instaweb = {
           local = true;
           httpd = "lighttpd";
           port = config.state.ports.git-instaweb.value;

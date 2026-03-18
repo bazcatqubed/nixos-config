@@ -5,7 +5,6 @@
 {
   config,
   lib,
-  helpers,
   pkgs,
   ...
 }:
@@ -64,7 +63,7 @@ in
     extraPackages = lib.optional cfg.additionalSetup pkgs.sqlite;
 
     extraConfigLua = ''
-      require('legendary').setup(${helpers.toLuaObject cfg.settings})
+      require('legendary').setup(${lib.nixvim.toLuaObject cfg.settings})
     '';
   };
 }

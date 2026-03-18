@@ -44,7 +44,7 @@ in
           enable = true;
           dev.enable = true;
           nixos.enable = true;
-          man.generateCaches = true;
+          man.cache.enable = true;
         };
 
         # Install Git, our favorite version control system.

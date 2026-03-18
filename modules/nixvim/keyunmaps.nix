@@ -5,7 +5,6 @@
 {
   config,
   lib,
-  helpers,
   ...
 }:
 
@@ -23,7 +22,7 @@ let
         };
 
         mode = lib.mkOption {
-          type = with lib.types; either helpers.keymaps.modeEnum (listOf helpers.keymaps.modeEnum);
+          type = with lib.types; either lib.nixvim.keymaps.modeEnum (listOf helpers.keymaps.modeEnum);
           default = "";
           example = [
             "n"
@@ -75,7 +74,7 @@ in
       lib.mkAfter ''
         -- Set up unmappings {{{
         do
-          local __nixvim_unbinds = ${helpers.toLuaObject cfg}
+          local __nixvim_unbinds = ${lib.nixvim.toLuaObject cfg}
           for i, unmap in ipairs(__nixvim_unbinds) do
             vim.keymap.del(unmap.mode, unmap.key, unmap.options)
           end

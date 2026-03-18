@@ -5,12 +5,11 @@
 {
   config,
   lib,
-  helpers,
   ...
 }:
 
 let
-  inherit (helpers) mkRaw;
+  inherit (lib.nixvim) mkRaw;
 
   initLushBase16 =
     acc: index: color:
@@ -807,12 +806,12 @@ in
 
           # See `treesitter-highlight-groups` help section for more details.
           (lib.mkIf config.plugins.treesitter.enable {
-            ${sym "@variable"} = helpers.listToUnkeyedAttrs [ (mkRaw "Normal") ];
+            ${sym "@variable"} = lib.nixvim.listToUnkeyedAttrs [ (mkRaw "Normal") ];
             ${sym "@tag.delimiter"} = {
               fg = mkRaw "base0A";
             };
-            ${sym "@text.emphasis"} = helpers.listToUnkeyedAttrs [ (mkRaw "Italic") ];
-            ${sym "@text.underline"} = helpers.listToUnkeyedAttrs [ (mkRaw "Underlined") ];
+            ${sym "@text.emphasis"} = lib.nixvim.listToUnkeyedAttrs [ (mkRaw "Italic") ];
+            ${sym "@text.underline"} = lib.nixvim.listToUnkeyedAttrs [ (mkRaw "Underlined") ];
             ${sym "@text.strike"} = {
               gui = "strikethrough";
             };

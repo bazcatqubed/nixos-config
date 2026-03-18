@@ -17,7 +17,7 @@ let
   inherit (config.services.vouch-proxy.instances."${vouchDomain}") settings;
   inherit (config.networking) domain;
   vouchDomain = "vouch.${config.networking.domain}";
-  authDomain = config.services.kanidm.serverSettings.domain;
+  authDomain = config.services.kanidm.server.settings.domain;
 in
 {
   options.hosts.plover.services.vouch-proxy.enable = lib.mkEnableOption "Vouch proxy setup";

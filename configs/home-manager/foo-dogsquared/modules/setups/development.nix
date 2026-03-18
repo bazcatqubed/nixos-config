@@ -194,7 +194,7 @@ in
           meld # Make a terminal dweller melt.
         ];
 
-        programs.git.extraConfig = {
+        programs.git.settings = {
           difftool.prompt = false;
           diff.tool = "diffoscope";
           diff.guitool = "meld";

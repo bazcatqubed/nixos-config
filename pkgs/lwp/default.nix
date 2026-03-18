@@ -8,7 +8,7 @@
   fetchFromGitHub,
   cmake,
   SDL2,
-  xorg,
+  libX11,
   xwayland,
   libconfig,
 }:
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ cmake ];
   buildInputs = [
     SDL2
-    xorg.libX11
+    libX11
     xwayland
     libconfig
   ];

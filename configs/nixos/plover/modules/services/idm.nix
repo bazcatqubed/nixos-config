@@ -30,11 +30,10 @@ in
         hosts.plover.services.vouch-proxy.enable = lib.mkDefault true;
 
         services.kanidm = {
-          enableServer = true;
-          enablePam = true;
-          package = pkgs.kanidm_1_8;
+          package = pkgs.kanidm_1_9;
 
-          serverSettings = {
+          server.enable = true;
+          server.settings = {
             domain = authDomain;
             origin = "https://${authDomain}";
             bindaddress = "127.0.0.1:${builtins.toString port}";
@@ -51,13 +50,14 @@ in
             };
           };
 
-          clientSettings = {
+          client.settings = {
             uri = "https://${authDomain}";
             verify_hostnames = true;
             verify_ca = true;
           };
 
-          unixSettings = {
+          unix.enable = true;
+          unix.settings = {
             use_etc_skel = false;
             kanidm.pam_allowed_login_groups = [ "kanidm" ];
           };

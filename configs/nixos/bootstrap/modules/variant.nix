@@ -44,7 +44,7 @@ in
       # Some niceties.
       suites.desktop.enable = true;
 
-      services.xserver.displayManager = {
+      services.displayManager = {
         gdm = {
           enable = true;
           autoSuspend = false;

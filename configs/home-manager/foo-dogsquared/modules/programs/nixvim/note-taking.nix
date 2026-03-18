@@ -6,7 +6,6 @@
   config,
   lib,
   pkgs,
-  helpers,
   hmConfig,
   ...
 }:
@@ -28,11 +27,11 @@ in
       load = lib.mkMerge [
         {
           # Pretty much required with tree-sitter integration and all.
-          "core.defaults" = helpers.emptyTable;
+          "core.defaults" = lib.nixvim.emptyTable;
 
           # Conceal your blade (which is the markup, in which it is pretty sharp to
           # look at).
-          "core.concealer" = helpers.emptyTable;
+          "core.concealer" = lib.nixvim.emptyTable;
 
           # Dear diary...
           "core.journal".config = {
@@ -40,7 +39,7 @@ in
           };
 
           # Norg ripping a page from org-mode.
-          "core.ui.calendar" = helpers.emptyTable;
+          "core.ui.calendar" = lib.nixvim.emptyTable;
 
           # Manage your note workspaces.
           "core.dirman".config = {

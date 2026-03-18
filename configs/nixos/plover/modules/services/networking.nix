@@ -62,7 +62,7 @@ in
     # default address at 127.0.0.53 (as of systemd v252).
     services.resolved = {
       enable = true;
-      dnssec = "false";
+      settings.Resolve.DNSSEC = "false";
     };
 
     # The interface configuration is based from the following discussion:

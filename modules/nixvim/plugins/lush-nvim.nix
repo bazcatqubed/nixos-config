@@ -6,7 +6,6 @@
   config,
   lib,
   pkgs,
-  helpers,
   ...
 }:
 
@@ -44,7 +43,7 @@ let
       # Converts each of the highlight group into a function to be able parsed and
       # used by Lush.
       highlightList = lib.mapAttrsToList (
-        highlight: arguments: "${highlight}(${helpers.toLuaObject arguments})"
+        highlight: arguments: "${highlight}(${lib.nixvim.toLuaObject arguments})"
       ) theme.highlights;
       # This is based from rktjmp/lush-template. We'll improve on things from
       # here whenever necessary.

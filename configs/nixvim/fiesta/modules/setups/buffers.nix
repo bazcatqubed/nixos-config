@@ -5,7 +5,6 @@
 {
   config,
   lib,
-  helpers,
   ...
 }:
 
@@ -21,7 +20,7 @@ in
 
   config = lib.mkIf cfg.enable {
     plugins.which-key.settings.spec = lib.singleton (
-      helpers.listToUnkeyedAttrs [ bindingPrefix ] // { group = "Buffers"; }
+      lib.nixvim.listToUnkeyedAttrs [ bindingPrefix ] // { group = "Buffers"; }
     );
 
     plugins.gitsigns = {
@@ -32,7 +31,7 @@ in
           ignore_whitespace = true;
         };
 
-        on_attach = helpers.mkRaw /* lua */ ''
+        on_attach = lib.nixvim.mkRaw /* lua */ ''
           function(bufnr)
             local gitsigns = require("gitsigns")
 
@@ -82,7 +81,7 @@ in
       {
         mode = "n";
         key = bindingPrefix' "d";
-        action = helpers.mkRaw "vim.cmd.bdelete";
+        action = lib.nixvim.mkRaw "vim.cmd.bdelete";
         options.desc = "Delete current buffer";
       }
     ];

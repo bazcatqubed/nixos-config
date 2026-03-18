@@ -6,7 +6,6 @@
   config,
   lib,
   pkgs,
-  helpers,
   ...
 }:
 
@@ -26,8 +25,8 @@ in
     plugins.neorg.settings = {
       # The basic bare essentials.
       load = {
-        "core.defaults" = helpers.emptyTable;
-        "core.concealer" = helpers.emptyTable;
+        "core.defaults" = lib.nixvim.emptyTable;
+        "core.concealer" = lib.nixvim.emptyTable;
       };
     };
 

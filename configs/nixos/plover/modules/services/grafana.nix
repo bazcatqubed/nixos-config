@@ -158,7 +158,7 @@ in
 
         services.grafana.settings = {
           database = rec {
-            host = "127.0.0.1:${builtins.toString config.services.postgresql.port}";
+            host = "127.0.0.1:${builtins.toString config.services.postgresql.settings.port}";
             password = "$__file{${config.sops.secrets."grafana/database/password".path}}";
             type = "postgres";
             name = "grafana";

@@ -6,7 +6,6 @@
   config,
   lib,
   pkgs,
-  helpers,
   ...
 }:
 
@@ -48,7 +47,7 @@ in
     extraPlugins = [ cfg.package ];
 
     extraConfigLua = ''
-      require('dressing').setup(${helpers.toLuaObject cfg.settings})
+      require('dressing').setup(${lib.nixvim.toLuaObject cfg.settings})
     '';
   };
 }

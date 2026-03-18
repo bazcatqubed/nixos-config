@@ -12,7 +12,9 @@
   coreutils,
   glib,
   gobject-introspection,
-  xorg,
+  libX11,
+  libXext,
+  libXi,
   udev,
   wireplumber,
   pipewire,
@@ -52,9 +54,9 @@ python3Packages.buildPythonPackage rec {
 
   buildInputs = [
     udev
-    xorg.libXi
-    xorg.libX11
-    xorg.libXext
+    libXi
+    libX11
+    libXext
     wireplumber
     pipewire
   ];

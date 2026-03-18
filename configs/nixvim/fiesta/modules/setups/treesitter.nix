@@ -6,7 +6,6 @@
   config,
   lib,
   pkgs,
-  helpers,
   ...
 }:
 
@@ -47,7 +46,7 @@ in
           desc = "Go to context upwards";
           silent = true;
         };
-        action = helpers.mkRaw ''
+        action = lib.nixvim.mkRaw ''
           function()
             require("treesitter-context").go_to_context(vim.v.count1)
           end
@@ -92,7 +91,7 @@ in
     plugins.which-key.settings.spec =
       lib.optionals config.plugins.treesitter-textobjects.settings.swap.enable
         [
-          (helpers.listToUnkeyedAttrs [ lspSwapBindingPrefix ] // { group = "Swap"; })
+          (lib.nixvim.listToUnkeyedAttrs [ lspSwapBindingPrefix ] // { group = "Swap"; })
         ];
 
     # Show me your moves.
