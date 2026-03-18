@@ -40,7 +40,7 @@ in
           (
             { lib, ... }:
             {
-              documentation.man.generateCaches = lib.mkForce false;
+              documentation.man.cache.enable = lib.mkForce false;
             }
           )
 
