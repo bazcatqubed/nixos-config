@@ -153,7 +153,7 @@ let
         standaloneConfigModules = lib.singleton (
           import ./shared/nix-conf.nix {
             inherit inputs lib;
-            inputOverrides = {
+            inputOverride = {
               nixpkgs = inputs.${config.nixpkgs.branch};
               home-manager = inputs.${config.homeManagerBranch};
             };
