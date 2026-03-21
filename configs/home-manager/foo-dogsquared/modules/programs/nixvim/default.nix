@@ -79,6 +79,11 @@ in
 
     home.packages = [ nixvimManpage ];
 
+    systemd.user.sessionVariables = {
+      MANPAGER = lib.mkForce "${neovimFlavorsPackage.meta.mainProgram} +Man!";
+      EDITOR = lib.mkForce neovimFlavorsPackage.meta.mainProgram;
+    };
+
     # Basically, we're creating Neovim flavors with NixVim so no need for it.
     wrapper-manager.packages.neovim-flavors =
       { config, ... }:
