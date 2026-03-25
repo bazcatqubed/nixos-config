@@ -30,7 +30,19 @@ in
     };
 
     # Move at the speed o' sound.
-    plugins.flash.enable = true;
+    plugins.flash = {
+      enable = true;
+      settings = {
+        jump.nohlsearch = true;
+        treesitter = lib.mkIf config.plugins.treesitter.enable {
+          search.incremental = true;
+        };
+
+        treesitter_search = lib.mkIf config.plugins.treesitter.enable {
+          search.incremental = true;
+        };
+      };
+    };
 
     # Talk to your programming languages like how and when you would talk to
     # your friends: only when you need to know what value does this Python
