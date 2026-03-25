@@ -72,7 +72,10 @@ in
       }
 
       (lib.mkIf (builtins.length cfg.addons > 0) {
-        wrappers.blender.env.BLENDER_SYSTEM_RESOURCES.value = addons;
+        wrappers.blender.env = {
+          BLENDER_SYSTEM_SCRIPTS.value = "${addons}/scripts";
+          BLENDER_SYSTEM_EXTENSIONS.value = "${addons}/extensions";
+        };
       })
     ]
   );

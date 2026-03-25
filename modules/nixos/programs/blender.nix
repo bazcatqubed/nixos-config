@@ -62,8 +62,12 @@ in
     # on `/usr/share/blender/$MAJOR.$MINOR`, we'll have to modify it with an
     # environment variable. This means in a NixOS system, it is only expected
     # to have one instance of the system resources.
-    environment.sessionVariables.BLENDER_SYSTEM_RESOURCES = lib.mkIf (
+    environment.sessionVariables.BLENDER_SYSTEM_SCRIPTS = lib.mkIf (
       builtins.length cfg.addons > 0
-    ) addons;
+    ) "${addons}/scripts";
+
+    environment.sessionVariables.BLENDER_SYSTEM_EXTENSIONS = lib.mkIf (
+      builtins.length cfg.addons > 0
+    ) "${addons}/extensions";
   };
 }
