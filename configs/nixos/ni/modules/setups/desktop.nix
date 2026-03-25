@@ -36,6 +36,11 @@ in
         programs.blender = {
           enable = true;
           package = pkgs.blender-foodogsquared;
+          addons = with pkgs; [
+            blender-machin3tools
+            blender-blendergis
+            blender-cad-sketcher
+          ];
         };
 
         # Make it in multiple languages. Take note the input method engine is set
