@@ -16,6 +16,10 @@
       pkgs,
       ...
     }:
+
+    let
+      devshell = import ../../shell.nix { inherit pkgs; };
+    in
     {
       apps = {
         run-workflow-with-vm =
@@ -32,11 +36,13 @@
             };
           in
           {
+            meta.description = "Easily instantiate virtual machines with the given workflow for debugging your DEs";
             type = "app";
             program = "${script}/bin/run-workflow-with-vm";
           };
 
         ffof = {
+          meta.description = "Fetch a bunch of things that built-in Nix fetchers cannot";
           type = "app";
           program =
             let
@@ -45,6 +51,18 @@
             lib.getExe package;
         };
       };
+
+      checks.reuse-compliance =
+        pkgs.runCommand "reuse-compliance-check"
+          {
+            buildInputs = with pkgs; [ reuse ];
+          }
+          ''
+            (
+              cd ${inputs.self}
+              reuse lint
+            ) && touch $out
+          '';
 
       # No amount of formatters will make this codebase nicer but it sure does
       # feel like it does.
