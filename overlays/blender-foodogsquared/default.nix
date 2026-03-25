@@ -13,6 +13,7 @@ final: prev:
       (colour-science.override {
         optionalFeatures = false;
       })
+      py-slvs
     ]
   );
 }
