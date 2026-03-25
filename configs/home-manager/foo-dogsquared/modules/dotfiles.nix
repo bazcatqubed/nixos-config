@@ -88,6 +88,7 @@ in
         home.file."${config.xdg.configHome}/nushell/scripts".source = getDotfiles "nu/scripts";
 
         home.sessionVariables = {
+          FDS_DOTDIR = dotfiles;
           NU_LIB_DIRS = "${config.xdg.configHome}/nushell/foodogsquared";
           FZF_ALT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --unrestricted";
           FZF_ALT_SHIFT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --full-path --max-depth 4 . ../";

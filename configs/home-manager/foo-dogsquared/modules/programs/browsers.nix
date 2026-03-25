@@ -53,9 +53,11 @@ let
   ++ lib.optionals userCfg.setups.development.enable [
     { id = "dgjhfomjieaadpoljlnidmbgkdffpack"; } # Sourcegraph
   ]
-  ++ lib.optionals (lib.elem "one.foodogsquared.AHappyGNOME" attrs.nixosConfig.workflows.enable) [
-    { id = "dacakhfljjhgdfdlgjpabkkjhbpcmiff"; } # Varia integrator
-  ];
+  ++
+    lib.optionals (lib.elem "one.foodogsquared.AHappyGNOME" attrs.nixosConfig.workflows.enable or [ ])
+      [
+        { id = "dacakhfljjhgdfdlgjpabkkjhbpcmiff"; } # Varia integrator
+      ];
 in
 {
   options.users.foo-dogsquared.programs.browsers = {
@@ -183,9 +185,9 @@ in
               ++ lib.optionals (userCfg.setups.research.enable && userCfg.setups.research.writing.enable) (
                 with pkgs.firefox-addons; [ private-grammar-checker-harper ]
               )
-              ++ lib.optionals (lib.elem "one.foodogsquared.AHappyGNOME" attrs.nixosConfig.workflows.enable) (
-                with pkgs.firefox-addons; [ varia-integrator ]
-              );
+              ++ lib.optionals (lib.elem "one.foodogsquared.AHappyGNOME"
+                attrs.nixosConfig.workflows.enable or [ ]
+              ) (with pkgs.firefox-addons; [ varia-integrator ]);
 
             # Much of the settings are affected by the policies set in the
             # package. See more information about them in
@@ -342,7 +344,7 @@ in
                 bind gT tabopen file://${config.xdg.dataHome}/foodogsquared/homepage/index.html
                 set newtab file://${config.xdg.dataHome}/foodogsquared/homepage/index.html
               ''
-              + lib.optionalString attrs.nixosConfig.services.miniflux.enable ''
+              + lib.optionalString attrs.nixosConfig.services.miniflux.enable or false ''
                 " This is to take advantage of Miniflux shortcuts.
                 blacklistadd localhost:${builtins.toString attrs.nixosConfig.state.ports.miniflux.value}
               '';

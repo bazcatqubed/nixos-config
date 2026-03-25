@@ -56,7 +56,7 @@ in
 
     # We're using Visual Studio Code as a git difftool and mergetool which is
     # surprisingly good compared to the competition (which is not much).
-    programs.git.extraConfig = {
+    programs.git.settings = {
       diff.tool = lib.mkDefault "vscode";
       difftool.vscode.cmd = "code --wait --diff $LOCAL $REMOTE";
 
