@@ -12,14 +12,14 @@
 
 buildPythonPackage rec {
   pname = "blender-blendergis";
-  version = "2.2.8";
+  version = "2215";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "domlysz";
     repo = "BlenderGIS";
     rev = lib.replaceStrings [ "." ] [ "" ] version;
-    hash = "sha256-m3fGLUZqkadxvq6vafFObrNfeWap2tj62dhPnyCN8zw=";
+    hash = "sha256-Bc/ldJvpkijkiX4Eivq5MX5Ykn7p8H5AOp5ZxKmXIxg=";
   };
 
   propagatedBuildInputs = [ imageio ];
@@ -37,11 +37,10 @@ buildPythonPackage rec {
     runHook postInstall
   '';
 
-  meta = with lib; {
+  meta = {
     homepage = "https://github.com/domlysz/BlenderGIS/";
     description = "Blender addons for interacting with geographic data";
-    license = licenses.gpl3Plus;
-    maintainers = with maintainers; [ foo-dogsquared ];
-    platforms = platforms.all;
+    license = lib.licenses.gpl3Plus;
+    platforms = lib.platforms.all;
   };
 }
