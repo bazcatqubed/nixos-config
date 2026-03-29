@@ -7,7 +7,7 @@
   lib,
   pkgs,
   ...
-}:
+}@attrs:
 
 let
   userCfg = config.users.foo-dogsquared;
@@ -47,11 +47,30 @@ in
           ms-toolsai.jupyter
           ms-toolsai.jupyter-renderers
         ]
-        ++ lib.optionals userCfg.setups.research.writing.enable [ ltex-plus.vscode-ltex-plus ];
+        ++ lib.optionals userCfg.setups.research.writing.enable [ ltex-plus.vscode-ltex-plus ]
+        ++ lib.optionals attrs.nixosConfig.suites.dev.containers.enable or false [
+          ms-vscode-remote.remote-ssh
+          ms-vscode-remote.remote-ssh-edit
+          ms-vscode-remote.remote-containers
+          (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              publisher = "ms-vscode";
+              name = "remote-server";
+              version = "1.5.3";
+              hash = "sha256-MSayIBwvSgIHg6gTrtUotHznvo5kTiveN8iSrehllW0=";
+            };
+          })
+        ];
 
-      userSettings = {
-        "extensions.ignoreRecommendations" = true;
-      };
+      userSettings = lib.mkMerge [
+        {
+          "extensions.ignoreRecommendations" = true;
+        }
+
+        (lib.mkIf attrs.nixosConfig.suites.dev.containers.enable or false {
+          "dev.containers.dockerPath" = "podman";
+        })
+      ];
     };
 
     # We're using Visual Studio Code as a git difftool and mergetool which is

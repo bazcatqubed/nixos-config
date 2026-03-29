@@ -24,6 +24,7 @@ let
     { id = "dhdgffkkebhmkfjojejmpbldmpobfkfo"; } # Tampermonkey
     { id = "kkmlkkjojmombglmlpbpapmhcaljjkde"; } # Zhongwen
     { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
+    { id = "fkagelmloambgokoeokbpihmgpkbgbfm"; } # Indie Wiki Buddy
     { id = "oldceeleldhonbafppcapldpdifcinji"; } # LanguageTool checker
   ]
   ++ lib.optionals config.services.activitywatch.enable [
@@ -166,6 +167,7 @@ in
                 unpaywall
                 rsshub-radar
                 refined-github-
+                indie-wiki-buddy
               ])
               ++ lib.optionals config.programs.mpv.enable (with pkgs.nur.repos.rycee.firefox-addons; [ ff2mpv ])
               ++ lib.optionals userCfg.programs.password-utilities.enable (
