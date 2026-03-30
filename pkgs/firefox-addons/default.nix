@@ -23,10 +23,10 @@
     };
     "dearrow" = buildMozillaXpiAddon {
       pname = "dearrow";
-      version = "2.2.3";
+      version = "2.3.2";
       addonId = "deArrow@ajay.app";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4656721/dearrow-2.2.3.xpi";
-      sha256 = "7d5986ce0d92019c10f0ad62ab23a3293ec83c0f090a3c8c57379efb9455820c";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4730911/dearrow-2.3.2.xpi";
+      sha256 = "d3185e2f773881b278f2bcd9be22256420dba8ec6d9628a565c01ce1fabf2f11";
       meta = with lib;
       {
         homepage = "https://dearrow.ajay.app";
@@ -42,6 +42,7 @@
           "https://*.youtube.com/*"
           "https://www.youtube-nocookie.com/embed/*"
           "scripting"
+          "https://dearrow.ajay.app/*"
         ];
         platforms = platforms.all;
       };
@@ -409,16 +410,16 @@
     };
     "varia-integrator" = buildMozillaXpiAddon {
       pname = "varia-integrator";
-      version = "1.4";
+      version = "1.5.2";
       addonId = "giantpinkrobots@protonmail.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4556398/varia_integrator-1.4.xpi";
-      sha256 = "58f6143ae499f19e931af43ea5403fd3397dcd9b823115ccec59e2c9d847fbd2";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4744787/varia_integrator-1.5.2.xpi";
+      sha256 = "8e80d321cb77b3c1e2129d68e7a260142189cbc8cfbb2622a7b8405af8f3e098";
       meta = with lib;
       {
         homepage = "https://giantpinkrobots.github.io/varia/";
         description = "Route all downloads to Varia if it's running.";
         license = licenses.mpl20;
-        mozPermissions = [ "downloads" "storage" "<all_urls>" "tabs" ];
+        mozPermissions = [ "downloads" "storage" "tabs" "cookies" ];
         platforms = platforms.all;
       };
     };
