@@ -40,4 +40,6 @@ in
       extra = config.foodogsquared.lib.extra;
     }
   );
+
+  _module.args.foodogsquaredPkgs = import ../../../pkgs { inherit pkgs; };
 }
