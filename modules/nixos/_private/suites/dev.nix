@@ -160,6 +160,7 @@ in
       (lib.mkIf cfg.containers.enable {
         environment.systemPackages = with pkgs; [
           dive # Dive into container images.
+          devcontainer # BETRAYAL!!!
         ];
 
         programs.distrobox = {
