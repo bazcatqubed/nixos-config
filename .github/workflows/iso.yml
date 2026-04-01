@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: DeterminateSystems/nix-installer-action@v21
+      - uses: DeterminateSystems/nix-installer-action@v22
       - name: Build ISO
         run: |
           nix build .#images.${{ matrix.arch }}.bootstrap-install-iso --out-link build-iso-result
