@@ -18,23 +18,62 @@ let
   cfg = userCfg.programs.doom-emacs;
 
   doomEmacsInstallation = "${config.xdg.configHome}/emacs";
+
+  emacsPackages = pkgs.emacsPackagesFor cfg.package;
 in
 {
-  options.users.foo-dogsquared.programs.doom-emacs.enable =
-    lib.mkEnableOption "foo-dogsquared's Doom Emacs configuration";
+  options.users.foo-dogsquared.programs.doom-emacs = {
+    enable = lib.mkEnableOption "foo-dogsquared's Doom Emacs configuration";
 
-  config = lib.mkIf cfg.enable {
-    programs.emacs = {
-      enable = true;
-      package = pkgs.emacs;
-      extraPackages =
+    package = lib.mkPackageOption pkgs "emacs" { };
+
+    extraModules = lib.mkOption {
+      description = ''
+        Extra Emacs packages to be added within the custom Emacs package in the
+        Doom Emacs installation.
+      '';
+      type = with lib.types; functionTo (listOf package);
+      default = self: [ ];
+      defaultText = "epkgs: []";
+      example = lib.literalExpression /* nix */ ''
         epkgs: with epkgs; [
           org-noter-pdftools
           org-pdftools
           pdf-tools
           vterm
-        ];
+        ]
+      '';
     };
+
+    extraPackages = lib.mkOption {
+      type = with lib.types; listOf package;
+      default = [ ];
+      example = lib.literalExpression /* nix */ ''
+        with pkgs; [
+          sqlite3
+          aspell
+          aspellDicts.en
+          aspellDicts.en-computers
+          wordnet
+          guile_3_0
+        ]
+      '';
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    wrapper-manager.packages.doom-emacs =
+      let
+        emacsPkg = emacsPackages.withPackages cfg.extraModules;
+      in
+      {
+        basePackages = lib.singleton emacsPkg;
+
+        # Doom Emacs dependencies for the usual modules.
+        subenvironments.doom = {
+          paths = cfg.extraPackages;
+        };
+      };
 
     # Automatically install Doom Emacs from here.
     home.mutableFile.${doomEmacsInstallation} = {
@@ -52,41 +91,9 @@ in
 
     home.sessionPath = [ "${doomEmacsInstallation}/bin" ];
 
-    # Doom Emacs dependencies for the usual modules.
-    home.packages = with pkgs; [
-      # :ui doom
-      nerd-fonts.symbols-only
-
-      # :checkers spell
-      aspell
-      aspellDicts.en
-      aspellDicts.en-computers
-
-      # :tools lookup
-      wordnet
-
-      # :lang common-lisp
-      guile_3_0
-
-      # :lang org +roam2
-      sqlite
-    ];
-
     programs.texlive = {
       enable = lib.mkDefault true;
       package = lib.mkDefault pkgs.texliveMedium;
-    };
-
-    programs.python = {
-      enable = lib.mkDefault true;
-      package = lib.mkDefault pkgs.python313;
-      modules = ps: with ps; [ jupyter ];
-    };
-
-    # Enable Emacs server for them quicknotes.
-    services.emacs = {
-      enable = true;
-      socketActivation.enable = true;
     };
 
     # Add org-protocol support.
