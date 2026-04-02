@@ -48,6 +48,40 @@ in
 
       (lib.mkIf (userCfg.programs.doom-emacs.enable) {
         xdg.configFile.doom.source = getDotfiles "emacs";
+
+        users.foo-dogsquared.programs.doom-emacs = {
+          extraModules =
+            epkgs: with epkgs; [
+              org-noter-pdftools
+              org-pdftools
+              pdf-tools
+              vterm
+            ];
+
+          extraPackages = with pkgs; [
+            # :ui doom
+            nerd-fonts.symbols-only
+
+            # :checkers spell
+            aspell
+            aspellDicts.en
+            aspellDicts.en-computers
+
+            # :tools lookup
+            wordnet
+
+            # :lang common-lisp
+            guile_3_0
+
+            # :lang org +roam2
+            sqlite
+
+            cargo
+            rustc
+
+            (python313.withPackages (ps: with ps; [ jupyter ]))
+          ];
+        };
       })
 
       (lib.mkIf (userCfg.setups.development.enable) {
@@ -69,6 +103,8 @@ in
 
         home.packages = with pkgs; [ neovide ];
 
+        programs.neovim.plugins = lib.singleton pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+
         programs.neovim.extraPackages = with pkgs; [
           charm-freeze
           luarocks
@@ -80,6 +116,9 @@ in
           # within this home-manager configuration.
           wl-clipboard
           xclip
+
+          cargo
+          rustc
         ];
       })
 
