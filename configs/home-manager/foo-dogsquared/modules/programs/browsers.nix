@@ -205,6 +205,8 @@ in
                 # Some quality of lifes.
                 "browser.search.widget.inNavBar" = true;
                 "browser.search.openintab" = true;
+                "browser.ctrlTab.sortByRecentlyUsed" = true;
+                "browser.sessionstore.resume_from_crash" = true;
 
                 # Some privacy settings...
                 "privacy.donottrackheader.enabled" = true;
