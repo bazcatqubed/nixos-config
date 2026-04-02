@@ -7,7 +7,7 @@
   lib,
   pkgs,
   ...
-}:
+}@attrs:
 
 let
   nixvimCfg = config.nixvimConfigs.fiesta-fds;
@@ -24,6 +24,7 @@ in
     # Enable all of the LSP servers that I'll likely use.
     plugins.lsp.servers = {
       astro.enable = true; # For Astro.
+      blueprint_ls.enable = true; # For Blueprint UI files.
       bashls.enable = true; # For Bash.
       clangd.enable = true; # For C/C++.
       cmake.enable = true; # For CMake.
@@ -31,6 +32,12 @@ in
       denols.enable = true; # For Deno runtime.
       dockerls.enable = true; # For Dockerfiles.
       emmet_ls.enable = true; # For emmet support.
+
+      # For Guile Scheme.
+      guile_ls = {
+        enable = true;
+        package = null;
+      };
 
       # For HTML.
       html = {
@@ -42,9 +49,13 @@ in
       lemminx.enable = true; # And for XML?
       ltex.enable = true; # And for LanguageTool, too?
       lua_ls.enable = true; # For Lua.
-      nixd.enable = true; # For Nix.
+      mesonlsp.enable = true; # For Meson.
+      nil_ls.enable = true; # For Nix.
       nushell.enable = true; # For Nushell.
       pyright.enable = true; # For Python.
+
+      # For Harper integration.
+      harper_ls.enable = attrs.hmConfig.users.foo-dogsquared.setups.research.writing.enable or false;
 
       # For Vale.
       vale_ls = {
@@ -64,7 +75,10 @@ in
         installCargo = false;
       };
 
+      scheme_langserver.enable = true; # For Scheme implementations.
       solargraph.enable = true; # For Ruby.
+      systemd_lsp.enable = true; # For systemd units.
+      stylua.enable = true; # For Stylua formatter.
       tailwindcss.enable = true; # For Tailwind CSS.
       terraformls.enable = true; # For Terraform.
       ts_ls.enable = true; # For TypeScript.
