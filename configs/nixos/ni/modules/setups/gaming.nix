@@ -83,5 +83,8 @@ in
 
     # Yes... Play your Brawl Stars and Clash Royale in NixOS. :)
     virtualisation.waydroid.enable = true;
+
+    # Create this for WINE-enabled setups.
+    boot.kernelModules = lib.optionals config.suites.desktop.windows-compatibility.enable [ "ntsync" ];
   };
 }
