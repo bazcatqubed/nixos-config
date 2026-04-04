@@ -79,8 +79,8 @@ in
 
     keymaps = [
       {
-        mode = "n";
-        key = bindingPrefix' "d";
+        mode = [ "n" ];
+        key = "<leader>x";
         action = lib.nixvim.mkRaw "vim.cmd.bdelete";
         options.desc = "Delete current buffer";
       }

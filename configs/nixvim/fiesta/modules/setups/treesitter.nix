@@ -12,14 +12,16 @@
 let
   nixvimCfg = config.nixvimConfigs.fiesta;
   cfg = nixvimCfg.setups.treesitter;
-
-  lspSwapBindingPrefix = "<leader>s";
 in
 {
   options.nixvimConfigs.fiesta.setups.treesitter.enable =
     lib.mkEnableOption "tree-sitter setup for Fiesta NixVim";
 
   config = lib.mkIf cfg.enable {
+    extraPlugins = with pkgs.vimPlugins; [
+      treewalker-nvim
+    ];
+
     # The main star of the show.
     plugins.treesitter = {
       enable = true;
@@ -38,28 +40,130 @@ in
       };
     };
 
-    keymaps = lib.optionals config.plugins.treesitter-context.enable [
-      {
-        mode = "n";
-        key = "[c";
-        options = {
-          desc = "Go to context upwards";
-          silent = true;
-        };
-        action = lib.nixvim.mkRaw ''
-          function()
-            require("treesitter-context").go_to_context(vim.v.count1)
-          end
-        '';
-      }
+    keymaps =
+      lib.optionals config.plugins.treesitter-context.enable [
+        {
+          mode = "n";
+          key = "[c";
+          options = {
+            desc = "Go to context upwards";
+            silent = true;
+          };
+          action = lib.nixvim.mkRaw ''
+            function()
+              require("treesitter-context").go_to_context(vim.v.count1)
+            end
+          '';
+        }
 
-      {
-        mode = "n";
-        key = "<leader>Lc";
-        options.desc = "Toggle context";
-        action = "<cmd>TSContext toggle<CR>";
-      }
-    ];
+        {
+          mode = "n";
+          key = "<leader>Lc";
+          options.desc = "Toggle context";
+          action = "<cmd>TSContext toggle<CR>";
+        }
+      ]
+      ++ lib.optionals (lib.elem pkgs.vimPlugins.treewalker-nvim config.extraPlugins) [
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<C-j>";
+          options = {
+            desc = "Move down to closest neighbor node";
+            silent = true;
+          };
+          action = "<cmd>Treewalker Down<CR>";
+        }
+
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<C-k>";
+          options = {
+            desc = "Move up to neighbor node";
+            silent = true;
+          };
+          action = "<cmd>Treewalker Up<CR>";
+        }
+
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<C-h>";
+          options = {
+            desc = "Move to inner neighbor node";
+            silent = true;
+          };
+          action = "<cmd>Treewalker Left<CR>";
+        }
+
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<C-l>";
+          options = {
+            desc = "Move to outer neighbor node";
+            silent = true;
+          };
+          action = "<cmd>Treewalker Right<CR>";
+        }
+
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<A-S-j>";
+          options = {
+            desc = "Swap down with closest neighbor node";
+            silent = true;
+          };
+          action = "<cmd>Treewalker SwapDown<CR>";
+        }
+
+        {
+          key = "<A-S-k>";
+          options = {
+            desc = "Swap up with neighbor node";
+            silent = true;
+          };
+          action = "<cmd>Treewalker SwapUp<CR>";
+        }
+
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<A-S-h>";
+          options = {
+            desc = "Swap with inner neighbor node";
+            silent = true;
+          };
+          action = "<cmd>Treewalker SwapLeft<CR>";
+        }
+
+        {
+          mode = [
+            "n"
+            "v"
+          ];
+          key = "<A-S-l>";
+          options = {
+            desc = "Swap with outer neighbor node";
+            silent = true;
+          };
+          action = "<cmd>Treewalker SwapRight<CR>";
+        }
+      ];
 
     opts = {
       foldenable = config.plugins.treesitter.folding.enable;
@@ -88,12 +192,6 @@ in
     # Bring some convenience to editing them.
     plugins.ts-autotag.enable = true;
 
-    plugins.which-key.settings.spec =
-      lib.optionals config.plugins.treesitter-textobjects.settings.swap.enable
-        [
-          (lib.nixvim.listToUnkeyedAttrs [ lspSwapBindingPrefix ] // { group = "Swap"; })
-        ];
-
     # Show me your moves.
     plugins.treesitter-textobjects = {
       enable = true;
@@ -116,109 +214,6 @@ in
             "class" = "F";
           };
       };
-
-      settings.move = lib.mkMerge (
-        [
-          {
-            enable = true;
-            set_jumps = true;
-          }
-        ]
-        ++ (
-          let
-            motions = lib.cartesianProduct {
-              region = [
-                "start"
-                "end"
-              ];
-              jumpDirection = [
-                "Previous"
-                "Next"
-              ];
-              variant = [
-                "outer"
-                "inner"
-              ];
-            };
-
-            motionMap = {
-              outerPrevious = "[";
-              outerNext = "]";
-              innerPrevious = "[[";
-              innerNext = "]]";
-            };
-
-            actionDesc =
-              variant: jumpDirection: query:
-              if variant == "inner" then
-                "Jump to inner part of the ${jumpDirection} ${query}"
-              else
-                "Jump to ${jumpDirection} ${query}";
-
-            mkQueryMappings =
-              # The accumulator. Should be a list where it contains all of the
-              # modules to be merged.
-              acc:
-
-              # The query object of the treesitter node. All queries are
-              # assumed to be "@$QUERY.outer".
-              query:
-
-              # A set of bindings to be used for each jump direction.
-              bindings:
-              let
-                mappings = lib.map (
-                  motion:
-                  let
-                    inherit (motion) region jumpDirection variant;
-                    jumpDirection' = lib.strings.toLower jumpDirection;
-                    binding' = bindings.${jumpDirection'};
-                    bindingPrefix = motionMap."${variant}${jumpDirection}";
-                  in
-                  {
-                    "goto_${jumpDirection}_${region}" = {
-                      "${bindingPrefix}${binding'}" = {
-                        desc = actionDesc variant jumpDirection' query;
-                        query = "@${query}.${variant}";
-                      };
-                    };
-                  }
-                ) motions;
-              in
-              acc ++ mappings;
-          in
-          lib.foldlAttrs mkQueryMappings [ ] {
-            "function" = {
-              previous = "m";
-              next = "m";
-            };
-            "block" = {
-              previous = "b";
-              next = "b";
-            };
-            "call" = {
-              previous = "f";
-              next = "f";
-            };
-            "class" = {
-              previous = "c";
-              next = "c";
-            };
-            "conditional" = {
-              previous = "D";
-              next = "d";
-            };
-            "statement" = {
-              previous = "S";
-              next = "s";
-            };
-            "loop" = {
-              previous = "L";
-              next = "l";
-            };
-          }
-        )
-      );
 
       settings.select = {
         enable = true;
@@ -281,63 +276,6 @@ in
             "attribute" = "a";
           };
       };
-
-      settings.swap = lib.mkMerge (
-        [ { enable = true; } ]
-        ++ (
-          let
-            motions = lib.cartesianProduct {
-              jumpDirection = [
-                "Previous"
-                "Next"
-              ];
-              variant = [ "outer" ];
-            };
-
-            actionDesc =
-              variant: jumpDirection: query:
-              if variant == "inner" then
-                "Jump to inner part of the ${jumpDirection} ${query}"
-              else
-                "Jump to ${jumpDirection} ${query}";
-
-            mkQueryMappings =
-              acc: query: bindings:
-              let
-                mappings = lib.map (
-                  motion:
-                  let
-                    inherit (motion) jumpDirection variant;
-                    jumpDirection' = lib.strings.toLower jumpDirection;
-                  in
-                  {
-                    "swap_${jumpDirection}" = {
-                      "${lspSwapBindingPrefix}${bindings.${jumpDirection'}}" = {
-                        desc = actionDesc variant jumpDirection' query;
-                        query = "@${query}.${variant}";
-                      };
-                    };
-                  }
-                ) motions;
-              in
-              acc ++ mappings;
-          in
-          lib.foldlAttrs mkQueryMappings [ ] {
-            "function" = {
-              next = "f";
-              previous = "F";
-            };
-            "parameter" = {
-              next = "a";
-              previous = "A";
-            };
-            "conditional" = {
-              next = "d";
-              previous = "D";
-            };
-          }
-        )
-      );
     };
   };
 }

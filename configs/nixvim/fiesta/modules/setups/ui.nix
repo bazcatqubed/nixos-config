@@ -45,7 +45,13 @@ in
     };
 
     # My elderly forgot-how-to-do-this assistant.
-    plugins.which-key.enable = true;
+    plugins.which-key = {
+      enable = true;
+      settings = {
+        preset = "helix";
+        plugins.presets.motions = true;
+      };
+    };
 
     # Taste the rainbow delimiters.
     plugins.rainbow-delimiters.enable = nixvimCfg.setups.treesitter.enable;

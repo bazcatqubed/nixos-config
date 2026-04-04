@@ -5,6 +5,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -16,6 +17,10 @@ in
   options.nixvimConfigs.fiesta.setups.qol.enable = lib.mkEnableOption "quality-of-life improvements";
 
   config = lib.mkIf cfg.enable {
+    extraPackages = lib.optionals config.plugins.snacks.settings.lazygit.enabled [
+      pkgs.lazygit
+    ];
+
     plugins.mini = {
       enable = true;
       modules = {
@@ -26,6 +31,16 @@ in
         surround = { };
         align = { };
         bracketed = { };
+      };
+    };
+
+    plugins.snacks = {
+      enable = true;
+      settings = {
+        scope.enabled = true;
+        picker.enabled = true;
+        rename.enabled = true;
+        lazygit.enabled = true;
       };
     };
 
@@ -150,6 +165,36 @@ in
             function()
               require("flash").toggle()
             end
+          '';
+        }
+
+        {
+          key = "<c-space>";
+          mode = [
+            "n"
+            "x"
+            "o"
+          ];
+          options.desc = "Quick Treesitter incremental selection";
+          action = lib.nixvim.mkRaw ''
+            function()
+              require("flash").treesitter({
+                actions = {
+                  ["<c-space>"] = "next",
+                  ["<BS>"] = "prev",
+                },
+              })
+            end
+          '';
+        }
+      ]
+      ++ lib.optionals config.plugins.snacks.settings.lazygit.enabled [
+        {
+          key = "<leader>g";
+          mode = [ "n" ];
+          options.desc = "Open Git client";
+          action = lib.nixvim.mkRaw ''
+            require("snacks").lazygit.open
           '';
         }
       ];
