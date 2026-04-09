@@ -6,6 +6,7 @@
   config,
   lib,
   pkgs,
+  foodogsquaredLib,
   ...
 }:
 
@@ -36,16 +37,7 @@ in
     ];
 
     keymaps =
-      let
-        mkDAPBinding =
-          binding: settings:
-          {
-            mode = "n";
-            key = "${bindingPrefix}${binding}";
-          }
-          // settings;
-      in
-      lib.mapAttrsToList mkDAPBinding {
+      foodogsquaredLib.nixvim.mkPrefixBinding { prefix = bindingPrefix; } {
         "b" = {
           options.desc = "Toggle breakpoint";
           action = lib.nixvim.mkRaw "require('dap').toggle_breakpoint";

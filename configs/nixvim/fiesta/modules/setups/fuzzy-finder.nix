@@ -5,6 +5,7 @@
 {
   config,
   lib,
+  foodogsquaredLib,
   ...
 }:
 
@@ -33,15 +34,7 @@ in
 
     # Configure all of the keymaps.
     keymaps =
-      let
-        mkPrefixBinding =
-          binding: settings:
-          lib.mergeAttrs {
-            mode = "n";
-            key = "${bindingPrefix}${binding}";
-          } settings;
-      in
-      lib.mapAttrsToList mkPrefixBinding (
+      foodogsquaredLib.nixvim.mkPrefixBinding { prefix = bindingPrefix; } (
         {
           "A" = {
             options.desc = "Resume last picker";
