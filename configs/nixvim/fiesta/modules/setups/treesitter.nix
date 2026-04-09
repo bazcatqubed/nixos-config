@@ -40,153 +40,112 @@ in
       };
     };
 
-    keymaps =
-      lib.optionals config.plugins.treesitter-context.enable [
-        {
-          mode = "n";
-          key = "[c";
-          options = {
-            desc = "Go to context upwards";
-            silent = true;
-          };
-          action = lib.nixvim.mkRaw ''
-            function()
-              require("treesitter-context").go_to_context(vim.v.count1)
-            end
-          '';
-        }
+    keymaps = lib.optionals (lib.elem pkgs.vimPlugins.treewalker-nvim config.extraPlugins) [
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "<C-j>";
+        options = {
+          desc = "Move down to closest neighbor node";
+          silent = true;
+        };
+        action = "<cmd>Treewalker Down<CR>";
+      }
 
-        {
-          mode = "n";
-          key = "<leader>Lc";
-          options.desc = "Toggle context";
-          action = "<cmd>TSContext toggle<CR>";
-        }
-      ]
-      ++ lib.optionals (lib.elem pkgs.vimPlugins.treewalker-nvim config.extraPlugins) [
-        {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<C-j>";
-          options = {
-            desc = "Move down to closest neighbor node";
-            silent = true;
-          };
-          action = "<cmd>Treewalker Down<CR>";
-        }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "<C-k>";
+        options = {
+          desc = "Move up to neighbor node";
+          silent = true;
+        };
+        action = "<cmd>Treewalker Up<CR>";
+      }
 
-        {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<C-k>";
-          options = {
-            desc = "Move up to neighbor node";
-            silent = true;
-          };
-          action = "<cmd>Treewalker Up<CR>";
-        }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "<C-h>";
+        options = {
+          desc = "Move to inner neighbor node";
+          silent = true;
+        };
+        action = "<cmd>Treewalker Left<CR>";
+      }
 
-        {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<C-h>";
-          options = {
-            desc = "Move to inner neighbor node";
-            silent = true;
-          };
-          action = "<cmd>Treewalker Left<CR>";
-        }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "<C-l>";
+        options = {
+          desc = "Move to outer neighbor node";
+          silent = true;
+        };
+        action = "<cmd>Treewalker Right<CR>";
+      }
 
-        {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<C-l>";
-          options = {
-            desc = "Move to outer neighbor node";
-            silent = true;
-          };
-          action = "<cmd>Treewalker Right<CR>";
-        }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "<A-S-j>";
+        options = {
+          desc = "Swap down with closest neighbor node";
+          silent = true;
+        };
+        action = "<cmd>Treewalker SwapDown<CR>";
+      }
 
-        {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<A-S-j>";
-          options = {
-            desc = "Swap down with closest neighbor node";
-            silent = true;
-          };
-          action = "<cmd>Treewalker SwapDown<CR>";
-        }
+      {
+        key = "<A-S-k>";
+        options = {
+          desc = "Swap up with neighbor node";
+          silent = true;
+        };
+        action = "<cmd>Treewalker SwapUp<CR>";
+      }
 
-        {
-          key = "<A-S-k>";
-          options = {
-            desc = "Swap up with neighbor node";
-            silent = true;
-          };
-          action = "<cmd>Treewalker SwapUp<CR>";
-        }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "<A-S-h>";
+        options = {
+          desc = "Swap with inner neighbor node";
+          silent = true;
+        };
+        action = "<cmd>Treewalker SwapLeft<CR>";
+      }
 
-        {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<A-S-h>";
-          options = {
-            desc = "Swap with inner neighbor node";
-            silent = true;
-          };
-          action = "<cmd>Treewalker SwapLeft<CR>";
-        }
-
-        {
-          mode = [
-            "n"
-            "v"
-          ];
-          key = "<A-S-l>";
-          options = {
-            desc = "Swap with outer neighbor node";
-            silent = true;
-          };
-          action = "<cmd>Treewalker SwapRight<CR>";
-        }
-      ];
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "<A-S-l>";
+        options = {
+          desc = "Swap with outer neighbor node";
+          silent = true;
+        };
+        action = "<cmd>Treewalker SwapRight<CR>";
+      }
+    ];
 
     opts = {
       foldenable = config.plugins.treesitter.folding.enable;
       foldlevelstart = 3;
       foldlevel = 5;
-    };
-
-    # Some niceties for refactoring.
-    plugins.treesitter-refactor = {
-      enable = false;
-      settings = {
-        highlight_current_scope.enable = false;
-        highlight_definitions.enable = true;
-        navigation.enable = true;
-        smart_rename.enable = true;
-      };
-    };
-
-    plugins.treesitter-context = {
-      enable = true;
-
-      # Enable the plugin, just don't enable it by default. ;p
-      settings.enable = false;
     };
 
     # Bring some convenience to editing them.

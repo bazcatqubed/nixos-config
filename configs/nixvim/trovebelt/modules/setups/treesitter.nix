@@ -29,16 +29,5 @@ in
         incremental_selection.enable = true;
       };
     };
-
-    # Some niceties for refactoring.
-    plugins.treesitter-refactor = {
-      enable = false;
-      settings = {
-        highlight_current_scope.enable = false;
-        highlight_definitions.enable = true;
-        navigation.enable = true;
-        smart_rename.enable = true;
-      };
-    };
   };
 }
