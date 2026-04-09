@@ -35,8 +35,13 @@ in
     in
     emptyWM.options.programs.gnome-session;
 
-  config = lib.mkIf (cfg.sessions != { }) {
-    home.packages = lib.singleton gnomeSessionPackage;
-    systemd.user.packages = lib.singleton gnomeSessionPackage;
-  };
+  config = lib.mkIf (cfg.sessions != { }) (
+    let
+      sessionPackages = lib.singleton gnomeSessionPackage ++ [ cfg.package ];
+    in
+    {
+      home.packages = sessionPackages;
+      systemd.user.packages = sessionPackages;
+    }
+  );
 }
