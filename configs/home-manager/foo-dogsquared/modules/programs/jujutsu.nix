@@ -18,6 +18,10 @@ in
     lib.mkEnableOption "foo-dogsquared's Jujutsu configuration";
 
   config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      lazyjj
+    ];
+
     programs.jujutsu = {
       enable = true;
       settings = {
