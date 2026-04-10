@@ -134,7 +134,7 @@ in
       suites.filesystem.setups.archive.enable = true;
 
       services.yt-dlp = {
-        enable = true;
+        enable = false;
         downloadPath = "${mountName}/yt-dlp-service";
 
         # This is applied on all jobs. It is best to be minimal as much as
@@ -178,7 +178,7 @@ in
       };
 
       services.gallery-dl = {
-        enable = true;
+        enable = false;
         downloadPath = "${mountName}/gallery-dl-service";
 
         extraArgs = galleryDlArgs ++ [
