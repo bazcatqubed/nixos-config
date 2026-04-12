@@ -67,8 +67,9 @@ in
           ];
 
           substituters.authorizedKeys = options.services.guix.substituters.authorizedKeys.default ++ [
-            (builtins.fetchurl {
+            (pkgs.fetchurl {
               url = "https://substitutes.nonguix.org/signing-key.pub";
+              hash = "sha256-54SjGHytpYrDPJjLCnw9xc4lNQn+CoxscX3tvgK2xkg=";
             })
           ];
 
