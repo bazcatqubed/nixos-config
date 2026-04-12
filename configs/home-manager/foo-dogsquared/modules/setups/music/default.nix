@@ -34,6 +34,7 @@ in
         home.packages = with pkgs; [
           songrec # SHAZAM!
           picard # Graphical beets.
+          lrcget # Get them lyrics.
 
           ardour # Arrrrrr...
           milkytracker # Mommy, mommy, I want milky music.
