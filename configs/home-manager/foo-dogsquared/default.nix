@@ -18,7 +18,7 @@ in
 {
   imports = [ ./modules ];
 
-  # All of the home-manager-user-specific setup are here.
+  # All the home-manager-user-specific setup are here.
   users.foo-dogsquared = {
     dotfiles.enable = true;
     dotfiles.reimplementation.enable = true;
@@ -135,7 +135,7 @@ in
   # Only enable autostart inside of NixOS systems.
   xdg.autostart.enable = attrs ? nixosConfig;
 
-  # Set nixpkgs config both outside and inside of home-manager.
+  # Set nixpkgs config outside and inside of home-manager.
   nixpkgs.config = import ./config/nixpkgs/config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./config/nixpkgs/config.nix;
 

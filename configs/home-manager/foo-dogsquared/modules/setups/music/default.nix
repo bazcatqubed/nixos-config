@@ -42,7 +42,7 @@ in
           helm # Take 'yer synthesizing at 'yer head.
           surge-xt # FM
           famistudio # Take a trip back to the past.
-          vcv-rack # A gay syntehsizer, I think?
+          vcv-rack # A gay synthesizer, I think?
         ];
 
         # Based from the FlatHub's version of their desktop file.
