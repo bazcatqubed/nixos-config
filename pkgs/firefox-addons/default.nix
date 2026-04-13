@@ -23,10 +23,10 @@
     };
     "dearrow" = buildMozillaXpiAddon {
       pname = "dearrow";
-      version = "2.3.2";
+      version = "2.3.4";
       addonId = "deArrow@ajay.app";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4730911/dearrow-2.3.2.xpi";
-      sha256 = "d3185e2f773881b278f2bcd9be22256420dba8ec6d9628a565c01ce1fabf2f11";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4757748/dearrow-2.3.4.xpi";
+      sha256 = "319aa4708e4053b024091d99ae3ed14449a3c0187f262a6c072ded2a1dade9ae";
       meta = with lib;
       {
         homepage = "https://dearrow.ajay.app";
@@ -68,10 +68,10 @@
     };
     "font-inspect" = buildMozillaXpiAddon {
       pname = "font-inspect";
-      version = "0.6.4";
+      version = "0.6.5";
       addonId = "{a658a273-612e-489e-b4f1-5344e672f4f5}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4660325/font_inspect-0.6.4.xpi";
-      sha256 = "960ea56d3ff916bccc2b33e9e024606a921c8bef99d77a8a07391476451f0f47";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4752199/font_inspect-0.6.5.xpi";
+      sha256 = "f6af6b2fcbf5dc9a9afd026174ac6e8340659e408a4e326da9bc048ec1b41f8d";
       meta = with lib;
       {
         homepage = "https://webextension.org/listing/font-finder.html";
@@ -477,10 +477,10 @@
     };
     "private-grammar-checker-harper" = buildMozillaXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "1.12.0";
+      version = "2.0.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4733097/private_grammar_checker_harper-1.12.0.xpi";
-      sha256 = "5715f1e90de798f68f19adf7ec4c466fd07b347b42dc18a6462e7a137d9490a1";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4758672/private_grammar_checker_harper-2.0.0.xpi";
+      sha256 = "f9dbec6273efb00803dd68cf506847ef3c4679500ac1d2768ac107d600fb65eb";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
@@ -669,10 +669,10 @@
     };
     "varia-integrator" = buildMozillaXpiAddon {
       pname = "varia-integrator";
-      version = "1.5.2";
+      version = "1.5.4";
       addonId = "giantpinkrobots@protonmail.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4744787/varia_integrator-1.5.2.xpi";
-      sha256 = "8e80d321cb77b3c1e2129d68e7a260142189cbc8cfbb2622a7b8405af8f3e098";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4757369/varia_integrator-1.5.4.xpi";
+      sha256 = "09c458294a60643b51a704df9485fdc676cc6053c505d3fd2c6c24d0c83b2682";
       meta = with lib;
       {
         homepage = "https://giantpinkrobots.github.io/varia/";
