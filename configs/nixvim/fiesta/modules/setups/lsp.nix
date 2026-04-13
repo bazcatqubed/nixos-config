@@ -46,7 +46,7 @@ in
         key = "gj";
         action = lib.nixvim.mkRaw /* lua */ ''
           function()
-            vim.diagnostic.jump({ count = -1, float = true })
+            vim.diagnostic.jump({ count = -vim.v.count1, float = true })
           end
         '';
       }
@@ -56,7 +56,7 @@ in
         key = "gk";
         action = lib.nixvim.mkRaw /* lua */ ''
           function()
-            vim.diagnostic.jump({ count = 1, float = true })
+            vim.diagnostic.jump({ count = vim.v.count1, float = true })
           end
         '';
       }
