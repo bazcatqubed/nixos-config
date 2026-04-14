@@ -74,43 +74,55 @@ let
         };
       };
     };
+
+  subenvPackages =
+    let
+      exportEnvVars =
+        envvars:
+        lib.mapAttrsToList (
+          n: v:
+          let
+            v' = if lib.isList v then lib.concatStringsSep ":" v else toString v;
+          in
+          ''
+            export ${lib.escapeShellArg n}=${lib.escapeShellArg v'}
+          ''
+        ) envvars;
+
+      mkBuildEnv =
+        n: v:
+        pkgs.buildEnv {
+          name = "wrapper-manager-subenv-${n}";
+          inherit (v) pathsToLink extraOutputsToInstall;
+          paths =
+            v.paths
+            ++ lib.optionals (v.profileRelativeEnvVars != { }) [
+              (pkgs.writeTextDir "/etc/profile" (exportEnvVars v.profileRelativeEnvVars))
+            ];
+        };
+    in
+    lib.mapAttrs mkBuildEnv cfg;
 in
 {
   options.subenvironments = lib.mkOption {
     type = with lib.types; attrsOf (submodule subenvModule);
     default = { };
     description = ''
-      A set of subenvironments.
+      A set of subenvironments. These are not installed as part of the packages
+      but rather linked to the wrapper via environment variables.
     '';
   };
 
   config = lib.mkIf (cfg != { }) {
-    basePackages =
+    environment.variables =
       let
-        exportEnvVars =
-          envvars:
-          lib.mapAttrsToList (
-            n: v:
-            let
-              v' = if lib.isList v then lib.concatStringsSep ":" v else toString v;
-            in
-            ''
-              export ${lib.escapeShellArg n}=${lib.escapeShellArg v'}
-            ''
-          ) envvars;
+        combineVars = n: v: {
+          value = lib.map (p: "${subenvPackages.${n}}${p}") v;
+          action = lib.mkOptionDefault "suffix";
+        };
 
-        mkBuildEnv =
-          n: v:
-          pkgs.buildEnv {
-            name = "wrapper-manager-subenv-${n}";
-            inherit (v) pathsToLink extraOutputsToInstall;
-            paths =
-              v.paths
-              ++ lib.optionals (v.profileRelativeEnvVars != { }) [
-                (pkgs.writeTextDir "/etc/profile" (exportEnvVars v.profileRelativeEnvVars))
-              ];
-          };
+        combineSubenvProfileVars = sn: sv: lib.mapAttrs combineVars sv.profileRelativeEnvVars;
       in
-      lib.mapAttrsToList mkBuildEnv cfg;
+      lib.mkMerge (lib.mapAttrsToList combineSubenvProfileVars cfg);
   };
 }
