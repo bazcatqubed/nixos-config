@@ -17,6 +17,7 @@
     ./programs/nushell.nix
     ./programs/pure-data.nix
     ./programs/python.nix
+    ./programs/supercollider.nix
     ./programs/typst.nix
     ./services/archivebox.nix
     ./services/borgbackup.nix
