@@ -47,10 +47,6 @@ in
                 url = "https://nightly.gnome.org/gnome-nightly.flatpakrepo";
                 hash = "sha256-rFluVpCvgs1iy7YKVnkPh3p6YuF4orbVuOhLUUFRyYM=";
               };
-              "kdeapps" = {
-                url = "https://distribute.kde.org/kdeapps.flatpakrepo";
-                hash = "sha256-dCF9QQYMmqMuzwAS+HYoPAAtwfzO7aVCl8s4RwhneqI=";
-              };
             };
           in
           lib.mapAttrs' (
