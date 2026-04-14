@@ -610,4 +610,37 @@
     ```
   */
   buildBlenderAddons = pkgs.callPackage ./blender/build-addons.nix { };
+
+  /**
+    Builder for installing SuperCollider quarks and extensions.
+
+    # Arguments
+
+    quarks
+    : A list of SuperCollider quarks to be expected at
+    `$out/share/SuperCollider/Extensions`.
+
+    quarkSettings
+    : A Nix-representable settings to be converted to
+    `$out/sclang_config.yaml`.
+
+    supercollider
+    : Package containing the SuperCollider executable.
+
+    # Type
+
+    ```
+    buildSuperColliderQuark:: Attr -> Derivation
+    ```
+
+    # Examples
+
+    ```nix
+    buildSuperColliderQuark (finalAttrs: {
+      name = "vowel";
+      src = ./.;
+    })
+    ```
+  */
+  buildSuperColliderQuark = pkgs.callPackage ./supercollider/build-quark.nix { };
 }

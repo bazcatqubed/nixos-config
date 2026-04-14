@@ -80,6 +80,7 @@ pkgs.lib.makeExtensible (
       buildDockerImage
       buildLayeredDockerImage
       buildBlenderAddons
+      buildSuperColliderQuark
       ;
     inherit (self.trivial)
       countAttrs
