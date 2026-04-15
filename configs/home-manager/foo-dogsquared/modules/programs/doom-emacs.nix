@@ -72,6 +72,10 @@ in
         # Doom Emacs dependencies for the usual modules.
         subenvironments.doom = {
           paths = cfg.extraPackages;
+          profileRelativeEnvVars = {
+            PATH = [ "/bin" ];
+            XDG_DATA_DIRS = [ "/share" ];
+          };
         };
       };
 

@@ -273,13 +273,27 @@ in
         home.packages = with pkgs; [
           decker
           uxn
-          supercollider-with-plugins
           # sonic-pi
           processing
           plugdata
           shader-slang # Just don't make it full or shady slurs.
           material-maker
         ];
+
+        programs.supercollider = {
+          enable = true;
+          plugins =
+            with pkgs.supercolliderPlugins;
+            [
+              sc3-plugins
+            ]
+            ++ (with pkgs.supercolliderQuarks; [
+              SuperDirt
+              SuperDirtMixer
+              ZZZ
+              MathLib
+            ]);
+        };
 
         programs.pure-data = {
           enable = true;

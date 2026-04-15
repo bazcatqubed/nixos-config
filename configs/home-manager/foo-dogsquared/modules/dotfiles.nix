@@ -79,6 +79,8 @@ in
             cargo
             rustc
 
+            gnuplot
+
             (python313.withPackages (ps: with ps; [ jupyter ]))
           ];
         };
