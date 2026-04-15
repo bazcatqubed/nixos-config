@@ -33,7 +33,6 @@ in
         ];
 
         systems = [ "x86_64-linux" ];
-        formats = null;
         modules = [
           inputs.disko.nixosModules.disko
           inputs.sops-nix.nixosModules.sops
@@ -108,7 +107,6 @@ in
         systems = [ "x86_64-linux" ];
         inherit domain;
 
-        formats = null;
         deploy = {
           hostname = subdomain "plover";
           autoRollback = true;
@@ -146,7 +144,6 @@ in
         };
         home-manager.branch = "home-manager-unstable";
         systems = [ "x86_64-linux" ];
-        formats = null;
         modules = [
           # Well, well, well...
           inputs.nixos-wsl.nixosModules.default
