@@ -93,6 +93,7 @@ lib.makeScope pkgs.newScope (
     #purrdata = callPackage ./purr-data { };
     # reshade = callPackage ./reshade { };
     speki = callPackage ./speki { };
+    supercolliderQuarks = callPackage ./supercollider-quarks { };
     sqlc-gen-from-template = callPackage ./sqlc-gen-from-template { };
     simple-icons = callPackage ./simple-icons { };
     tic-80-unstable = callPackage ./tic-80 { };
