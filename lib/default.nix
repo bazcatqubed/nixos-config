@@ -102,6 +102,7 @@ pkgs.lib.makeExtensible (
       fetchPexelsImages
       fetchPexelsVideos
       fetchUnsplashImages
+      fetchSupercolliderQuark
       ;
     inherit (self.xdg) getXdgDesktop getXdgAutostartFile;
   }

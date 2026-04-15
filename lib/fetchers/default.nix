@@ -217,4 +217,46 @@
     ```
   */
   fetchUnsplashImages = pkgs.callPackage ./fetch-unsplash-asset/images.nix { };
+
+  /**
+    Fetch SuperCollider quarks given from a bare lockfile.
+
+    # Arguments
+
+    hash
+    : Hash for the fixed-output derivation.
+
+    lockfile
+    : Explicit path to the lockfile. By default, it is set to `null`.
+
+    urls
+    : A list of paths to be downloaded to the quarks installation folder.
+    Shorthand values are typically placed here (e.g., `MathLib`, `SuperDirt`).
+
+    # Type
+
+    ```
+    fetchSupercolliderQuark :: Attr -> Derivation
+    ```
+
+    # Examples
+
+    ```nix
+    fetchSupercolliderQuark {
+      src = ./.; # Will search under `quarks.txt`.
+      hash = "";
+    }
+
+    fetchSupercolliderQuark {
+      lockfile = ./quarks.txt;
+      hash = "";
+    };
+
+    fetchSupercolliderQuark {
+      urls = [ "SuperDirt" "ZZZ" ];
+      hash = "";
+    }
+    ```
+  */
+  fetchSupercolliderQuark = pkgs.callPackage ./supercollider/fetch-quark.nix { };
 }
