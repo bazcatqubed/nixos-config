@@ -112,6 +112,7 @@ in
             inotify-tools # I notify things with tools like these.
             watchman # He ain't a superhero though, he's a creeper (for your files that is).
             miller # Another data query language.
+            nurl # Nuuuuuuuuuuu.
             devbox # Create a Nix devshell without Nixlang.
             kanidm_1_8 # What is you?
             shellcheck # Magic conch shell check.
@@ -128,7 +129,7 @@ in
             kind
 
             # Testing out your web app #532.
-            beekeeper-studio
+            beekeeper-studio # Making database wrangling a bee-yutiful thing to do.
             turso-cli
           ]
           ++ lib.optionals (attrs.nixosConfig.suites.vpn.personal.enable or false) [
