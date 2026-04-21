@@ -105,22 +105,32 @@ in
 
         home.packages = with pkgs; [ neovide ];
 
-        programs.neovim.plugins = lib.singleton pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+        programs.neovim = lib.mkMerge [
+          {
+            extraPackages = with pkgs; [
+              charm-freeze
+              luarocks
+              lua5_1
+              shfmt
+              cmake
 
-        programs.neovim.extraPackages = with pkgs; [
-          charm-freeze
-          luarocks
-          lua5_1
-          shfmt
-          cmake
+              # Just assume that there is no clipboard thingy that is already managed
+              # within this home-manager configuration.
+              wl-clipboard
+              xclip
 
-          # Just assume that there is no clipboard thingy that is already managed
-          # within this home-manager configuration.
-          wl-clipboard
-          xclip
+              cargo
+              rustc
+            ];
 
-          cargo
-          rustc
+            plugins = lib.singleton pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+          }
+
+          # It creates the files at home directory starting from the specified
+          # version.
+          (lib.mkIf (lib.versionAtLeast config.home.stateVersion "26.05") {
+            sideloadInitLua = true;
+          })
         ];
       })
 
