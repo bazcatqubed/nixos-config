@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-name: "Cache outputs"
+name: "Build all the things"
 on:
   push:
     branches:
@@ -10,6 +10,7 @@ on:
       - develop
 jobs:
   build-custom-packages:
+    name: "Build custom packages"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -21,7 +22,30 @@ jobs:
           name: bazcatqubed
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: Build custom packages
-        run: nix build -f ./pkgs --impure
+        run: nix build -f ./pkgs --impure --show-trace
         env:
           NIXPKGS_ALLOW_UNFREE: "1"
           NIXPKGS_ALLOW_INSECURE: "1"
+  build-devcontainers:
+    name: "Build devcontainers"
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/nix-installer-action@v22
+      - name: Build
+        run: |
+          nix build -f ./devcontainers --print-out-paths --no-link --show-trace > build_paths
+        env:
+          NIXPKGS_ALLOW_UNFREE: "1"
+          NIXPKGS_ALLOW_INSECURE: "1"
+      - name: Deploy devcontainers to GitHub registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | skopeo login ghcr.io -u ${{ github.actor }} --password-stdin
+
+          for image_archive in $(< build_paths); do
+            CONTAINER_TAG=$(echo $image_archive | awk 'match($0, /fds-(\S+).tar.+/, arr) {print arr[1]}')
+            skopeo copy \
+            "docker-archive:${image_archive}" "docker://ghcr.io/${{ github.repository }}:$CONTAINER_TAG"
+          done

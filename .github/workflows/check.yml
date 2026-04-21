@@ -21,7 +21,7 @@ jobs:
         uses: DeterminateSystems/flake-checker-action@v12
       - name: Check flake outputs
         run: |
-          nix flake check --impure --accept-flake-config --keep-going
+          nix flake check --impure --accept-flake-config --keep-going --show-trace
         env:
           NIXPKGS_ALLOW_BROKEN: "1"
           NIXPKGS_ALLOW_UNFREE: "1"

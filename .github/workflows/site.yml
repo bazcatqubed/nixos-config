@@ -16,7 +16,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v22
       - env:
           NIXPKGS_ALLOW_UNFREE: "1"
-        run: nix build .#devPackages.x86_64-linux.website
+        run: nix build .#devPackages.x86_64-linux.website --show-trace
       - uses: actions/upload-pages-artifact@v4
         with:
           path: "result/"
