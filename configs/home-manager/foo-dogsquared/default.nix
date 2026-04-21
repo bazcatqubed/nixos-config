@@ -139,7 +139,7 @@ in
   nixpkgs.config = import ./config/nixpkgs/config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./config/nixpkgs/config.nix;
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "25.11";
 
   xdg.configFile = {
     kanidm.source = ./config/kanidm/config;
