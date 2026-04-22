@@ -148,6 +148,15 @@ let
               home.homeDirectory = lib.mkForce setupConfig.homeDirectory;
             }
           )
+
+          (
+            let
+              releaseInfo = lib.importJSON "${inputs."${config.homeManagerBranch}"}/release.json";
+            in
+            {
+              config.lib.hm.version = releaseInfo.release;
+            }
+          )
         ];
 
         standaloneConfigModules = lib.singleton (
