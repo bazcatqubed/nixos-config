@@ -27,7 +27,13 @@ lib.extendMkDerivation {
       ...
     }@args:
     {
-      name = args.name or "supercollider-quarks-deps";
+      name =
+        args.name or (
+          if (lib.length urls) == 1 then
+            "supercollider-quark-${lib.head urls}"
+          else
+            "supercollider-quarks-multi-${lib.head urls}"
+        );
       nativeBuildInputs = args.nativeBuildInputs or [ ] ++ [ cacert ];
       buildInputs = args.buildInputs or [ ] ++ [
         which
