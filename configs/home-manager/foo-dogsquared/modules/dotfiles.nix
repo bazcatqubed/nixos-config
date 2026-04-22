@@ -128,7 +128,7 @@ in
 
           # It creates the files at home directory starting from the specified
           # version.
-          (lib.mkIf (lib.versionAtLeast config.home.stateVersion "26.05") {
+          (lib.mkIf (lib.versionAtLeast config.lib.hm.version "26.05") {
             sideloadInitLua = true;
           })
         ];
