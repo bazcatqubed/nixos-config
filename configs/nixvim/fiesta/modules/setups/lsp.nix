@@ -46,7 +46,23 @@ in
         key = "gj";
         action = lib.nixvim.mkRaw /* lua */ ''
           function()
-            vim.diagnostic.jump({ count = -vim.v.count1, float = true })
+            vim.diagnostic.jump({
+              count = vim.v.count1,
+              on_jump = function(diagnostic, bufnr)
+                if not diagnostic then return end
+
+                vim.diagnostic.open_float({
+                  namespace = diagnostic.namespace,
+                  bufnr = bufnr,
+                  scope = "cursor",
+                  severity = { min = vim.diagnostic.severity.WARN },
+                  severity_sort = {
+                    reverse = true,
+                  },
+                  focus = false,
+                })
+              end,
+            })
           end
         '';
       }
@@ -56,7 +72,23 @@ in
         key = "gk";
         action = lib.nixvim.mkRaw /* lua */ ''
           function()
-            vim.diagnostic.jump({ count = vim.v.count1, float = true })
+            vim.diagnostic.jump({
+              count = -vim.v.count1,
+              on_jump = function(diagnostic, bufnr)
+                if not diagnostic then return end
+
+                vim.diagnostic.open_float({
+                  namespace = diagnostic.namespace,
+                  bufnr = bufnr,
+                  scope = "cursor",
+                  severity = { min = vim.diagnostic.severity.WARN },
+                  severity_sort = {
+                    reverse = true,
+                  },
+                  focus = false,
+                })
+              end,
+            })
           end
         '';
       }
