@@ -90,7 +90,6 @@ lib.makeScope pkgs.newScope (
     #pd-l2ork = callPackage ./pd-l2ork { };
     #rotp-modnar = callPackage ./rotp-modnar { };
     #rotp-fusion = callPackage ./rotp-fusion { };
-    #purrdata = callPackage ./purr-data { };
     # reshade = callPackage ./reshade { };
     speki = callPackage ./speki { };
     supercolliderQuarks = callPackage ./supercollider-quarks { };
