@@ -867,11 +867,11 @@
     },
     "wrapper-manager-fds": {
       "locked": {
-        "lastModified": 1776861124,
-        "narHash": "sha256-+/pgCbYVyO3cbJ/Cml3+aQSXa4QURZ2SjzwaxQFjUSg=",
+        "lastModified": 1776874369,
+        "narHash": "sha256-lOA9pGah5xz8oYVD1qeKYbX4oLrCb5wNahyLPcQOV9I=",
         "owner": "bazcatqubed",
         "repo": "nix-module-wrapper-manager-fds",
-        "rev": "960da7089bc1aac3acf4990de5326b2a1d2405a7",
+        "rev": "623efe3e981de32f3c0ca7a49bbff69c47ba4007",
         "type": "github"
       },
       "original": {
