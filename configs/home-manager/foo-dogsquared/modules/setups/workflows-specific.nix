@@ -47,6 +47,7 @@ in
             additionalShellExtensions
             ++ lib.optionals userCfg.services.backup.enable [ pkgs.pika-backup ]
             ++ lib.optionals userCfg.setups.development.enable [ pkgs.devhelp ]
+            ++ lib.optionals userCfg.setups.research.writing.enable [ pkgs.hieroglyphic ]
             ++ lib.optionals userCfg.programs.vs-code.enable [ pkgs.gnomeExtensions.vscode-search-provider ];
 
           xdg.autostart.entries = lib.optionals (lib.elem pkgs.varia workflows.${workflowId}.extraApps) (

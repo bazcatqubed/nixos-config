@@ -171,6 +171,10 @@ in
             harper # A grammer checker with yer' Grandma..er.
             typesetter # If you want to get fancier than a Markdown document, here you go.
             cook-cli # We need to cook.
+
+            # Make them interactive AO3s.
+            twine
+            inform7
           ]
           ++ lib.optionals config.programs.typst.enable [
             tinymist

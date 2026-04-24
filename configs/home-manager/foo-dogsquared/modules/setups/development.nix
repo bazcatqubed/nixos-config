@@ -274,7 +274,6 @@ in
         home.packages = with pkgs; [
           decker
           uxn
-          # sonic-pi
           processing
           plugdata
           shader-slang # Just don't make it full or shady slurs.
@@ -294,6 +293,24 @@ in
               ZZZ
               MathLib
             ]);
+        };
+
+        programs.haskell = {
+          enable = true;
+          libraries =
+            ghcPackages: with ghcPackages; [
+              bifunctors
+              colour
+              hosc
+              microspec
+              mwc-random
+              network
+              primitive
+              random
+              tidal
+              tidal-core
+              vector
+            ];
         };
 
         programs.pure-data = {

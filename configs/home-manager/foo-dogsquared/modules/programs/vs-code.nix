@@ -60,6 +60,16 @@ in
               hash = "sha256-MSayIBwvSgIHg6gTrtUotHznvo5kTiveN8iSrehllW0=";
             };
           })
+        ]
+        ++ lib.optionals userCfg.setups.development.creative-coding.enable [
+          (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              publisher = "tidalcycles";
+              name = "vscode-tidalcycles";
+              version = "2.0.2";
+              hash = "sha256-TfRLJZcMpoBJuXitbRmacbglJABZrMGtSNXAbjSfLaQ=";
+            };
+          })
         ];
 
       userSettings = lib.mkMerge [
