@@ -29,7 +29,6 @@ in
           "beekeeper-studio-5.5.7"
           "qtwebengine-5.15.19"
           "quickjs-2025-09-13-2"
-          "nexusmods-app-0.21.1"
         ];
 
         systems = [ "x86_64-linux" ];

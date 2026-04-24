@@ -33,7 +33,6 @@ in
 
     # Bring more of them games.
     environment.systemPackages = with pkgs; [
-      nexusmods-app # Making your gaming experience to infinite possibilities like the space.
       ruffle # Take a trip to nostalgia lane without the viruses.
 
       # rpcs3
