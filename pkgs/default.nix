@@ -66,6 +66,7 @@ lib.makeScope pkgs.newScope (
     flatsync = callPackage ./flatsync { };
     freerct = callPackage ./freerct.nix { };
     gnome-search-provider-recoll = callPackage ./gnome-search-provider-recoll.nix { };
+    gnome-kiosk = callPackage ./gnome-kiosk { };
     #graphite-design-tool = callPackage ./graphite-design-tool { };
     go-avahi-cname = callPackage ./go-avahi-cname { };
     grant = callPackage ./grant { };
