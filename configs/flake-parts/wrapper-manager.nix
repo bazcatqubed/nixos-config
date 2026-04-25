@@ -22,6 +22,10 @@
         nixpkgs.branch = "nixos-unstable";
       };
     };
+
+    sharedModules = [
+      inputs.wrapper-manager-fds.wrapperModules.modular-services-full
+    ];
   };
 
   flake.wrapperManagerModules.default = inputs.fds-core.wrapperManagerModules.default;
