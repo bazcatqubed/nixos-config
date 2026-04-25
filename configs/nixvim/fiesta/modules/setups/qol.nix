@@ -36,12 +36,47 @@ in
 
     plugins.snacks = {
       enable = true;
-      settings = {
-        scope.enabled = true;
-        picker.enabled = true;
-        rename.enabled = true;
-        lazygit.enabled = true;
-      };
+      settings = lib.mkMerge [
+        {
+          scope.enabled = true;
+          picker.enabled = true;
+          rename.enabled = true;
+          lazygit.enabled = true;
+        }
+
+        (lib.mkIf config.plugins.flash.enable {
+          picker.win.input.keys = {
+            "<a-s>" = lib.nixvim.listToUnkeyedAttrs [ "flash" ] // {
+              mode = [
+                "n"
+                "i"
+              ];
+            };
+            "s" = lib.nixvim.listToUnkeyedAttrs [ "flash" ];
+          };
+
+          actions.flash = lib.nixvim.mkRaw /* lua */ ''
+            function()
+              require("flash").jump({
+                pattern = "^",
+                label = { after = { 0, 0 } },
+                search = {
+                  mode = "search",
+                  exclude = {
+                    function(win)
+                      return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "snacks_picker_list"
+                    end,
+                  },
+                },
+                action = function(match)
+                  local idx = picker.list:row2idx(match.pos[1])
+                  picker.list:_move(idx, true, true)
+                end,
+              })
+            end
+          '';
+        })
+      ];
     };
 
     # Move at the speed o' sound.
@@ -62,7 +97,7 @@ in
     # Talk to your programming languages like how and when you would talk to
     # your friends: only when you need to know what value does this Python
     # expression evaluates to.
-    # plugins.conjure.enable = true;
+    plugins.conjure.enable = true;
 
     # Make them parenthesis management tolerable.
     plugins.parinfer-rust.enable = true;
