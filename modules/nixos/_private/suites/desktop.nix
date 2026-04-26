@@ -158,8 +158,8 @@ in
         environment.systemPackages = lib.optionals cfg.windows-compatibility.enable (
           with pkgs;
           [
-            # yabridge
-            # yabridgectl
+            yabridge
+            yabridgectl
           ]
         );
 
