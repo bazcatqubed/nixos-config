@@ -62,6 +62,7 @@ in
           })
         ]
         ++ lib.optionals userCfg.setups.development.creative-coding.enable [
+          justusadam.language-haskell
           (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
             mktplcRef = {
               publisher = "tidalcycles";
