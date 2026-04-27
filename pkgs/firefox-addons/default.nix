@@ -23,10 +23,10 @@
     };
     "dearrow" = buildMozillaXpiAddon {
       pname = "dearrow";
-      version = "2.3.4";
+      version = "2.3.5";
       addonId = "deArrow@ajay.app";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4757748/dearrow-2.3.4.xpi";
-      sha256 = "319aa4708e4053b024091d99ae3ed14449a3c0187f262a6c072ded2a1dade9ae";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4760405/dearrow-2.3.5.xpi";
+      sha256 = "4d83666ae933ce9b9a7061742e7776dcc98bfbbbe47e60d0a5b99271fc9f6085";
       meta = with lib;
       {
         homepage = "https://dearrow.ajay.app";
@@ -159,10 +159,10 @@
     };
     "indie-wiki-buddy" = buildMozillaXpiAddon {
       pname = "indie-wiki-buddy";
-      version = "3.14.2";
+      version = "3.14.4";
       addonId = "{cb31ec5d-c49a-4e5a-b240-16c767444f62}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4727783/indie_wiki_buddy-3.14.2.xpi";
-      sha256 = "450c8c7629f377880688bedb770ac733e82aa15aa963ed39e199d69622b38523";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4773275/indie_wiki_buddy-3.14.4.xpi";
+      sha256 = "4bab840aef056b3e4c5d14aaeb99507fb1e58601d8da8c845a6b89738f49836d";
       meta = with lib;
       {
         homepage = "https://getindie.wiki/";
@@ -477,10 +477,10 @@
     };
     "private-grammar-checker-harper" = buildMozillaXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "2.0.0";
+      version = "2.1.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4758672/private_grammar_checker_harper-2.0.0.xpi";
-      sha256 = "f9dbec6273efb00803dd68cf506847ef3c4679500ac1d2768ac107d600fb65eb";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4778851/private_grammar_checker_harper-2.1.0.xpi";
+      sha256 = "71a36f52277f904e8ba6fe5e3c4b8f1c9404fb35013781deb7ab874def22ce01";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
@@ -496,10 +496,10 @@
     };
     "refined-github-" = buildMozillaXpiAddon {
       pname = "refined-github-";
-      version = "26.4.4";
+      version = "26.4.20";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4752872/refined_github-26.4.4.xpi";
-      sha256 = "36d0c4681e37d0ad0a3eb289d71f55324143a37b28b7e2d67ab35427944a3a41";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4772939/refined_github-26.4.20.xpi";
+      sha256 = "d160e48b3d8dc4a6b46c774088d67fe557116dcd51dd6fa376c02eb0c51deb8a";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
@@ -655,10 +655,10 @@
     };
     "updateswh" = buildMozillaXpiAddon {
       pname = "updateswh";
-      version = "0.7.0";
+      version = "0.9.0";
       addonId = "{157eb9f0-9814-4fcc-b0b7-586b3093c641}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4765428/updateswh-0.7.0.xpi";
-      sha256 = "b71d1f8b02d60bb79d7e6c1457246c2961c9d3df2c1e5ad8c7fa69ad5189f412";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4778739/updateswh-0.9.0.xpi";
+      sha256 = "21af7eb3a4cf3e2de54d579da34d7401fe4244e42a6f567c521ebf6cd1f1f623";
       meta = with lib;
       {
         description = "Check archival state of a source code repository and propose to update it if needed.";
@@ -667,8 +667,21 @@
           "storage"
           "tabs"
           "activeTab"
-          "<all_urls>"
+          "scripting"
           "https://archive.softwareheritage.org/*"
+          "*://github.com/*"
+          "*://bitbucket.org/*"
+          "*://gitlab.com/*"
+          "*://0xacab.org/*"
+          "*://gite.lirmm.fr/*"
+          "*://framagit.org/*"
+          "*://gricad-gitlab.univ-grenoble-alpes.fr/*"
+          "*://git.rampin.org/*"
+          "*://codeberg.org/*"
+          "*://git.disroot.org/*"
+          "*://git.minetest.land/*"
+          "*://repo.radio/*"
+          "*://git.fsfe.org/*"
         ];
         platforms = platforms.all;
       };
