@@ -22,7 +22,6 @@
     "uas"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
 
   services.ddccontrol.enable = true;
