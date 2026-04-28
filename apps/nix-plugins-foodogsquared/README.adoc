@@ -1,0 +1,9 @@
+// SPDX-FileCopyrightText: 2026 Gabriel Arazas <foodogsquared@foodogsquared.one>
+//
+// SPDX-License-Identifier: LGPL-2.1-or-later
+
+= nix-plugin-foodogsquared
+:toc:
+
+A bunch of custom Nix and Lix plugins in use for this project.
+Mind you, all the plugin systems above are pretty much considered unstable so just be cautious of the version requirements for them.
