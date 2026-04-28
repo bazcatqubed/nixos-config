@@ -65,6 +65,7 @@ lib.makeScope pkgs.newScope (
     fastn = callPackage ./fastn { };
     flatsync = callPackage ./flatsync { };
     freerct = callPackage ./freerct.nix { };
+    gitte = callPackage ./gitte { };
     gnome-search-provider-recoll = callPackage ./gnome-search-provider-recoll.nix { };
     gnome-kiosk = callPackage ./gnome-kiosk { };
     #graphite-design-tool = callPackage ./graphite-design-tool { };
