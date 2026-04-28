@@ -142,6 +142,7 @@ in
           with pkgs;
           [
             devtoolbox
+            wildcard
             turtle
           ]
         )
