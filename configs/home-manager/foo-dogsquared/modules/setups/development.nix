@@ -328,6 +328,27 @@ in
           exec = lib.getExe pkgs.decker;
           icon = "${pkgs.decker.src}/icon_512x512.png";
         };
+
+        wrapper-manager.packages.web-apps =
+          { foodogsquaredLib, ... }:
+          {
+            programs.chromium-web-apps.apps.strudel = {
+              baseURL = "strudel.cc";
+              imageHash = "sha512-EgwOJYmxVF69Iqi1no6BX8muXWu+oRXx2mah25jdmjyGr1yZA3lJjPXoObfP0QUQgnV5MenxnoqB0OtKc5wjBw==";
+              flags = foodogsquaredLib.extra.mkCommonChromiumFlags "strudel";
+              desktopEntrySettings = {
+                desktopName = "Strudel";
+                genericName = "Live Coding Environment";
+                categories = [ "Development" ];
+                comment = "Live coding environment based on Tidal Cycles";
+                keywords = [
+                  "Creative coding"
+                  "Live coding"
+                  "Tidal Cycles"
+                ];
+              };
+            };
+          };
       })
 
       (lib.mkIf cfg.gamedev.enable {
