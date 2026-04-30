@@ -144,6 +144,7 @@ in
             devtoolbox
             wildcard
             turtle
+            gitte
           ]
         )
         ++
