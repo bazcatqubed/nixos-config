@@ -17,7 +17,7 @@ jobs:
       - env:
           NIXPKGS_ALLOW_UNFREE: "1"
         run: nix build .#devPackages.x86_64-linux.website --show-trace
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: "result/"
           retention-days: 7
