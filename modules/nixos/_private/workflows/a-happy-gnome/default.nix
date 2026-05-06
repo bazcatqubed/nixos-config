@@ -100,6 +100,7 @@ in
           authenticator # 2-factor codes for 2-factor storages.
           bazaar # ...and a cathedral you can explore too.
           blanket # Zen...
+          constrict # Make them videos suitable for IRC terminal, I suppose.
           dialect # Your gateway to polyglotting.
           eyedropper # Some nice eyedropper tool.
           flowtime # Some nice timer for those overworking.
@@ -145,6 +146,7 @@ in
             wildcard
             turtle
             gitte
+            textpieces
           ]
         )
         ++
