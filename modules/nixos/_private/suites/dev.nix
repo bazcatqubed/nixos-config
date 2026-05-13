@@ -30,10 +30,10 @@ in
         # Hey! Wanna see some of <INSERT APPLICATION'S NAME> big dark dump?
         systemd.coredump = {
           enable = true;
-          extraConfig = ''
-            ProcessSizeMax=10G
-            ExternalSizeMax=10G
-          '';
+          settings.Coredump = {
+            ProcessSizeMax = "10G";
+            ExternalSizeMax = "10G";
+          };
         };
 
         # Debugging time!
