@@ -67,13 +67,13 @@
 # TODO: Fix the timestamp in the help section.
 stdenv.mkDerivation (finalAttrs: {
   pname = "tic-80";
-  version = "unstable-2026-02-23";
+  version = "unstable-2026-05-13";
 
   src = fetchFromGitHub {
     owner = "nesbox";
     repo = "TIC-80";
-    rev = "ae1195a9d0fbda243bf0ebd861d6876d072a979e";
-    hash = "sha256-oXXLTCkMfB1q16mIq612fieTkleRYN/tP7SBtlRIEKA=";
+    rev = "9b79d496f0e3afcdf43bc5f97f59834114447b63";
+    hash = "sha256-lrZ1wgEh6yFkpPvlJJr0OQmZvxG0l14BttRFgXBd0Ko=";
     fetchSubmodules = true;
   };
 
