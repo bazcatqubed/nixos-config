@@ -114,7 +114,7 @@ in
             miller # Another data query language.
             nurl # Nuuuuuuuuuuu.
             devbox # Create a Nix devshell without Nixlang.
-            kanidm_1_8 # What is you?
+            kanidm_1_9 # What is you?
             shellcheck # Magic conch shell check.
             shfmt # Decorate them horrible code a little bit.
 
