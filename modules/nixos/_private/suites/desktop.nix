@@ -150,7 +150,7 @@ in
         environment.systemPackages = with pkgs; [
           # Setup the WINE environment.
           wineWow64Packages.stable
-          bottles # The Windows environment package manager.
+          # bottles # The Windows environment package manager.
         ];
       })
 
