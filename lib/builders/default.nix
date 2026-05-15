@@ -643,4 +643,40 @@
     ```
   */
   buildSuperColliderQuark = pkgs.callPackage ./supercollider/build-quark.nix { };
+
+  /**
+    Builder for creating Marp slides.
+
+    # Arguments
+
+    It is similar to `mkDerivation` but with additional arguments specific for
+    the builder.
+
+    browser
+    : The browser of the builder to be used when converting it to PDF.
+
+    settings
+    : Settings to be used in place of `.marprc` (in YAML format).
+
+    formats
+    : List of formats to be compiled into. Each of the given format is appended
+    as part of `--$FORMAT` flag within each build step. If the list is empty, it
+    will use the upstream default.
+
+    # Type
+
+    ```
+    buildMarpSlides :: Attr -> Derivation
+    ```
+
+    # Examples
+
+    ```nix
+    buildMarpSlides (finalAttrs: {
+      src = lib.cleanSource ./.;
+      formats = [ "html" "pdf" "pptx" ];
+    })
+    ```
+  */
+  buildMarpSlides = pkgs.callPackage ./marp/build-slides.nix { };
 }

@@ -39,6 +39,7 @@ lib.makeScope pkgs.newScope (
       buildDockerImage
       buildBlenderAddons
       buildSuperColliderQuark
+      buildMarpSlides
       ;
     inherit (self.foodogsquaredLib.fetchers)
       fetchInternetArchive
