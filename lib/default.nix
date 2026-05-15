@@ -82,6 +82,7 @@ pkgs.lib.makeExtensible (
       buildBlenderAddons
       buildSuperColliderQuark
       buildMarpSlides
+      buildTypstDocument
       ;
     inherit (self.trivial)
       countAttrs

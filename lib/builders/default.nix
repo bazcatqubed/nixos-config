@@ -679,4 +679,57 @@
     ```
   */
   buildMarpSlides = pkgs.callPackage ./marp/build-slides.nix { };
+
+  /**
+    Builder for compiling Typst documents.
+
+    # Arguments
+
+    It is similar to `mkDerivation` but with additional arguments specific for
+    the builder.
+
+    extraPackages
+    : Lambda containing additional packages to be put into the builder.
+
+    typstPkg
+    : Derivation containing Typst and its integrated wrapper function. Defaults
+    to nixpkgs' instance of Typst.
+
+    files
+    : An attrset detailing the files with their formats and extra arguments to
+    be included in the build step. By default, it only considers `main.typ` to be
+    converted into PDF format.
+
+    vendorHash
+    : Optional hash to be used when the builder requires fetching all of the
+    Typst dependencies through the network instead. This now requires assigning
+    fixed-output hashes into the derivation.
+
+    # Type
+
+    ```
+    buildTypstDocument :: Attr -> Derivation
+    ```
+
+    # Examples
+
+    ```nix
+    buildTypstDocument (finalAttrs: {
+      src = lib.cleanSource ./.;
+      files = {
+        "slide.typ".formats = [ "pdf" ];
+        "main.typ" = {
+          formats = [ "pdf" "html" ];
+          extraArgs = [ "--features" "html" ];
+        };
+      };
+      extraPackages = p: with p; [
+        cetz
+        unify
+        touying
+      ];
+    })
+    ```
+  */
+  buildTypstDocument = pkgs.callPackage ./typst/build-document.nix { };
 }
