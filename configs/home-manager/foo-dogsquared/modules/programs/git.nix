@@ -105,6 +105,16 @@ in
             };
           };
         };
+
+        programs.gitu = {
+          enable = true;
+          settings = {
+            general = {
+              confirm_discard = "hunk";
+              mouse_support = true;
+            };
+          };
+        };
       }
 
       (lib.mkIf cfg.instaweb.enable {
