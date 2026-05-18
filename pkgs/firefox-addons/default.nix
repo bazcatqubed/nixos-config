@@ -159,10 +159,10 @@
     };
     "indie-wiki-buddy" = buildMozillaXpiAddon {
       pname = "indie-wiki-buddy";
-      version = "3.14.4";
+      version = "3.14.5";
       addonId = "{cb31ec5d-c49a-4e5a-b240-16c767444f62}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4773275/indie_wiki_buddy-3.14.4.xpi";
-      sha256 = "4bab840aef056b3e4c5d14aaeb99507fb1e58601d8da8c845a6b89738f49836d";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4801726/indie_wiki_buddy-3.14.5.xpi";
+      sha256 = "beb53fe18dc9438f812eee77002c91a9835cf9c2593e41cb7216fd6eeddb5dbf";
       meta = with lib;
       {
         homepage = "https://getindie.wiki/";
@@ -496,10 +496,10 @@
     };
     "refined-github-" = buildMozillaXpiAddon {
       pname = "refined-github-";
-      version = "26.5.10";
+      version = "26.5.13";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4799573/refined_github-26.5.10.xpi";
-      sha256 = "869681afa89a5462a0dd83a7951249c2ac420efb877002c20eefc54789ecb21e";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4804659/refined_github-26.5.13.xpi";
+      sha256 = "b0d14dcaa4a7248b82aabb38eaac454782dcb9083cd9b721b847e68f6ab9a1bf";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
