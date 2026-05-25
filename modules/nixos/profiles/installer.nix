@@ -37,4 +37,8 @@
   # Yeah, that's right, this is also a Guix System installer because SCREW YOU,
   # NIXOS USERS!
   services.guix.enable = lib.mkDefault true;
+
+  # We're putting our custom plugins here since we're using it to install our
+  # private configurations which contains code using the plugins anyways.
+  nix.settings.plugin-files = lib.singleton "${foodogsquaredLib.nixPlugins}/lib/nix/plugins/foodogsquared";
 }
