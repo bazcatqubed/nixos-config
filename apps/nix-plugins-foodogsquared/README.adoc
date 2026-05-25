@@ -7,3 +7,30 @@
 
 A bunch of custom Nix and Lix plugins in use for this project.
 Mind you, all the plugin systems above are pretty much considered unstable so just be cautious of the version requirements for them.
+
+== Quickstart
+
+To set up for building this project, you need the following dependencies:
+
+- GCC >=v15
+- Nix >=v2.31
+- Lix >=v2.95
+- Meson (>=1.10) and co. (Ninja, pkg-config)
+
+The build step is handled by Meson so you can just proceed the same as most Meson-configured projects.
+
+[source, shell]
+----
+meson setup build && cd build
+meson compile
+----
+
+Then after it is built, you'll have to link it with Nix/Lix either through the command line or `nix.conf` content.
+The following block shows an example of either methods.
+
+[source, shell]
+----
+nix --option plugin-files $OUTPUT repl
+
+NIX_CONFIG="plugin-files = $OUTPUT" nix repl
+----
