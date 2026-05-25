@@ -93,10 +93,10 @@ in
         stream = {
           source = [
             "pipe:///run/snapserver/jukebox?name=${lib.escapeURL "foodogsquared's PC"}&sampleFormat=48000:16:2&codec=pcm"
-            "airplay://${lib.getExe' pkgs.shairport-sync "shairport-sync"}?devicename=Snapcast"
+            "airplay://${lib.getExe' pkgs.shairport-sync "shairport-sync"}?name=Snapcast&devicename=Snapcast"
           ]
           ++ lib.optionals config.services.spotifyd.enable [
-            "librespot://${lib.getExe' pkgs.librespot "librespot"}?devicename=Snapcast&bitrate=320&volume=50&normalize=true&autoplay=true"
+            "librespot://${lib.getExe' pkgs.librespot "librespot"}?name=LibreSpot&devicename=Snapcast&bitrate=320&volume=50&normalize=true&autoplay=true"
           ];
         };
 
