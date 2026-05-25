@@ -107,6 +107,9 @@ pkgs.lib.makeExtensible (
       fetchSupercolliderQuark
       ;
     inherit (self.xdg) getXdgDesktop getXdgAutostartFile;
+
+    # Yeah, we're putting our plugins here.
+    nixPlugins = pkgs.callPackage ../apps/nix-plugins-foodogsquared { };
   }
   // lib.optionalAttrs (builtins ? fetchTree) {
     flake = callLib ./flake.nix;
