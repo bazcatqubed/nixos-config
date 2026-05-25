@@ -213,9 +213,9 @@ include::./docs/website/content/en/08-acknowledgement/index.adoc[tag=acknowledge
 
 == Copyright
 
-For those who care, this project is licensed under MIT license.
+This project follows https://reuse.software/spec-3.3/[REUSE specification] with most of its files already have the licensing information embedded infile.
+For those who care, the overwhelmingly majority of the project is licensed under MIT license.
 I just chose it to make it easier to upstream parts of this project to nixpkgs and to make it easier to copy it without much problems (just don't forget to add attribution as indicated from the license).
-Please see link:./LICENSE[`./LICENSE`] for the full text.
 
 However, various subprojects found in here may be under different licenses.
 An example of this is the custom GNOME Shell extensions found for my main GNOME configuration which are licensed under GPLv3 only.
