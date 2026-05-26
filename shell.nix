@@ -11,6 +11,7 @@ let
   run-workflow-in-vm = pkgs.callPackage ./apps/run-workflow-with-vm { };
   fetch-website-icon = pkgs.callPackage ./lib/fetchers/fetch-website-icon/package/package.nix { };
   fds-flock-of-fetchers = pkgs.callPackage ./apps/fds-fetcher-flock/nix/package.nix { };
+  nix-fds-plugins = import ./apps/nix-plugins-foodogsquared/nix { inherit pkgs; };
 in
 pkgs.mkShell {
   packages =
@@ -63,4 +64,10 @@ pkgs.mkShell {
       delve
     ]
     ++ extraPackages;
+
+  # Dunno if this works for non-nixpkgs' stdenv shells (i.e., anything that is
+  # not Bash) but better to be safe than sorry in this case.
+  env.NIX_CONFIG = ''
+    plugin-files = ${nix-fds-plugins}/lib/nix/plugins/foodogsquared
+  '';
 }

@@ -6,4 +6,14 @@
   pkgs ? import <nixpkgs> { },
 }:
 
-pkgs.callPackage ./nix/package.nix { lix = pkgs.lixPackageSets.lix_2_95.lix; }
+let
+  mainPkg = pkgs.callPackage ./package.nix { };
+in
+pkgs.mkShell {
+  inputsFrom = [ mainPkg ];
+
+  packages = with pkgs; [
+    treefmt
+    nixfmt
+  ];
+}
