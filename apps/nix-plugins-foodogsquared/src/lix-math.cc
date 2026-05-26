@@ -3,23 +3,24 @@
 // SPDX-License-Identifier: LGPL-2.1-or-later
 
 #include <cmath>
+#include <functional>
 #include <lix/libexpr/primops.hh>
 #include <lix/libexpr/value.hh>
 #include <math.h>
 #include <stdlib.h>
 
-static nix::Value prim_fds_math_abs(nix::EvalState &state, nix::Value **args, nix::Value &v) {
+static void prim_fds_math_abs(nix::EvalState &state, nix::Value **args, nix::Value &v) {
     state.forceValue(*args[0], nix::noPos);
 
     if (args[0]->type() == nix::nFloat) {
-        return {
+        v = {
             nix::NewValueAs::floating,
             fabs(
                 state.forceFloat(*args[0], nix::noPos, "while getting absolute value")
             ),
         };
     } else {
-        return {
+        v = {
             nix::NewValueAs::integer,
             abs(
                 state.forceInt(*args[0], nix::noPos, "while getting absolute value").value
@@ -28,12 +29,12 @@ static nix::Value prim_fds_math_abs(nix::EvalState &state, nix::Value **args, ni
     }
 }
 
-static nix::Value prim_fds_math_mod(nix::EvalState &state, nix::Value **args, nix::Value &v) {
+static void prim_fds_math_mod(nix::EvalState &state, nix::Value **args, nix::Value &v) {
     state.forceValue(*args[0], nix::noPos);
     state.forceValue(*args[1], nix::noPos);
 
     if (args[0]->type() == nix::nFloat || args[1]->type() == nix::nFloat) {
-        return {
+        v = {
             nix::NewValueAs::floating,
             fmod(
                 state.forceFloat(*args[0], nix::noPos, "while evaluating the first operand of the modulo operation"),
@@ -44,51 +45,14 @@ static nix::Value prim_fds_math_mod(nix::EvalState &state, nix::Value **args, ni
         auto x = state.forceInt(*args[0], nix::noPos, "while evaluating the first operand of the modulo operation");
         auto y = state.forceInt(*args[1], nix::noPos, "while evaluating the second operand of the modulo operation");
 
-        return {
+        v = {
             nix::NewValueAs::integer,
             x.value % y.value
         };
     }
 }
 
-static nix::Value prim_fds_math_log(
-    nix::EvalState &state, nix::Value **args, nix::Value &v
-) {
-    state.forceValue(*args[0], nix::noPos);
-
-    return {
-        nix::NewValueAs::floating,
-        log(
-            state.forceFloat(*args[0], nix::noPos, "while evaluating the logarithm")
-        )
-    };
-}
-
-static nix::Value prim_fds_math_log10(
-    nix::EvalState &state, nix::Value **args, nix::Value &v
-) {
-    state.forceValue(*args[0], nix::noPos);
-    return {
-        nix::NewValueAs::floating,
-        log10(
-            state.forceFloat(*args[0], nix::noPos, "while evaluating the log10")
-        )
-    };
-}
-
-static nix::Value prim_fds_math_log2(
-    nix::EvalState &state, nix::Value **args, nix::Value &v
-) {
-    state.forceValue(*args[0], nix::noPos);
-    return {
-        nix::NewValueAs::floating,
-        log2(
-            state.forceFloat(*args[0], nix::noPos, "while evaluating the log2")
-        )
-    };
-}
-
-static nix::Value prim_fds_math_logx(
+static void prim_fds_math_logx(
     nix::EvalState &state, nix::Value **args, nix::Value &v
 ) {
     state.forceValue(*args[0], nix::noPos);
@@ -96,19 +60,19 @@ static nix::Value prim_fds_math_logx(
 
     auto b = state.forceFloat(*args[0], nix::noPos, "while evaluating the logx");
     auto x = state.forceFloat(*args[1], nix::noPos, "while evaluating the logx");
-    return {
+    v = {
         nix::NewValueAs::floating,
         log(x) / log(b)
     };
 }
 
-static nix::Value prim_fds_math_sqrt(
+static void prim_fds_math_sqrt(
     nix::EvalState &state, nix::Value **args, nix::Value &v
 ) {
     state.forceValue(*args[0], nix::noPos);
 
     if (args[0]->type() == nix::nFloat) {
-        return {
+        v = {
             nix::NewValueAs::floating,
             sqrt(
                 state.forceFloat(*args[0], nix::noPos, "while evaluating the square root")
@@ -117,20 +81,20 @@ static nix::Value prim_fds_math_sqrt(
     } else {
         // FIXME: Check for integer overflow
         auto x = state.forceInt(*args[0], nix::noPos, "while evaluating the square root");
-        return {
+        v = {
             nix::NewValueAs::integer,
             sqrtl(x.value)
         };
     }
 }
 
-static nix::Value prim_fds_math_cbrt(
+static void prim_fds_math_cbrt(
     nix::EvalState &state, nix::Value **args, nix::Value &v
 ) {
     state.forceValue(*args[0], nix::noPos);
 
     if (args[0]->type() == nix::nFloat) {
-        return {
+        v = {
             nix::NewValueAs::floating,
             cbrt(
                 state.forceFloat(*args[0], nix::noPos, "while evaluating the cube root")
@@ -138,11 +102,27 @@ static nix::Value prim_fds_math_cbrt(
         };
     } else {
         auto x = state.forceInt(*args[0], nix::noPos, "while evaluating the cube root");
-        return {
+        v = {
             nix::NewValueAs::integer,
             cbrtl(x.value)
         };
     }
+}
+
+std::function<nix::PrimOpImpl> mkPrimOpFloatingValueImpl(
+    std::function<double(double)> f, std::string desc
+) {
+    return [f, desc](
+        nix::EvalState &state, nix::Value **args, nix::Value &v
+    ) -> nix::Value {
+        state.forceValue(*args[0], nix::noPos);
+        v = {
+            nix::NewValueAs::floating,
+            f(
+                state.forceFloat(*args[0], nix::noPos, std::format("while evaluating {}", desc))
+            )
+        };
+    };
 }
 
 extern "C" void nix_plugin_entry() {
@@ -170,7 +150,16 @@ extern "C" void nix_plugin_entry() {
         .doc = R"(
             Return the value of natural logarithm of `X`.
         )",
-        .fun = prim_fds_math_log,
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return log(x); }, "natural logarithm"),
+    });
+
+    nix::PluginPrimOps::add({
+        .name = "__log1p",
+        .args = { "X" },
+        .doc = R"(
+            Return the value of logarithm of 1 + `X`.
+        )",
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return log1p(x); }, "logarithm of 1p"),
     });
 
     nix::PluginPrimOps::add({
@@ -179,7 +168,7 @@ extern "C" void nix_plugin_entry() {
         .doc = R"(
             Return the value of base-2 logarithm of `X`.
         )",
-        .fun = prim_fds_math_log2,
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return log2(x); }, "log2"),
     });
 
     nix::PluginPrimOps::add({
@@ -188,7 +177,7 @@ extern "C" void nix_plugin_entry() {
         .doc = R"(
             Return the value of base-10 logarithm of `X`.
         )",
-        .fun = prim_fds_math_log10,
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return log10(x); }, "log10"),
     });
 
     nix::PluginPrimOps::add({
@@ -216,5 +205,59 @@ extern "C" void nix_plugin_entry() {
             Return the cube root of `X`.
         )",
         .fun = prim_fds_math_cbrt,
+    });
+
+    nix::PluginPrimOps::add({
+        .name = "__cos",
+        .args = { "X" },
+        .doc = R"(
+            Return the cosine of `X`.
+        )",
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return cos(x); }, "cosine"),
+    });
+
+    nix::PluginPrimOps::add({
+        .name = "__sin",
+        .args = { "X" },
+        .doc = R"(
+            Return the sine of `X`.
+        )",
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return sin(x); }, "sine"),
+    });
+
+    nix::PluginPrimOps::add({
+        .name = "__tan",
+        .args = { "X" },
+        .doc = R"(
+            Return the tangent of `X`.
+        )",
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return tan(x); }, "tangent"),
+    });
+
+    nix::PluginPrimOps::add({
+        .name = "__acos",
+        .args = { "X" },
+        .doc = R"(
+            Return the arc cosine of `X`.
+        )",
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return acos(x); }, "arc cosine"),
+    });
+
+    nix::PluginPrimOps::add({
+        .name = "__asin",
+        .args = { "X" },
+        .doc = R"(
+            Return the arc sine of `X`.
+        )",
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return asin(x); }, "arc sine"),
+    });
+
+    nix::PluginPrimOps::add({
+        .name = "__atan",
+        .args = { "X" },
+        .doc = R"(
+            Return the arc tangent of `X`.
+        )",
+        .fun = mkPrimOpFloatingValueImpl([](double x) { return atan(x); }, "arc tangent"),
     });
 }

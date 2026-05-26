@@ -2,10 +2,12 @@
 //
 // SPDX-License-Identifier: LGPL-2.1-or-later
 
+#include <functional>
+#include <nix/expr/eval.hh>
+#include <string>
 #include <cmath>
 #include <nix/expr/primops.hh>
 #include <stdlib.h>
-#include <math.h>
 
 static void prim_fds_math_abs(
     nix::EvalState &state, const nix::PosIdx pos, nix::Value **args, nix::Value &v
@@ -65,66 +67,6 @@ static nix::RegisterPrimOp primop_fds_math_pow({
     .impl = prim_fds_math_pow
 });
 
-static void prim_fds_math_log(
-    nix::EvalState &state, const nix::PosIdx pos, nix::Value **args, nix::Value &v
-) {
-    state.forceValue(*args[0], pos);
-    v.mkFloat(
-        log(
-            state.forceFloat(*args[0], pos, "while evaluating the logarithm")
-        )
-    );
-}
-
-static nix::RegisterPrimOp primop_fds_math_log({
-    .name = "__log",
-    .args = { "X" },
-    .doc = R"(
-        Return the value of natural logarithm of `X`.
-    )",
-    .impl = prim_fds_math_log,
-});
-
-static void prim_fds_math_log10(
-    nix::EvalState &state, const nix::PosIdx pos, nix::Value **args, nix::Value &v
-) {
-    state.forceValue(*args[0], pos);
-    v.mkFloat(
-        log10(
-            state.forceFloat(*args[0], pos, "while evaluating the log10")
-        )
-    );
-}
-
-static nix::RegisterPrimOp primop_fds_math_log10({
-    .name = "__log10",
-    .args = { "X" },
-    .doc = R"(
-        Return the value of base-10 logarithm of `X`.
-    )",
-    .impl = prim_fds_math_log10,
-});
-
-static void prim_fds_math_log2(
-    nix::EvalState &state, const nix::PosIdx pos, nix::Value **args, nix::Value &v
-) {
-    state.forceValue(*args[0], pos);
-    v.mkFloat(
-        log2(
-            state.forceFloat(*args[0], pos, "while evaluating the log2")
-        )
-    );
-}
-
-static nix::RegisterPrimOp primop_fds_math_log2({
-    .name = "__log2",
-    .args = { "X" },
-    .doc = R"(
-        Return the value of base-2 logarithm of `X`.
-    )",
-    .impl = prim_fds_math_log2,
-});
-
 static void prim_fds_math_logx(
     nix::EvalState &state, const nix::PosIdx pos, nix::Value **args, nix::Value &v
 ) {
@@ -175,23 +117,56 @@ static nix::RegisterPrimOp primop_fds_math_mod({
     .impl = prim_fds_math_mod,
 });
 
-static void prim_fds_math_sqrt(
-    nix::EvalState &state, const nix::PosIdx pos, nix::Value **args, nix::Value &v
-) {
-    state.forceValue(*args[0], pos);
 
-    if (args[0]->type() == nix::nFloat) {
+nix::fun<nix::PrimOpFun> mkPrimOpFloat(std::function<double(double)> f, std::string desc) {
+    return [f, desc](
+        nix::EvalState &state, const nix::PosIdx pos, nix::Value **args, nix::Value &v
+    ) {
+        state.forceValue(*args[0], pos);
         v.mkFloat(
-            sqrt(
-                state.forceFloat(*args[0], pos, "while evaluating the square root")
+            f(
+                state.forceFloat(*args[0], pos, std::format("while evaluating the {}", desc))
             )
         );
-    } else {
-        // FIXME: Check for integer overflow
-        auto x = state.forceInt(*args[0], pos, "while evaluating the square root");
-        v.mkInt(sqrtl(x.value));
-    }
+    };
 }
+
+static nix::RegisterPrimOp primop_fds_math_log({
+    .name = "__log",
+    .args = { "X" },
+    .doc = R"(
+        Return the value of natural logarithm of `X`.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return log(x); }, "natural logarithm"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_log1p({
+    .name = "__log1p",
+    .args = { "X" },
+    .doc = R"(
+        Return the value of logarithm of 1 + `X`.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return log1p(x); }, "logarithm of 1 + x"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_log10({
+    .name = "__log10",
+    .args = { "X" },
+    .doc = R"(
+        Return the value of base-10 logarithm of `X`.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return log10(x); }, "log10"),
+});
+
+
+static nix::RegisterPrimOp primop_fds_math_log2({
+    .name = "__log2",
+    .args = { "X" },
+    .doc = R"(
+        Return the value of base-2 logarithm of `X`.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return log2(x); }, "log2"),
+});
 
 static nix::RegisterPrimOp primop_fds_math_sqrt({
     .name = "__sqrt",
@@ -199,25 +174,8 @@ static nix::RegisterPrimOp primop_fds_math_sqrt({
     .doc = R"(
         Returns the square root of `X`.
     )",
-    .impl = prim_fds_math_sqrt,
+    .impl = mkPrimOpFloat([](double x) { return sqrt(x); }, "square root"),
 });
-
-static void prim_fds_math_cbrt(
-    nix::EvalState &state, const nix::PosIdx pos, nix::Value **args, nix::Value &v
-) {
-    state.forceValue(*args[0], pos);
-
-    if (args[0]->type() == nix::nFloat) {
-        v.mkFloat(
-            cbrt(
-                state.forceFloat(*args[0], pos, "while evaluating the cube root")
-            )
-        );
-    } else {
-        auto x = state.forceInt(*args[0], pos, "while evaluating the cube root");
-        v.mkInt(cbrtl(x.value));
-    }
-}
 
 static nix::RegisterPrimOp primop_fds_math_cbrt({
     .name = "__cbrt",
@@ -225,5 +183,59 @@ static nix::RegisterPrimOp primop_fds_math_cbrt({
     .doc = R"(
         Returns the cube root of `X`.
     )",
-    .impl = prim_fds_math_cbrt,
+    .impl = mkPrimOpFloat([](double x) { return cbrt(x); }, "cube root"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_sin({
+    .name = "__sin",
+    .args = { "X" },
+    .doc = R"(
+        Returns the sine of `X` in radians.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return sin(x); }, "sine"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_cos({
+    .name = "__cos",
+    .args = { "X" },
+    .doc = R"(
+        Returns the cosine of `X` in radians.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return cos(x); }, "cosine"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_tan({
+    .name = "__tan",
+    .args = { "X" },
+    .doc = R"(
+        Returns the tangent of `X` in radians.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return tan(x); }, "tangent"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_asin({
+    .name = "__asin",
+    .args = { "X" },
+    .doc = R"(
+        Returns the arc sine of `X` in radians.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return asin(x); }, "arc sine"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_acos({
+    .name = "__acos",
+    .args = { "X" },
+    .doc = R"(
+        Returns the arc cosine of `X` in radians.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return acos(x); }, "arc cosine"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_atan({
+    .name = "__atan",
+    .args = { "X" },
+    .doc = R"(
+        Returns the arc tangine of `X` in radians.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return atan(x); }, "arc tangine"),
 });
