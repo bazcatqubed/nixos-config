@@ -15,4 +15,12 @@ in
       vouch-proxy.package = lib.mkDefault pkgs.vouch-proxy;
     };
   };
+
+  gonic.default = {
+    imports = lib.singleton (lib.modules.importApply ./gonic.nix { inherit (pkgs) formats; });
+
+    config = {
+      gonic.package = lib.mkDefault pkgs.gonic;
+    };
+  };
 }
