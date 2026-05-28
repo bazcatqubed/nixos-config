@@ -22,13 +22,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "bobby";
-  version = "49.0.4";
+  version = "50.0.2";
 
   src = fetchFromGitHub {
     owner = "hbons";
     repo = finalAttrs.pname;
-    rev = finalAttrs.version;
-    hash = "sha256-xBPmIJc+THpoxwoHBTbCVTTn7BeNgMJ5iPGs1b//krU=";
+    rev = "v${finalAttrs.version}";
+    hash = "sha256-/N7CmzPwUdGkHIZujCGW3LvsGM6DdXrcm2kH6XlVGDA=";
   };
 
   nativeBuildInputs = [
@@ -51,7 +51,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-I8wnajVtI5FGJ0BVPGd+65aZ9TYRVDrbabqETt+QP2o=";
+    hash = "sha256-TT3ceAy44sfyKZ7wmH3C4nj5TyfiJlu4vBWAaGs+pGg=";
   };
 
   meta = with lib; {
