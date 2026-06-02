@@ -235,7 +235,52 @@ static nix::RegisterPrimOp primop_fds_math_atan({
     .name = "__atan",
     .args = { "X" },
     .doc = R"(
-        Returns the arc tangine of `X` in radians.
+        Returns the arc tangent of `X` in radians.
     )",
-    .impl = mkPrimOpFloat([](double x) { return atan(x); }, "arc tangine"),
+    .impl = mkPrimOpFloat([](double x) { return atan(x); }, "arc tangent"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_exp({
+    .name = "__exp",
+    .args = { "X" },
+    .doc = R"(
+        Returns the value of e raised to the power of `X`.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return exp(x); }, "base-e exponent"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_exp2({
+    .name = "__exp2",
+    .args = { "X" },
+    .doc = R"(
+        Returns the value of 2 raised to the power of `X`.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return exp2(x); }, "base-2 exponent"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_exp2m1({
+    .name = "__exp2m1",
+    .args = { "X" },
+    .doc = R"(
+        Returns the value of 2 raised to the power of `X` minus 1.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return exp2m1(x); }, "base-2 exponent minus 1"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_exp10({
+    .name = "__exp10",
+    .args = { "X" },
+    .doc = R"(
+        Returns the value of 10 raised to the power of `X`.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return exp10(x); }, "base-10 exponent"),
+});
+
+static nix::RegisterPrimOp primop_fds_math_exp10m1({
+    .name = "__exp10m1",
+    .args = { "X" },
+    .doc = R"(
+        Returns the value of 10 raised to the power of `X` - 1.
+    )",
+    .impl = mkPrimOpFloat([](double x) { return exp10m1(x); }, "base-10 exponent minus 1"),
 });
