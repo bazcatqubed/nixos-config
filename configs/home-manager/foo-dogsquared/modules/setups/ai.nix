@@ -24,7 +24,6 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       aider-chat-full # Invite an uninviting robot in your programming session.
-      plandex # Roleplay/train your senior role by training a junior to fuck up your project.
     ];
 
     # Now see them robits with a graphical app.
