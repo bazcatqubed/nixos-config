@@ -32,18 +32,25 @@ in
     ];
 
     # Bring more of them games.
-    environment.systemPackages = with pkgs; [
-      ruffle # Take a trip to nostalgia lane without the viruses.
+    environment.systemPackages =
+      with pkgs;
+      [
+        ruffle # Take a trip to nostalgia lane without the viruses.
 
-      # rpcs3
-      ryubing
+        # rpcs3
+        ryubing
 
-      clonehero # Is a real virtuoso, a rock idol.
-      mindustry # Not a Minecraft industry simulator.
-      luanti # Free Roblox
-      the-powder-toy # Free micro-Minecraft.
-      rotp-foodogsquared # Free space Minecraft planet colonization simulator.
-    ];
+        clonehero # Is a real virtuoso, a rock idol.
+        mindustry # Not a Minecraft industry simulator.
+        luanti # Free Roblox
+        the-powder-toy # Free micro-Minecraft.
+        rotp-foodogsquared # Free space Minecraft planet colonization simulator.
+
+        wesnoth-devel
+      ]
+      ++ lib.optionals config.virtualisation.waydroid.enable [
+        wl-clipboard
+      ];
 
     # Losing only means more possibilities to play.
     programs.dwarf-fortress = {
@@ -60,8 +67,10 @@ in
           "9-27"
           "9-7"
           "10-14"
-          "10-15"
+          "10-19"
           "10-24"
+          "10-29"
+          "10-34"
         ];
       in
       lib.map (v: pkgs."proton-ge-${v}-bin") protonGEVersions;
