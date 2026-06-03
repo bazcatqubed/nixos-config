@@ -17,6 +17,8 @@ let
     mkKeyValue = lib.generators.mkKeyValueDefault { } " ";
     listsAsDuplicateKeys = true;
   };
+
+  appName = "gonic";
 in
 {
   _class = "service";
@@ -34,6 +36,13 @@ in
         Settings to be applied.
       '';
       default = { };
+      example = lib.literalExpression ''
+        {
+          cache-path = "/home/homeless-man/.cache";
+          music-path = "/home/homeless-man/Music";
+          playlists-path = "/home/homeless-man/Music/Playlists";
+        }
+      '';
     };
 
     settingsFile = lib.mkOption {
@@ -43,11 +52,27 @@ in
         Settings file to be used for the service.
       '';
     };
+
+    extraArguments = lib.mkOption {
+      type = with lib.types; listOf str;
+      default = [ ];
+      description = ''
+        List of extra arguments to be added to the main service process.
+      '';
+      example = lib.literalExpression ''
+        [
+          "-jukebox-enabled"
+          "-http-log"
+        ]
+      '';
+    };
   };
 
   config = {
     process.argv = [
       (lib.getExe cfg.package)
+      "-config-path"
+      cfg.settingsFile
     ]
     ++ cfg.extraArguments;
 
@@ -62,12 +87,13 @@ in
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        RestrictAddressFamilies = [
-          "AF_UNIX"
-          "AF_INET"
-          "AF_INET6"
-        ];
-        RestrictNamespaces = true;
+        CacheDirectory = appName;
+        ConfigurationDirectory = appName;
+        RuntimeDirectory = appName;
+        StateDirectory = appName;
+
+        CapabilityBoundingSet = [ ];
+        LockPersonality = true;
         PrivateDevices = true;
         PrivateUsers = true;
         ProtectClock = true;
@@ -76,6 +102,14 @@ in
         ProtectKernelLogs = true;
         ProtectKernelModules = true;
         ProtectKernelTunables = true;
+        RestrictAddressFamilies = [
+          "AF_UNIX"
+          "AF_INET"
+          "AF_INET6"
+        ];
+        RestrictNamespaces = true;
+        RestrictRealtime = true;
+        UMask = "0066";
       };
     };
   });
