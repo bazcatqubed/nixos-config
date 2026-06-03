@@ -131,10 +131,6 @@ in
   # The keyfile required to decrypt the secrets.
   sops.age.keyFile = "${config.xdg.configHome}/age/user";
 
-  # Add our own projects directory since most programs can't decide where it is
-  # properly.
-  xdg.userDirs.extraConfig.PROJECTS = "${config.home.homeDirectory}/Projects";
-
   # Only enable autostart inside of NixOS systems.
   xdg.autostart.enable = attrs ? nixosConfig;
 

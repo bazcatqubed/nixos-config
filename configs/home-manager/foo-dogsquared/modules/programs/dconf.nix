@@ -43,7 +43,7 @@ in
               "&VIDEOS"
               "&PUBLIC_SHARE"
 
-              userDirs.extraConfig.PROJECTS
+              userDirs.projects
             ];
           };
 

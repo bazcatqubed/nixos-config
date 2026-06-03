@@ -116,7 +116,7 @@ in
           builtins.toString [
             userDirs.music
             userDirs.documents
-            userDirs.extraConfig.PROJECTS
+            userDirs.projects
             userDirs.download
           ];
 
@@ -126,11 +126,11 @@ in
           in
           lib.concatStringsSep " " ignoreDirectories;
 
-        "${config.xdg.userDirs.extraConfig.PROJECTS}" = {
+        "${config.xdg.userDirs.projects}" = {
           "skippedNames+" = ".editorconfig .gitignore result flake.lock go.sum";
         };
 
-        "${config.xdg.userDirs.extraConfig.PROJECTS}/software" = {
+        "${config.xdg.userDirs.projects}/software" = {
           "skippedNames+" = "target result";
         };
       };

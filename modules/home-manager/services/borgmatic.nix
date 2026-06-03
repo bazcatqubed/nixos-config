@@ -214,7 +214,7 @@ in
             settings = {
               source_directories = [
                 "''${config.xdg.configHome}"
-                "''${config.xdg.userDirs.extraConfig.XDG_PROJECTS_DIR}"
+                "''${config.xdg.userDirs.projects}"
                 "''${config.home.homeDirectory}/.thunderbird"
                 "''${config.home.homeDirectory}/Zotero"
               ];

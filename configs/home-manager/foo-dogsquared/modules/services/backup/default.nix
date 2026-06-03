@@ -35,7 +35,7 @@ let
           "! ${config.xdg.cacheHome}"
           "- ${config.xdg.configHome}"
           "- ${config.xdg.userDirs.download}"
-          "+ ${config.xdg.userDirs.extraConfig.PROJECTS}"
+          "+ ${config.xdg.userDirs.projects}"
           "+ ${config.xdg.userDirs.documents}"
           "+ ${config.xdg.userDirs.music}"
           "+ ${config.xdg.userDirs.pictures}"

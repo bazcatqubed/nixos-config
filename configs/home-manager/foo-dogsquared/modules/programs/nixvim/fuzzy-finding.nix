@@ -28,8 +28,8 @@ in
         show_unindexed = true;
         workspaces = {
           writings = "${userDirs.documents}/Writings";
-          packages = "${userDirs.extraConfig.PROJECTS}/packages";
-          software = "${userDirs.extraConfig.PROJECTS}/software";
+          packages = "${userDirs.projects}/packages";
+          software = "${userDirs.projects}/software";
         };
       };
     };
