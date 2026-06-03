@@ -46,47 +46,6 @@ in
       };
     };
 
-    # My portable music streaming server.
-    services.gonic = {
-      enable = true;
-      settings = rec {
-        listen-addr = "localhost:${builtins.toString config.state.ports.gonic.value}";
-        cache-path = "${config.state.paths.cacheDir}/gonic";
-        music-path = [ "/srv/Music" ];
-        podcast-path = "${cache-path}/podcasts";
-        playlists-path = "${cache-path}/playlists";
-
-        jukebox-enabled = true;
-        jukebox-mpv-extra-args =
-          let
-            args = [
-              "--ao=pcm"
-              "--ao-pcm-file=${config.state.paths.runtimeDir}/snapserver/jukebox"
-            ];
-          in
-          lib.concatStringsSep " " args;
-
-        scan-interval = 1;
-        scan-at-start-enabled = true;
-      };
-    };
-
-    services.spotifyd = {
-      enable = false;
-      settings.global = {
-        autoplay = true;
-        device_name = "My laptop";
-        bitrate = 320;
-        device_type = "computer";
-        use_keyring = false;
-        use_mpris = false;
-
-        # We're relying on the local discovery.
-        zeroconf_port = config.state.ports.spotifyd.value;
-        no_audio_cache = true;
-      };
-    };
-
     services.snapserver = {
       enable = true;
       settings = {
@@ -117,13 +76,6 @@ in
     systemd.services.snapserver.serviceConfig = {
       SupplementaryGroups = [ "audio" ];
       RuntimeDirectoryMode = "0775";
-    };
-
-    systemd.services.gonic = {
-      serviceConfig = {
-        SupplementaryGroups = [ "audio" ];
-        CacheDirectory = "gonic";
-      };
     };
   };
 }

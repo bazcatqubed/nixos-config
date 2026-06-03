@@ -24,6 +24,7 @@ in
 {
   options.users.foo-dogsquared.setups.music = {
     enable = lib.mkEnableOption "foo-dogsquared's music setup";
+    jukebox.enable = lib.mkEnableOption "jukebox service";
     mpd.enable = lib.mkEnableOption "foo-dogsquared's MPD server setup";
     spotify.enable = lib.mkEnableOption "music streaming setup with Spotify";
   };
@@ -368,6 +369,39 @@ in
             services.links = lib.singleton mopidyLink;
             music.links = lib.mkBefore [ (mopidyLink // { text = "Mopidy server"; }) ];
           };
+      })
+
+      (lib.mkIf cfg.jukebox.enable {
+        state.ports.gonic.value = attrs.nixosConfig.state.ports.gonic.value or 4747;
+
+        home.services.music-jukebox = {
+          imports = [
+            foodogsquaredLib.services.gonic.default
+          ];
+
+          gonic = {
+            settings = rec {
+              listen-addr = "localhost:${builtins.toString config.state.ports.gonic.value}";
+              cache-path = "${config.xdg.cacheHome}/gonic";
+              music-path = lib.singleton musicDir;
+              podcast-path = "${musicDir}/Podcasts";
+              playlists-path = "${musicDir}/Playlists";
+
+              jukebox-enabled = true;
+              jukebox-mpv-extra-args =
+                let
+                  args = [
+                    "--ao=pcm"
+                    # "--ao-pcm-file=${config.state.paths.runtimeDir}/snapserver/jukebox"
+                  ];
+                in
+                lib.concatStringsSep " " args;
+
+              scan-interval = 1;
+              scan-at-start-enabled = true;
+            };
+          };
+        };
       })
     ]
   );

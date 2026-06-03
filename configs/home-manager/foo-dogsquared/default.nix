@@ -104,8 +104,11 @@ in
         gamedev.enable = true;
       };
       fonts.enable = true;
-      music.enable = true;
-      music.mpd.enable = true;
+      music = {
+        enable = true;
+        jukebox.enable = true;
+        mpd.enable = true;
+      };
       research = {
         enable = true;
         writing.enable = true;
