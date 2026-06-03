@@ -36,7 +36,12 @@ final: prev:
         DisablePocket = true;
         DisableSetDesktopBackground = true;
         DontCheckDefaultBrowser = true;
-        EnableTrackingProtection = true;
+        EnableTrackingProtection = {
+          Value = true;
+          Cryptomining = true;
+          Fingerprinting = true;
+          EmailTracking = true;
+        };
 
         ExtensionSettings =
           let
@@ -87,6 +92,8 @@ final: prev:
               );
           in
           lib.mapAttrs' applyInstallationMode extensions;
+
+        InstallAddonsPermission.Default = true;
 
         FirefoxHome = {
           Highlights = false;

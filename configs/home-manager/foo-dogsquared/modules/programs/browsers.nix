@@ -114,7 +114,12 @@ in
           DisablePocket = true;
           DisableSetDesktopBackground = true;
           DontCheckDefaultBrowser = true;
-          EnableTrackingProtection = true;
+          EnableTrackingProtection = {
+            Value = true;
+            Cryptomining = true;
+            Fingerprinting = true;
+            EmailTracking = true;
+          };
           FirefoxHome = {
             Highlights = false;
             Pocket = false;
