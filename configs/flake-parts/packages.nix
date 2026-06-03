@@ -28,6 +28,7 @@
         (import ../../pkgs { inherit pkgs; })
         // {
           firefox-addons = lib.recurseIntoAttrs (pkgs.callPackage ../../pkgs/firefox-addons { });
+          proton-ge = lib.recurseIntoAttrs pkgs.protonGEPackages;
         }
       );
     };
