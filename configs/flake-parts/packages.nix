@@ -15,10 +15,20 @@
   };
 
   perSystem =
-    { system, pkgs, ... }:
+    {
+      system,
+      pkgs,
+      lib,
+      ...
+    }:
     {
       # My custom packages, available in here as well. Though, I mainly support
       # "x86_64-linux". I just want to try out supporting other systems.
-      packages = inputs.flake-utils.lib.flattenTree (import ../../pkgs { inherit pkgs; });
+      packages = inputs.flake-utils.lib.flattenTree (
+        (import ../../pkgs { inherit pkgs; })
+        // {
+          firefox-addons = lib.recurseIntoAttrs (pkgs.callPackage ../../pkgs/firefox-addons { });
+        }
+      );
     };
 }
