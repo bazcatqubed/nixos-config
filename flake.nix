@@ -49,7 +49,7 @@
     # Make a Neovim distro.
     nixvim.follows = "nixvim-unstable";
 
-    nixvim-stable.url = "github:nix-community/nixvim/nixos-25.11";
+    nixvim-stable.url = "github:nix-community/nixvim/nixos-26.05";
     nixvim-stable.inputs.nixpkgs.follows = "nixos-stable";
 
     nixvim-unstable.url = "github:nix-community/nixvim";
