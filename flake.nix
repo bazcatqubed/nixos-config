@@ -29,7 +29,7 @@
     # ...except we allow other configurations to use other nixpkgs branch so
     # that may not matter anyways.
     nixos-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixos-stable-small.url = "github:NixOS/nixpkgs/nixos-25.11-small";
+    nixos-stable-small.url = "github:NixOS/nixpkgs/nixos-26.05-small";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
