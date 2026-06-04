@@ -51,7 +51,7 @@
   };
 
   # Enable the display manager of choice.
-  services.displayManager.gdm.enable = true;
+  services.displayManager.plasma-login-manager.enable = true;
 
   # The keyfile required for the secrets to be decrypted.
   sops.age.keyFile = "/var/lib/sops-nix/key";
