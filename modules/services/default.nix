@@ -31,4 +31,12 @@ in
       suwayomi-server.package = lib.mkDefault pkgs.suwayomi-server;
     };
   };
+
+  komga.default = {
+    imports = lib.singleton (lib.modules.importApply ./komga.nix { inherit (pkgs) formats; });
+
+    config = {
+      komga.package = lib.mkDefault pkgs.komga;
+    };
+  };
 }
