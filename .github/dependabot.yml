@@ -8,7 +8,19 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "ci"
   - package-ecosystem: "nix"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      flakes:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "flake.lock"
