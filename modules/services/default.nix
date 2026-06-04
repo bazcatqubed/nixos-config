@@ -23,4 +23,12 @@ in
       gonic.package = lib.mkDefault pkgs.gonic;
     };
   };
+
+  suwayomi-server.default = {
+    imports = lib.singleton (lib.modules.importApply ./suwayomi-server.nix { inherit (pkgs) formats; });
+
+    config = {
+      suwayomi-server.package = lib.mkDefault pkgs.suwayomi-server;
+    };
+  };
 }
