@@ -51,20 +51,6 @@ in
             };
           }
 
-          (lib.mkIf config.services.archivebox.webserver.enable {
-            services.links = lib.singleton {
-              url = "http://localhost:${builtins.toString config.state.ports.archivebox-webserver.value}";
-              text = "Archive webserver";
-            };
-
-            YOHOOHOOHOOHOO.links = lib.mkBefore (
-              lib.singleton {
-                url = "http://localhost:${builtins.toString config.state.ports.archivebox-webserver.value}";
-                text = "ArchiveBox webserver";
-              }
-            );
-          })
-
           (lib.mkIf (attrs.nixosConfig.suites.filesystem.setups.archive.enable or false) {
             YOHOOHOOHOOHOO.links = lib.mkBefore (
               lib.singleton {
@@ -96,7 +82,10 @@ in
     setups = {
       ai.enable = true;
       business.enable = true;
-      desktop.enable = true;
+      desktop = {
+        enable = true;
+        comics.enable = true;
+      };
       development = {
         enable = true;
         creative-coding.enable = true;
