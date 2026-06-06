@@ -278,6 +278,7 @@ in
           plugdata
           shader-slang # Just don't make it full or shady slurs.
           material-maker
+          pharo
         ];
 
         programs.supercollider = {
