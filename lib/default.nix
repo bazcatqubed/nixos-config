@@ -29,6 +29,7 @@ pkgs.lib.makeExtensible (
     # formats and won't have any attributes exported at the top-level.
     # -- START-NO-TOP-LVL-EXPORT --
     formats = callLib ./formats.nix;
+    modules = callLib ./modules.nix;
     services = import ../modules/services { inherit pkgs; };
     # -- END-NO-TOP-LVL-EXPORT --
 
