@@ -21,5 +21,6 @@ in
 
   python311 = overridePython prev.python311;
   python312 = overridePython prev.python312;
+  python313 = overridePython prev.python313;
   python314 = overridePython prev.python314;
 }
