@@ -23,10 +23,10 @@
     };
     "dearrow" = buildMozillaXpiAddon {
       pname = "dearrow";
-      version = "2.3.7";
+      version = "2.3.8";
       addonId = "deArrow@ajay.app";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4820758/dearrow-2.3.7.xpi";
-      sha256 = "ffb71bfdbb1280891aa9af9685b7d877585daf5690b3987f3392c5a36a8dbcab";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4826435/dearrow-2.3.8.xpi";
+      sha256 = "0f5945b833f0629330357979b8dd004bb099923dc95907bddd727b8b974ad6fa";
       meta = with lib;
       {
         homepage = "https://dearrow.ajay.app";
@@ -441,14 +441,14 @@
     };
     "open-access-helper" = buildMozillaXpiAddon {
       pname = "open-access-helper";
-      version = "2026.5";
+      version = "2026.6";
       addonId = "info@oahelper.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4795938/open_access_helper-2026.5.xpi";
-      sha256 = "baf0b677af6d4b0e717fb98c8a1c4e86ed9a3805cfe94995690535fad7faf1f1";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4839789/open_access_helper-2026.6.xpi";
+      sha256 = "f0e99b5fbe80e433ad3081aace4af041c41b21e7b4c9706118d6a4e0872073dc";
       meta = with lib;
       {
         homepage = "https://www.oahelper.org";
-        description = "Effortless legal access to full text scholarly articles: \r\nOpen Access Helper will help you identify legal open access copies of academic articles, using unpaywall.org and core.ac.uk";
+        description = "Effortless legal access to full text scholarly articles: \nOpen Access Helper will help you identify legal open access copies of academic articles, using unpaywall.org and other sources.";
         mozPermissions = [
           "tabs"
           "storage"
@@ -477,10 +477,10 @@
     };
     "private-grammar-checker-harper" = buildMozillaXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "2.1.0";
+      version = "2.4.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4778851/private_grammar_checker_harper-2.1.0.xpi";
-      sha256 = "71a36f52277f904e8ba6fe5e3c4b8f1c9404fb35013781deb7ab874def22ce01";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4837922/private_grammar_checker_harper-2.4.0.xpi";
+      sha256 = "a30d7d5d5e538d9f3a6a82f9ffc5758366be7cd05e7c2e571774a0c28d174d38";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
@@ -496,10 +496,10 @@
     };
     "refined-github-" = buildMozillaXpiAddon {
       pname = "refined-github-";
-      version = "26.5.24";
+      version = "26.6.7";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4819673/refined_github-26.5.24.xpi";
-      sha256 = "be216e58b24ea4af52c0758294348a3324d73d092de5eb42603e5088ec954016";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4840557/refined_github-26.6.7.xpi";
+      sha256 = "7274247b34b4bab57e73c8058ddd1a459e323bea717d9ec16d1ccc8385791bd0";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
@@ -655,10 +655,10 @@
     };
     "updateswh" = buildMozillaXpiAddon {
       pname = "updateswh";
-      version = "0.9.0";
+      version = "0.9.2";
       addonId = "{157eb9f0-9814-4fcc-b0b7-586b3093c641}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4778739/updateswh-0.9.0.xpi";
-      sha256 = "21af7eb3a4cf3e2de54d579da34d7401fe4244e42a6f567c521ebf6cd1f1f623";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4836256/updateswh-0.9.2.xpi";
+      sha256 = "db33f60b9a02539d061c2678f9defdcbc02a8e6a241678e9510f7b4895cb5a3b";
       meta = with lib;
       {
         description = "Check archival state of a source code repository and propose to update it if needed.";
@@ -672,6 +672,8 @@
           "*://github.com/*"
           "*://bitbucket.org/*"
           "*://gitlab.com/*"
+          "*://gitee.com/*"
+          "*://pagure.io/*"
           "*://0xacab.org/*"
           "*://gite.lirmm.fr/*"
           "*://framagit.org/*"
