@@ -7,6 +7,8 @@ final: prev:
 {
   blender-foodogsquared = final.blender.withPackages (
     p: with p; [
+      matplotlib
+      numpy
       pandas
       scipy
       pillow
