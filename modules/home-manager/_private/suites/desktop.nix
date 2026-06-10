@@ -36,6 +36,10 @@ in
 
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
+      {
+        xdg.userDirs.setSessionVariables = attrs ? nixosConfig;
+      }
+
       (lib.mkIf cfg.graphics.enable {
         home.packages =
           with pkgs;
