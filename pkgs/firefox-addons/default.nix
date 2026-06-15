@@ -23,10 +23,10 @@
     };
     "dearrow" = buildMozillaXpiAddon {
       pname = "dearrow";
-      version = "2.3.8";
+      version = "2.3.9";
       addonId = "deArrow@ajay.app";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4826435/dearrow-2.3.8.xpi";
-      sha256 = "0f5945b833f0629330357979b8dd004bb099923dc95907bddd727b8b974ad6fa";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4844316/dearrow-2.3.9.xpi";
+      sha256 = "29347fa23449225c707cc33636230a93aa3ea9ac00b76c03617e4217c989739a";
       meta = with lib;
       {
         homepage = "https://dearrow.ajay.app";
@@ -441,10 +441,10 @@
     };
     "open-access-helper" = buildMozillaXpiAddon {
       pname = "open-access-helper";
-      version = "2026.6";
+      version = "2026.6.1";
       addonId = "info@oahelper.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4839789/open_access_helper-2026.6.xpi";
-      sha256 = "f0e99b5fbe80e433ad3081aace4af041c41b21e7b4c9706118d6a4e0872073dc";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4843622/open_access_helper-2026.6.1.xpi";
+      sha256 = "218c7c21c259f8e5b06118d1e6a6c30c9bcd7541f01e5ed377da0a209e517233";
       meta = with lib;
       {
         homepage = "https://www.oahelper.org";
