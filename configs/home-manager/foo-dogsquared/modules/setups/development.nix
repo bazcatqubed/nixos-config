@@ -223,6 +223,7 @@ in
           }:
           {
             programs.chromium-web-apps.apps = {
+              # All-in-one documentation site.
               devdocs = {
                 baseURL = "devdocs.io";
                 imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
@@ -241,6 +242,7 @@ in
                 };
               };
 
+              # All-in-one stop for GNOME ecosystem.
               gnome-devdocs = {
                 baseURL = "gjs-docs.gnome.org";
                 imageHash = "sha512-FQWUz7CyFhpRi6iJN2LZUi8pV6AL8+74aynrTbVkMnRUNO9bo9BB6hgvOCW/DQvCl1a2SZ0iAxk2ULZKAVR0MA==";
@@ -265,17 +267,17 @@ in
 
       (lib.mkIf (userCfg.setups.desktop.enable && pkgs.stdenv.isLinux) {
         home.packages = with pkgs; [
-          d-spy # Some GNOME dev probably developed this.
+          d-spy # SPY, SPY, SPYYYYYYY!!!
           bustle # Hustle and...
         ];
       })
 
       (lib.mkIf cfg.creative-coding.enable {
         home.packages = with pkgs; [
-          decker
+          decker # Put yer' cards in the upper...
           uxn
-          processing
-          plugdata
+          processing # Them generative art (not the AI ones...).
+          plugdata # This is NOT a plug-and-play for your data, it's a plug-and-dance to your patches.
           shader-slang # Just don't make it full or shady slurs.
           material-maker
           pharo
@@ -291,7 +293,7 @@ in
             ++ (with pkgs.supercolliderQuarks; [
               SuperDirt
               SuperDirtMixer
-              ZZZ
+              ZZZ # Not the game, btw.
               MathLib
             ]);
         };
@@ -355,7 +357,7 @@ in
       (lib.mkIf cfg.gamedev.enable {
         home.packages = with pkgs; [
           tic-80-unstable # Fantasy computer inside of your computer.
-          godot_4 # Does blue still appear in red?
+          godot_4 # Does white still appears in red?
           godot_4-export-templates-bin
           gdtoolkit_4 # Set of things to make things in blue.
 
@@ -375,7 +377,7 @@ in
           ps: with ps; [
             jupyter # Just like the planet, a very big gaseous thing with a big red spot (i.e., the deployment).
             jupyter-book
-            notebook
+            notebook # This'll make you cry because of the dramatics of this tool.
           ];
       })
     ]

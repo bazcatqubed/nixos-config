@@ -40,8 +40,8 @@ in
             core.excludesFile = builtins.toString ../../config/git/ignore;
 
             user = {
-              name = config.accounts.email.accounts.work.realName;
-              email = config.accounts.email.accounts.work.address;
+              name = config.accounts.email.accounts.personal.realName;
+              email = config.accounts.email.accounts.personal.address;
             };
 
             alias = {

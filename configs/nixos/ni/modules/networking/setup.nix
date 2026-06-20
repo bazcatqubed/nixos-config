@@ -156,7 +156,7 @@ in
       })
 
       (lib.mkIf (cfg.setup == "networkmanager") {
-        networking.usePredictableInterfaceNames = true;
+        networking.usePredictableInterfaceNames = lib.mkDefault true;
 
         # Enable and configure NetworkManager.
         networking.networkmanager = lib.mkMerge [
