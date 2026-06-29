@@ -81,6 +81,8 @@
       # The rainbow road to ricing your raw materials.
       inputs.self.homeModules.bahaghari
 
+      ../../modules/home-manager/profiles/generic.nix
+
       # The default shared config for our home-manager configurations. This
       # is also to be used for sharing modules among home-manager users from
       # NixOS configurations with `nixpkgs.useGlobalPkgs` set to `true` so
