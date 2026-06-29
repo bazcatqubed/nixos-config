@@ -13,7 +13,7 @@ jobs:
     name: "Build custom packages"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@v22
       - name: Prepare push to binary cache
         uses: cachix/cachix-action@v17
@@ -32,7 +32,7 @@ jobs:
     permissions:
       packages: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@v22
       - name: Build
         run: |
