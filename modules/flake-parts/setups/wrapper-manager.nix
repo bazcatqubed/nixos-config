@@ -88,7 +88,13 @@ let
               wrapper-manager.sharedModules = cfg.sharedModules ++ config.wrapper-manager.additionalModules;
 
               wrapper-manager.packages = lib.mapAttrs (name: wmPackage: {
-                imports = partsConfig.setups.wrapper-manager.configs.${name}.modules ++ wmPackage.additionalModules;
+                imports =
+                  let
+                    wmPackage' = partsConfig.setups.wrapper-manager.configs.${name};
+                  in
+                  wmPackage'.modules
+                  ++ wmPackage.additionalModules
+                  ++ lib.singleton { _module.args = wmPackage'.specialArgs; };
               }) config.wrapper-manager.packages;
             }
           )

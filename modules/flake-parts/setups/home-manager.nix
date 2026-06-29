@@ -390,9 +390,20 @@ in
                       {
                         users.users = lib.mapAttrs (name: hmUser: hmUser.userConfig) setupConfig.home-manager.users;
 
-                        home-manager.users = lib.mapAttrs (name: hmUser: {
-                          imports = partsConfig.setups.home-manager.configs.${name}.modules ++ hmUser.additionalModules;
-                        }) setupConfig.home-manager.users;
+                        home-manager.users = lib.mapAttrs (
+                          name: hmUser:
+                          let
+                            hmUser' = partsConfig.setups.home-manager.configs.${name};
+                          in
+                          {
+                            imports =
+                              hmUser'.modules
+                              ++ hmUser.additionalModules
+                              ++ lib.singleton {
+                                _module.args = hmUser'.specialArgs;
+                              };
+                          }
+                        ) setupConfig.home-manager.users;
                       }
 
                       (lib.mkIf (isNixpkgs "global") {

@@ -260,6 +260,10 @@ in
           {
             config.modules = lib.optionals (config.nixvim.branch != null) [
               inputs.${config.nixvim.branch}.nixosModules.nixvim
+
+              {
+                programs.nixvim._module.args = config.specialArgs;
+              }
             ];
           }
         )
@@ -276,6 +280,10 @@ in
           {
             config.modules = lib.optionals (config.nixvim.branch != null) [
               inputs.${config.nixvim.branch}.homeManagerModules.nixvim
+
+              {
+                programs.nixvim._module.args = config.specialArgs;
+              }
             ];
           }
         )
