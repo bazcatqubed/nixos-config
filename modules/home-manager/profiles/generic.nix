@@ -7,8 +7,8 @@
   lib,
   pkgs,
   ...
-}:
+}@attrs:
 
 {
-  xdg.userDirs.setSessionVariables = true;
+  xdg.userDirs.setSessionVariables = !(attrs ? nixosConfig);
 }

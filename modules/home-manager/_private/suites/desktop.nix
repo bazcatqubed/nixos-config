@@ -37,7 +37,7 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
-        xdg.userDirs.setSessionVariables = attrs ? nixosConfig;
+        xdg.userDirs.setSessionVariables = !(attrs ? nixosConfig);
       }
 
       (lib.mkIf cfg.graphics.enable {
