@@ -280,7 +280,7 @@ in
           plugdata # This is NOT a plug-and-play for your data, it's a plug-and-dance to your patches.
           shader-slang # Just don't make it full or shady slurs.
           material-maker
-          pharo
+          glamoroustoolkit
         ];
 
         programs.supercollider = {
