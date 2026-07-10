@@ -28,7 +28,14 @@ in
         user.name = config.accounts.email.accounts.personal.realName;
         user.email = config.accounts.email.accounts.personal.address;
 
-        ui.diff-editor = "diffedit3";
+        ui = {
+          diff-editor = "diffedit3";
+          diff-formatter = [
+            (lib.getExe pkgs.difftastic)
+            "$left"
+            "$right"
+          ];
+        };
 
         "merge-tools.diffoscope" = {
           merge-args = [
