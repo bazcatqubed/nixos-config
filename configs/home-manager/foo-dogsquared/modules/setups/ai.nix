@@ -22,10 +22,6 @@ in
     lib.mkEnableOption "installation of AI-related tools";
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      aider-chat-full # Invite an uninviting robot in your programming session.
-    ];
-
     # Now see them robits with a graphical app.
     programs.newelle.enable = true;
 
