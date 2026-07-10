@@ -52,8 +52,6 @@ in
         users.foo-dogsquared.programs.doom-emacs = {
           extraModules =
             epkgs: with epkgs; [
-              org-noter-pdftools
-              org-pdftools
               pdf-tools
               vterm
             ];
