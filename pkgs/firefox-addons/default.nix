@@ -441,10 +441,10 @@
     };
     "open-access-helper" = buildMozillaXpiAddon {
       pname = "open-access-helper";
-      version = "2026.6.1";
+      version = "2026.7";
       addonId = "info@oahelper.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4843622/open_access_helper-2026.6.1.xpi";
-      sha256 = "218c7c21c259f8e5b06118d1e6a6c30c9bcd7541f01e5ed377da0a209e517233";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4895271/open_access_helper-2026.7.xpi";
+      sha256 = "8d62385baea3b8bc65970e451dfc5ae959f319931f58d913c1f0063b5e47d641";
       meta = with lib;
       {
         homepage = "https://www.oahelper.org";
@@ -496,10 +496,10 @@
     };
     "refined-github-" = buildMozillaXpiAddon {
       pname = "refined-github-";
-      version = "26.7";
+      version = "26.7.12";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4876625/refined_github-26.7.xpi";
-      sha256 = "e3eeffcef15770b97042e2b6caf69b67984d2398b124b75778f176f3b9eff373";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4895101/refined_github-26.7.12.xpi";
+      sha256 = "d7601af3c1a6146fe18d0f5f71def6fd4aac4c4ff4d462500540a882855d6d78";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
