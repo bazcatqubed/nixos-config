@@ -71,6 +71,7 @@ in
           "10-24"
           "10-29"
           "10-34"
+          "11-1"
         ];
       in
       lib.map (v: pkgs."proton-ge-${v}-bin") protonGEVersions;
