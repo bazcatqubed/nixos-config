@@ -50,6 +50,8 @@ let
     proton-ge-10-29-bin = getGEProton "10-29" "sha256-ATtKLEKA+r557FVnBoW/iYrRR4Ki9G8rjlV4+2rki0I=";
 
     proton-ge-10-34-bin = getGEProton "10-34" "sha256-lzPsYYcrp5NoT3B0WFj3o10Z7tXx7xva1wEP3edeuqM=";
+
+    proton-ge-11-1-bin = getGEProton "11-1" "sha256-I7SSvzQQ/NqdvwjpJ9IFFtAaTS+rgHUyXx0us1vIOnw=";
   };
 in
 {
@@ -64,5 +66,6 @@ in
     proton-ge-10-24-bin
     proton-ge-10-29-bin
     proton-ge-10-34-bin
+    proton-ge-11-1-bin
     ;
 }
