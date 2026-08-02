@@ -183,6 +183,17 @@ in
                   };
                 };
 
+                drawio = {
+                  baseURL = "app.diagrams.net";
+                  flags = foodogsquaredLib.extra.mkCommonChromiumFlags "drawio";
+                  imageHash = "sha512-r/yFA/2NryFtZw/78I8kFzLH5jHSDcgA/3q5E9iFJegB5S608CuvVPL1Eap9QBUJf1Fs/zs7r+4hS9KH2354jw==";
+                  desktopEntrySettings = {
+                    desktopName = "Draw.io";
+                    genericName = "Diagramming Tool";
+                    categories = [ "Graphics" ];
+                  };
+                };
+
                 graphite = {
                   baseURL = "editor.graphite.rs";
                   flags = foodogsquaredLib.extra.mkCommonChromiumFlags "graphite";
