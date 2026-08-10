@@ -496,10 +496,10 @@
     };
     "refined-github-" = buildMozillaXpiAddon {
       pname = "refined-github-";
-      version = "26.7.26";
+      version = "26.8.8";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4920035/refined_github-26.7.26.xpi";
-      sha256 = "b9f0dda8163cff7fc31d8a289080adc24ac4ed255c8b90cf9c3651fd18a88adf";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4945591/refined_github-26.8.8.xpi";
+      sha256 = "cfa6508a75193560a2623220a4e59c6bad7099fed16d65e04c28f0372775e4c6";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
@@ -690,10 +690,10 @@
     };
     "varia-integrator" = buildMozillaXpiAddon {
       pname = "varia-integrator";
-      version = "1.5.4";
+      version = "1.5.5";
       addonId = "giantpinkrobots@protonmail.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4757369/varia_integrator-1.5.4.xpi";
-      sha256 = "09c458294a60643b51a704df9485fdc676cc6053c505d3fd2c6c24d0c83b2682";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4936207/varia_integrator-1.5.5.xpi";
+      sha256 = "14041a1abf7deb83c54494047f55d00aef28f00cfd1c93881d66844ff71a6a15";
       meta = with lib;
       {
         homepage = "https://giantpinkrobots.github.io/varia/";
