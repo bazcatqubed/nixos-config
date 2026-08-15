@@ -130,9 +130,7 @@ class Outline(object):
         """
         opml_body = opml_xml.find("./body")
 
-        assert (
-            opml_body is not None
-        ), """
+        assert opml_body is not None, """
             Given OPML does not have a ``<body>`` element. It is most likely
             the OPML is not valid.
         """
