@@ -29,23 +29,31 @@ let
 
       {
         archive_name_format = lib.mkDefault "{fqdn}-home-manager-personal-{now}";
-        patterns = lib.mkBefore [
-          "R ${config.home.homeDirectory}"
-          "! ${config.xdg.dataHome}"
-          "! ${config.xdg.cacheHome}"
-          "- ${config.xdg.configHome}"
-          "- ${config.xdg.userDirs.download}"
-          "+ ${config.xdg.userDirs.projects}"
-          "+ ${config.xdg.userDirs.documents}"
-          "+ ${config.xdg.userDirs.music}"
-          "+ ${config.xdg.userDirs.pictures}"
-          "+ ${config.xdg.userDirs.templates}"
-          "+ ${config.xdg.userDirs.videos}"
-          "+ ${config.home.homeDirectory}/.thunderbird"
-          "+ ${config.xdg.dataHome}/gopass"
-          "+ ${config.xdg.configHome}/age"
-          "+ ${config.xdg.configHome}/sops"
-        ];
+        patterns = lib.mkBefore (
+          [
+            "R ${config.home.homeDirectory}"
+            "! ${config.xdg.dataHome}"
+            "! ${config.xdg.cacheHome}"
+            "- ${config.xdg.configHome}"
+            "- ${config.xdg.userDirs.download}"
+            "+ ${config.xdg.userDirs.projects}"
+            "+ ${config.xdg.userDirs.documents}"
+            "+ ${config.xdg.userDirs.music}"
+            "+ ${config.xdg.userDirs.pictures}"
+            "+ ${config.xdg.userDirs.templates}"
+            "+ ${config.xdg.userDirs.videos}"
+          ]
+          ++ lib.optionals (config.sops.secrets != { }) [
+            "+ ${config.xdg.configHome}/age"
+            "+ ${config.xdg.configHome}/sops"
+          ]
+          ++ lib.optionals userCfg.programs.password-utilities.enable [
+            "+ ${config.xdg.dataHome}/gopass"
+          ]
+          ++ lib.optionals config.programs.thunderbird.enable [
+            "+ ${config.home.homeDirectory}/.thunderbird"
+          ]
+        );
         exclude_if_present = [
           ".nobackup"
           ".exclude.bak"
