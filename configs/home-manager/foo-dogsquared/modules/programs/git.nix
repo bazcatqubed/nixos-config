@@ -92,7 +92,6 @@ in
           extensions = with pkgs; [
             gh-eco
             gh-dash
-            gh-actions-cache
           ];
 
           settings = {
