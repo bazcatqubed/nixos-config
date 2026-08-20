@@ -5,34 +5,38 @@
 {
   lib,
   fetchFromGitHub,
-  python3,
+  python3Packages,
   mopidy,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3Packages.buildPythonApplication (finalAttrs: {
   pname = "mopidy-internetarchive";
-  version = "3.0.1";
-  format = "pyproject";
+  version = "3.1.2";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "tkem";
-    repo = pname;
-    rev = "v${version}";
-    sha256 = "sha256-whlJJJR4wgeAIStQRwI44oz0sBqiDAh+F157Y9RUzY0=";
+    repo = finalAttrs.pname;
+    rev = "v${finalAttrs.version}";
+    sha256 = "sha256-WSnT9uLEP2I1vkjv3FYPCXc4uGwlqz5c0i7c7XbmMoU=";
   };
 
-  propagatedBuildInputs =
-    with python3.pkgs;
+  build-system = [
+    python3Packages.setuptools
+    python3Packages.setuptools-scm
+  ];
+
+  dependencies =
+    with python3Packages;
     [
       cachetools
       pykka
       requests
-      setuptools
       uritools
     ]
     ++ [ mopidy ];
 
-  checkInputs = with python3.pkgs; [
+  checkInputs = with python3Packages; [
     pytest
     pytest-cov
   ];
@@ -42,4 +46,4 @@ python3.pkgs.buildPythonApplication rec {
     homepage = "https://github.com/tkem/mopidy-internetarchive";
     license = licenses.asl20;
   };
-}
+})
