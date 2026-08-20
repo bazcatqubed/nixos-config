@@ -5,18 +5,18 @@
 {
   lib,
   fetchgit,
-  python3,
+  python3Packages,
   mopidy,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3Packages.buildPythonApplication (finalAttrs: {
   pname = "mopidy-funkwhale";
   version = "1.1.0";
-  format = "pyproject";
+  pyproject = true;
 
   src = fetchgit {
     url = "https://dev.funkwhale.audio/funkwhale/mopidy.git";
-    rev = "v${version}";
+    rev = "v${finalAttrs.version}";
     sha256 = "sha256-vSjUWXUFGGAlFLYSdODUxd+SnK+HBCLOAhEySQBXk4A=";
   };
 
@@ -24,8 +24,12 @@ python3.pkgs.buildPythonApplication rec {
     sed -i 's/vext/pykka/' setup.cfg
   '';
 
-  propagatedBuildInputs =
-    with python3.pkgs;
+  build-system = [
+    python3Packages.setuptools
+  ];
+
+  dependencies =
+    with python3Packages;
     [
       pykka
       requests
@@ -34,7 +38,7 @@ python3.pkgs.buildPythonApplication rec {
     ]
     ++ [ mopidy ];
 
-  checkInputs = with python3.pkgs; [
+  checkInputs = with python3Packages; [
     pytest
     pytest-cov
     pytest-mock
@@ -47,4 +51,4 @@ python3.pkgs.buildPythonApplication rec {
     homepage = "https://funkwhale.audio";
     license = licenses.gpl3Plus;
   };
-}
+})
