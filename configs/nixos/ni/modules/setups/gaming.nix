@@ -37,7 +37,7 @@ in
       [
         ruffle # Take a trip to nostalgia lane without the viruses.
 
-        # rpcs3
+        rpcs3
         ryubing
 
         clonehero # Is a real virtuoso, a rock idol.
