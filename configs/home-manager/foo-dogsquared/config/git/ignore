@@ -2,6 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
+# Guile
+.guile-repl.socket
+.scheme-langserver.log
+
 # My typical todo list on the project root.
 # Just a force of habit.
 todo.norg
