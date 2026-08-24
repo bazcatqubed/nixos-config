@@ -159,10 +159,10 @@
     };
     "indie-wiki-buddy" = buildMozillaXpiAddon {
       pname = "indie-wiki-buddy";
-      version = "3.14.6";
+      version = "3.14.8";
       addonId = "{cb31ec5d-c49a-4e5a-b240-16c767444f62}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4815321/indie_wiki_buddy-3.14.6.xpi";
-      sha256 = "ed5e9bd34eb285a51205c149b963266e490c3742a2fe9ec50211b03492bc612b";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4951001/indie_wiki_buddy-3.14.8.xpi";
+      sha256 = "69d0fb83217fa5b6921e711f73768e34562dbee15ca99261dd509cac9f9e8197";
       meta = with lib;
       {
         homepage = "https://getindie.wiki/";
@@ -441,10 +441,10 @@
     };
     "open-access-helper" = buildMozillaXpiAddon {
       pname = "open-access-helper";
-      version = "2026.7";
+      version = "2026.8";
       addonId = "info@oahelper.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4895271/open_access_helper-2026.7.xpi";
-      sha256 = "8d62385baea3b8bc65970e451dfc5ae959f319931f58d913c1f0063b5e47d641";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4972994/open_access_helper-2026.8.xpi";
+      sha256 = "1ae2bd20c7eaa845bf5f15bab0af5ccf6931184caa74a6576a71324b80b7d447";
       meta = with lib;
       {
         homepage = "https://www.oahelper.org";
@@ -690,10 +690,10 @@
     };
     "varia-integrator" = buildMozillaXpiAddon {
       pname = "varia-integrator";
-      version = "1.5.5";
+      version = "1.5.6";
       addonId = "giantpinkrobots@protonmail.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4936207/varia_integrator-1.5.5.xpi";
-      sha256 = "14041a1abf7deb83c54494047f55d00aef28f00cfd1c93881d66844ff71a6a15";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4973113/varia_integrator-1.5.6.xpi";
+      sha256 = "0a530f7e8acf8cb11125e3e99d89c2813b61ee6130b38be9e504b68e08004bf5";
       meta = with lib;
       {
         homepage = "https://giantpinkrobots.github.io/varia/";
