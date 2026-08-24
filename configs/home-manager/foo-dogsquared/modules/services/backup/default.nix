@@ -43,10 +43,6 @@ let
             "+ ${config.xdg.userDirs.templates}"
             "+ ${config.xdg.userDirs.videos}"
           ]
-          ++ lib.optionals (config.sops.secrets != { }) [
-            "+ ${config.xdg.configHome}/age"
-            "+ ${config.xdg.configHome}/sops"
-          ]
           ++ lib.optionals userCfg.programs.password-utilities.enable [
             "+ ${config.xdg.dataHome}/gopass"
           ]
@@ -78,6 +74,18 @@ let
 
         check_last = 4;
       }
+    ];
+
+  homeExclusivePatterns =
+    lib.optionals (config.sops.secrets != { }) [
+      "+ ${config.xdg.configHome}/age"
+      "+ ${config.xdg.configHome}/sops"
+    ]
+    ++ lib.optionals config.programs.gpg.enable [
+      "+ ${config.programs.gpg.homedir}"
+    ]
+    ++ lib.optionals config.programs.ssh.enable [
+      "+ ${config.home.homeDirectory}/.ssh"
     ];
 
   checkRemovableMountScript = pkgs.writeShellScript "check-for-removable-storage" ''
@@ -132,6 +140,7 @@ in
               };
               relocated_repo_access_is_ok = true;
               before_backup = lib.singleton "${checkRemovableMountScript} ${removablePath}";
+              patterns = homeExclusivePatterns;
             };
         };
       })
@@ -145,6 +154,7 @@ in
               path = "\${BORG_PERSONAL_FDS_PATH:-${attrs.nixosConfig.state.paths.laptop-ssd}/Backups/foodogsquared}";
               label = "local-archive";
             };
+            patterns = homeExclusivePatterns;
           };
         };
       }
