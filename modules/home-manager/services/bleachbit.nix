@@ -116,7 +116,7 @@ in
         ];
       };
 
-      Service.ExecStart = ''
+      Service.ExecStart = pkgs.writeShellScriptBin "bleachbit-clean-script" ''
         ${cfg.package}/bin/bleachbit --clean ${lib.escapeShellArgs cleaners}
       '';
     };
