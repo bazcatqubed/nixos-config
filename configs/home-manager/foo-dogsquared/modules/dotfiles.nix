@@ -13,11 +13,9 @@ let
   userCfg = config.users.foo-dogsquared;
   cfg = userCfg.dotfiles;
 
-  projectsDir = config.xdg.userDirs.projects;
-
-  dotfiles = "${projectsDir}/packages/dotfiles";
-  dotfilePackages = import "${dotfiles}/_packages/nix" { inherit pkgs; };
-  dotfiles' = config.lib.file.mkOutOfStoreSymlink config.home.mutableFile."${dotfiles}".path;
+  inherit (config.state.paths) dotfilesDir;
+  dotfilePackages = import "${dotfilesDir}/_packages/nix" { inherit pkgs; };
+  dotfiles' = config.lib.file.mkOutOfStoreSymlink config.home.mutableFile."${dotfilesDir}".path;
   getDotfiles = path: "${dotfiles'}/${path}";
 in
 {
@@ -38,12 +36,14 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
-        home.mutableFile.${dotfiles} = {
-          url = "https://github.com/foo-dogsquared/dotfiles.git";
+        state.paths.dotfilesDir = "${config.xdg.userDirs.projects}/packages/dotfiles";
+
+        home.mutableFile.${dotfilesDir} = {
+          url = "https://github.com/bazcatqubed/dotfiles.git";
           type = "git";
         };
 
-        home.sessionPath = [ "${config.home.mutableFile.${dotfiles}.path}/bin" ];
+        home.sessionPath = [ "${config.home.mutableFile.${dotfilesDir}.path}/bin" ];
       }
 
       (lib.mkIf (userCfg.programs.doom-emacs.enable) {
@@ -137,7 +137,7 @@ in
         home.file."${config.xdg.configHome}/nushell/scripts".source = getDotfiles "nu/scripts";
 
         home.sessionVariables = {
-          FDS_DOTDIR = dotfiles;
+          FDS_DOTDIR = dotfilesDir;
           NU_LIB_DIRS = "${config.xdg.configHome}/nushell/foodogsquared";
           FZF_ALT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --unrestricted";
           FZF_ALT_SHIFT_C_COMMAND = "${lib.getExe' pkgs.fd "fd"} --type directory --full-path --max-depth 4 . ../";
