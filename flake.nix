@@ -28,11 +28,11 @@
 
     # ...except we allow other configurations to use other nixpkgs branch so
     # that may not matter anyways.
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixos-stable-small.url = "github:NixOS/nixpkgs/nixos-26.05-small";
-    nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixos-stable.url = "https://channels.nixos.org/nixos-26.05/nixexprs.tar.zst";
+    nixos-stable-small.url = "https://channels.nixos.org/nixos-26.05-small/nixexprs.tar.zst";
+    nixos-unstable.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
+    nixos-unstable-small.url = "https://channels.nixos.org/nixos-unstable-small/nixexprs.tar.zst";
+    nixpkgs-unstable.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst";
 
     # We're using these libraries for other functions.
     flake-utils.url = "github:numtide/flake-utils";
