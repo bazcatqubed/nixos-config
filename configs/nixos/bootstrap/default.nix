@@ -4,6 +4,7 @@
 
 {
   pkgs,
+  modulesPath,
   foodogsquaredUtils,
   foodogsquaredModulesPath,
   ...
@@ -40,5 +41,17 @@
     };
 
     system.stateVersion = "23.11";
+
+    image.modules = {
+      fds-install-iso.imports = [
+        "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
+        ./modules/profiles/install-iso.nix
+      ];
+      fds-install-iso-graphical.imports = [
+        "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
+        "${foodogsquaredModulesPath}/profiles/image/install-iso-graphical.nix"
+        ./modules/profiles/install-iso-graphical.nix
+      ];
+    };
   };
 }

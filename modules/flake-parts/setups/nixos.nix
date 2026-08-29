@@ -73,42 +73,6 @@ let
       system = null;
     };
 
-  # The nixos-generators modules set as well as our custom-made ones.
-  nixosGeneratorsModulesSet =
-    let
-      importNixosGeneratorModule = (
-        _: modulePath: {
-          imports = [
-            modulePath
-            "${inputs.nixos-generators}/format-module.nix"
-          ];
-        }
-      );
-
-      customFormats = lib.mapAttrs importNixosGeneratorModule {
-        install-iso-graphical = ../../nixos-generators/install-iso-graphical.nix;
-      };
-    in
-    inputs.nixos-generators.nixosModules // customFormats;
-
-  # A very very thin wrapper around `mkHost` to build with the given format.
-  mkImage =
-    {
-      pkgs,
-      system,
-      extraModules ? [ ],
-      format ? "iso",
-      specialArgs ? { },
-    }:
-    let
-      extraModules' = extraModules ++ [ nixosGeneratorsModulesSet.${format} ];
-      image = mkHost {
-        inherit pkgs system specialArgs;
-        extraModules = extraModules';
-      };
-    in
-    image.config.system.build.${image.config.formatAttr};
-
   deployNodeType =
     { config, lib, ... }:
     {
@@ -453,17 +417,10 @@ in
               generateImages =
                 name: metadata:
                 let
+                  host = config.flake.nixosConfigurations."${name}-${system}";
                   buildImage =
                     format: formatMetadata:
-                    lib.nameValuePair "${name}-${format}" (mkImage {
-                      inherit format system;
-                      inherit (metadata) specialArgs;
-                      pkgs = import inputs.${metadata.nixpkgs.branch} {
-                        inherit system;
-                        inherit (metadata.nixpkgs) config;
-                      };
-                      extraModules = cfg.sharedModules ++ metadata.modules ++ formatMetadata.additionalModules;
-                    });
+                    lib.nameValuePair "${name}-${format}" (host.config.system.build.images.${format});
 
                   images = lib.mapAttrsToList buildImage metadata.formats;
                 in

@@ -129,8 +129,8 @@ in
           "x86_64-linux"
         ];
         formats = {
-          install-iso.additionalModules = lib.singleton ../nixos/bootstrap/modules/profiles/install-iso.nix;
-          install-iso-graphical.additionalModules = lib.singleton ../nixos/bootstrap/modules/profiles/install-iso-graphical.nix;
+          fds-install-iso = { };
+          fds-install-iso-graphical = { };
         };
         modules = [ inputs.disko.nixosModules.disko ];
         shouldBePartOfNixOSConfigurations = true;
