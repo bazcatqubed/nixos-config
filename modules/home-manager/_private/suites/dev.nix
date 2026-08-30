@@ -115,7 +115,8 @@ in
         # A fuzzy finder that enables fuzzy finding not furry finding, a common misconception.
         programs.fzf = {
           enable = true;
-          changeDirWidgetCommand = "${lib.getExe pkgs.fd} --type directory --unrestricted";
+          changeDirWidget.command = "${lib.getExe pkgs.fd} --type directory --unrestricted";
+          historyWidget.command = if config.programs.atuin.enable then "" else null;
           defaultOptions =
             let
               skipDirectories' = lib.concatStringsSep "," config.state.paths.ignoreDirectories;
@@ -164,6 +165,7 @@ in
       (lib.mkIf cfg.coreutils-replacement.enable {
         home.packages = with pkgs; [
           fd # Welp, a reliable find.
+          dust # Check out the size of your bad boys.
         ];
 
         # dog > sky dog > cat.
