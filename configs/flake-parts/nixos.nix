@@ -128,10 +128,10 @@ in
           "aarch64-linux"
           "x86_64-linux"
         ];
-        formats = {
-          fds-install-iso = { };
-          fds-install-iso-graphical = { };
-        };
+        formats = [
+          "fds-install-iso"
+          "fds-install-iso-graphical"
+        ];
         modules = [ inputs.disko.nixosModules.disko ];
         shouldBePartOfNixOSConfigurations = true;
       };
