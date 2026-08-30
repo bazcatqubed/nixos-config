@@ -23,7 +23,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v22
       - name: Build ISO
         run: |
-          just host-build bootstrap build-image --image-variant fds-install-iso
+          nix build .#images.${{ matrix.arch }}.bootstrap-fds-install-iso --out-link build-iso-result --show-trace
         env:
           NIXPKGS_ALLOW_BROKEN: "1"
           NIXPKGS_ALLOW_UNFREE: "1"
