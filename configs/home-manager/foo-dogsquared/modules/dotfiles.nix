@@ -177,6 +177,7 @@ in
           # Replacing it with our own implementation of autojump and Atuin.
           programs.zoxide.enable = lib.mkForce false;
           programs.atuin.enable = lib.mkForce false;
+          programs.fzf.historyWidget.command = lib.mkForce "";
         }
       )
     ]
