@@ -139,16 +139,6 @@ let
             remoteBuild = true;
           };
         };
-
-        shouldBePartOfNixOSConfigurations = lib.mkOption {
-          type = lib.types.bool;
-          default = lib.isAttrs config.deploy || config.formats == null;
-          example = true;
-          description = ''
-            Indicates whether the declarative NixOS setup should be included as
-            part of the `nixosConfigurations` flake output.
-          '';
-        };
       };
 
       config.nixpkgs.config = cfg.sharedNixpkgsConfig;

@@ -133,7 +133,6 @@ in
           "fds-install-iso-graphical"
         ];
         modules = [ inputs.disko.nixosModules.disko ];
-        shouldBePartOfNixOSConfigurations = true;
       };
 
       # The WSL system (that is yet to be used).
