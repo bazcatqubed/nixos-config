@@ -85,8 +85,6 @@ in
                 "adbusers"
                 "wheel"
                 "audio"
-                "docker"
-                "podman"
                 "networkmanager"
                 "systemd-journal"
                 "wireshark"
