@@ -29,6 +29,7 @@
         // {
           firefox-addons = lib.recurseIntoAttrs (pkgs.callPackage ../../pkgs/firefox-addons { });
           proton-ge = lib.recurseIntoAttrs pkgs.protonGEPackages;
+          helix = pkgs.helix-steel-plugin;
         }
       );
     };
