@@ -147,6 +147,11 @@ in
 
         # Text editors galore.
         programs.helix.enable = true;
+        wrapper-manager.packages.helix-variants = {
+          wrappers.hx-steel = {
+            arg0 = lib.getExe pkgs.helix-steel-plugin;
+          };
+        };
       }
 
       (lib.mkIf (config.services.podman.enable && !(attrs.nixosConfig.programs.distrobox.enable or false))
