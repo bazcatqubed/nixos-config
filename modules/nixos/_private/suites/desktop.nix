@@ -194,9 +194,9 @@ in
         };
 
         # Journal settings for retention.
-        services.journald.extraConfig = ''
-          MaxRetentionSec="3 month"
-        '';
+        services.journald.settings.Journal = {
+          MaxRetentionSec = "3 month";
+        };
       })
 
       (lib.mkIf cfg.autoUpgrade.enable {
