@@ -5,25 +5,34 @@
 final: prev:
 
 let
+  inherit (prev) stdenvNoCC;
+
   mkProtonOverride =
     displayName:
     {
       repoHash ? null,
       ...
     }@overrideAttrsArgs:
-    (prev.proton-ge-bin.override { steamDisplayName = displayName; }).overrideAttrs (
+    prev.proton-ge-bin.overrideAttrs (
+      finalAttrs:
       overrideAttrsArgs
-      // prev.lib.optionalAttrs (repoHash != null) {
+      // {
+        steamDisplayName = displayName;
+        toolName = displayName;
         version = displayName;
+      }
+      // prev.lib.optionalAttrs (repoHash != null) {
         src = prev.fetchzip {
-          url = getReleaseUrl displayName;
+          urls = getReleaseUrl displayName;
           hash = repoHash;
         };
       }
     );
-  getReleaseUrl =
-    version:
-    "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}.tar.gz";
+  getReleaseUrl = version: [
+    "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}.tar.gz"
+    "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}-${stdenvNoCC.hostPlatform.system}.tar.gz"
+    "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}-${stdenvNoCC.hostPlatform.uname.processor}.tar.gz"
+  ];
 
   getGEProton =
     version: repoHash:
@@ -52,6 +61,8 @@ let
     proton-ge-10-34-bin = getGEProton "10-34" "sha256-lzPsYYcrp5NoT3B0WFj3o10Z7tXx7xva1wEP3edeuqM=";
 
     proton-ge-11-1-bin = getGEProton "11-1" "sha256-I7SSvzQQ/NqdvwjpJ9IFFtAaTS+rgHUyXx0us1vIOnw=";
+
+    proton-ge-11-6-bin = getGEProton "11-6" "sha256-rX27DUrrrHtR1cgyr/424m9JPjrdASIisVGv2vWzMAs=";
   };
 in
 {
