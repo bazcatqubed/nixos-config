@@ -13,7 +13,7 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_7_1;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_7_2;
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
