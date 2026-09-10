@@ -4,13 +4,11 @@
 
 {
   lib,
-  buildPythonPackage,
   fetchFromGitHub,
-  imageio,
-  openimageio,
+  python3Packages,
 }:
 
-buildPythonPackage rec {
+python3Packages.buildPythonPackage (finalAttrs: {
   pname = "blender-blendergis";
   version = "2215";
   format = "other";
@@ -18,12 +16,12 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "domlysz";
     repo = "BlenderGIS";
-    rev = lib.replaceStrings [ "." ] [ "" ] version;
+    rev = lib.replaceStrings [ "." ] [ "" ] finalAttrs.version;
     hash = "sha256-Bc/ldJvpkijkiX4Eivq5MX5Ykn7p8H5AOp5ZxKmXIxg=";
   };
 
-  propagatedBuildInputs = [ imageio ];
-  buildInputs = [ openimageio ];
+  propagatedBuildInputs = with python3Packages; [ imageio ];
+  buildInputs = with python3Packages; [ openimageio ];
 
   passthru.blenderPluginName = "BlenderGIS";
 
@@ -31,8 +29,8 @@ buildPythonPackage rec {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/share/blender/scripts/addons/${passthru.blenderPluginName}
-    cp -r . $out/share/blender/scripts/addons/${passthru.blenderPluginName}
+    mkdir -p $out/share/blender/scripts/addons/${finalAttrs.passthru.blenderPluginName}
+    cp -r . $out/share/blender/scripts/addons/${finalAttrs.passthru.blenderPluginName}
 
     runHook postInstall
   '';
@@ -43,4 +41,4 @@ buildPythonPackage rec {
     license = lib.licenses.gpl3Plus;
     platforms = lib.platforms.all;
   };
-}
+})

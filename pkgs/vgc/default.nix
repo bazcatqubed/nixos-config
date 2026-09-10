@@ -6,8 +6,7 @@
   stdenv,
   lib,
   fetchFromGitHub,
-  wrapQtAppsHook,
-  qtbase,
+  qt5,
   cmake,
   python3,
   harfbuzz,
@@ -16,7 +15,7 @@
   git,
 }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "vgc";
   version = "unstable-2024-08-16";
 
@@ -31,7 +30,7 @@ stdenv.mkDerivation rec {
   patches = [ ./patches/set-reproducible-build.patch ];
 
   nativeBuildInputs = [
-    wrapQtAppsHook
+    qt5.wrapQtAppsHook
     cmake
   ];
 
@@ -41,7 +40,7 @@ stdenv.mkDerivation rec {
     freetype
     harfbuzz
     libGLU
-    qtbase
+    qt5.qtbase
   ];
 
   meta = with lib; {
@@ -50,4 +49,4 @@ stdenv.mkDerivation rec {
     license = licenses.asl20;
     maintainers = with maintainers; [ foo-dogsquared ];
   };
-}
+})

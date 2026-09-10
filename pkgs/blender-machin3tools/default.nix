@@ -4,11 +4,11 @@
 
 {
   lib,
-  buildPythonPackage,
   fetchFromGitHub,
+  python3Packages,
 }:
 
-buildPythonPackage rec {
+python3Packages.buildPythonPackage (finalAttrs: {
   pname = "blender-machin3tools";
   version = "1.5.0";
   format = "other";
@@ -26,8 +26,8 @@ buildPythonPackage rec {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/share/blender/scripts/addons/${passthru.blenderPluginName}
-    cp -r . $out/share/blender/scripts/addons/${passthru.blenderPluginName}
+    mkdir -p $out/share/blender/scripts/addons/${finalAttrs.passthru.blenderPluginName}
+    cp -r . $out/share/blender/scripts/addons/${finalAttrs.passthru.blenderPluginName}
 
     runHook postInstall
   '';
@@ -39,4 +39,4 @@ buildPythonPackage rec {
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ foo-dogsquared ];
   };
-}
+})

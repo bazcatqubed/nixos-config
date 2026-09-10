@@ -6,8 +6,7 @@
   stdenv,
   lib,
   fetchFromGitHub,
-  buildPythonPackage,
-  py-slvs,
+  python3Packages,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -21,7 +20,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-5Vy7vs3tH3LXreqHd90D3n5kP9X/f2Wa8d8Dy4D9YoQ=";
   };
 
-  propagatedNativeBuildInputs = [ py-slvs ];
+  propagatedNativeBuildInputs = with python3Packages; [ py-slvs ];
   installPhase = ''
     runHook preInstall
     output_dir=$out/share/blender/scripts/addons/CAD_Sketcher

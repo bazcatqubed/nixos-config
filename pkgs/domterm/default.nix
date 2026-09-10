@@ -14,12 +14,8 @@
   openssl,
   unixtools,
   zlib,
-  rustPlatform,
   perl,
-  qtbase,
-  qtwebchannel,
-  qtwebengine,
-  wrapQtAppsHook,
+  qt6,
 
   withQtDocking ? false,
 
@@ -34,7 +30,7 @@
   libxslt,
 }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "domterm";
   version = "unstable-2026-01-29";
 
@@ -58,10 +54,10 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     autoreconfHook
     pkg-config
-    wrapQtAppsHook
-    qtbase
-    qtwebchannel
-    qtwebengine
+    qt6.wrapQtAppsHook
+    qt6.qtbase
+    qt6.qtwebchannel
+    qt6.qtwebengine
   ];
 
   buildInputs = [
@@ -88,4 +84,4 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ foo-dogsquared ];
     broken = true;
   };
-}
+})

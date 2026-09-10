@@ -7,12 +7,7 @@
 }:
 
 let
-  inherit (pkgs)
-    lib
-    python3Packages
-    qt5
-    qt6
-    ;
+  inherit (pkgs) lib;
 in
 lib.makeScope pkgs.newScope (
   self:
@@ -56,14 +51,14 @@ lib.makeScope pkgs.newScope (
     awesome-cli = callPackage ./awesome-cli { };
     bobby = callPackage ./bobby { };
     base16-builder-go = callPackage ./base16-builder-go { };
-    blender-blendergis = python3Packages.callPackage ./blender-blendergis { };
-    blender-machin3tools = python3Packages.callPackage ./blender-machin3tools { };
-    blender-cad-sketcher = pkgs.python314Packages.callPackage ./blender-cad-sketcher { };
-    colour-science = python3Packages.callPackage ./colour-science { };
+    blender-blendergis = callPackage ./blender-blendergis { };
+    blender-machin3tools = callPackage ./blender-machin3tools { };
+    blender-cad-sketcher = callPackage ./blender-cad-sketcher { };
+    colour-science = callPackage ./colour-science { };
     clidle = callPackage ./clidle.nix { };
     ctrld = callPackage ./ctrld { };
-    domterm = qt6.callPackage ./domterm { };
-    durdraw = python3Packages.callPackage ./durdraw { };
+    domterm = callPackage ./domterm { };
+    durdraw = callPackage ./durdraw { };
     fastn = callPackage ./fastn { };
     flatsync = callPackage ./flatsync { };
     freerct = callPackage ./freerct.nix { };
@@ -101,7 +96,7 @@ lib.makeScope pkgs.newScope (
     simple-icons = callPackage ./simple-icons { };
     tic-80-unstable = callPackage ./tic-80 { };
     sessiond = callPackage ./sessiond { };
-    vgc = qt5.callPackage ./vgc { };
+    vgc = callPackage ./vgc { };
     watc = callPackage ./watc { };
     willow = callPackage ./willow { };
     wzmach = callPackage ./wzmach { };

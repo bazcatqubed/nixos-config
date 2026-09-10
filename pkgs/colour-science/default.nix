@@ -4,48 +4,40 @@
 
 {
   lib,
-  buildPythonPackage,
-  fetchPypi,
-  numpy,
-  hatchling,
-
+  python3Packages,
   optionalFeatures ? true,
-  imageio,
-  matplotlib,
-  networkx,
-  pandas,
-  scipy,
-  xxhash,
-
-  openimageio,
-  opencolorio,
 }:
 
-buildPythonPackage (finalAttrs: {
+python3Packages.buildPythonPackage (finalAttrs: {
   pname = "colour-science";
   version = "0.4.7";
   pyproject = true;
 
-  src = fetchPypi {
+  src = python3Packages.fetchPypi {
     pname = "colour_science";
     inherit (finalAttrs) version;
     hash = "sha256-s0dz3E3T+bqZzKUpf6EOn1MhNNmUs6Iwjay+lw39UHk=";
   };
 
-  propagatedBuildInputs = [
-    numpy
-    hatchling
-  ]
-  ++ lib.optionals optionalFeatures [
-    imageio
-    matplotlib
-    networkx
-    pandas
-    scipy
-    xxhash
-  ];
+  propagatedBuildInputs =
+    with python3Packages;
+    [
+      numpy
+      hatchling
+    ]
+    ++ lib.optionals optionalFeatures [
+      imageio
+      matplotlib
+      networkx
+      pandas
+      scipy
+      xxhash
+    ];
 
   propagatedNativeBuildInputs =
+    let
+      inherit (python3Packages) openimageio opencolorio;
+    in
     lib.optionals (optionalFeatures && (lib.versionAtLeast openimageio.version "3")) [
       openimageio
     ]

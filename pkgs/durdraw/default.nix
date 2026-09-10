@@ -4,17 +4,16 @@
 
 {
   lib,
-  buildPythonPackage,
   fetchFromGitHub,
-  setuptools,
+  python3Packages,
 }:
 
-buildPythonPackage (finalAttrs: {
+python3Packages.buildPythonPackage (finalAttrs: {
   pname = "durdraw";
   version = "0.29.0";
   pyproject = true;
 
-  build-system = [ setuptools ];
+  build-system = with python3Packages; [ setuptools ];
 
   src = fetchFromGitHub {
     owner = "cmang";
