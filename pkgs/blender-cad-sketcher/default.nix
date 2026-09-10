@@ -11,13 +11,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "blender-cad-sketcher";
-  version = "unstable-2026-03-22";
+  version = "0.31.1";
 
   src = fetchFromGitHub {
     owner = "hlorus";
     repo = "CAD_Sketcher";
-    rev = "c398c2dd394e4b0eabd0e74eba0036b23f351c28";
-    hash = "sha256-5Vy7vs3tH3LXreqHd90D3n5kP9X/f2Wa8d8Dy4D9YoQ=";
+    rev = "v${finalAttrs.version}";
+    hash = "sha256-mDTAws+0tAT8qGCLr7bkqsQ8CUydvskNhatD50DZtwY=";
   };
 
   propagatedNativeBuildInputs = with python3Packages; [ py-slvs ];
