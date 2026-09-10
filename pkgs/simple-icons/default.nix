@@ -10,13 +10,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "simple-icons";
-  version = "16.6.0";
+  version = "16.30.0";
 
   src = fetchFromGitHub {
     owner = "simple-icons";
     repo = "simple-icons";
     rev = finalAttrs.version;
-    hash = "sha256-JxXyjn0BqGCUKHIdgn5tnVef9H1glKI2LeHqHY7ZQU8=";
+    hash = "sha256-YD4K86DCCRzLFP6ahJV3vzbVVFYiNNpobmab3Ontx5w=";
   };
 
   buildPhase = ''
