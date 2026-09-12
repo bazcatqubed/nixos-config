@@ -68,6 +68,8 @@ lib.makeScope pkgs.newScope (
     #graphite-design-tool = callPackage ./graphite-design-tool { };
     go-avahi-cname = callPackage ./go-avahi-cname { };
     grant = callPackage ./grant { };
+    helix-steel = callPackage ./helix-steel { };
+    helix-steel-wrapper = callPackage ./helix-steel-wrapper { };
     hush-shell = callPackage ./hush-shell.nix { };
     kip = callPackage ./kip { };
     lektra = callPackage ./lektra { };

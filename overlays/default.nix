@@ -15,5 +15,4 @@
   rotp-foodogsquared = import ./rotp-foodogsquared;
   thunderbird-foodogsquared = import ./thunderbird-foodogsquared;
   proton-ge-custom = import ./proton-ge-custom;
-  helix-foodogsquared = import ./helix-foodogsquared;
 }
