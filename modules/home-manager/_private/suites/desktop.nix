@@ -69,7 +69,7 @@ in
         home.packages =
           with pkgs;
           [
-            audacity # EGADS!!!
+            audacity_4 # EGADS!!!
             musescore # You won't find muses to score, only music: a common misconception.
             zrythm # The freer FL Studio (if you're sailing by the high seven seas).
             ffmpeg-full # Ah yes, everyman's multimedia swiss army knife.
