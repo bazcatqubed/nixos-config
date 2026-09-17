@@ -149,7 +149,7 @@ in
         programs.helix.enable = true;
         wrapper-manager.packages.helix-variants = {
           wrappers.hx-steel = {
-            arg0 = lib.getExe pkgs.helix-steel-plugin;
+            arg0 = lib.getExe pkgs.helix-steel-wrapper;
           };
         };
       }

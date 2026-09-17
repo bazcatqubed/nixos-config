@@ -240,7 +240,7 @@ in
                       ]
                       ++ lib.optionals userCfg.programs.vs-code.enable [
                         {
-                          wm_class = "Code";
+                          wm_class = "code";
                           preferredWidth = "100%";
                           spaceIndex = wmIndexOf "dev";
                         }
