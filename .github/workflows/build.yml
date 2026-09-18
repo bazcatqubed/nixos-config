@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@v23
       - name: Prepare push to binary cache
         uses: cachix/cachix-action@v17
         if: ${{ github.ref == 'refs/heads/master' }}
@@ -33,7 +33,7 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@v23
       - name: Build
         run: |
           nix build -f ./devcontainers --print-out-paths --no-link --show-trace > build_paths
