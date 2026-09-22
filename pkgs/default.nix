@@ -8,16 +8,12 @@
 
 let
   inherit (pkgs) lib;
-in
-lib.makeScope pkgs.newScope (
-  self:
-  let
-    callPackage = pkgs.newScope self;
-  in
-  {
+
+  fds = import ../lib { inherit pkgs; };
+  fdsSet = {
     # My custom nixpkgs extensions.
-    foodogsquaredLib = import ../lib { inherit pkgs; };
-    inherit (self.foodogsquaredLib.builders)
+    foodogsquaredLib = fds;
+    inherit (fds.builders)
       makeXDGMimeAssociationList
       makeXDGPortalConfiguration
       makeXDGDesktopEntry
@@ -37,7 +33,7 @@ lib.makeScope pkgs.newScope (
       buildMarpSlides
       buildTypstDocument
       ;
-    inherit (self.foodogsquaredLib.fetchers)
+    inherit (fds.fetchers)
       fetchInternetArchive
       fetchUgeeDriver
       fetchWebsiteIcon
@@ -46,63 +42,20 @@ lib.makeScope pkgs.newScope (
       fetchUnsplashImages
       fetchSupercolliderQuark
       ;
+  };
+  newScope = extra: pkgs.newScope (fdsSet // extra);
 
-    # My custom packages.
-    awesome-cli = callPackage ./awesome-cli { };
-    bobby = callPackage ./bobby { };
-    base16-builder-go = callPackage ./base16-builder-go { };
-    blender-blendergis = callPackage ./blender-blendergis { };
-    blender-machin3tools = callPackage ./blender-machin3tools { };
-    blender-cad-sketcher = callPackage ./blender-cad-sketcher { };
-    colour-science = callPackage ./colour-science { };
-    clidle = callPackage ./clidle.nix { };
-    ctrld = callPackage ./ctrld { };
-    domterm = callPackage ./domterm { };
-    durdraw = callPackage ./durdraw { };
-    fastn = callPackage ./fastn { };
-    flatsync = callPackage ./flatsync { };
-    freerct = callPackage ./freerct.nix { };
-    gitte = callPackage ./gitte { };
-    gnome-search-provider-recoll = callPackage ./gnome-search-provider-recoll.nix { };
-    gnome-kiosk = callPackage ./gnome-kiosk { };
-    #graphite-design-tool = callPackage ./graphite-design-tool { };
-    go-avahi-cname = callPackage ./go-avahi-cname { };
-    grant = callPackage ./grant { };
-    helix-steel = callPackage ./helix-steel { };
-    helix-steel-wrapper = callPackage ./helix-steel-wrapper { };
-    hush-shell = callPackage ./hush-shell.nix { };
-    kip = callPackage ./kip { };
-    lektra = callPackage ./lektra { };
-    lwp = callPackage ./lwp { };
-    moac = callPackage ./moac.nix { };
-    mopidy-beets = callPackage ./mopidy-beets.nix { };
-    mopidy-funkwhale = callPackage ./mopidy-funkwhale.nix { };
-    mopidy-internetarchive = callPackage ./mopidy-internetarchive.nix { };
-    mopidy-listenbrainz = callPackage ./mopidy-listenbrainz { };
-    nautilus-annotations = callPackage ./nautilus-annotations { };
-    # nautilus-custom-icon-name = callPackage ./nautilus-icon-name { };
-    pop-launcher-plugin-brightness = callPackage ./pop-launcher-plugin-brightness { };
-    pop-launcher-plugin-duckduckgo-bangs = callPackage ./pop-launcher-plugin-duckduckgo-bangs.nix { };
-    pop-launcher-plugin-jetbrains = callPackage ./pop-launcher-plugin-jetbrains { };
-    pigeon-mail = callPackage ./pigeon-mail { };
-    swh = callPackage ./software-heritage {
-      python3Packages = pkgs.python312Packages;
-    };
-    #pd-l2ork = callPackage ./pd-l2ork { };
-    #rotp-modnar = callPackage ./rotp-modnar { };
-    #rotp-fusion = callPackage ./rotp-fusion { };
-    # reshade = callPackage ./reshade { };
-    speki = callPackage ./speki { };
-    supercolliderQuarks = callPackage ./supercollider-quarks { };
-    sqlc-gen-from-template = callPackage ./sqlc-gen-from-template { };
-    simple-icons = callPackage ./simple-icons { };
-    tic-80-unstable = callPackage ./tic-80 { };
-    sessiond = callPackage ./sessiond { };
-    vgc = callPackage ./vgc { };
-    watc = callPackage ./watc { };
-    willow = callPackage ./willow { };
-    wzmach = callPackage ./wzmach { };
-    xs = callPackage ./xs { };
-    yolk = callPackage ./yolk { };
-  }
-)
+  excludeList = [
+    # `default.nix` itself which goes to an infinite recursion when placed within
+    # `<flake-utils>.flattenTree` or any functions travelling in the attrset.
+    "default"
+
+    # All of the packages here relies on third-party packages so no...
+    "firefox-addons"
+  ];
+in
+lib.removeAttrs (lib.filesystem.packagesFromDirectoryRecursive {
+  inherit (pkgs) callPackage;
+  inherit newScope;
+  directory = ./.;
+}) excludeList
