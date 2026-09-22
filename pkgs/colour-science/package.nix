@@ -4,6 +4,7 @@
 
 {
   lib,
+  opencolorio,
   python3Packages,
   optionalFeatures ? true,
 }:
@@ -36,7 +37,7 @@ python3Packages.buildPythonPackage (finalAttrs: {
 
   propagatedNativeBuildInputs =
     let
-      inherit (python3Packages) openimageio opencolorio;
+      inherit (python3Packages) openimageio;
     in
     lib.optionals (optionalFeatures && (lib.versionAtLeast openimageio.version "3")) [
       openimageio
