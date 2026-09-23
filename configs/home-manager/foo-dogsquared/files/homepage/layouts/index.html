@@ -26,16 +26,16 @@ SPDX-License-Identifier: MIT
                 {{ end }}
                 <div class="nav-header">{{ $name }}</div>
                 {{ with $value.flavorText }}
-                    <div class="flavor-text">{{ . }}</div>
+                    <div class="flavor-text">{{ . | safeHTML }}</div>
                 {{ end }}
                 <hr />
 
                 <nav>
                 {{ range $item := $value.links }}
                     {{ if $item.subsection }}
-                        <span class="nav-subsection">{{ $item.text }}</span>
+                        <span class="nav-subsection" {{ with $item.description }}title="{{ . | safeHTML }}"{{ end }}>{{ $item.text | safeHTML }}</span>
                     {{ else }}
-                        <a href="{{ safeURL $item.url }}">{{ $item.text }}</a>
+                        <a href="{{ safeURL $item.url }}" {{ with $item.description }}title="{{ . | safeHTML }}"{{ end }}>{{ $item.text | safeHTML }}</a>
                     {{ end }}
                 {{ end }}
                 </nav>

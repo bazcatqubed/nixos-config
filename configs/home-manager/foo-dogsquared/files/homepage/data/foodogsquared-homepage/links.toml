@@ -163,8 +163,8 @@ textOnly = true
 weight = -2
 links = [
   { url = "https://search.brave.com", text = "Brave Search" },
-  { url = "https://sourcegraph.com/search", text = "SourceGraph" },
-  { url = "https://manualslib.com/", text = "ManualsLib" },
+  { url = "https://sourcegraph.com/search", text = "SourceGraph", description = "Search public code" },
+  { url = "https://manualslib.com/", text = "ManualsLib", description = "Safe haven for those user manuals you neglect" },
   { url = "https://www.digikey.ph/en/products", text = "Digikey products search" },
   { url = "https://www.trustedparts.com/en/distributors", text = "TrustedParts product search" },
   { url = "https://phind.com/", text = "Phind" },
@@ -178,10 +178,11 @@ name = "Games"
 flavorText = "Pure unadulterated gaming"
 textOnly = true
 links = [
-  { url = "https://wafflegame.net", text = "Waffle" },
-  { url = "https://duotrigordle.com", text = "Duotrigordle" },
-  { url = "https://www.merriam-webster.com/games/quordle/", text = "Quordle" },
+  { url = "https://wafflegame.net", text = "Waffle", description = "A suitable breakfast game" },
+  { url = "https://duotrigordle.com", text = "Duotrigordle", description = "Wordle on steroids" },
+  { url = "https://www.merriam-webster.com/games/quordle/", text = "Quordle", description = "Wordle on protein shake" },
   { url = "https://www.nytimes.com/crosswords/game/mini", text = "The Mini Crossword" },
+  { url = "https://crosswordle.com/", text = "Crosswordle" }
 ]
 icon.iconset = "material-design-icons"
 icon.name = "gamepad-variant"
