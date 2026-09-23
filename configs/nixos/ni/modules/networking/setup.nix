@@ -167,7 +167,7 @@ in
             plugins = with pkgs; [
               networkmanager-openconnect
               networkmanager-openvpn
-              networkmanager-vpnc
+              networkmanager-libreswan
             ];
           }
 

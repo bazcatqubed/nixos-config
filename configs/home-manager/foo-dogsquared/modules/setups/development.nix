@@ -149,7 +149,7 @@ in
         programs.helix.enable = true;
         wrapper-manager.packages.helix-variants = {
           wrappers.hx-steel = {
-            arg0 = lib.getExe pkgs.helix-steel-wrapper;
+            arg0 = lib.getExe pkgs.helix-steel.wrapper;
           };
         };
       }
@@ -295,7 +295,7 @@ in
             [
               sc3-plugins
             ]
-            ++ (with pkgs.supercolliderQuarks; [
+            ++ (with pkgs.supercollider-quarks; [
               SuperDirt
               SuperDirtMixer
               ZZZ # Not the game, btw.
