@@ -7,6 +7,7 @@
   runCommand,
   helix-unwrapped,
 
+  callPackage,
   steel,
   rustPlatform,
 }:
@@ -33,6 +34,7 @@ helix-unwrapped.overrideAttrs (
       hash = "sha256-gxX/gXJ9cIAShQTBSZcmAcX4qahE3zoYYmKzmFHqV7E=";
     };
     patches = [ ];
+    passthru.wrapper = callPackage ./wrapper.nix { };
     env = {
       HELIX_DISABLE_AUTO_GRAMMAR_BUILD = "1";
       HELIX_DEFAULT_RUNTIME = runCommand "helix-default-runtime" { } ''
