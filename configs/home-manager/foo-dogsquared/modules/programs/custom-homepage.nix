@@ -128,5 +128,9 @@ in
       });
 
     xdg.dataFile."foodogsquared/homepage".source = cfg.finalPackage;
+
+    # Get the data as a consistent source in the home environment.
+    xdg.dataFile."foodogsquared/links.toml".source =
+      settingsFormat.generate "fds-homepage-links" cfg.sections;
   };
 }
