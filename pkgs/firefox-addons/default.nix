@@ -159,10 +159,10 @@
     };
     "indie-wiki-buddy" = buildMozillaXpiAddon {
       pname = "indie-wiki-buddy";
-      version = "4.0.0";
+      version = "4.0.1";
       addonId = "{cb31ec5d-c49a-4e5a-b240-16c767444f62}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4982796/indie_wiki_buddy-4.0.0.xpi";
-      sha256 = "2769ffe55ff3462eef9029f00d90bb2df7d3f2fa6521b90de47aa81152e25df8";
+      url = "https://addons.mozilla.org/firefox/downloads/file/5057371/indie_wiki_buddy-4.0.1.xpi";
+      sha256 = "3b4b804391e9c9ffc62da11299720f887c829220d05393c67392ef6c81407c42";
       meta = with lib;
       {
         homepage = "https://getindie.wiki/";
@@ -244,10 +244,10 @@
     };
     "private-grammar-checker-harper" = buildMozillaXpiAddon {
       pname = "private-grammar-checker-harper";
-      version = "2.11.0";
+      version = "2.12.0";
       addonId = "harper@writewithharper.com";
-      url = "https://addons.mozilla.org/firefox/downloads/file/5037758/private_grammar_checker_harper-2.11.0.xpi";
-      sha256 = "c596a23a5c3b33b9c58cbaafd9ce0a3ab5e0e829d2cd7c205028999be64a25d8";
+      url = "https://addons.mozilla.org/firefox/downloads/file/5079480/private_grammar_checker_harper-2.12.0.xpi";
+      sha256 = "a6c18163a279f49aec46077ebef0e4c584d8e011fe1ef54f3a9e5a88af1e9555";
       meta = with lib;
       {
         homepage = "https://writewithharper.com";
@@ -263,10 +263,10 @@
     };
     "refined-github-" = buildMozillaXpiAddon {
       pname = "refined-github-";
-      version = "26.9.12";
+      version = "26.10";
       addonId = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/5024350/refined_github-26.9.12.xpi";
-      sha256 = "eff601153ab28f19ac3bcda4b5d8f3f8c8f4eb47ac45dddaa3a49a67b734138d";
+      url = "https://addons.mozilla.org/firefox/downloads/file/5075070/refined_github-26.10.xpi";
+      sha256 = "ee4784797ac6af961e8bdea62767357a753dbfefbad51a25a04746d6156ea192";
       meta = with lib;
       {
         homepage = "https://github.com/refined-github/refined-github";
