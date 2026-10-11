@@ -28,6 +28,7 @@ let
         host = "heracles.mxrouting.net";
         port = 993;
         tls.enable = true;
+        authentication = "plain";
       };
 
       # Set up the outgoing mails.
@@ -35,6 +36,7 @@ let
         host = "heracles.mxrouting.net";
         port = 465;
         tls.enable = true;
+        authentication = "plain";
       };
     };
 in
@@ -94,6 +96,9 @@ in
             userName = "foo.dogsquared@gmail.com";
             flavor = "gmail.com";
             passwordCommand = "gopass show websites/accounts.google.com/foo.dogsquared | head -n 1";
+
+            imap.authentication = "login";
+            smtp.authentication = "login";
           };
 
           old_personal = rec {
