@@ -81,8 +81,8 @@ in
             lib.optionals hasDesktopSuiteEnabled (
               with pkgs;
               [
-                # yabridge # Building bridges to Windows and Linux audio tools.
-                # yabridgectl # The bridge controller.
+                yabridge # Building bridges to Windows and Linux audio tools.
+                yabridgectl # The bridge controller.
               ]
             )
           );
